@@ -16,12 +16,29 @@
 //! URG センサ管理
 typedef struct
 {
-  // !!! 共通のパラメータは、この構造体で管理する
-  char dummy;
+    // !!! 共通のパラメータは、この構造体で管理する
+    char dummy;
 } urg_t;
 
 
-//! urg_t 構造体の初期化
+//! 通信タイプ
+typedef enum {
+    SERIAL,                     //!< シリアル通信
+    ETHERNET,                   //!< イーサーネット通信
+} connection_type_t;
+
+
+/*!
+  \brief URG 構造体の初期化
+
+  urg_t を宣言したときは、URG ライブラリの関数を使う前にこの関数で初期化する必要があります。
+
+  Example
+  \code
+  urg_t urg;
+  urg_initialize(&urg);
+  \endcode
+*/
 extern void urg_initialize(urg_t *urg);
 
 
@@ -30,9 +47,10 @@ extern void urg_initialize(urg_t *urg);
 
   指定したデバイスに接続し、距離を計測できるようにします。
 
-  \param[i/o] urg URG センサ管理
-  \param[i] device 接続デバイス名
-  \param[i] baudrate 接続ボーレート [bps]
+  \param[in/out] urg URG センサ管理
+  \param[in] device 接続デバイス名
+  \param[in] baudrate 接続ボーレート [bps]
+  \param[in] connection_type 通信タイプ
 
   retval 0 正常
   retval <0 エラー
@@ -43,11 +61,11 @@ extern void urg_initialize(urg_t *urg);
   urg_initialize(&urg);
 
   if (!urg_open("/dev/ttyACM0", 115200)) {
-    printf("urg_connect: %s\n", urg_get_error(&urg));
-    return -1;
+      return -1;
   } \endcode
 */
-extern int urg_open(urg_t *urg, const char *device, long baudrate);
+extern int urg_open(urg_t *urg, const char *device, long baudrate,
+                    connection_type_t connection_type);
 
 
 /*!
@@ -64,18 +82,33 @@ extern int urg_open(urg_t *urg, const char *device, long baudrate);
 extern void urg_close(urg_t *urg);
 
 
-// !!! タイムスタンプモードの開始
-// !!!
+//! タイムスタンプモードの開始
 extern int urg_start_timestamp_mode(urg_t *urg);
 
 
-// !!! タイムスタンプの取得
-// !!!
-extern long urg_get_timestamp(urg_t *urg);
+/*!
+  \brief タイムスタンプの取得
+
+  \param[in] urg URG センサ管理
+
+  \ratval >=0 タイムスタンプ [msec]
+  \retval <0 エラー
+
+  Example
+  \code
+  urg_start_timestamp_mode(&urg);
+
+  urg_ticks();
+  timestamp = urg_timestamp();
+
+  urg_stop_timestamp_mode(&urg);
+  // !!!
+  \endcode
+*/
+extern long urg_timestamp(urg_t *urg);
 
 
-// !!! タイムスタンプモードの終了
-// !!!
+//! タイムスタンプモードの終了
 extern void urg_stop_timestamp_mode(urg_t *urg);
 
 

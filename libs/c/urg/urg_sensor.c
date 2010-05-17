@@ -19,11 +19,14 @@ void urg_initialize(urg_t *urg)
 }
 
 
-int urg_open(urg_t *urg, const char *device, long baudrate)
+int urg_open(urg_t *urg, const char *device, long baudrate,
+             connection_type_t connection_type)
 {
     (void)urg;
     (void)device;
     (void)baudrate;
+    (void)connection_type;
+
     // !!!
 
     return -1;

@@ -1,15 +1,22 @@
 /*!
-  \mainpage URG Library tutorial
+  \mainpage URG C Library tutorial
 
-  !!! URG センサの特徴
+  これは URG C ライブラリを用いて URG センサを利用するためのマニュアルです。
 
-  !!! センサの準備
+  - \subpage urg_feature_page
 
-  !!! データの取得
+  - URG センサを使うための準備
 
-  - !!! タイムスタンプの利用
-    - !!! 取得間隔のチェック
-    - !!! 外部センサとの同期
+  - URG からのデータ取得
+    - データを逐次取得する
+    - データを連続して取得する
+    - 強度データの取得
+    - マルチエコー・データの取得
 
-  !!!
+  - URG のタイムスタンプの利用
+    - 取得間隔のチェック
+    - 外部タイムスタンプとの同期
+
+  - If you have any questions, ask in our mailing list.
+    - urgwidget-users@lists.sourceforge.net
 */

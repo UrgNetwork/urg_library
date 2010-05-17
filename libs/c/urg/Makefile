@@ -23,6 +23,10 @@ depend :
 ######################################################################
 $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_sensor.o) \
+	$(URG_C_LIB)(urg_utils.o) \
+
 # DO NOT DELETE
 
+urg_utils.o: urg_sensor.h
 urg_sensor.o: urg_sensor.h
+urg_utils.o: urg_utils.h urg_sensor.h

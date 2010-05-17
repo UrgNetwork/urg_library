@@ -1,8 +1,10 @@
-# urg_c
+# Makefile for c/urg/samples
 
 all :
 
 clean :
 
-.PHONY : all clean
+depend :
+
+.PHONY : all depend clean
 ######################################################################
