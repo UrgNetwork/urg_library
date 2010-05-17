@@ -1,22 +1,30 @@
 /*!
-  \mainpage URG C Library tutorial
+  \mainpage URG C ライブラリ マニュアル
 
   これは URG C ライブラリを用いて URG センサを利用するためのマニュアルです。
 
   - \subpage urg_feature_page
 
-  - URG センサを使うための準備
+  - \subpage urg_setup_page
 
-  - URG からのデータ取得
-    - データを逐次取得する
-    - データを連続して取得する
-    - 強度データの取得
-    - マルチエコー・データの取得
+  - \subpage urg_usage_dox
+    - \ref urg_usage_gd
+    - \ref urg_usage_md
+    - \ref urg_usage_id
+    - \ref urg_usage_hd
 
-  - URG のタイムスタンプの利用
-    - 取得間隔のチェック
-    - 外部タイムスタンプとの同期
+  - \subpage urg_timestamp_page
+    - \ref urg_timestamp_check
+    - \ref urg_timestamp_sync
 
-  - If you have any questions, ask in our mailing list.
+  - <b>ライブラリ API</b>
+    - urg_sensor.h
+    - urg_utils.h
+
+  \n
+  - 質問などありましたら、以下のメーリングリストまで お問い合わせ下さい。
+    \n \n
     - urgwidget-users@lists.sourceforge.net
+
+  \n
 */

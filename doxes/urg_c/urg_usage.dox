@@ -1,0 +1,27 @@
+/*!
+  \page urg_usage_dox URG からのデータ取得 (記述中)
+
+  !!!
+
+  \section urg_usage_abstract データ取得の種類について
+
+  !!!
+
+  \section urg_usage_gd データを逐次取得する
+
+  !!!
+
+  \section urg_usage_md データを連続して取得する
+
+  !!!
+
+  \section urg_usage_id 強度データの取得
+
+  !!!
+
+  \section urg_usage_hd マルチエコー・データの取得
+
+  !!!
+
+  \n
+*/
