@@ -23,15 +23,24 @@ typedef struct
 
 //! 通信タイプ
 typedef enum {
-    SERIAL,                     //!< シリアル通信
-    ETHERNET,                   //!< イーサーネット通信
+    URG_SERIAL,                 //!< シリアル通信
+    URG_ETHERNET,               //!< イーサーネット通信
 } connection_type_t;
+
+
+//! 距離を何 byte で表現するかの指定
+typedef enum {
+    URG_RANGE_2_BYTE,           //!< 距離を 2 byte で表現する
+    URG_RANGE_3_BYTE,           //!< 距離を 3 byte で表現する
+} range_byte_t;
 
 
 /*!
   \brief URG 構造体の初期化
 
   urg_t を宣言したときは、URG ライブラリの関数を使う前にこの関数で初期化する必要があります。
+
+  \param[in,out] urg URG センサ管理
 
   Example
   \code
@@ -47,7 +56,7 @@ extern void urg_initialize(urg_t *urg);
 
   指定したデバイスに接続し、距離を計測できるようにします。
 
-  \param[in/out] urg URG センサ管理
+  \param[in,out] urg URG センサ管理
   \param[in] device 接続デバイス名
   \param[in] baudrate 接続ボーレート [bps]
   \param[in] connection_type 通信タイプ
@@ -73,7 +82,7 @@ extern int urg_open(urg_t *urg, const char *device, long baudrate,
 
   レーザを消灯し、URG との接続を切断します。
 
-  \param[i/o] urg URG センサ管理
+  \param[in,out] urg URG センサ管理
 
   Example
   \code
@@ -89,9 +98,9 @@ extern int urg_start_timestamp_mode(urg_t *urg);
 /*!
   \brief タイムスタンプの取得
 
-  \param[in] urg URG センサ管理
+  \param[in,out] urg URG センサ管理
 
-  \ratval >=0 タイムスタンプ [msec]
+  \retval >=0 タイムスタンプ [msec]
   \retval <0 エラー
 
   Example
@@ -112,43 +121,74 @@ extern long urg_timestamp(urg_t *urg);
 extern void urg_stop_timestamp_mode(urg_t *urg);
 
 
-// !!! データ取得に必要な配列のサイズを返す関数を、ここで用意するか
-// !!! 拡張ライブラリで用意するかは未定
-// !!!
-// !!! 拡張ライブラリで用意することにする
+/*!
+  \brief データの逐次取得
 
+  １スキャンの距離データを取得します。取得が完了するまで、この関数は処理をブロックします。
 
-// !!!
-// !!! 案: urg_once_scan()
-// !!! 1 スキャンのデータを取得します。
-// !!! これはブロッキング関数です。データの受信が終わるまで、次の関数に処理が移りません。
-// !!! サンプルコードを示す
-// !!! urg_once_scan()
-// !!! if (n == !!!) // 計測が完了してから、この行が処理される
+  \param[in,out] urg URG センサ管理
+
+  \retval >0 !!!
+  \retval <=0 !!!
+
+  Example
+  \code
+  // !!!
+  \endcode
+*/
 extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
 
 
 // !!!
 // !!! 案: urg_scan_request()
 // !!! データ計測の開始を指示します。
+//  \param[in,out] urg URG センサ管理
+/*!
+  \brief !!!
+
+  !!!
+
+  Example
+  \code
+  // !!!
+  \endcode
+*/
 extern int urg_start_measurement(urg_t *urg, int scan_times, int skip_scan);
+
+//  \param[in,out] urg URG センサ管理
 extern int urg_receive_measurement(urg_t *urg, long data[], long *timestamp);
 
 
+//  \param[in,out] urg URG センサ管理
 extern int urg_start_intensity_measurement(urg_t *urg,
                                            int scan_times, int skip_scan);
+//  \param[in,out] urg URG センサ管理
 extern int urg_receive_intensity_measurement(urg_t *urg,
                                              long data[], long *timestamp);
 
 
+//  \param[in,out] urg URG センサ管理
 extern int urg_start_multiecho_measurement(urg_t *urg,
                                            int scan_times, int skip_scan);
+//  \param[in,out] urg URG センサ管理
 extern int urg_receive_multiecho_measurement(urg_t *urg,
                                              long data[], long *timestamp);
 
 
-// !!! 案: urg_scan_stop()
-// !!! urg_scan_request() で行った計測を途中で中止したい場合に用いる。
+/*!
+  \brief 計測を中断し、レーザを消灯させます。
+
+  urg_start_measurement(), urg_start_intensity_measurement(), urg_start_multiecho_measurement() の計測を中断するときに用います。
+
+  \param[in,out] urg URG センサ管理
+
+  Example
+  \code
+  // !!!
+  \endcode
+
+  \see urg_start_measurement(), urg_start_intensity_measurement(), urg_start_multiecho_measurement()
+*/
 extern void urg_stop_measurement(urg_t *urg);
 
 
@@ -160,12 +200,15 @@ extern int urg_set_width(urg_t *urg,
 
 
 // !!!
-// !!! レーザを発光させる
+// !!! デフォルトがどっちか、も書く
+extern int urg_set_range_limit(range_byte_t range_byte);
+
+
+//! レーザを発光させる
 extern int urg_laser_on(urg_t *urg);
 
 
-// !!!
-// !!! レーザを消灯する
+//! レーザを消灯する
 extern void urg_laser_off(urg_t *urg);
 
 #endif /* !URG_SENSOR_H */

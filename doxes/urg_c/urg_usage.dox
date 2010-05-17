@@ -5,23 +5,56 @@
 
   \section urg_usage_abstract データ取得の種類について
 
+  - \ref urg_usage_gd
+  - \ref urg_usage_md
+  - \ref urg_usage_id
+  - \ref urg_usage_hd
+
   !!!
+
 
   \section urg_usage_gd データを逐次取得する
 
-  !!!
+  !!! 何ができるか
+
+  !!! 適切に利用するためには urg_laser_on() を用いて、レーザを発光させておく必要があります。
+
+  !!! urg_get_distance() を使う
+
+  !!! サンプル
+
 
   \section urg_usage_md データを連続して取得する
 
-  !!!
+  !!! \ref urg_usage_gd 場合に比べて、どういうメリットがあるか
+
+  !!! 何ができるか
+
+  !!! urg_start_measurement(), urg_receive_measurement() を使う
+
+  !!! サンプル
+
 
   \section urg_usage_id 強度データの取得
 
-  !!!
+  !!! 強度データとは、何なのか
+
+  !!! 何ができるか
+
+  !!! urg_start_intensity_measurement(), urg_receive_intensity_measurement() を使う
+
+  !!! サンプル
+
 
   \section urg_usage_hd マルチエコー・データの取得
 
-  !!!
+  !!! マルチエコーとは、何なのか
+
+  !!! 何ができるか
+
+  !!! urg_start_multiecho_measurement(), urg_receive_multiecho_measurement() を使う
+
+  !!! サンプル
 
   \n
 */

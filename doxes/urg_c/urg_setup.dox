@@ -1,7 +1,46 @@
 /*!
   \page urg_setup_page URG センサを使うための準備 (記述中)
 
-  !!!
+  \section urg_setup_abstract センサを使うための準備
+
+  !!! 電源を用意して、配線を行います
+
+  !!! センサと電源の表
+
+  !!! 配線は、センサ横のシールをよく確認してから行いましょう。
+
+  !!! 以降の手順は、OS 毎に説明します。
+
+  - \ref urg_setup_windows
+  - \ref urg_setup_linux
+  - \ref urg_setup_mac
+
+
+  \section urg_setup_windows Windows の場合
+
+  !!! 必要に応じて URG 用の USB ドライバをインストールする
+
+  !!! 認識されることを確認しましょう。
+
+  !!! UrgViewer で動作確認を行いましょう
+
+
+  \section urg_setup_linux Linux の場合
+
+  !!! URG を接続したときに、/dev/ttyACM0 として認識されることを確認します。
+
+  !!! Qt をインストールすれば、UrgViewer をビルドできます。
+
+  !!! UrgViewer で動作確認を行いましょう
+
+
+  \section urg_setup_mac Mac の場合
+
+  !!! URG を接続したときに、!!! として認識されることを確認します。
+
+  !!! Qt をインストールすれば、UrgViewer をビルドできます。
+
+  !!! UrgViewer で動作確認を行いましょう
 
   \n
 */

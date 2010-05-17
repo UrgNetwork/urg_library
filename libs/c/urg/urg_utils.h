@@ -30,4 +30,37 @@
 extern const char *urg_error(urg_t *urg);
 
 
+// !!!
+extern int urg_width_min(urg_t *urg);
+
+
+// !!!
+extern int urg_width_max(urg_t *urg);
+
+
+//! 取得できるデータ数の最大数を返す
+extern int urg_data_max(urg_t *urg);
+// !!! データ取得に必要な配列のサイズを返す関数を、ここで用意する
+
+
+// !!! ID を返す
+// !!! ID を使って、接続するセンサを選択するサンプルを作る
+
+
+// !!! パラメータを返す
+
+
+// !!! バージョンを返す
+
+
+// !!! II の故障情報を返す
+
+
+// !!! デバイス一覧を返す
+//extern urg_
+
+
+// !!! URG 用 USB ドライバを用いているデバイス一覧を返す
+
+
 #endif /* !URG_UTILS_H */

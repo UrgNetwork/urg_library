@@ -151,6 +151,15 @@ int urg_set_width(urg_t *urg, int first_step, int last_step, int skip_step)
 }
 
 
+int urg_set_one_data_size(urg_t *urg, int size)
+{
+    (void)urg;
+    (void)size;
+    // !!!
+    return -1;
+}
+
+
 int urg_laser_on(urg_t *urg)
 {
     (void)urg;

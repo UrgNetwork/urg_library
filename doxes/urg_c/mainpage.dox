@@ -21,6 +21,8 @@
     - urg_sensor.h
     - urg_utils.h
 
+  - \subpage urg_sensor_spec_page
+
   \n
   - 質問などありましたら、以下のメーリングリストまで お問い合わせ下さい。
     \n \n
