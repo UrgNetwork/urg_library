@@ -1,5 +1,4 @@
 /*!
-  \file
   \brief URG センサ制御
 
   URG 用の基本的な関数を提供します。
@@ -48,7 +47,7 @@ int urg_start_timestamp_mode(urg_t *urg)
 }
 
 
-long urg_get_timestamp(urg_t *urg)
+long urg_timestamp(urg_t *urg)
 {
     (void)urg;
     // !!!

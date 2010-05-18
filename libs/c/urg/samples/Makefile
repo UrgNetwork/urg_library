@@ -1,10 +1,35 @@
 # Makefile for c/urg/samples
+# $Id$
 
-all :
+# Compile options
+CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
+INCLUDES = -I..
+LDFLAGS =
+LDLIBS =
+
+# Target
+TARGET = \
+	get_distance \
+	normal_measurement \
+	intensity_measurement \
+	multiecho_measurement \
+	sync_timestamp \
+
+all : $(TARGET)
 
 clean :
+	$(RM) *.o $(TARGET)
 
 depend :
+	makedepend -Y -- $(INCLUDES) -- $(wildcard *.h *.c)
 
 .PHONY : all depend clean
 ######################################################################
+REQUIRE_LIB = ../urg_c.a
+$(REQUIRE_LIB) :
+	cd $(@D)/ && $(MAKE) $(@F)
+
+get_distance normal_measurement intensity_measurement multiecho_measurement sync_timestamp : $(REQUIRE_LIB)# DO NOT DELETE
+
+get_distance.o: ../urg_sensor.h ../urg_utils.h
+sync_timestamp.o: ../urg_sensor.h ../urg_utils.h

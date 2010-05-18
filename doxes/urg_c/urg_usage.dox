@@ -21,7 +21,7 @@
 
   !!! urg_get_distance() を使う
 
-  !!! サンプル
+  !!! サンプル: \ref get_distance.c
 
 
   \section urg_usage_md データを連続して取得する

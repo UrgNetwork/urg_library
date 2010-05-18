@@ -23,37 +23,47 @@
   Example
   \code
   if (!urg_open("/dev/ttyACM0", 115200)) {
-      printf("urg_connect: %s\n", urg_error(&urg));
+      printf("urg_open: %s\n", urg_error(&urg));
       return -1;
   } \endcode
 */
-extern const char *urg_error(urg_t *urg);
+extern const char *urg_error(const urg_t *urg);
+
+
+// !!! 距離の最小値
+extern long urg_distance_min(const urg_t *urg);
+
+
+// !!! 距離の最大値
+extern long urg_distance_max(const urg_t *urg);
+
+// !!!
+extern int urg_width_min(const urg_t *urg);
 
 
 // !!!
-extern int urg_width_min(urg_t *urg);
+extern int urg_width_max(const urg_t *urg);
 
 
-// !!!
-extern int urg_width_max(urg_t *urg);
+// !!! １スキャンにかかる時間 [msec]
+extern int urg_scan_msec(const urg_t *urg);
 
 
 //! 取得できるデータ数の最大数を返す
-extern int urg_data_max(urg_t *urg);
-// !!! データ取得に必要な配列のサイズを返す関数を、ここで用意する
+extern int urg_data_max(const urg_t *urg);
 
 
 // !!! ID を返す
+extern const char *urg_sensor_id(const urg_t *urg);
 // !!! ID を使って、接続するセンサを選択するサンプルを作る
 
 
-// !!! パラメータを返す
-
-
 // !!! バージョンを返す
+extern const char *urg_sensor_version(const urg_t *urg);
 
 
 // !!! II の故障情報を返す
+extern const char *urg_sensor_status(const urg_t *urg);
 
 
 // !!! デバイス一覧を返す

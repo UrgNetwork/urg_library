@@ -3,3 +3,8 @@ syntax: glob
 *.o
 *.a
 generated_html
+get_distance
+sync_timestamp
+normal_measurement
+intensity_measurement
+multiecho_measurement

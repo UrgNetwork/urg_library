@@ -69,8 +69,8 @@ extern void urg_initialize(urg_t *urg);
   urg_t urg;
   urg_initialize(&urg);
 
-  if (!urg_open("/dev/ttyACM0", 115200)) {
-      return -1;
+  if (urg_open("/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
+      return 1;
   } \endcode
 */
 extern int urg_open(urg_t *urg, const char *device, long baudrate,
@@ -154,6 +154,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
   \endcode
 */
 extern int urg_start_measurement(urg_t *urg, int scan_times, int skip_scan);
+
 
 //  \param[in,out] urg URG センサ管理
 extern int urg_receive_measurement(urg_t *urg, long data[], long *timestamp);

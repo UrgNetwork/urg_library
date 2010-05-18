@@ -9,7 +9,7 @@ clean :
 
 .PHONY : all clean
 ######################################################################
-$(HTML_DIR)/index.html : $(wildcard *.dox ../../libs/c/urg/*.[ch]) Doxyfile
+$(HTML_DIR)/index.html : $(wildcard *.dox ../../libs/c/urg/*.[ch] ../../libs/c/urg/samples/*.[ch]) Doxyfile
 	mkdir -p $(HTML_DIR)
 	cp img/icon_*.png $(HTML_DIR)
 	doxygen
