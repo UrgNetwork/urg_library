@@ -53,6 +53,14 @@ extern int urg_scan_msec(const urg_t *urg);
 extern int urg_data_max(const urg_t *urg);
 
 
+// !!! 最後に取得した設定において、角度とインデックスの変換を行う
+extern double urg_index2rad(const urg_t *urg, int index);
+
+
+// !!!
+extern int urg_rad2index(const urg_t *urg, double radian);
+
+
 // !!! ID を返す
 extern const char *urg_sensor_id(const urg_t *urg);
 // !!! ID を使って、接続するセンサを選択するサンプルを作る

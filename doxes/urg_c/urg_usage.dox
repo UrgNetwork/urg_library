@@ -35,7 +35,7 @@
   !!! サンプル
 
 
-  \section urg_usage_id 強度データの取得
+  \section urg_usage_id 強度データを取得する
 
   !!! 強度データとは、何なのか
 
@@ -46,7 +46,7 @@
   !!! サンプル
 
 
-  \section urg_usage_hd マルチエコー・データの取得
+  \section urg_usage_hd マルチエコー・データを取得する
 
   !!! マルチエコーとは、何なのか
 

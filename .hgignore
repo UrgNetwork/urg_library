@@ -4,7 +4,8 @@ syntax: glob
 *.a
 generated_html
 get_distance
-sync_timestamp
 normal_measurement
 intensity_measurement
 multiecho_measurement
+calculate_xy
+sync_timestamp

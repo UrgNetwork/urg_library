@@ -1,5 +1,5 @@
 /*!
-  \example start_measurement.c !!!
+  \example normal_measurement.c データを連続して取得する
 
   \author Satofumi KAMIMURA
 

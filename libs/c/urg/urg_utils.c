@@ -72,6 +72,24 @@ int urg_data_max(const urg_t *urg)
 }
 
 
+double urg_index2rad(const urg_t *urg, int index)
+{
+    (void)urg;
+    (void)index;
+    // !!!
+    return 0.0;
+}
+
+
+int urg_rad2index(const urg_t *urg, double radian)
+{
+    (void)urg;
+    (void)radian;
+    // !!!
+    return -1;
+}
+
+
 const char *urg_sensor_id(const urg_t *urg)
 {
     (void)urg;
