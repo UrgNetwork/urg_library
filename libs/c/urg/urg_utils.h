@@ -31,18 +31,11 @@ extern const char *urg_error(const urg_t *urg);
 
 
 // !!! 距離の最小値
-extern long urg_distance_min(const urg_t *urg);
-
-
-// !!! 距離の最大値
-extern long urg_distance_max(const urg_t *urg);
+extern void urg_distance_min_max(const urg_t *urg,
+                                 long *min_distance, long *max_distance);
 
 // !!!
-extern int urg_width_min(const urg_t *urg);
-
-
-// !!!
-extern int urg_width_max(const urg_t *urg);
+extern int urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
 // !!! １スキャンにかかる時間 [msec]
@@ -50,15 +43,16 @@ extern int urg_scan_msec(const urg_t *urg);
 
 
 //! 取得できるデータ数の最大数を返す
-extern int urg_data_max(const urg_t *urg);
+extern int urg_max_index(const urg_t *urg);
 
 
 // !!! 最後に取得した設定において、角度とインデックスの変換を行う
 extern double urg_index2rad(const urg_t *urg, int index);
-
+extern int urg_index2deg(const urg_t *urg, int index);
 
 // !!!
-extern int urg_rad2index(const urg_t *urg, double radian);
+extern int urg_rad2step(const urg_t *urg, double radian);
+extern int urg_deg2step(const urg_t *urg, int degree);
 
 
 // !!! ID を返す

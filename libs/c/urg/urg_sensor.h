@@ -28,6 +28,14 @@ typedef enum {
 } connection_type_t;
 
 
+//! 計測タイプ
+typedef enum {
+    URG_DISTANCE,               //!< 距離
+    URG_DISTANCE_INTENSITY,     //!< 距離 + 強度
+    URG_MULTIECHO,              //!< (距離 x 3) + (強度 x 3)
+} measurement_type_t;
+
+
 //! 距離を何 byte で表現するかの指定
 typedef enum {
     URG_RANGE_2_BYTE,           //!< 距離を 2 byte で表現する
@@ -35,6 +43,12 @@ typedef enum {
 } range_byte_t;
 
 
+enum {
+    URG_SCAN_INFINITY = 0,      //!< 無限回のデータ取得
+};
+
+
+#if 0
 /*!
   \brief URG 構造体の初期化
 
@@ -49,6 +63,7 @@ typedef enum {
   \endcode
 */
 extern void urg_initialize(urg_t *urg);
+#endif
 
 
 /*!
@@ -58,7 +73,7 @@ extern void urg_initialize(urg_t *urg);
 
   \param[in,out] urg URG センサ管理
   \param[in] device 接続デバイス名
-  \param[in] baudrate 接続ボーレート [bps]
+  \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
   \param[in] connection_type 通信タイプ
 
   retval 0 正常
@@ -69,11 +84,11 @@ extern void urg_initialize(urg_t *urg);
   urg_t urg;
   urg_initialize(&urg);
 
-  if (urg_open("/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
+  if (urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
       return 1;
   } \endcode
 */
-extern int urg_open(urg_t *urg, const char *device, long baudrate,
+extern int urg_open(urg_t *urg, const char *device, long baudrate_or_port,
                     connection_type_t connection_type);
 
 
@@ -121,6 +136,7 @@ extern long urg_timestamp(urg_t *urg);
 extern void urg_stop_timestamp_mode(urg_t *urg);
 
 
+#if 0
 /*!
   \brief データの逐次取得
 
@@ -137,8 +153,21 @@ extern void urg_stop_timestamp_mode(urg_t *urg);
   \endcode
 */
 extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
+#endif
 
 
+extern void start_measurement(urg_t *urg, measurement_type_t type,
+                              int scan_times, int skip_scan);
+
+extern void get_distance(urg_t *urg, long data[], long *timestamp);
+extern void get_distance_intensity(urg_t *urg, long data[],
+                                   unsigned short intensity[], long *timestamp);
+extern void get_multiecho(urg_t *urg, long data_multi[],
+                          unsigned short intensity_multi[], long *timestamp);
+
+extern void stop_measurement(urg_t *urg);
+
+#if 0
 // !!!
 // !!! 案: urg_scan_request()
 // !!! データ計測の開始を指示します。
@@ -191,6 +220,7 @@ extern int urg_receive_multiecho_measurement(urg_t *urg,
   \see urg_start_measurement(), urg_start_intensity_measurement(), urg_start_multiecho_measurement()
 */
 extern void urg_stop_measurement(urg_t *urg);
+#endif
 
 
 // !!!
@@ -198,11 +228,15 @@ extern void urg_stop_measurement(urg_t *urg);
 // !!! cluster_step については、十分に説明する
 extern int urg_set_width(urg_t *urg,
                          int first_step, int last_step, int skip_step);
+extern int urg_set_range_width(urg_t *urg,
+                               int first_step, int last_step, int skip_step);
+extern int urg_set_scaning_parameter(urg_t *urg,
+                                     int first_step, int last_step, int skip_step);
 
 
 // !!!
 // !!! デフォルトがどっちか、も書く
-extern int urg_set_range_limit(range_byte_t range_byte);
+extern int urg_set_communication_data_size(range_byte_t range_byte);
 
 
 //! レーザを発光させる
