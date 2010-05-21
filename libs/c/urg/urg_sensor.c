@@ -62,73 +62,48 @@ void urg_stop_timestamp_mode(urg_t *urg)
 }
 
 
-int urg_get_distance(urg_t *urg, long data[], long *timestamp)
+void urg_start_measurement(urg_t *urg, measurement_type_t type,
+                           int scan_times, int skip_scan)
 {
     (void)urg;
-    (void)data;
-    (void)timestamp;
-    // !!!
-    return -1;
-}
-
-
-int urg_start_measurement(urg_t *urg, int scan_times, int skip_scan)
-{
-    (void)urg;
+    (void)type;
     (void)scan_times;
     (void)skip_scan;
     // !!!
-    return -1;
 }
 
 
-int urg_receive_measurement(urg_t *urg, long data[], long *timestamp)
+void urg_get_distance(urg_t *urg, long data[], long *timestamp)
 {
     (void)urg;
     (void)data;
     (void)timestamp;
     // !!!
-    return -1;
 }
 
 
-int urg_start_intensity_measurement(urg_t *urg, int scan_times, int skip_scan)
-{
-    (void)urg;
-    (void)scan_times;
-    (void)skip_scan;
-    // !!!
-    return -1;
-}
-
-
-int urg_receive_intensity_measurement(urg_t *urg, long data[], long *timestamp)
+void urg_get_distance_intensity(urg_t *urg, long data[],
+                                unsigned short intensity[],
+                                long *timestamp)
 {
     (void)urg;
     (void)data;
+    (void)intensity;
     (void)timestamp;
     // !!!
-    return -1;
 }
 
 
-int urg_start_multiecho_measurement(urg_t *urg, int scan_times, int skip_scan)
+void urg_get_multiecho(urg_t *urg, long data_multi[],
+                       unsigned short intensity_multi[],
+                       long *timestamp)
 {
     (void)urg;
-    (void)scan_times;
-    (void)skip_scan;
-    // !!!
-    return -1;
-}
-
-
-int urg_receive_multiecho_measurement(urg_t *urg, long data[], long *timestamp)
-{
-    (void)urg;
-    (void)data;
+    (void)data_multi;
+    (void)intensity_multi;
     (void)timestamp;
+
     // !!!
-    return -1;
 }
 
 

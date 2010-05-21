@@ -22,7 +22,7 @@
 
   Example
   \code
-  if (!urg_open("/dev/ttyACM0", 115200)) {
+  if (!urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL)) {
       printf("urg_open: %s\n", urg_error(&urg));
       return -1;
   } \endcode
@@ -33,9 +33,6 @@ extern const char *urg_error(const urg_t *urg);
 // !!! 距離の最小値
 extern void urg_distance_min_max(const urg_t *urg,
                                  long *min_distance, long *max_distance);
-
-// !!!
-extern int urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
 // !!! １スキャンにかかる時間 [msec]
@@ -50,29 +47,40 @@ extern int urg_max_index(const urg_t *urg);
 extern double urg_index2rad(const urg_t *urg, int index);
 extern int urg_index2deg(const urg_t *urg, int index);
 
+
 // !!!
 extern int urg_rad2step(const urg_t *urg, double radian);
 extern int urg_deg2step(const urg_t *urg, int degree);
 
 
-// !!! ID を返す
+/*!
+  \brief センサのシリアル ID 文字列を返す
+
+  !!!
+
+  !!! ID を使って、接続するセンサを選択するサンプルを作る
+*/
 extern const char *urg_sensor_id(const urg_t *urg);
-// !!! ID を使って、接続するセンサを選択するサンプルを作る
 
 
-// !!! バージョンを返す
+/*!
+  \brief センサのバージョン文字列を返す
+
+  !!! バージョンを返す
+*/
 extern const char *urg_sensor_version(const urg_t *urg);
 
 
-// !!! II の故障情報を返す
+/*!
+  \brief センサのステータス文字列を返す
+
+  !!! II の故障情報を返す
+*/
 extern const char *urg_sensor_status(const urg_t *urg);
 
 
-// !!! デバイス一覧を返す
-//extern urg_
-
-
-// !!! URG 用 USB ドライバを用いているデバイス一覧を返す
-
+// !!! これらは別ファイルで行う
+// COM デバイス一覧を返す
+// URG 用 USB ドライバを用いているデバイス一覧を返す
 
 #endif /* !URG_UTILS_H */
