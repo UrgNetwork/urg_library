@@ -10,9 +10,8 @@ LDLIBS = -lm
 # Target
 TARGET = \
 	get_distance \
-	normal_measurement \
-	intensity_measurement \
-	multiecho_measurement \
+	get_distance_intensity \
+	get_multiecho \
 	calculate_xy \
 	sync_timestamp \
 

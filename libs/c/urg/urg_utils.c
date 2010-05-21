@@ -18,39 +18,24 @@ const char *urg_error(const urg_t *urg)
 }
 
 
-long urg_distance_min(const urg_t *urg)
+void urg_distance_min_max(const urg_t *urg,
+                          long *min_distance, long *max_distance)
 {
     (void)urg;
-    // !!!
+    (void)min_distance;
+    (void)max_distance;
 
-    return -1;
+    // !!!
 }
 
 
-long urg_distance_max(const urg_t *urg)
+void urg_step_min_max(const urg_t *urg, int *min_index, int *max_index)
 {
     (void)urg;
+    (void)min_index;
+    (void)max_index;
+
     // !!!
-
-    return -1;
-}
-
-
-int urg_width_min(const urg_t *urg)
-{
-    (void)urg;
-    // !!!
-
-    return -1;
-}
-
-
-int urg_width_max(const urg_t *urg)
-{
-    (void)urg;
-    // !!!
-
-    return -1;
 }
 
 
@@ -63,7 +48,7 @@ int urg_scan_msec(const urg_t *urg)
 }
 
 
-int urg_data_max(const urg_t *urg)
+int urg_max_index(const urg_t *urg)
 {
     (void)urg;
     // !!!
@@ -78,6 +63,39 @@ double urg_index2rad(const urg_t *urg, int index)
     (void)index;
     // !!!
     return 0.0;
+}
+
+
+int urg_index2deg(const urg_t *urg, int index)
+{
+    (void)urg;
+    (void)index;
+
+    // !!!
+
+    return 0;
+}
+
+
+extern int urg_rad2step(const urg_t *urg, double radian)
+{
+    (void)urg;
+    (void)radian;
+
+    // !!!
+
+    return 0;
+}
+
+
+extern int urg_deg2step(const urg_t *urg, int degree)
+{
+    (void)urg;
+    (void)degree;
+
+    // !!!
+
+    return 0;
 }
 
 

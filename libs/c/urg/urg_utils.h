@@ -35,6 +35,10 @@ extern void urg_distance_min_max(const urg_t *urg,
                                  long *min_distance, long *max_distance);
 
 
+// !!!
+extern void urg_step_min_max(const urg_t *urg, int *min_index, int *max_index);
+
+
 // !!! １スキャンにかかる時間 [msec]
 extern int urg_scan_msec(const urg_t *urg);
 

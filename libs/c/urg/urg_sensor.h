@@ -175,7 +175,7 @@ extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
 
   !!!
 */
-extern void urg_get_distance(urg_t *urg, long data[], long *timestamp);
+extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
 
 
 /*!
@@ -183,9 +183,9 @@ extern void urg_get_distance(urg_t *urg, long data[], long *timestamp);
 
   !!!
 */
-extern void urg_get_distance_intensity(urg_t *urg, long data[],
-                                       unsigned short intensity[],
-                                       long *timestamp);
+extern int urg_get_distance_intensity(urg_t *urg, long data[],
+                                      unsigned short intensity[],
+                                      long *timestamp);
 
 
 /*!
@@ -197,9 +197,8 @@ extern void urg_get_distance_intensity(urg_t *urg, long data[],
 
   !!!
 */
-extern void urg_get_multiecho(urg_t *urg, long data_multi[],
-                              unsigned short intensity_multi[],
-                              long *timestamp);
+extern int urg_get_multiecho(urg_t *urg, long data_multi[],
+                             unsigned short intensity_multi[], long *timestamp);
 
 
 /*!
@@ -222,8 +221,8 @@ extern void urg_stop_measurement(urg_t *urg);
 
   !!!
 */
-extern int urg_set_scaning_parameter(urg_t *urg, int first_step, int last_step,
-                                     int skip_step);
+extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
+                                      int skip_step);
 
 
 /*!
@@ -239,7 +238,7 @@ extern int urg_set_scaning_parameter(urg_t *urg, int first_step, int last_step,
 
   初期状態では URG_COMMUNICATION_3_BYTE が設定されています。
 */
-extern int urg_set_communication_data_size(range_byte_t range_byte);
+extern int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size);
 
 
 //! レーザを発光させる

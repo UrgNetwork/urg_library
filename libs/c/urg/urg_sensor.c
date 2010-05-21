@@ -73,30 +73,36 @@ void urg_start_measurement(urg_t *urg, measurement_type_t type,
 }
 
 
-void urg_get_distance(urg_t *urg, long data[], long *timestamp)
+int urg_get_distance(urg_t *urg, long data[], long *timestamp)
 {
     (void)urg;
     (void)data;
     (void)timestamp;
+
     // !!!
+
+    return -1;
 }
 
 
-void urg_get_distance_intensity(urg_t *urg, long data[],
-                                unsigned short intensity[],
-                                long *timestamp)
+int urg_get_distance_intensity(urg_t *urg,
+                               long data[], unsigned short intensity[],
+                               long *timestamp)
 {
     (void)urg;
     (void)data;
     (void)intensity;
     (void)timestamp;
+
     // !!!
+
+    return -1;
 }
 
 
-void urg_get_multiecho(urg_t *urg, long data_multi[],
-                       unsigned short intensity_multi[],
-                       long *timestamp)
+int urg_get_multiecho(urg_t *urg,
+                      long data_multi[], unsigned short intensity_multi[],
+                      long *timestamp)
 {
     (void)urg;
     (void)data_multi;
@@ -104,32 +110,40 @@ void urg_get_multiecho(urg_t *urg, long data_multi[],
     (void)timestamp;
 
     // !!!
+
+    return -1;
 }
 
 
 void urg_stop_measurement(urg_t *urg)
 {
     (void)urg;
+
     // !!!
 }
 
 
-int urg_set_width(urg_t *urg, int first_step, int last_step, int skip_step)
+int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
+                               int skip_step)
 {
     (void)urg;
     (void)first_step;
     (void)last_step;
     (void)skip_step;
+
     // !!!
+
     return -1;
 }
 
 
-int urg_set_one_data_size(urg_t *urg, int size)
+int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size)
 {
     (void)urg;
-    (void)size;
+    (void)data_size;
+
     // !!!
+
     return -1;
 }
 

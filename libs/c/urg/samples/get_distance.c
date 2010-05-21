@@ -26,15 +26,14 @@ int main(void)
     int n;
 
     // 接続
-    urg_initialize(&urg);
     if (urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
-    data = malloc(urg_data_max(&urg) * sizeof(data[0]));
+    data = malloc(urg_max_index(&urg) * sizeof(data[0]));
 
     // データ取得
-    urg_laser_on(&urg);
+    urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &timestamp);
         if (n < 0) {
