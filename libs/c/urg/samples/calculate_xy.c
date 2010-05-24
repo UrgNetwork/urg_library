@@ -24,15 +24,14 @@ int main(void)
     int n;
 
     // 接続
-    urg_initialize(&urg);
     if (urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
-    data = malloc(urg_data_max(&urg) * sizeof(data[0]));
+    data = malloc(urg_max_index(&urg) * sizeof(data[0]));
 
     // データ取得
-    urg_laser_on(&urg);
+    urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
     n = urg_get_distance(&urg, data, &timestamp);
     if (n < 0) {
         printf("urg_distance: %s\n", urg_error(&urg));
@@ -41,8 +40,7 @@ int main(void)
     }
 
     // X-Y 座標系の値を出力
-    min_distance = urg_distance_min(&urg);
-    max_distance = urg_distance_max(&urg);
+    urg_distance_min_max(&urg, &min_distance, &max_distance);
     for (i = 0; i < n; ++i) {
         long distance = data[i];
         double radian;

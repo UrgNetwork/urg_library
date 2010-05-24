@@ -103,8 +103,20 @@ int urg_rad2index(const urg_t *urg, double radian)
 {
     (void)urg;
     (void)radian;
+
     // !!!
-    return -1;
+
+    return 0;
+}
+
+
+int urg_deg2index(const urg_t *urg, int degree)
+{
+    (void)urg;
+    (void)degree;
+    // !!!
+
+    return 0;
 }
 
 
@@ -132,4 +144,15 @@ const char *urg_sensor_status(const urg_t *urg)
     // !!!
 
     return "Not implemented";
+}
+
+
+int urg_find_port(char *port_name, int index)
+{
+    (void)port_name;
+    (void)index;
+
+    // !!!
+
+    return 0;
 }

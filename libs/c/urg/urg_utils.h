@@ -57,6 +57,11 @@ extern int urg_rad2step(const urg_t *urg, double radian);
 extern int urg_deg2step(const urg_t *urg, int degree);
 
 
+// !!!
+extern int urg_rad2index(const urg_t *urg, double radian);
+extern int urg_deg2index(const urg_t *urg, int degree);
+
+
 /*!
   \brief センサのシリアル ID 文字列を返す
 
@@ -83,8 +88,7 @@ extern const char *urg_sensor_version(const urg_t *urg);
 extern const char *urg_sensor_status(const urg_t *urg);
 
 
-// !!! これらは別ファイルで行う
-// COM デバイス一覧を返す
-// URG 用 USB ドライバを用いているデバイス一覧を返す
+// !!!
+extern int urg_find_port(char *port_name, int index);
 
 #endif /* !URG_UTILS_H */

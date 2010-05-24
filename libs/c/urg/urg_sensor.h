@@ -32,14 +32,15 @@ typedef enum {
 typedef enum {
     URG_DISTANCE,               //!< 距離
     URG_DISTANCE_INTENSITY,     //!< 距離 + 強度
-    URG_MULTIECHO,              //!< (距離 x 3) + (強度 x 3)
+    URG_MULTIECHO,              //!< マルチエコーの距離
+    URG_MULTIECHO_iNTENSITY     //!< マルチエコーの(距離 + 強度)
 } measurement_type_t;
 
 
 //! 距離を何 byte で表現するかの指定
 typedef enum {
-    URG_COMMUNICATION_3_BYTE,           //!< 距離を 3 byte で表現する
-    URG_COMMUNICATION_2_BYTE,           //!< 距離を 2 byte で表現する
+    URG_COMMUNICATION_3_BYTE,   //!< 距離を 3 byte で表現する
+    URG_COMMUNICATION_2_BYTE,   //!< 距離を 2 byte で表現する
 } range_byte_t;
 
 
@@ -138,19 +139,21 @@ extern void urg_stop_timestamp_mode(urg_t *urg);
   \retval 0 正常
   \retval <0 エラー
 
-  type は !!!
+  type には取得するデータの種類を指定します。
 
-  - URG_DISTANCE
-  - URG_DISTANCE_INTENSITY
-  - URG_MULTIECHO
+  - #URG_DISTANCE ... 距離データ
+  - #URG_DISTANCE_INTENSITY ... 距離データと強度データ
+  - #URG_MULTIECHO ... マルチエコー版の距離データ
+  - #URG_MULTIECHO_iNTENSITY ... マルチエコー版の(距離データと強度データ)
 
-  scan_times は !!!
+  scan_times は何回のデータを取得するかをゼロ以上の数で指定します。ただし、ゼロまたは #URG_SCAN_INTENSITY を指定した場合は、無限回のデータを取得します。\n
+  開始した計測を中断するには urg_stop_measurement() を使います。
 
-  - URG_SCAN_INFINITY
-
-  skip_scan は !!!
+  skip_scan はミラーの回転数のうち、何回に１回ほど計測行うかを指定します。skip_scan に指定できる範囲は [0, 9] です。
 
   !!! skip_scan についての図
+
+  たとえば、ミラーの１回転が 100 [msec] のセンサで skip_scan に 1 を指定した場合、データの取得間隔は 200 [msec] になります。
 
   Example
   \code
@@ -172,6 +175,14 @@ extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
 
 /*!
   \brief 距離データの取得
+
+  センサから距離データを取得します。
+
+  \param[in,out] urg URG センサ管理
+  \param[out] data 距離データ
+  \param[out] timestamp タイムスタンプ
+
+  data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_index() で取得できます。
 
   !!!
 */

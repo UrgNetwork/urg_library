@@ -25,9 +25,12 @@ $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_sensor.o) \
 	$(URG_C_LIB)(urg_utils.o) \
 	$(URG_C_LIB)(serial_linux.o) \
+	$(URG_C_LIB)(serial_utils.o) \
 
 # DO NOT DELETE
 
 urg_utils.o: urg_sensor.h
+serial_utils.o: serial_utils_linux.c serial_utils.h
+serial_utils_linux.o: serial_utils.h
 urg_sensor.o: urg_sensor.h
 urg_utils.o: urg_utils.h urg_sensor.h
