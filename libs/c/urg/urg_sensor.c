@@ -100,9 +100,22 @@ int urg_get_distance_intensity(urg_t *urg,
 }
 
 
-int urg_get_multiecho(urg_t *urg,
-                      long data_multi[], unsigned short intensity_multi[],
-                      long *timestamp)
+int urg_get_multiecho(urg_t *urg, long data_multi[], long *timestamp)
+{
+    (void)urg;
+    (void)data_multi;
+    (void)timestamp;
+
+    // !!!
+
+    return -1;
+}
+
+
+int urg_get_multiecho_intensity(urg_t *urg,
+                                long data_multi[],
+                                unsigned short intensity_multi[],
+                                long *timestamp)
 {
     (void)urg;
     (void)data_multi;

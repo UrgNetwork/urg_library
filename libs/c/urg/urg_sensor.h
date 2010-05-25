@@ -146,7 +146,7 @@ extern void urg_stop_timestamp_mode(urg_t *urg);
   - #URG_MULTIECHO ... マルチエコー版の距離データ
   - #URG_MULTIECHO_iNTENSITY ... マルチエコー版の(距離データと強度データ)
 
-  scan_times は何回のデータを取得するかをゼロ以上の数で指定します。ただし、ゼロまたは #URG_SCAN_INTENSITY を指定した場合は、無限回のデータを取得します。\n
+  scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INTENSITY を指定した場合は、無限回のデータを取得します。\n
   開始した計測を中断するには urg_stop_measurement() を使います。
 
   skip_scan はミラーの回転数のうち、何回に１回ほど計測行うかを指定します。skip_scan に指定できる範囲は [0, 9] です。
@@ -158,16 +158,16 @@ extern void urg_stop_timestamp_mode(urg_t *urg);
   Example
   \code
   enum { CAPTURE_TIMES = 10 };
-  start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
+  urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
 
   for (i = 0; i < CAPTURE_TIMES; ++i) {
-      n = urg_get_distance(&urg, data, &timestamp);
+      int n = urg_get_distance(&urg, data, &timestamp);
 
       // 受信したデータの利用
       ...
   } \endcode
 
-  \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_stop_measurement()
+  \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
 */
 extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
                                   int scan_times, int skip_scan);
@@ -176,15 +176,37 @@ extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
 /*!
   \brief 距離データの取得
 
-  センサから距離データを取得します。
+  センサから距離データを取得します。事前に urg_start_measurement() を #URG_DISTANCE 指定で呼び出しておく必要があります。
 
   \param[in,out] urg URG センサ管理
-  \param[out] data 距離データ
-  \param[out] timestamp タイムスタンプ
+  \param[out] data 距離データ [mm]
+  \param[out] timestamp タイムスタンプ [msec]
+
+  \retval >=0 受信したデータ個数
+  \retval <0 エラー
 
   data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_index() で取得できます。
 
-  !!!
+  timestamp には、センサ内部のタイムスタンプが格納されます。timestamp を取得したくない場合 NULL を指定して下さい。
+
+  Example
+  \code
+  long *data = malloc(urg_max_index() * sizeof(data[0]));
+
+  ...
+
+  // データのみ取得する
+  urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+  int n = urg_get_distance(&urg, data, NULL);
+
+  ...
+
+  // データとタイムスタンプを取得する
+  long timestamp;
+  urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+  n = urg_get_distance(&urg, data, &timestamp); \endcode
+
+  \see urg_start_measurement(), urg_max_index()
 */
 extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
 
@@ -192,7 +214,34 @@ extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
 /*!
   \brief 距離と強度データの取得
 
-  !!!
+  urg_get_distance() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY 指定で呼び出しておく必要があります。
+
+  \param[in,out] urg URG センサ管理
+  \param[out] data 距離データ [mm]
+  \param[out] intensity 強度データ
+  \param[out] timestamp タイムスタンプ [msec]
+
+  \retval >=0 受信したデータ個数
+  \retval <0 エラー
+
+  強度データとは、!!!
+
+  data, timestamp については urg_get_distance() と同じです。
+
+  intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_index() で取得できます。
+
+  Example
+  \code
+  int data_size = urg_max_index();
+  long *data = malloc(data_size * sizeof(long));
+  long *intensity = malloc(data_size * sizeof(unsigned short));
+
+  ...
+
+  urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
+  int n = urg_get_distance_intensity(&urg, data, intesnity, NULLL); \endcode
+
+  \see urg_start_measurement(), urg_max_index()
 */
 extern int urg_get_distance_intensity(urg_t *urg, long data[],
                                       unsigned short intensity[],
@@ -200,16 +249,84 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
 
 /*!
-  \brief マルチエコー・データの取得
+  \brief 距離データの取得 (マルチエコー版)
+
+  マルチエコー版の距離データ取得関数です。事前に urg_start_measurement() を #URG_MULTIECHO 指定で呼び出しておく必要があります。
+
+  \param[in,out] urg URG センサ管理
+  \param[out] data_multi 距離データ [mm]
+  \param[out] timestamp タイムスタンプ [msec]
+
+  \retval >=0 受信したデータ個数
+  \retval <0 エラー
 
   マルチエコーとは、!!!
 
-  強度データも含まれます。
+  timestamp については urg_get_distance() と同じです。
 
-  !!!
+  data_multi には、センサから取得した距離データが１つの step あたり最大で 3 つ格納されます。マルチエコーが存在しない場合のデータ値は -1 になります。
+
+  \verbatim
+  data_multi[0] ... step n の距離データ (1 つめ)
+  data_multi[1] ... step n の距離データ (2 つめ)
+  data_multi[2] ... step n の距離データ (3 つめ)
+  data_multi[3] ... step (n + 1) の 距離データ (1 つめ)
+  data_multi[4] ... step (n + 1) の 距離データ (2 つめ)
+  data_multi[5] ... step (n + 1) の 距離データ (3 つめ)
+  ...
+  \endverbatim
+
+  格納順は、各 step において urg_get_distance() のときと同じ距離のデータが (3n + 0) の位置に格納され、それ以外のデータが (3n + 1), (3n + 2) の位置に降順に格納されます。\n
+  つまり data_multi[3n + 1] >= data_multi[3n + 2] になることは保証されますが data_multi[3n + 0] と data_multi[3n + 1] の関係は未定義です。(data_multi[3n + 1] == data_multi[3n + 2] が成り立つのはデータ値が -1 のとき。)
+
+  Example
+  \code
+  long *data_multi = malloc(3 * urg_max_index() * sizeof(long));
+
+  ...
+
+  urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
+  int n = urg_get_distance_intensity(&urg, data_multi, NULLL); \endcode
+
+  \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_multiecho(urg_t *urg, long data_multi[],
-                             unsigned short intensity_multi[], long *timestamp);
+extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *timestamp);
+
+
+/*!
+  \brief 距離と強度データの取得 (マルチエコー版)
+
+  urg_get_multiecho() に加え、強度データの取得できる関数です。事前に urg_start_measurement() を #URG_MULTIECHO_INTENSITY 指定で呼び出しておく必要があります。
+
+  \param[in,out] urg URG センサ管理
+  \param[out] data_multi 距離データ [mm]
+  \param[out] intensity_multi 強度データ
+  \param[out] timestamp タイムスタンプ [msec]
+
+  \retval >=0 受信したデータ個数
+  \retval <0 エラー
+
+  data_multi, timestamp については urg_get_multiecho() と同じです。
+
+  intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_index() で取得できます。
+
+  Example
+  \code
+  int data_size = urg_max_index();
+  long *data_multi = malloc(3 * data_size * sizeof(long));
+  long *intensity_multi = malloc(3 * data_size * sizeof(unsigned short));
+
+  ...
+
+  urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
+  int n = urg_get_multiecho_intensity(&urg, data_multi,
+                                      intesnity_multi, NULLL); \endcode
+
+  \see urg_start_measurement(), urg_max_index()
+*/
+extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
+                                       unsigned short intensity_multi[],
+                                       long *timestamp);
 
 
 /*!
@@ -217,12 +334,17 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[],
 
   \ref urg_start_measurement() の計測を中断します。
 
+  \param[in,out] urg URG センサ管理
+
   Example
   \code
-  !!!
-  \endcode
+  urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
+  for (int i = 0; i < 10; ++i) {
+      urg_get_distance(&urg, data, NULL);
+  }
+  urg_stop_measurement(&urg); \endcode
 
-  \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho()
+  \see urg_start_measurement()
 */
 extern void urg_stop_measurement(urg_t *urg);
 
@@ -230,7 +352,47 @@ extern void urg_stop_measurement(urg_t *urg);
 /*!
   \brief 計測範囲を設定します
 
-  !!!
+  センサが計測する範囲を step 値で指定します。urg_get_distance() などの距離データ取得の関数で返されるデータ数は、ここで指定した範囲で制限されます。
+
+  \param[in,out] urg URG センサ管理
+  \param[in] first_step 計測の開始 step
+  \param[in] last_step 計測の終了 step
+  \param[in] skip_step 計測データをグルーピングする個数
+
+  センサの step は、センサ正面を 0 とし、センサ上部から見て反時計まわりの向きが正の値となる順に割り振られます。
+
+  !!! step の図
+
+  step の間隔と、最大値、最小値はセンサ依存です。step 値の最大値、最小値は urg_step_min_max() で取得できます。\n
+
+  first_step, last_step でデータの計測範囲を指定します。計測範囲は [first_step, last_step] となります。
+
+  skip_step は、計測データをグルーピングする個数を指定します。指定できる値は [0, 99] です。\n
+  skip_step は、指定された数のデータを 1 つにまとめることで、センサから受信するデータ量を減らし、距離取得を行う関数の応答性を高めるときに使います。ただし、データをまとめるため、得られるデータの分解能は減ります。
+
+  例えば以下のような距離データが得られる場合に
+  \verbatim
+  100, 101, 102, 103, 104, 105, 106, 107, 108, 109
+  \endverbatim
+
+  skip_step に 2 を指定すると、得られるデータは
+  \verbatim
+  \endverbatim
+
+  データは、まとめるデータのうち、一番小さな値のデータが用いられます。
+
+  Example
+  \code
+  // センサ前方 90 度の範囲のデータを取得する
+  urg_set_scanning_parameter(&urg, urg_deg2step(&urg, -45),
+                             urg_deg2step(&urg, +45), 1);
+  urg_start_measurement(&urg, URG_DISTANCE, 0);
+  int n = urg_get_distance(&urg, data, NULL);
+  for (int i = 0; i < n; ++i) {
+      printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
+  } \endcode
+
+  \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
 */
 extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
                                       int skip_step);
@@ -239,15 +401,21 @@ extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 /*!
   \brief 通信データのサイズ変更
 
-  !!! 距離データ受信の際のデータサイズを変更します。
+  距離データをセンサから受信の際のデータサイズを変更します。
 
-  この設定は \ref urg_start_measurement() で type を URG_DISTANCE に指定したときのみ有効です。設定は、次の \ref urg_start_measurement() から有効になります。
+  \param[in,out] urg URG センサ管理
+  \param[in] data_size 距離値を表現するデータのバイト数
 
-  !!! データサイズを小さくできますが、計測できる距離は !!!! [mm] 以下になります。!!! よりも遠い位置の距離を検出した場合、返される値は !!!! になります。
+  \retval 0 成功
+  \retval <0 エラー
 
-  !!! 通信速度が遅い場合は、設定を URG_COMMUNICATION_2_BYTE にすることで urg_get_distance() の応答性が改善される場合があります。
+  data_size には
 
-  初期状態では URG_COMMUNICATION_3_BYTE が設定されています。
+  - URG_COMMUNICATION_3_BYTE ... 距離を 3 byte で表現する
+  - URG_COMMUNICATION_2_BYTE ... 距離を 2 byte で表現する
+
+  を指定できます。\n
+  初期状態では距離を 3 byte で表現するようになっています。この設定を 2 byte に設定することで、センサから受信するデータ数は 2/3 になります。ただし、取得できる距離の最大値が 4095 になるため、観測したい対象が 4 [m] 以内の範囲に存在する場合のみ利用して下さい。
 */
 extern int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size);
 
