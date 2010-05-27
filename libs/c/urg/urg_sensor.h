@@ -52,7 +52,7 @@ enum {
 /*!
   \brief 接続
 
-  指定したデバイスに接続し、距離を計測できるようにします。
+  指定したデバイスに接続し、距離を計測できるようにする。
 
   \param[in,out] urg URG センサ管理
   \param[in] device 接続デバイス名
@@ -73,6 +73,8 @@ enum {
   ...
 
   urg_close(&urg); \endcode
+
+  \attention URG C ライブラリの他の関数を呼び出す前に、この関数を呼び出す必要があります。
 
   \see urg_close()
 */

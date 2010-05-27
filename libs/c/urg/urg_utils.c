@@ -25,6 +25,8 @@ void urg_distance_min_max(const urg_t *urg,
     (void)min_distance;
     (void)max_distance;
 
+    // !!! urg_set_communication_data_size() の設定も反映する
+
     // !!!
 }
 
@@ -77,28 +79,6 @@ int urg_index2deg(const urg_t *urg, int index)
 }
 
 
-extern int urg_rad2step(const urg_t *urg, double radian)
-{
-    (void)urg;
-    (void)radian;
-
-    // !!!
-
-    return 0;
-}
-
-
-extern int urg_deg2step(const urg_t *urg, int degree)
-{
-    (void)urg;
-    (void)degree;
-
-    // !!!
-
-    return 0;
-}
-
-
 int urg_rad2index(const urg_t *urg, double radian)
 {
     (void)urg;
@@ -119,6 +99,49 @@ int urg_deg2index(const urg_t *urg, int degree)
     return 0;
 }
 
+
+int urg_rad2step(const urg_t *urg, double radian)
+{
+    (void)urg;
+    (void)radian;
+
+    // !!!
+
+    return 0;
+}
+
+
+int urg_deg2step(const urg_t *urg, int degree)
+{
+    (void)urg;
+    (void)degree;
+
+    // !!!
+
+    return 0;
+}
+
+
+double urg_step2rad(const urg_t *urg, int step)
+{
+    (void)urg;
+    (void)step;
+
+    // !!!
+
+    return 0.0;
+}
+
+
+int urg_step2deg(const urg_t *urg, int step)
+{
+    (void)urg;
+    (void)step;
+
+    // !!!
+
+    return 0;
+}
 
 const char *urg_sensor_id(const urg_t *urg)
 {
