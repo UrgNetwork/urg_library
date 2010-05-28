@@ -19,7 +19,7 @@ int main(void)
     long *data;
     long max_distance;
     long min_distance;
-    long timestamp;
+    long time_stamp;
     int i;
     int n;
 
@@ -32,7 +32,7 @@ int main(void)
 
     // データ取得
     urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
-    n = urg_get_distance(&urg, data, &timestamp);
+    n = urg_get_distance(&urg, data, &time_stamp);
     if (n < 0) {
         printf("urg_distance: %s\n", urg_error(&urg));
         urg_close(&urg);

@@ -95,7 +95,7 @@ extern void urg_close(urg_t *urg);
 
 
 //! タイムスタンプモードの開始
-extern int urg_start_timestamp_mode(urg_t *urg);
+extern int urg_start_time_stamp_mode(urg_t *urg);
 
 
 /*!
@@ -108,24 +108,24 @@ extern int urg_start_timestamp_mode(urg_t *urg);
 
   Example
   \code
-  urg_start_timestamp_mode(&urg);
+  urg_start_time_stamp_mode(&urg);
 
   before_ticks = urg_ticks();
-  timestamp = urg_timestamp();
+  time_stamp = urg_time_stamp();
   after_ticks = urg_ticks();
 
   // タイムスタンプについての計算
   ...
 
-  urg_stop_timestamp_mode(&urg); \endcode
+  urg_stop_time_stamp_mode(&urg); \endcode
 
-  詳しくは \ref sync_timestamp.c を参照して下さい。
+  詳しくは \ref sync_time_stamp.c を参照して下さい。
 */
-extern long urg_timestamp(urg_t *urg);
+extern long urg_time_stamp(urg_t *urg);
 
 
 //! タイムスタンプモードの終了
-extern void urg_stop_timestamp_mode(urg_t *urg);
+extern void urg_stop_time_stamp_mode(urg_t *urg);
 
 
 /*!
@@ -163,7 +163,7 @@ extern void urg_stop_timestamp_mode(urg_t *urg);
   urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
 
   for (i = 0; i < CAPTURE_TIMES; ++i) {
-      int n = urg_get_distance(&urg, data, &timestamp);
+      int n = urg_get_distance(&urg, data, &time_stamp);
 
       // 受信したデータの利用
       ...
@@ -182,14 +182,14 @@ extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
 
   \param[in,out] urg URG センサ管理
   \param[out] data 距離データ [mm]
-  \param[out] timestamp タイムスタンプ [msec]
+  \param[out] time_stamp タイムスタンプ [msec]
 
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
   data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_index() で取得できます。
 
-  timestamp には、センサ内部のタイムスタンプが格納されます。timestamp を取得したくない場合 NULL を指定して下さい。
+  time_stamp には、センサ内部のタイムスタンプが格納されます。time_stamp を取得したくない場合 NULL を指定して下さい。
 
   Example
   \code
@@ -204,13 +204,13 @@ extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
   ...
 
   // データとタイムスタンプを取得する
-  long timestamp;
+  long time_stamp;
   urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
-  n = urg_get_distance(&urg, data, &timestamp); \endcode
+  n = urg_get_distance(&urg, data, &time_stamp); \endcode
 
   \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
+extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
 
 /*!
@@ -221,14 +221,14 @@ extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
   \param[in,out] urg URG センサ管理
   \param[out] data 距離データ [mm]
   \param[out] intensity 強度データ
-  \param[out] timestamp タイムスタンプ [msec]
+  \param[out] time_stamp タイムスタンプ [msec]
 
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
   強度データとは、!!!
 
-  data, timestamp については urg_get_distance() と同じです。
+  data, time_stamp については urg_get_distance() と同じです。
 
   intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_index() で取得できます。
 
@@ -247,7 +247,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *timestamp);
 */
 extern int urg_get_distance_intensity(urg_t *urg, long data[],
                                       unsigned short intensity[],
-                                      long *timestamp);
+                                      long *time_stamp);
 
 
 /*!
@@ -257,14 +257,14 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   \param[in,out] urg URG センサ管理
   \param[out] data_multi 距離データ [mm]
-  \param[out] timestamp タイムスタンプ [msec]
+  \param[out] time_stamp タイムスタンプ [msec]
 
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
   マルチエコーとは、!!!
 
-  timestamp については urg_get_distance() と同じです。
+  time_stamp については urg_get_distance() と同じです。
 
   data_multi には、センサから取得した距離データが１つの step あたり最大で 3 つ格納されます。マルチエコーが存在しない場合のデータ値は -1 になります。
 
@@ -292,7 +292,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *timestamp);
+extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
 
 /*!
@@ -303,12 +303,12 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *timestamp);
   \param[in,out] urg URG センサ管理
   \param[out] data_multi 距離データ [mm]
   \param[out] intensity_multi 強度データ
-  \param[out] timestamp タイムスタンプ [msec]
+  \param[out] time_stamp タイムスタンプ [msec]
 
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
-  data_multi, timestamp については urg_get_multiecho() と同じです。
+  data_multi, time_stamp については urg_get_multiecho() と同じです。
 
   intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_index() で取得できます。
 
@@ -328,7 +328,7 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *timestamp);
 */
 extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
                                        unsigned short intensity_multi[],
-                                       long *timestamp);
+                                       long *time_stamp);
 
 
 /*!
@@ -395,6 +395,8 @@ extern void urg_stop_measurement(urg_t *urg);
   } \endcode
 
   \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
+
+  !!! 設定に失敗したら、エラーを返す
 */
 extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
                                       int skip_step);

@@ -68,14 +68,14 @@ double urg_index2rad(const urg_t *urg, int index)
 }
 
 
-int urg_index2deg(const urg_t *urg, int index)
+double urg_index2deg(const urg_t *urg, int index)
 {
     (void)urg;
     (void)index;
 
     // !!!
 
-    return 0;
+    return 0.0;
 }
 
 
@@ -90,7 +90,7 @@ int urg_rad2index(const urg_t *urg, double radian)
 }
 
 
-int urg_deg2index(const urg_t *urg, int degree)
+int urg_deg2index(const urg_t *urg, double degree)
 {
     (void)urg;
     (void)degree;
@@ -111,7 +111,7 @@ int urg_rad2step(const urg_t *urg, double radian)
 }
 
 
-int urg_deg2step(const urg_t *urg, int degree)
+int urg_deg2step(const urg_t *urg, double degree)
 {
     (void)urg;
     (void)degree;

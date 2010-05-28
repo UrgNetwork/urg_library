@@ -1,5 +1,5 @@
 /*!
-  \example sync_timestamp.c URG と PC のタイムスタンプを同期する
+  \example sync_time_stamp.c URG と PC のタイムスタンプを同期する
 
   \author Satofumi KAMIMURA
 
@@ -16,11 +16,11 @@
 int main(void)
 {
     enum {
-        TIMESTAMP_RECEIVE_TIMES = 5,
+        TIME_STAMP_RECEIVE_TIMES = 5,
     };
 
     urg_t urg;
-    long timestamp;
+    long time_stamp;
     int i;
 
     // !!!
@@ -33,16 +33,16 @@ int main(void)
     // !!!
 
     // !!!
-    urg_start_timestamp_mode(&urg);
-    for (i = 0; i < TIMESTAMP_RECEIVE_TIMES; ++i) {
-        timestamp = urg_timestamp(&urg);
-        if (timestamp < 0) {
+    urg_start_time_stamp_mode(&urg);
+    for (i = 0; i < TIME_STAMP_RECEIVE_TIMES; ++i) {
+        time_stamp = urg_time_stamp(&urg);
+        if (time_stamp < 0) {
             // !!! error_handling
             // !!!
         }
         // !!!
     }
-    urg_stop_timestamp_mode(&urg);
+    urg_stop_time_stamp_mode(&urg);
 
     // !!! URG のタイムスタンプと PC の時間の関係を出力する
 

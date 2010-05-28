@@ -12,6 +12,7 @@ TARGET = \
 	get_distance \
 	get_distance_intensity \
 	get_multiecho \
+	get_subrange_distance \
 	calculate_xy \
 	sync_timestamp \
 	sensor_parameter \

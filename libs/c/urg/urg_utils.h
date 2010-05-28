@@ -118,7 +118,7 @@ extern double urg_index2rad(const urg_t *urg, int index);
 
 
 //! インデックスと角度(degree)の変換を行う
-extern int urg_index2deg(const urg_t *urg, int index);
+extern double urg_index2deg(const urg_t *urg, int index);
 
 
 //! 角度(radian)とインデックスの変換を行う
@@ -126,7 +126,7 @@ extern int urg_rad2index(const urg_t *urg, double radian);
 
 
 //! 角度(degree)とインデックスの変換を行う
-extern int urg_deg2index(const urg_t *urg, int degree);
+extern int urg_deg2index(const urg_t *urg, double degree);
 
 
 /*!
@@ -147,7 +147,7 @@ extern int urg_rad2step(const urg_t *urg, double radian);
 
 
 //! 角度(degree)と step の変換を行う
-extern int urg_deg2step(const urg_t *urg, int degree);
+extern int urg_deg2step(const urg_t *urg, double degree);
 
 
 //! step と 角度(radian)の変換を行う

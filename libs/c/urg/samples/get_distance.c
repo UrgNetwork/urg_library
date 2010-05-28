@@ -14,26 +14,21 @@
 #include <stdlib.h>
 
 
-static void printData(urg_t *urg, long data[], int n, long timestamp)
+static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 {
-    if (n <= 0) {
-        return;
-    }
-
 #if 1
     // 前方のデータのみを表示
-    int front_step = urg_deg2index(urg, 0);
-    printf("%ld, (%ld)\n", data[front_step], timestamp);
+    int front_index = urg_step2index(urg, 0);
+    printf("%ld, (%ld)\n", data[front_index], time_stamp);
 
 #else
     int i;
 
     // 全てのデータを表示
-    printf("# n = %d, timestamp = %d\n", n, timestamp);
+    printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
     for (i = 0; i < n; ++i) {
         printf("%d, %ld\n", i, data[i]);
     }
-    printf("\n");
 #endif
 }
 
@@ -44,35 +39,45 @@ int main(void)
         CAPTURE_TIMES = 3,
     };
     urg_t urg;
-    long *data;
-    long timestamp;
+    long *data = NULL;
+    long time_stamp;
     int n;
     int i;
 
     // 接続
-    if (urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
+    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
+
     data = malloc(urg_max_index(&urg) * sizeof(data[0]));
-    if (! data) {
+    if (!data) {
         perror("urg_max_index()");
         return 1;
     }
 
     // データ取得
+    ret = urg_set_scanning_parameter(&urg,
+                                     urg_deg2step(&urg, -90),
+                                     urg_deg2step(&urg, +90), 0);
+    if (ret < 0) {
+        // !!!
+    }
+
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
-        n = urg_get_distance(&urg, data, &timestamp);
+        n = urg_get_distance(&urg, data, &time_stamp);
         if (n < 0) {
             printf("urg_distance: %s\n", urg_error(&urg));
+            free(data);
             urg_close(&urg);
             return 1;
         }
-        printData(&urg, data, n, timestamp);
+        print_data(&urg, data, n, time_stamp);
     }
 
     // 切断
+    free(data);
     urg_close(&urg);
 
     return 0;
