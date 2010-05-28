@@ -66,7 +66,7 @@ enum {
   \code
   urg_t urg;
 
-  if (urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL) < 0) {
+  if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
       return 1;
   }
 
@@ -78,8 +78,8 @@ enum {
 
   \see urg_close()
 */
-extern int urg_open(urg_t *urg, const char *device, long baudrate_or_port,
-                    connection_type_t connection_type);
+extern int urg_open(urg_t *urg, connection_type_t connection_type,
+                    const char *device, long baudrate_or_port);
 
 
 /*!

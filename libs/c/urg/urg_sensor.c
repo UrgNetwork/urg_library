@@ -18,8 +18,8 @@ void urg_initialize(urg_t *urg)
 }
 
 
-int urg_open(urg_t *urg, const char *device, long baudrate,
-             connection_type_t connection_type)
+int urg_open(urg_t *urg, connection_type_t connection_type,
+             const char *device, long baudrate)
 {
     (void)urg;
     (void)device;

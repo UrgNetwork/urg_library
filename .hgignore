@@ -7,5 +7,5 @@ get_distance
 get_distance_intensity
 get_multiecho
 calculate_xy
-sync_timestamp
+sync_time_stamp
 sensor_parameter

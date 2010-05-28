@@ -143,6 +143,17 @@ int urg_step2deg(const urg_t *urg, int step)
     return 0;
 }
 
+
+int urg_step2index(const urg_t *urg, int step)
+{
+    (void)urg;
+    (void)step;
+    // !!!
+
+    return 0;
+}
+
+
 const char *urg_sensor_id(const urg_t *urg)
 {
     (void)urg;

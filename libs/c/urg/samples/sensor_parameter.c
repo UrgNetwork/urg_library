@@ -21,7 +21,7 @@ int main(void)
     long min_distance;
     long max_distance;
 
-    if (! urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL)) {
+    if (! urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200)) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
