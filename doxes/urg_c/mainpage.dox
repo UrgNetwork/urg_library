@@ -8,10 +8,10 @@
   - \subpage urg_setup_page
 
   - \subpage urg_usage_dox
-    - \ref urg_usage_gd
     - \ref urg_usage_md
-    - \ref urg_usage_id
-    - \ref urg_usage_hd
+    - \ref urg_usage_mi
+    - \ref urg_usage_nd
+    - \ref urg_usage_ni
 
   - \subpage urg_timestamp_page
     - \ref urg_timestamp_check
