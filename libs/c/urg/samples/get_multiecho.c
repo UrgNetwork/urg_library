@@ -1,5 +1,5 @@
 /*!
-  \example multiecho_measurement.c マルチエコー・データ取得する
+  \example get_multiecho.c 距離データ(マルチエコー)を取得する
 
   \author Satofumi KAMIMURA
 

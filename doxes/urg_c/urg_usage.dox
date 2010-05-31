@@ -5,56 +5,52 @@
 
   \section urg_usage_abstract データ取得の種類について
 
-  - \ref urg_usage_gd
   - \ref urg_usage_md
-  - \ref urg_usage_id
-  - \ref urg_usage_hd
+  - \ref urg_usage_mi
+  - \ref urg_usage_nd
+  - \ref urg_usage_ni
 
   !!!
 
 
-  \section urg_usage_gd データを逐次取得する
-
-  !!! 何ができるか
-
-  !!! 適切に利用するためには urg_laser_on() を用いて、レーザを発光させておく必要があります。
-
-  !!! urg_get_distance() を使う
-
-  !!! サンプル: \ref get_distance.c
-
-
-  \section urg_usage_md データを連続して取得する
+  \section urg_usage_md 距離データを取得する
 
   !!! \ref urg_usage_gd 場合に比べて、どういうメリットがあるか
 
   !!! 何ができるか
 
-  !!! urg_start_measurement(), urg_receive_measurement() を使う
+  !!! urg_start_measurement()
 
-  !!! サンプル
+  !!! サンプル \ref get_distance.c
 
 
-  \section urg_usage_id 強度データを取得する
+  \section urg_usage_mi 距離・強度データを取得する
 
   !!! 強度データとは、何なのか
 
   !!! 何ができるか
 
-  !!! urg_start_intensity_measurement(), urg_receive_intensity_measurement() を使う
+  !!! urg_get_distance_intensity() を使う
 
-  !!! サンプル
+  !!! サンプル \ref get_distance_intensity.c
 
 
-  \section urg_usage_hd マルチエコー・データを取得する
+  \section urg_usage_nd 距離データ(マルチエコー)を取得する
+
+  !!!
+
+  !!! サンプル \ref get_multiecho.c
+
+
+  \section urg_usage_ni 距離・強度データ(マルチエコー)を取得する
 
   !!! マルチエコーとは、何なのか
 
   !!! 何ができるか
 
-  !!! urg_start_multiecho_measurement(), urg_receive_multiecho_measurement() を使う
+  !!! urg_get_multiecho_measurement() を使う
 
-  !!! サンプル
+  !!! サンプル \ref get_multiecho_intensity.c
 
   \n
 */

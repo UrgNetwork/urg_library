@@ -1,5 +1,5 @@
 /*!
-  \example get_distance.c データを逐次取得する
+  \example get_distance.c 距離データを取得する
 
   \author Satofumi KAMIMURA
 

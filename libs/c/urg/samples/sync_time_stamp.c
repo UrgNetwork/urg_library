@@ -1,5 +1,5 @@
 /*!
-  \example sync_time_stamp.c URG と PC のタイムスタンプを同期する
+  \example sync_time_stamp.c センサと PC のタイムスタンプを同期する
 
   \author Satofumi KAMIMURA
 
