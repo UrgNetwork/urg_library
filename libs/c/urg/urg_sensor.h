@@ -151,9 +151,9 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
   scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INTENSITY を指定した場合は、無限回のデータを取得します。\n
   開始した計測を中断するには urg_stop_measurement() を使います。
 
-  skip_scan はミラーの回転数のうち、何回に１回ほど計測行うかを指定します。skip_scan に指定できる範囲は [0, 9] です。
+  skip_scan はミラーの回転数のうち、何回に１回だけ計測行うかを指定します。skip_scan に指定できる範囲は [0, 9] です。
 
-  !!! skip_scan についての図
+  \image html scip_scan_image.png 何回に１回だけ計測するか
 
   たとえば、ミラーの１回転が 100 [msec] のセンサで skip_scan に 1 を指定した場合、データの取得間隔は 200 [msec] になります。
 
@@ -226,7 +226,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
-  強度データとは、!!!
+  強度データとは、距離計算に使った波形の反射強度であり、センサのシリーズ毎に特性が異なります。 強度データを使うことで、物体の反射率や環境の大まかな濃淡を推測できます。
 
   data, time_stamp については urg_get_distance() と同じです。
 
@@ -262,7 +262,9 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
-  マルチエコーとは、!!!
+  マルチエコーとは複数の距離データです。 マルチエコーは、１つのレーザ発光において複数の距離データが得られたときに得られます。
+
+  \imgage html multi_echo_image.png マルチエコー例
 
   time_stamp については urg_get_distance() と同じです。
 
@@ -275,8 +277,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
   data_multi[3] ... step (n + 1) の 距離データ (1 つめ)
   data_multi[4] ... step (n + 1) の 距離データ (2 つめ)
   data_multi[5] ... step (n + 1) の 距離データ (3 つめ)
-  ...
-  \endverbatim
+  ... \endverbatim
 
   格納順は、各 step において urg_get_distance() のときと同じ距離のデータが (3n + 0) の位置に格納され、それ以外のデータが (3n + 1), (3n + 2) の位置に降順に格納されます。\n
   つまり data_multi[3n + 1] >= data_multi[3n + 2] になることは保証されますが data_multi[3n + 0] と data_multi[3n + 1] の関係は未定義です。(data_multi[3n + 1] == data_multi[3n + 2] が成り立つのはデータ値が -1 のとき。)
@@ -361,9 +362,12 @@ extern void urg_stop_measurement(urg_t *urg);
   \param[in] last_step 計測の終了 step
   \param[in] skip_step 計測データをグルーピングする個数
 
+  \retval 0 正常
+  \retval <0 エラー
+
   センサの step は、センサ正面を 0 とし、センサ上部から見て反時計まわりの向きが正の値となる順に割り振られます。
 
-  !!! step の図
+  \image html sensor_step_image.png センサと step の関係
 
   step の間隔と、最大値、最小値はセンサ依存です。step 値の最大値、最小値は urg_step_min_max() で取得できます。\n
 
@@ -395,8 +399,6 @@ extern void urg_stop_measurement(urg_t *urg);
   } \endcode
 
   \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
-
-  !!! 設定に失敗したら、エラーを返す
 */
 extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
                                       int skip_step);

@@ -67,7 +67,7 @@ extern void urg_distance_min_max(const urg_t *urg,
 
   step はセンサ正面が 0 であり、センサ上部から見た場合の反時計まわりの方向が正、時計まわりの方向が負の step 値となる。
 
-  !!! step についての図
+  \image html sensor_step_image.png センサと step の関係
 
   min_step, max_step の値はセンサによって異なる。
 
@@ -100,6 +100,10 @@ extern int urg_max_index(const urg_t *urg);
   \param[in] index インデックス
 
   \return 角度 [radian]
+
+  index は、取得した計測データについての値であり step や角度との関係は取得設定により異なる。
+
+  \image html sensor_index_image.png センサの計測範囲とインデックスの関係
 
   Example
   \code
@@ -139,7 +143,9 @@ extern int urg_deg2index(const urg_t *urg, double degree);
 
   \return step
 
-  変換した結果が整数でない場合、結果は 0 の方向に切り捨てられた値となる。
+  \image html sensor_angle_image.png センサの step と角度との関係
+
+  角度から step へ変換した結果が整数でない場合、結果は 0 の方向に切り捨てられた値となる。
 
   \see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
 */
