@@ -169,8 +169,8 @@ void urg_stop_time_stamp_mode(urg_t *urg);
 
   \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
 */
-void urg_start_measurement(urg_t *urg, measurement_type_t type,
-                           int scan_times, int skip_scan);
+int urg_start_measurement(urg_t *urg, measurement_type_t type,
+                          int scan_times, int skip_scan);
 
 
 /*!
@@ -429,6 +429,6 @@ int urg_laser_on(urg_t *urg);
 
 
 //! レーザを消灯する
-void urg_laser_off(urg_t *urg);
+int urg_laser_off(urg_t *urg);
 
 #endif /* !URG_SENSOR_H */

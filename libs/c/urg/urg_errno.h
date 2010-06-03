@@ -12,7 +12,12 @@
 
 enum {
     URG_UNKNOWN_ERROR = -1,
-    URG_OPEN_ERROR = -2,
+    URG_NOT_CONNECTED = -2,
+    URG_NOT_IMPLEMENTED = -3,
+
+    URG_SERIAL_OPEN_ERROR = -4,
+    URG_ETHERNET_OPEN_ERROR = -5,
+
     // !!!
 };
 
