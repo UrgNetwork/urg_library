@@ -11,17 +11,17 @@
 */
 
 
-//! 通信用リソースの管理
+/*! 通信用リソースの管理 */
 typedef struct
 {
     char dummy;
 } connection_t;
 
 
-//! 通信タイプ
+/*! 通信タイプ */
 typedef enum {
-    URG_SERIAL,                 //!< シリアル通信
-    URG_ETHERNET,               //!< イーサーネット通信
+    URG_SERIAL,                 /*!< シリアル通信 */
+    URG_ETHERNET,               /*!< イーサーネット通信 */
 } connection_type_t;
 
 

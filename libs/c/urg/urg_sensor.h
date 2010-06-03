@@ -15,35 +15,45 @@
 #include "urg_connection.h"
 
 
-//! URG センサ管理
+/*! URG センサ管理 */
 typedef struct
 {
     int is_active;
+    int last_errno;
     connection_t connection;
+
+    int max_index;
+    long scan_usec;
+    int min_distance;
+    int max_distance;
+    int scanning_first_step;
+    int scanning_last_step;
+    int scanning_skip_step;
+    int communication_data_size;
 
     // !!! 共通のパラメータは、この構造体で管理する
     char dummy;
 } urg_t;
 
 
-//! 計測タイプ
+/*! 計測タイプ */
 typedef enum {
-    URG_DISTANCE,               //!< 距離
-    URG_DISTANCE_INTENSITY,     //!< 距離 + 強度
-    URG_MULTIECHO,              //!< マルチエコーの距離
-    URG_MULTIECHO_iNTENSITY     //!< マルチエコーの(距離 + 強度)
+    URG_DISTANCE,               /*!< 距離 */
+    URG_DISTANCE_INTENSITY,     /*!< 距離 + 強度 */
+    URG_MULTIECHO,              /*!< マルチエコーの距離 */
+    URG_MULTIECHO_iNTENSITY     /*!< マルチエコーの(距離 + 強度) */
 } measurement_type_t;
 
 
-//! 距離を何 byte で表現するかの指定
+/*! 距離を何 byte で表現するかの指定 */
 typedef enum {
-    URG_COMMUNICATION_3_BYTE,   //!< 距離を 3 byte で表現する
-    URG_COMMUNICATION_2_BYTE,   //!< 距離を 2 byte で表現する
+    URG_COMMUNICATION_3_BYTE,   /*!< 距離を 3 byte で表現する */
+    URG_COMMUNICATION_2_BYTE,   /*!< 距離を 2 byte で表現する */
 } range_byte_t;
 
 
 enum {
-    URG_SCAN_INFINITY = 0,      //!< 無限回のデータ取得
+    URG_SCAN_INFINITY = 0,      /*!< 無限回のデータ取得 */
 };
 
 
@@ -92,7 +102,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
 void urg_close(urg_t *urg);
 
 
-//! タイムスタンプモードの開始
+/*! タイムスタンプモードの開始 */
 int urg_start_time_stamp_mode(urg_t *urg);
 
 
@@ -122,7 +132,7 @@ int urg_start_time_stamp_mode(urg_t *urg);
 long urg_time_stamp(urg_t *urg);
 
 
-//! タイムスタンプモードの終了
+/*! タイムスタンプモードの終了 */
 void urg_stop_time_stamp_mode(urg_t *urg);
 
 
@@ -337,6 +347,9 @@ int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
 
   \param[in,out] urg URG センサ管理
 
+  \retval 0 正常
+  \retval <0 エラー
+
   Example
   \code
   urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
@@ -347,7 +360,7 @@ int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
 
   \see urg_start_measurement()
 */
-void urg_stop_measurement(urg_t *urg);
+int urg_stop_measurement(urg_t *urg);
 
 
 /*!
@@ -424,11 +437,11 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size);
 
 
-//! レーザを発光させる
+/*! レーザを発光させる */
 int urg_laser_on(urg_t *urg);
 
 
-//! レーザを消灯する
+/*! レーザを消灯する */
 int urg_laser_off(urg_t *urg);
 
 #endif /* !URG_SENSOR_H */

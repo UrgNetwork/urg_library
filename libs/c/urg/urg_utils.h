@@ -83,11 +83,11 @@ void urg_distance_min_max(const urg_t *urg,
 void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
-//! １スキャンにかかる時間 [msec] を返す
-int urg_scan_msec(const urg_t *urg);
+/*! １スキャンにかかる時間 [usec] を返す */
+long urg_scan_usec(const urg_t *urg);
 
 
-//! 取得データ数の最大値を返す
+/*! 取得データ数の最大値を返す */
 int urg_max_index(const urg_t *urg);
 
 
@@ -121,15 +121,15 @@ int urg_max_index(const urg_t *urg);
 double urg_index2rad(const urg_t *urg, int index);
 
 
-//! インデックスと角度(degree)の変換を行う
+/*! インデックスと角度(degree)の変換を行う */
 double urg_index2deg(const urg_t *urg, int index);
 
 
-//! 角度(radian)とインデックスの変換を行う
+/*! 角度(radian)とインデックスの変換を行う */
 int urg_rad2index(const urg_t *urg, double radian);
 
 
-//! 角度(degree)とインデックスの変換を行う
+/*! 角度(degree)とインデックスの変換を行う */
 int urg_deg2index(const urg_t *urg, double degree);
 
 
@@ -152,18 +152,18 @@ int urg_deg2index(const urg_t *urg, double degree);
 int urg_rad2step(const urg_t *urg, double radian);
 
 
-//! 角度(degree)と step の変換を行う
+/*! 角度(degree)と step の変換を行う */
 int urg_deg2step(const urg_t *urg, double degree);
 
 
-//! step と 角度(radian)の変換を行う
+/*! step と 角度(radian)の変換を行う */
 double urg_step2rad(const urg_t *urg, int step);
 
 
-//! step と 角度(degree)の変換を行う
+/*! step と 角度(degree)の変換を行う */
 int urg_step2deg(const urg_t *urg, int step);
 
-//! step とインデックスの変換を行う
+/*! step とインデックスの変換を行う */
 int urg_step2index(const urg_t *urg, int step);
 
 
