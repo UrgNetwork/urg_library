@@ -23,11 +23,11 @@
   Example
   \code
   if (!urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL)) {
-      printf("urg_open: %s\n", urg_error(&urg));
-      return -1;
+  printf("urg_open: %s\n", urg_error(&urg));
+  return -1;
   } \endcode
 */
-extern const char *urg_error(const urg_t *urg);
+const char *urg_error(const urg_t *urg);
 
 
 /*!
@@ -45,15 +45,15 @@ extern const char *urg_error(const urg_t *urg);
   urg_distance_min_max(&urg, &min_distance, &max_distance);
 
   for (int i = 0; i < n; ++i) {
-      long distance = data[i];
-      if ((distance < min_distance) || (distance > max_distance)) {
-          continue;
-      }
-      ...
+  long distance = data[i];
+  if ((distance < min_distance) || (distance > max_distance)) {
+  continue;
+  }
+  ...
   } \endcode
 */
-extern void urg_distance_min_max(const urg_t *urg,
-                                 long *min_distance, long *max_distance);
+void urg_distance_min_max(const urg_t *urg,
+                          long *min_distance, long *max_distance);
 
 
 /*!
@@ -80,15 +80,15 @@ extern void urg_distance_min_max(const urg_t *urg,
 
   \see urg_set_scanning_parameter(), urg_step2rad(), urg_step2deg()
 */
-extern void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
+void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
 //! １スキャンにかかる時間 [msec] を返す
-extern int urg_scan_msec(const urg_t *urg);
+int urg_scan_msec(const urg_t *urg);
 
 
 //! 取得データ数の最大値を返す
-extern int urg_max_index(const urg_t *urg);
+int urg_max_index(const urg_t *urg);
 
 
 /*!
@@ -109,28 +109,28 @@ extern int urg_max_index(const urg_t *urg);
   \code
   int n = urg_get_distance(&urg, data, NULL);
   for (int i = 0; i < n; ++i) {
-      long distance = data[i];
-      double radian = urg_index2rad(i);
-      double x = distance * cos(radian);
-      double y = distance * sin(radian);
-      printf("%.1f, %.1f\n", x, y);
+  long distance = data[i];
+  double radian = urg_index2rad(i);
+  double x = distance * cos(radian);
+  double y = distance * sin(radian);
+  printf("%.1f, %.1f\n", x, y);
   } \endcode
 
   \see urg_index2deg(), urg_rad2index(), urg_deg2index()
 */
-extern double urg_index2rad(const urg_t *urg, int index);
+double urg_index2rad(const urg_t *urg, int index);
 
 
 //! インデックスと角度(degree)の変換を行う
-extern double urg_index2deg(const urg_t *urg, int index);
+double urg_index2deg(const urg_t *urg, int index);
 
 
 //! 角度(radian)とインデックスの変換を行う
-extern int urg_rad2index(const urg_t *urg, double radian);
+int urg_rad2index(const urg_t *urg, double radian);
 
 
 //! 角度(degree)とインデックスの変換を行う
-extern int urg_deg2index(const urg_t *urg, double degree);
+int urg_deg2index(const urg_t *urg, double degree);
 
 
 /*!
@@ -149,22 +149,22 @@ extern int urg_deg2index(const urg_t *urg, double degree);
 
   \see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
 */
-extern int urg_rad2step(const urg_t *urg, double radian);
+int urg_rad2step(const urg_t *urg, double radian);
 
 
 //! 角度(degree)と step の変換を行う
-extern int urg_deg2step(const urg_t *urg, double degree);
+int urg_deg2step(const urg_t *urg, double degree);
 
 
 //! step と 角度(radian)の変換を行う
-extern double urg_step2rad(const urg_t *urg, int step);
+double urg_step2rad(const urg_t *urg, int step);
 
 
 //! step と 角度(degree)の変換を行う
-extern int urg_step2deg(const urg_t *urg, int step);
+int urg_step2deg(const urg_t *urg, int step);
 
 //! step とインデックスの変換を行う
-extern int urg_step2index(const urg_t *urg, int step);
+int urg_step2index(const urg_t *urg, int step);
 
 
 /*!
@@ -176,7 +176,7 @@ extern int urg_step2index(const urg_t *urg, int step);
 
   \return シリアル ID 文字列
 */
-extern const char *urg_sensor_id(const urg_t *urg);
+const char *urg_sensor_id(const urg_t *urg);
 
 
 /*!
@@ -188,7 +188,7 @@ extern const char *urg_sensor_id(const urg_t *urg);
 
   \return バージョン文字列
 */
-extern const char *urg_sensor_version(const urg_t *urg);
+const char *urg_sensor_version(const urg_t *urg);
 
 
 /*!
@@ -200,10 +200,10 @@ extern const char *urg_sensor_version(const urg_t *urg);
 
   \return ステータス文字列
 */
-extern const char *urg_sensor_status(const urg_t *urg);
+const char *urg_sensor_status(const urg_t *urg);
 
 
 // !!!
-extern int urg_find_port(char *port_name, int index);
+int urg_find_port(char *port_name, int index);
 
 #endif /* !URG_UTILS_H */

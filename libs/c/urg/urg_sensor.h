@@ -12,20 +12,18 @@
   $Id$
 */
 
+#include "connection.h"
+
 
 //! URG センサ管理
 typedef struct
 {
+    int is_active;
+    connection_t connection;
+
     // !!! 共通のパラメータは、この構造体で管理する
     char dummy;
 } urg_t;
-
-
-//! 通信タイプ
-typedef enum {
-    URG_SERIAL,                 //!< シリアル通信
-    URG_ETHERNET,               //!< イーサーネット通信
-} connection_type_t;
 
 
 //! 計測タイプ
@@ -67,7 +65,7 @@ enum {
   urg_t urg;
 
   if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
-      return 1;
+  return 1;
   }
 
   ...
@@ -78,8 +76,8 @@ enum {
 
   \see urg_close()
 */
-extern int urg_open(urg_t *urg, connection_type_t connection_type,
-                    const char *device, long baudrate_or_port);
+int urg_open(urg_t *urg, connection_type_t connection_type,
+             const char *device, long baudrate_or_port);
 
 
 /*!
@@ -91,11 +89,11 @@ extern int urg_open(urg_t *urg, connection_type_t connection_type,
 
   \see urg_open()
 */
-extern void urg_close(urg_t *urg);
+void urg_close(urg_t *urg);
 
 
 //! タイムスタンプモードの開始
-extern int urg_start_time_stamp_mode(urg_t *urg);
+int urg_start_time_stamp_mode(urg_t *urg);
 
 
 /*!
@@ -121,11 +119,11 @@ extern int urg_start_time_stamp_mode(urg_t *urg);
 
   詳しくは \ref sync_time_stamp.c を参照して下さい。
 */
-extern long urg_time_stamp(urg_t *urg);
+long urg_time_stamp(urg_t *urg);
 
 
 //! タイムスタンプモードの終了
-extern void urg_stop_time_stamp_mode(urg_t *urg);
+void urg_stop_time_stamp_mode(urg_t *urg);
 
 
 /*!
@@ -163,16 +161,16 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
   urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
 
   for (i = 0; i < CAPTURE_TIMES; ++i) {
-      int n = urg_get_distance(&urg, data, &time_stamp);
+  int n = urg_get_distance(&urg, data, &time_stamp);
 
-      // 受信したデータの利用
-      ...
+  // 受信したデータの利用
+  ...
   } \endcode
 
   \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
 */
-extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
-                                  int scan_times, int skip_scan);
+void urg_start_measurement(urg_t *urg, measurement_type_t type,
+                           int scan_times, int skip_scan);
 
 
 /*!
@@ -210,7 +208,7 @@ extern void urg_start_measurement(urg_t *urg, measurement_type_t type,
 
   \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
+int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
 
 /*!
@@ -245,9 +243,9 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
   \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_distance_intensity(urg_t *urg, long data[],
-                                      unsigned short intensity[],
-                                      long *time_stamp);
+int urg_get_distance_intensity(urg_t *urg, long data[],
+                               unsigned short intensity[],
+                               long *time_stamp);
 
 
 /*!
@@ -293,7 +291,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
+int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
 
 /*!
@@ -323,13 +321,13 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
   urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
   int n = urg_get_multiecho_intensity(&urg, data_multi,
-                                      intesnity_multi, NULLL); \endcode
+  intesnity_multi, NULLL); \endcode
 
   \see urg_start_measurement(), urg_max_index()
 */
-extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
-                                       unsigned short intensity_multi[],
-                                       long *time_stamp);
+int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
+                                unsigned short intensity_multi[],
+                                long *time_stamp);
 
 
 /*!
@@ -343,13 +341,13 @@ extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
   \code
   urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
   for (int i = 0; i < 10; ++i) {
-      urg_get_distance(&urg, data, NULL);
+  urg_get_distance(&urg, data, NULL);
   }
   urg_stop_measurement(&urg); \endcode
 
   \see urg_start_measurement()
 */
-extern void urg_stop_measurement(urg_t *urg);
+void urg_stop_measurement(urg_t *urg);
 
 
 /*!
@@ -391,17 +389,17 @@ extern void urg_stop_measurement(urg_t *urg);
   \code
   // センサ前方 90 度の範囲のデータを取得する
   urg_set_scanning_parameter(&urg, urg_deg2step(&urg, -45),
-                             urg_deg2step(&urg, +45), 1);
+  urg_deg2step(&urg, +45), 1);
   urg_start_measurement(&urg, URG_DISTANCE, 0);
   int n = urg_get_distance(&urg, data, NULL);
   for (int i = 0; i < n; ++i) {
-      printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
+  printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
   } \endcode
 
   \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
 */
-extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
-                                      int skip_step);
+int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
+                               int skip_step);
 
 
 /*!
@@ -423,14 +421,14 @@ extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
   を指定できます。\n
   初期状態では距離を 3 byte で表現するようになっています。この設定を 2 byte に設定することで、センサから受信するデータ数は 2/3 になります。ただし、取得できる距離の最大値が 4095 になるため、観測したい対象が 4 [m] 以内の範囲に存在する場合のみ利用して下さい。
 */
-extern int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size);
+int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size);
 
 
 //! レーザを発光させる
-extern int urg_laser_on(urg_t *urg);
+int urg_laser_on(urg_t *urg);
 
 
 //! レーザを消灯する
-extern void urg_laser_off(urg_t *urg);
+void urg_laser_off(urg_t *urg);
 
 #endif /* !URG_SENSOR_H */

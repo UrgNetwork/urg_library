@@ -9,18 +9,26 @@
 */
 
 #include "urg_sensor.h"
+#include "urg_errno.h"
 
-
-void urg_initialize(urg_t *urg)
-{
-    (void)urg;
-    // !!!
-}
+enum {
+    URG_FALSE = 0,
+    URG_TRUE = 1,
+};
 
 
 int urg_open(urg_t *urg, connection_type_t connection_type,
              const char *device, long baudrate)
 {
+    urg->is_active = URG_FALSE;
+
+    if (! connection_open(&urg->connection, connection_type,
+                          device, baudrate)) {
+
+        // !!!
+        return URG_OPEN_ERROR;
+    }
+
     (void)urg;
     (void)device;
     (void)baudrate;
