@@ -1,5 +1,5 @@
-#ifndef SERIAL_H
-#define SERIAL_H
+#ifndef URG_SERIAL_H
+#define URG_SERIAL_H
 
 /*!
   \file
@@ -14,4 +14,4 @@
 void serial_open(serial_t *serial, const char *device, long baudrate);
 // !!!
 
-#endif /* !SERIAL_H */
+#endif /* !URG_SERIAL_H */

@@ -12,7 +12,7 @@
   $Id$
 */
 
-#include "connection.h"
+#include "urg_connection.h"
 
 
 //! URG センサ管理

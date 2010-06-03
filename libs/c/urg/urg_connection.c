@@ -7,7 +7,7 @@
   $Id$
 */
 
-#include "connection.h"
+#include "urg_connection.h"
 
 
 // !!!

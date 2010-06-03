@@ -1,5 +1,5 @@
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef URG_CONNECTION_H
+#define URG_CONNECTION_H
 
 /*!
   \file
@@ -34,4 +34,4 @@ int connection_read(connection_t *connection, char *data, int max_size);
 // !!!
 
 
-#endif /* !CONNECTION_H */
+#endif /* !URG_CONNECTION_H */

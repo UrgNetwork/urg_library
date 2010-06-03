@@ -9,7 +9,7 @@
 
 
 #if 0
-#include "serial_utils_windows.c"
+#include "urg_serial_utils_windows.c"
 #else
-#include "serial_utils_linux.c"
+#include "urg_serial_utils_linux.c"
 #endif

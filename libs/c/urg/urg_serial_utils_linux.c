@@ -7,7 +7,7 @@
   $Id$
 */
 
-#include "serial_utils.h"
+#include "urg_serial_utils.h"
 
 
 int serial_find_port(char *port_name, int index)

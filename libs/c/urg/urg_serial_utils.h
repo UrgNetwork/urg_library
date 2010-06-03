@@ -1,5 +1,5 @@
-#ifndef SERIAL_UTILS_H
-#define SERIAL_UTILS_H
+#ifndef URG_SERIAL_UTILS_H
+#define URG_SERIAL_UTILS_H
 
 /*!
   \file
@@ -18,4 +18,4 @@
 // !!! バッファサイズは 64 byte 以上必要です
 int serial_find_port(char *port_name, int index);
 
-#endif /* !SERIAL_UTILS_H */
+#endif /* !URG_SERIAL_UTILS_H */
