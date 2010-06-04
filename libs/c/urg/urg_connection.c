@@ -11,12 +11,12 @@
 
 
 int connection_open(connection_t *connection, connection_type_t connection_type,
-                    const char *device, long baudrate)
+                    const char *device, long baudrate_or_port)
 {
     (void)connection;
     (void)connection_type;
     (void)device;
-    (void)baudrate;
+    (void)baudrate_or_port;
 
     // !!!
 
@@ -43,12 +43,27 @@ int connection_write(connection_t *connection, const char *data, int size)
 }
 
 
-int connection_read(connection_t *connection, char *data, int max_size)
+int connection_read(connection_t *connection,
+                    char *data, int max_size, int timeout)
 {
     (void)connection;
     (void)data;
     (void)max_size;
+    (void)timeout;
 
+    // !!!
+
+    return -1;
+}
+
+
+int connection_readline(connection_t *connection,
+                        char *data, int max_size, int timeout)
+{
+    (void)connection;
+    (void)data;
+    (void)max_size;
+    (void)timeout;
     // !!!
 
     return -1;
