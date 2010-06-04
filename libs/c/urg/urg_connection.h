@@ -28,7 +28,6 @@ typedef enum {
 int connection_open(connection_t *connection, connection_type_t connection_type,
                     const char *device, long baudrate);
 void connection_close(connection_t *connection);
-
 int connection_write(connection_t *connection, const char *data, int size);
 int connection_read(connection_t *connection, char *data, int max_size);
 // !!!

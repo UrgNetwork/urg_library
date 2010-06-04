@@ -38,4 +38,4 @@ urg_connection.o: urg_connection.h
 urg_sensor.o: urg_sensor.h urg_connection.h urg_errno.h
 urg_serial_utils.o: urg_serial_utils_linux.c urg_serial_utils.h
 urg_serial_utils_linux.o: urg_serial_utils.h
-urg_utils.o: urg_utils.h urg_sensor.h urg_connection.h
+urg_utils.o: urg_utils.h urg_sensor.h urg_connection.h urg_errno.h
