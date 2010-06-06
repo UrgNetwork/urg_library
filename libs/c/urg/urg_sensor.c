@@ -347,3 +347,12 @@ int urg_laser_off(urg_t *urg)
 {
     return urg_stop_measurement(urg);
 }
+
+
+int urg_reboot(urg_t *urg)
+{
+    (void)urg;
+    // !!!
+
+    return -1;
+}

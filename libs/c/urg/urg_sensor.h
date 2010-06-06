@@ -444,4 +444,8 @@ int urg_laser_on(urg_t *urg);
 /*! レーザを消灯する */
 int urg_laser_off(urg_t *urg);
 
+
+/*! センサを再起動する */
+int urg_reboot(urg_t *urg);
+
 #endif /* !URG_SENSOR_H */
