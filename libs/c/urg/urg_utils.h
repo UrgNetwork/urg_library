@@ -161,7 +161,7 @@ double urg_step2rad(const urg_t *urg, int step);
 
 
 /*! step と 角度(degree)の変換を行う */
-int urg_step2deg(const urg_t *urg, int step);
+double urg_step2deg(const urg_t *urg, int step);
 
 /*! step とインデックスの変換を行う */
 int urg_step2index(const urg_t *urg, int step);

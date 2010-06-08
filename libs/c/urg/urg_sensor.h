@@ -67,15 +67,15 @@ enum {
   \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
   \param[in] connection_type 通信タイプ
 
-  retval 0 正常
-  retval <0 エラー
+  \retval 0 正常
+  \retval <0 エラー
 
   Example
   \code
   urg_t urg;
 
   if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
-  return 1;
+      return 1;
   }
 
   ...

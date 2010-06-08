@@ -8,6 +8,7 @@
 
 #include "urg_utils.h"
 #include "urg_errno.h"
+#include <math.h>
 
 #undef max
 
@@ -129,16 +130,7 @@ double urg_index2rad(const urg_t *urg, int index)
 
 double urg_index2deg(const urg_t *urg, int index)
 {
-    if (!urg->is_active) {
-        return URG_NOT_CONNECTED;
-    }
-
-    (void)urg;
-    (void)index;
-
-    // !!!
-
-    return 0.0;
+    return urg_index2rad(urg, index) * 180.0 / M_PI;
 }
 
 
@@ -159,15 +151,7 @@ int urg_rad2index(const urg_t *urg, double radian)
 
 int urg_deg2index(const urg_t *urg, double degree)
 {
-    if (!urg->is_active) {
-        return URG_NOT_CONNECTED;
-    }
-
-    (void)urg;
-    (void)degree;
-    // !!!
-
-    return 0;
+    return urg_rad2step(urg, degree * M_PI / 180.0);
 }
 
 
@@ -216,18 +200,9 @@ double urg_step2rad(const urg_t *urg, int step)
 }
 
 
-int urg_step2deg(const urg_t *urg, int step)
+double urg_step2deg(const urg_t *urg, int step)
 {
-    if (!urg->is_active) {
-        return URG_NOT_CONNECTED;
-    }
-
-    (void)urg;
-    (void)step;
-
-    // !!!
-
-    return 0;
+    return urg_step2rad(urg, step) * 180.0 / M_PI;
 }
 
 
