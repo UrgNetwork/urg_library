@@ -8,19 +8,24 @@
 */
 
 #include "urg_communication.h"
+#include "urg_serial.h"
+#include "urg_ethernet.h"
 
 
 int communication_open(communication_t *communication,
                        communication_type_t communication_type,
                        const char *device, long baudrate_or_port)
 {
-    (void)communication;
-    (void)communication_type;
-    (void)device;
-    (void)baudrate_or_port;
+    switch (communication_type) {
+    case URG_SERIAL:
+        return serial_open(&communication->serial, device, baudrate_or_port);
+        break;
 
-    // !!!
-
+    case URG_ETHERNET:
+        return ethernet_open(&communication->ethernet,
+                             device, baudrate_or_port);
+        break;
+    }
     return -1;
 }
 

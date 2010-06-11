@@ -10,8 +10,10 @@
   $Id$
 */
 
+#include "urg_serial_t.h"
 
-void serial_open(serial_t *serial, const char *device, long baudrate);
+
+int serial_open(serial_t *serial, const char *device, long baudrate);
 // !!!
 
 #endif /* !URG_SERIAL_H */

@@ -27,14 +27,21 @@ $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_communication.o) \
 	$(URG_C_LIB)(urg_serial_linux.o) \
 	$(URG_C_LIB)(urg_serial_utils.o) \
+	$(URG_C_LIB)(urg_ethernet_linux.o) \
 	$(URG_C_LIB)(urg_ethernet.o) \
 
 # DO NOT DELETE
 
-urg_sensor.o: urg_communication.h
-urg_utils.o: urg_sensor.h urg_communication.h
-urg_communication.o: urg_communication.h
-urg_sensor.o: urg_sensor.h urg_communication.h urg_errno.h
+urg_communication.o: urg_serial_t.h urg_ethernet_t.h
+urg_ethernet.o: urg_ethernet_t.h
+urg_sensor.o: urg_communication.h urg_serial_t.h urg_ethernet_t.h
+urg_serial.o: urg_serial_t.h
+urg_utils.o: urg_sensor.h urg_communication.h urg_serial_t.h urg_ethernet_t.h
+urg_communication.o: urg_communication.h urg_serial_t.h urg_ethernet_t.h
+urg_communication.o: urg_serial.h urg_ethernet.h
+urg_sensor.o: urg_sensor.h urg_communication.h urg_serial_t.h
+urg_sensor.o: urg_ethernet_t.h urg_errno.h
 urg_serial_utils.o: urg_serial_utils_linux.c urg_serial_utils.h
 urg_serial_utils_linux.o: urg_serial_utils.h
-urg_utils.o: urg_utils.h urg_sensor.h urg_communication.h urg_errno.h
+urg_utils.o: urg_utils.h urg_sensor.h urg_communication.h urg_serial_t.h
+urg_utils.o: urg_ethernet_t.h urg_errno.h

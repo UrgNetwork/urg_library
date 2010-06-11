@@ -10,6 +10,9 @@
   $Id$
 */
 
+#include "urg_serial_t.h"
+#include "urg_ethernet_t.h"
+
 
 /*! 定数定義 */
 enum {
@@ -20,8 +23,10 @@ enum {
 /*! 通信リソースの管理 */
 typedef struct
 {
+    serial_t serial;
+    ethernet_t ethernet;
+
     // !!!
-    char dummy;
 } communication_t;
 
 
