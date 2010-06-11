@@ -1,5 +1,5 @@
-#ifndef URG_CONNECTION_H
-#define URG_CONNECTION_H
+#ifndef URG_COMMUNICATION_H
+#define URG_COMMUNICATION_H
 
 /*!
   \file
@@ -13,7 +13,7 @@
 
 /*! 定数定義 */
 enum {
-    CONNECTION_TIMEOUT = -1,    //!< タイムアウト発生エラー
+    COMMUNICATION_TIMEOUT = -1,    //!< タイムアウト発生エラー
 };
 
 
@@ -22,14 +22,14 @@ typedef struct
 {
     // !!!
     char dummy;
-} connection_t;
+} communication_t;
 
 
 /*! 通信タイプ */
 typedef enum {
     URG_SERIAL,                 /*!< シリアル通信 */
     URG_ETHERNET,               /*!< イーサーネット通信 */
-} connection_type_t;
+} communication_type_t;
 
 
 /*!
@@ -37,44 +37,45 @@ typedef enum {
 
   指定されたデバイスに接続する。
 
-  \param[in,out] connection 通信リソースの管理
-  \param[in] connection_type 接続タイプ
+  \param[in,out] communication 通信リソースの管理
+  \param[in] communication_type 接続タイプ
   \param[in] device 接続名
   \param[in] baudrate_or_port ボーレート / ポート番号
 
   \retval 0 正常
   \retval <0 エラー
 
-  connection_type には
+  communication_type には
 
   - URG_SERIAL ... シリアル通信
   - URG_ETHERNET .. イーサーネット通信
 
   を指定する。
 
-  device, baudrate_or_port の指定は connection_type により指定できる値が異なる。
- 例えば、シリアル通信の場合は以下のようになる。
+  device, baudrate_or_port の指定は communication_type により指定できる値が異なる。
+  例えば、シリアル通信の場合は以下のようになる。
 
   Example
   \code
-  connection_t connection;
-  if (! connection_open(&connection, URG_SERIAL, "COM1", 115200)) {
-      return 1;
+  communication_t communication;
+  if (! communication_open(&communication, URG_SERIAL, "COM1", 115200)) {
+  return 1;
   } \endcode
 
   また、イーサーネット通信の場合は以下のようになる。
 
   Example
   \code
-  connection_t connection;
-  if (! connection_open(&connection, URG_ETHERNET, "192.168.0.10", 10940)) {
-      return 1;
+  communication_t communication;
+  if (! communication_open(&communication, URG_ETHERNET, "192.168.0.10", 10940)) {
+  return 1;
   } \endcode
 
-  \see connection_close()
+  \see communication_close()
 */
-int connection_open(connection_t *connection, connection_type_t connection_type,
-                    const char *device, long baudrate_or_port);
+int communication_open(communication_t *communication,
+                       communication_type_t communication_type,
+                       const char *device, long baudrate_or_port);
 
 
 /*!
@@ -82,14 +83,14 @@ int connection_open(connection_t *connection, connection_type_t connection_type,
 
   デバイスとの接続を切断する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] communication 通信リソースの管理
 
   \code
-  connection_close(&connection); \endcode
+  communication_close(&communication); \endcode
 
-  \see connection_open()
+  \see communication_open()
 */
-void connection_close(connection_t *connection);
+void communication_close(communication_t *communication);
 
 
 /*!
@@ -97,7 +98,7 @@ void connection_close(connection_t *connection);
 
   データを送信する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] communication 通信リソースの管理
   \param[in] data 送信データ
   \param[in] size 送信バイト数
 
@@ -106,11 +107,12 @@ void connection_close(connection_t *connection);
 
   Example
   \code
-  n = connection_write(&connection, "QT\n", 3); \endcode
+  n = communication_write(&communication, "QT\n", 3); \endcode
 
-  \see connection_read(), connection_readline()
+  \see communication_read(), communication_readline()
 */
-int connection_write(connection_t *connection, const char *data, int size);
+int communication_write(communication_t *communication,
+                        const char *data, int size);
 
 
 /*!
@@ -118,7 +120,7 @@ int connection_write(connection_t *connection, const char *data, int size);
 
   データを受信する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] communication 通信リソースの管理
   \param[in] data 受信データを格納するバッファ
   \param[in] max_size 受信データを格納できるバイト数
   \param[in] timeout タイムアウト時間 [msec]
@@ -128,21 +130,21 @@ int connection_write(connection_t *connection, const char *data, int size);
 
   timeout に負の値を指定した場合、タイムアウトは発生しない。
 
-  1 文字も受信しなかったときは #CONNECTION_TIMEOUT を返す。
+  1 文字も受信しなかったときは #COMMUNICATION_TIMEOUT を返す。
 
   Example
   \code
   enum {
-      BUFFER_SIZE = 256,
-      TIMEOUT = 1000,           // [msec]
+  BUFFER_SIZE = 256,
+  TIMEOUT = 1000,           // [msec]
   };
   char buffer[BUFFER_SIZE];
-  n = connection_read(&connection, buffer, BUFFER_SIZE, TIMEOUT); \endcode
+  n = communication_read(&communication, buffer, BUFFER_SIZE, TIMEOUT); \endcode
 
-  \see connection_write(), connection_readline()
+  \see communication_write(), communication_readline()
 */
-int connection_read(connection_t *connection,
-                    char *data, int max_size, int timeout);
+int communication_read(communication_t *communication,
+                       char *data, int max_size, int timeout);
 
 
 /*!
@@ -150,7 +152,7 @@ int connection_read(connection_t *connection,
 
   改行文字までのデータを受信する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] communication 通信リソースの管理
   \param[in] data 受信データを格納するバッファ
   \param[in] max_size 受信データを格納できるバイト数
   \param[in] timeout タイムアウト時間 [msec]
@@ -162,12 +164,12 @@ int connection_read(connection_t *connection,
 
   改行文字は '\\r' または '\\n' とする。
 
-  受信した最初の文字が改行の場合は、0 を返し、1 文字も受信しなかったときは #CONNECTION_TIMEOUT を返す。
+  受信した最初の文字が改行の場合は、0 を返し、1 文字も受信しなかったときは #COMMUNICATION_TIMEOUT を返す。
 
-  \see connection_write(), connection_read()
+  \see communication_write(), communication_read()
 */
-int connection_readline(connection_t *connection,
-                        char *data, int max_size, int timeout);
+int communication_readline(communication_t *communication,
+                           char *data, int max_size, int timeout);
 
 
-#endif /* !URG_CONNECTION_H */
+#endif /* !URG_COMMUNICATION_H */

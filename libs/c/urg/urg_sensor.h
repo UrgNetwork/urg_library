@@ -12,7 +12,7 @@
   $Id$
 */
 
-#include "urg_connection.h"
+#include "urg_communication.h"
 
 
 /*! URG センサ管理 */
@@ -20,7 +20,7 @@ typedef struct
 {
     int is_active;
     int last_errno;
-    connection_t connection;
+    communication_t communication;
 
     int max_index;
     long scan_usec;
@@ -65,7 +65,7 @@ enum {
   \param[in,out] urg URG センサ管理
   \param[in] device 接続デバイス名
   \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
-  \param[in] connection_type 通信タイプ
+  \param[in] communication_type 通信タイプ
 
   \retval 0 正常
   \retval <0 エラー
@@ -86,7 +86,7 @@ enum {
 
   \see urg_close()
 */
-int urg_open(urg_t *urg, connection_type_t connection_type,
+int urg_open(urg_t *urg, communication_type_t communication_type,
              const char *device, long baudrate_or_port);
 
 
