@@ -69,11 +69,18 @@ static int response(urg_t *urg, const char* command, int command_size,
 //! チェックサムの計算
 static char checksum(const char buffer[], int size)
 {
-    (void)buffer;
-    (void)size;
-    // !!!
+    int i;
+    unsigned char sum = '\0';
 
-    return '0';
+    for (i = 0; i < size; ++i) {
+        sum += buffer[i];
+    }
+
+    // SCIP 仕様書参照
+    sum &= 0x3f;
+    sum += 0x30;
+
+    return sum;
 }
 
 
