@@ -1,7 +1,8 @@
 /*!
   \brief URG センサ制御
 
-  URG 用の基本皁E��関数を提供します、E
+  URG 用の基本的な関数を提供します。
+
   \author Satofumi KAMIMURA
 
   $Id$
@@ -21,12 +22,12 @@ enum {
     EXPECTED_END = -1,
 
     RECEIVE_DATA_TIMEOUT,
-    RECEIVE_DATA_COMPLETE,      /*!< チE�Eタを正常に受信 */
+    RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
     RECEIVE_DATA_QT,            /*!< QT 応答を受信 */
 };
 
 
-// !!! ボ�Eレートを変更しながら接��を行う
+// !!! ボーレートを変更しながら接続を行う
 static int connect_serial_device(urg_t *urg, long baudrate)
 {
     (void)urg;
@@ -58,12 +59,15 @@ static int response(urg_t *urg, const char* command, int command_size,
     (void)receive_buffer_max_size;
     // !!!
 
-    // !!! receive_buffer は '\0' 終端させめE    // !!! 改行�E取り除ぁE
+    // !!! receive_buffer は '\0' 終端させる
+    // !!! 改行は取り除く
+
     return -1;
 }
 
 
-//! チェチE��サムの計箁Estatic char checksum(const char buffer[], int size)
+//! チェックサムの計算
+static char checksum(const char buffer[], int size)
 {
     int i;
     unsigned char sum = '\0';
@@ -72,7 +76,7 @@ static int response(urg_t *urg, const char* command, int command_size,
         sum += buffer[i];
     }
 
-    // SCIP 仕様書参�E
+    // SCIP 仕様書を参照のこと
     sum &= 0x3f;
     sum += 0x30;
 
@@ -80,7 +84,8 @@ static int response(urg_t *urg, const char* command, int command_size,
 }
 
 
-//! SCIP 斁E���EのチE��ーチEstatic long decode(const char buffer[], int size)
+//! SCIP 文字列のデコード
+static long decode(const char buffer[], int size)
 {
     (void)buffer;
     (void)size;
@@ -90,7 +95,8 @@ static int response(urg_t *urg, const char* command, int command_size,
 }
 
 
-//! 距離チE�Eタの取征Estatic int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+//! 距離データの取得
+static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                         long *time_stamp)
 {
     (void)urg;
@@ -100,9 +106,9 @@ static int response(urg_t *urg, const char* command, int command_size,
 
     // !!! 戻り値
     // !!! - エラー
-    // !!! - 受信したチE�Eタ数
+    // !!! - 受信したデータ数
     // !!! - QT, RS, RT の応答を受信した
-    // !!! (RS, RT で受信が中断するかを確認すること。まぁ、使わなぁE��ど)
+    // !!! (RS, RT で受信が中断するかを確認すること。まぁ、使わないけど)
 
     return -1;
 }
@@ -115,7 +121,8 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
 
     urg->is_active = URG_FALSE;
 
-    // チE��イスへの接綁E    if (! connection_open(&urg->connection, connection_type,
+    // デバイスへの接続
+    if (! connection_open(&urg->connection, connection_type,
                           device, baudrate)) {
         switch (connection_type) {
         case URG_SERIAL:
@@ -127,7 +134,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
         return urg->last_errno;
     }
 
-    // 持E��した�Eーレートで URG と通信できるように調整
+    // 指定したボーレートで URG と通信できるように調整
     if (connection_type == URG_SERIAL) {
         ret = connect_serial_device(urg, baudrate);
         if (ret < 0) {
@@ -135,10 +142,12 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
         }
     }
 
-    // 変数の初期匁E    urg->last_errno = URG_NO_ERROR;
+    // 変数の初期化
+    urg->last_errno = URG_NO_ERROR;
     urg->communication_data_size = URG_COMMUNICATION_3_BYTE;
 
-    // パラメータ惁E��を取征E    return receive_parameter(urg);
+    // パラメータ情報を取得
+    return receive_parameter(urg);
 }
 
 
@@ -157,7 +166,8 @@ int urg_start_time_stamp_mode(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    // TM0 を発行すめE    return response(urg, "TM0\n", 4, expected, NULL, 0);
+    // TM0 を発行する
+    return response(urg, "TM0\n", 4, expected, NULL, 0);
 }
 
 
@@ -195,7 +205,8 @@ void urg_stop_time_stamp_mode(urg_t *urg)
         return;
     }
 
-    // TM2 を発行すめE    response(urg, "TM2\n", 4, expected, NULL, 0);
+    // TM2 を発行する
+    response(urg, "TM2\n", 4, expected, NULL, 0);
 }
 
 
@@ -206,7 +217,7 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
         return URG_NOT_CONNECTED;
     }
 
-    // 持E��されたタイプ�EパケチE��を生成し、E��信する
+    // 指定されたタイプのパケットを生成し、送信する
     // !!! GD, GS, (GI),
     // !!! MD, MS, MI
     // !!! (HD), (HS), (HI)
@@ -273,11 +284,14 @@ int urg_stop_measurement(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    // QT を発行すめE    connection_write(&urg->connection, "QT\n", 3);
+    // QT を発行する
+    connection_write(&urg->connection, "QT\n", 3);
     do {
-        // QT の応答が返されるまで、距離チE�Eタを読み捨てめE        ret = receive_data(urg, NULL, NULL, NULL);
+        // QT の応答が返されるまで、距離データを読み捨てる
+        ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == RECEIVE_DATA_QT) {
-            // 正常応筁E            return 0;
+            // 正常応答
+            return 0;
         }
     } while (ret != RECEIVE_DATA_TIMEOUT);
 
@@ -288,7 +302,7 @@ int urg_stop_measurement(urg_t *urg)
 int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
                                int skip_step)
 {
-    // 設定�E篁E��外を持E��したとき�E、エラーを返す
+    // 設定の範囲外を指定したときは、エラーを返す
     if (((skip_step < 0) || (skip_step >= 100)) ||
         (first_step > last_step) ||
         (first_step < urg->scanning_first_step) ||
@@ -329,7 +343,7 @@ int urg_laser_on(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    // 既にレーザが発光してぁE��とき�E、コマンドを送信しなぁE��ぁE��する
+    // 既にレーザが発光しているときは、コマンドを送信しないようにする
     // !!!
 
     return response(urg, "BM\n", 3, expected, NULL, 0);
