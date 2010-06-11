@@ -24,7 +24,7 @@ depend :
 $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_sensor.o) \
 	$(URG_C_LIB)(urg_utils.o) \
-	$(URG_C_LIB)(urg_connection.o) \
+	$(URG_C_LIB)(urg_communication.o) \
 	$(URG_C_LIB)(urg_serial_linux.o) \
 	$(URG_C_LIB)(urg_serial_utils.o) \
 	$(URG_C_LIB)(urg_ethernet.o) \
