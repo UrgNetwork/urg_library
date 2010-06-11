@@ -34,7 +34,7 @@ get_distance normal_measurement intensity_measurement multiecho_measurement calc
 
 # DO NOT DELETE
 
-calculate_xy.o: ../urg_sensor.h ../urg_connection.h ../urg_utils.h
-get_distance.o: ../urg_sensor.h ../urg_connection.h ../urg_utils.h
-sensor_parameter.o: ../urg_sensor.h ../urg_connection.h ../urg_utils.h
-sync_time_stamp.o: ../urg_sensor.h ../urg_connection.h ../urg_utils.h
+calculate_xy.o: ../urg_sensor.h ../urg_utils.h
+get_distance.o: ../urg_sensor.h ../urg_utils.h
+sensor_parameter.o: ../urg_sensor.h ../urg_utils.h
+sync_time_stamp.o: ../urg_sensor.h ../urg_utils.h
