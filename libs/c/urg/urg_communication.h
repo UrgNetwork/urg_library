@@ -128,6 +128,8 @@ int connection_write(connection_t *connection, const char *data, int size);
 
   timeout に負の値を指定した場合、タイムアウトは発生しない。
 
+  1 文字も受信しなかったときは #CONNECTION_TIMEOUT を返す。
+
   Example
   \code
   enum {
@@ -158,7 +160,7 @@ int connection_read(connection_t *connection,
 
   data には、'\\0' 終端された文字列が max_size を越えないバイト数だけ格納される。 つまり、受信できる文字のバイト数は、最大で max_size - 1 となる。
 
-  改行文字は '\\r', '\\n' とする。
+  改行文字は '\\r' または '\\n' とする。
 
   受信した最初の文字が改行の場合は、0 を返し、1 文字も受信しなかったときは #CONNECTION_TIMEOUT を返す。
 
