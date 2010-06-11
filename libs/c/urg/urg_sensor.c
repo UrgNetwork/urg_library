@@ -107,7 +107,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 }
 
 
-int urg_open(urg_t *urg, connection_type_t connection_type,
+int urg_open(urg_t *urg, communication_type_t communication_type,
              const char *device, long baudrate)
 {
     int ret;
@@ -115,9 +115,9 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
     urg->is_active = URG_FALSE;
 
     // デバイスへの接続
-    if (! connection_open(&urg->connection, connection_type,
+    if (! communication_open(&urg->communication, communication_type,
                           device, baudrate)) {
-        switch (connection_type) {
+        switch (communication_type) {
         case URG_SERIAL:
             urg->last_errno = URG_SERIAL_OPEN_ERROR;
             break;
@@ -128,7 +128,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
     }
 
     // 指定したボーレートで URG と通信できるように調整
-    if (connection_type == URG_SERIAL) {
+    if (communication_type == URG_SERIAL) {
         ret = connect_serial_device(urg, baudrate);
         if (ret < 0) {
             return ret;
@@ -146,7 +146,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
 
 void urg_close(urg_t *urg)
 {
-    connection_close(&urg->connection);
+    communication_close(&urg->communication);
     urg->is_active = URG_FALSE;
 }
 
@@ -278,7 +278,7 @@ int urg_stop_measurement(urg_t *urg)
     }
 
     // QT を発行する
-    connection_write(&urg->connection, "QT\n", 3);
+    communication_write(&urg->communication, "QT\n", 3);
     do {
         // QT の応答が返されるまで、距離データを読み捨てる
         ret = receive_data(urg, NULL, NULL, NULL);
