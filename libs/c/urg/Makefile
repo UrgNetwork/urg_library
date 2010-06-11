@@ -15,6 +15,8 @@ all : $(TARGET)
 
 clean :
 	$(RM) *.o $(TARGET)
+	cd samples/ && $(MAKE) clean
+	cd test/ && $(MAKE) clean
 
 depend :
 	makedepend -Y -- $(INCLUDES) -- $(wildcard *.h *.c)
