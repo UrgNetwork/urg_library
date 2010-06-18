@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
     (void)argc;
     (void)argv;
 
-    begin_test("checksum() test");
-    ASSERT_EQUAL_CHAR('P', checksum("00", 2));
-    end_test();
+    test_begin("checksum() test");
+    TEST_ASSERT_EQUAL_CHAR('P', checksum("00", 2));
+    test_end();
 
     // !!!
 

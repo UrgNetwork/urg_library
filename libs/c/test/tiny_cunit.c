@@ -11,20 +11,20 @@
 #include <stdlib.h>
 
 
-void begin_test(const char* test_name)
+void test_begin(const char* test_name)
 {
     printf("%s ... ", test_name);
 }
 
 
-void end_test(void)
+void test_end(void)
 {
     printf("O.K.\n");
 }
 
 
-void assert_equal_char(const char expected, const char actual,
-                       const char* src_file, int line_no)
+void test_assert_equal_char(const char expected, const char actual,
+                            const char* src_file, int line_no)
 {
     if (expected == actual) {
         return;

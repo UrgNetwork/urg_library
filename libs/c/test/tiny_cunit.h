@@ -11,11 +11,11 @@
 */
 
 
-void begin_test(const char* test_name);
-void end_test(void);
-void assert_equal_char(const char expected, const char actual,
-                       const char* src_file, int line_no);
+void test_begin(const char* test_name);
+void test_end(void);
+void test_assert_equal_char(const char expected, const char actual,
+                            const char* src_file, int line_no);
 
-#define ASSERT_EQUAL_CHAR(A, B) assert_equal_char(A, B, __FILE__, __LINE__)
+#define TEST_ASSERT_EQUAL_CHAR(A, B) test_assert_equal_char(A, B, __FILE__, __LINE__)
 
 #endif /* !TINY_CUNIT_H */
