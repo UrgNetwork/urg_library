@@ -28,17 +28,18 @@ enum {
 typedef struct
 {
 #if 0
-    // !!!
+    HANDLE hCom;                /*!< 接続リソース */
+    int current_timeout;        /*!< タイムアウトの設定時間 [msec] */
 #else
     int fd;
     struct termios sio;
-    ring_buffer_t ring;
+#endif
+
+    ring_buffer_t ring;         /*!< リングバッファ */
     char buffer[RING_BUFFER_SIZE_SHIFT];
-    char error_string[ERROR_MESSAGE_SIZE];
     char has_last_ch;          /*!< 書き戻した文字があるかのフラグ */
     char last_ch;              /*!< 書き戻した１文字 */
-#endif
-    // !!!
+    char error_string[ERROR_MESSAGE_SIZE];
 } serial_t;
 
 #endif /* !URG_SERIAL_T_H */
