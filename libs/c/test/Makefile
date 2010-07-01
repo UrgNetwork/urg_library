@@ -8,7 +8,7 @@ LDFLAGS =
 LDLIBS =
 
 # Target
-TARGET = urg_sensor_test
+TARGET = urg_sensor_test serial_test
 
 all : $(TARGET)
 
@@ -23,9 +23,11 @@ depend :
 
 .PHONY : all clean test depend
 ######################################################################
-$(TARGET) : tiny_cunit.o ../urg_communication.o ../urg_serial.o ../urg_ethernet.o
+$(TARGET) : tiny_cunit.o ../urg_communication.o ../urg_serial.o ../urg_ethernet.o ../urg_ring_buffer.o
+
 # DO NOT DELETE
 
+serial_test.o: ../urg_serial.h ../urg_serial_t.h ../urg_ring_buffer.h
 urg_sensor_test.o: ../urg_sensor.c ../urg_sensor.h ../urg_communication.h
-urg_sensor_test.o: ../urg_serial_t.h ../urg_ethernet_t.h ../urg_errno.h
-urg_sensor_test.o: tiny_cunit.h
+urg_sensor_test.o: ../urg_serial_t.h ../urg_ring_buffer.h ../urg_ethernet_t.h
+urg_sensor_test.o: ../urg_errno.h tiny_cunit.h
