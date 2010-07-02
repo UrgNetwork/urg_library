@@ -10,12 +10,13 @@
   $Id$
 */
 
-
-#if 0
+#include "urg_detect_os.h"
+#if defined(URG_WINDOWS_OS)
+#include <windows.h>
 #else
-#include "urg_ring_buffer.h"
 #include <termios.h>
 #endif
+#include "urg_ring_buffer.h"
 
 enum {
     RING_BUFFER_SIZE_SHIFT = 7,
@@ -27,7 +28,7 @@ enum {
 
 typedef struct
 {
-#if 0
+#if defined(URG_WINDOWS_OS)
     HANDLE hCom;                /*!< 接続リソース */
     int current_timeout;        /*!< タイムアウトの設定時間 [msec] */
 #else

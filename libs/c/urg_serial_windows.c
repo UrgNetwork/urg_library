@@ -8,15 +8,76 @@
 */
 
 #include "urg_serial.h"
+#include <stdio.h>
 
 
 static void serial_initialize(serial_t *serial)
 {
-    serial->hCom_ = INVALID_HANDLE_VALUE;
-    serial->errno_ = SerialNoError;
-    serial->has_last_ch_ = False;
+    serial->hCom = INVALID_HANDLE_VALUE;
+    serial->has_last_ch = False;
 
-    ring_initialize(&serial->ring_, serial->buffer_, RingBufferSizeShift);
+    ring_initialize(&serial->ring, serial->buffer, RING_BUFFER_SIZE_SHIFT);
+}
+
+
+/* ボーレートの変更 */
+static int serial_set_baudrate(serial_t *serial, long baudrate)
+{
+  long baudrate_value;
+  DCB dcb;
+
+  switch (baudrate) {
+
+  case 4800:
+    baudrate_value = CBR_4800;
+    break;
+
+  case 9600:
+    baudrate_value = CBR_9600;
+    break;
+
+  case 19200:
+    baudrate_value = CBR_19200;
+    break;
+
+  case 38400:
+    baudrate_value = CBR_38400;
+    break;
+
+  case 57600:
+    baudrate_value = CBR_57600;
+    break;
+
+  case 115200:
+    baudrate_value = CBR_115200;
+    break;
+
+  default:
+    baudrate_value = baudrate;
+  }
+
+  GetCommState(serial->hCom, &dcb);
+  dcb.BaudRate = baudrate_value;
+  dcb.ByteSize = 8;
+  dcb.Parity = NOPARITY;
+  dcb.fParity = FALSE;
+  dcb.StopBits = ONESTOPBIT;
+  SetCommState(serial->hCom, &dcb);
+
+  return 0;
+}
+
+
+static void set_timeout(serial_t *serial, int timeout)
+{
+  COMMTIMEOUTS timeouts;
+  GetCommTimeouts(serial->hCom, &timeouts);
+
+  timeouts.ReadIntervalTimeout = (timeout == 0) ? MAXDWORD : 0;
+  timeouts.ReadTotalTimeoutConstant = timeout;
+  timeouts.ReadTotalTimeoutMultiplier = 0;
+
+  SetCommTimeouts(serial->hCom, &timeouts);
 }
 
 
@@ -30,27 +91,28 @@ int serial_open(serial_t *serial, const char *device, long baudrate)
 
     /* COM ポートを開く */
     _snprintf(adjusted_device, NameLength, "\\\\.\\%s", device);
-    serial->hCom_ = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
+    serial->hCom = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
                                 0, NULL, OPEN_EXISTING,
                                 FILE_ATTRIBUTE_NORMAL, NULL);
 
-    if (serial->hCom_ == INVALID_HANDLE_VALUE) {
-        printf("open failed: %s\n", device);
-        return -1;
+    if (serial->hCom == INVALID_HANDLE_VALUE) {
+      // !!! store error_message buffer
+      printf("open failed: %s\n", device);
+      return -1;
     }
 
     /* 通信サイズの更新 */
-    SetupComm(serial->hCom_, 4096 * 8, 4096);
+    SetupComm(serial->hCom, 4096 * 8, 4096);
 
     /* ボーレートの変更 */
-    serial_setBaudrate(serial, baudrate);
+    serial_set_baudrate(serial, baudrate);
 
     /* シリアル制御構造体の初期化 */
-    serial->has_last_ch_ = False;
+    serial->has_last_ch = False;
 
     /* タイムアウトの設定 */
-    serial->current_timeout_ = 0;
-    setTimeout(serial, serial->current_timeout_);
+    serial->current_timeout = 0;
+    set_timeout(serial, serial->current_timeout);
 
     return 0;
 }
@@ -58,9 +120,9 @@ int serial_open(serial_t *serial, const char *device, long baudrate)
 
 void serial_close(serial_t *serial)
 {
-    if (serial->hCom_ != INVALID_HANDLE_VALUE) {
-        CloseHandle(serial->hCom_);
-        serial->hCom_ = INVALID_HANDLE_VALUE;
+    if (serial->hCom != INVALID_HANDLE_VALUE) {
+        CloseHandle(serial->hCom);
+        serial->hCom = INVALID_HANDLE_VALUE;
     }
 }
 
@@ -69,32 +131,31 @@ int serial_write(serial_t *serial, const char *data, int size)
 {
     DWORD n;
 
-    if (data_size < 0) {
+    if (size < 0) {
         return 0;
     }
 
-    if (! serial_isConnected(serial)) {
-        return SerialConnectionFail;
+    if (serial->hCom == INVALID_HANDLE_VALUE) {
+      return -1;
     }
 
-    WriteFile(serial->hCom_, data, (DWORD)data_size, &n, NULL);
+    WriteFile(serial->hCom, data, (DWORD)size, &n, NULL);
     return n;
 }
 
 
-static int internal_receive(char data[], int data_size_max,
+static int internal_receive(char data[], int max_size,
                             serial_t* serial, int timeout)
 {
     int filled = 0;
     DWORD n;
 
-    if (timeout != serial->current_timeout_) {
-        setTimeout(serial, timeout);
-        serial->current_timeout_ = timeout;
+    if (timeout != serial->current_timeout) {
+        set_timeout(serial, timeout);
+        serial->current_timeout = timeout;
     }
 
-    ReadFile(serial->hCom_, &data[filled],
-             (DWORD)data_size_max - filled, &n, NULL);
+    ReadFile(serial->hCom, &data[filled], (DWORD)max_size - filled, &n, NULL);
 
     return filled + n;
 }
@@ -106,47 +167,47 @@ int serial_read(serial_t *serial, char *data, int max_size, int timeout)
     int buffer_size;
     int read_n;
 
-    if (data_size_max <= 0) {
+    if (max_size <= 0) {
         return 0;
     }
 
     /* 書き戻した１文字があれば、書き出す */
-    if (serial->has_last_ch_) {
-        data[0] = serial->last_ch_;
-        serial->has_last_ch_ = False;
+    if (serial->has_last_ch) {
+        data[0] = serial->last_ch;
+        serial->has_last_ch = False;
         ++filled;
     }
 
-    if (! serial_isConnected(serial)) {
+    if (serial->hCom == INVALID_HANDLE_VALUE) {
         if (filled > 0) {
             return filled;
         }
-        return SerialConnectionFail;
+        return -1;
     }
 
-    buffer_size = ring_size(&serial->ring_);
-    read_n = data_size_max - filled;
+    buffer_size = ring_size(&serial->ring);
+    read_n = max_size - filled;
     if (buffer_size < read_n) {
         // リングバッファ内のデータで足りなければ、データを読み足す
-        char buffer[RingBufferSize];
+        char buffer[RING_BUFFER_SIZE];
         int n = internal_receive(buffer,
-                                 ring_capacity(&serial->ring_) - buffer_size,
+                                 ring_capacity(&serial->ring) - buffer_size,
                                  serial, 0);
-        ring_write(&serial->ring_, buffer, n);
+        ring_write(&serial->ring, buffer, n);
     }
-    buffer_size = ring_size(&serial->ring_);
+    buffer_size = ring_size(&serial->ring);
 
     // リングバッファ内のデータを返す
     if (read_n > buffer_size) {
         read_n = buffer_size;
     }
     if (read_n > 0) {
-        ring_read(&serial->ring_, &data[filled], read_n);
+      ring_read(&serial->ring, &data[filled], read_n);
         filled += read_n;
     }
 
     // データをタイムアウト付きで読み出す
     filled += internal_receive(&data[filled],
-                               data_size_max - filled, serial, timeout);
+                               max_size - filled, serial, timeout);
     return filled;
 }
