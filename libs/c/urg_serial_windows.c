@@ -22,61 +22,61 @@ static void serial_initialize(serial_t *serial)
 /* ボーレートの変更 */
 static int serial_set_baudrate(serial_t *serial, long baudrate)
 {
-  long baudrate_value;
-  DCB dcb;
+    long baudrate_value;
+    DCB dcb;
 
-  switch (baudrate) {
+    switch (baudrate) {
 
-  case 4800:
-    baudrate_value = CBR_4800;
-    break;
+    case 4800:
+        baudrate_value = CBR_4800;
+        break;
 
-  case 9600:
-    baudrate_value = CBR_9600;
-    break;
+    case 9600:
+        baudrate_value = CBR_9600;
+        break;
 
-  case 19200:
-    baudrate_value = CBR_19200;
-    break;
+    case 19200:
+        baudrate_value = CBR_19200;
+        break;
 
-  case 38400:
-    baudrate_value = CBR_38400;
-    break;
+    case 38400:
+        baudrate_value = CBR_38400;
+        break;
 
-  case 57600:
-    baudrate_value = CBR_57600;
-    break;
+    case 57600:
+        baudrate_value = CBR_57600;
+        break;
 
-  case 115200:
-    baudrate_value = CBR_115200;
-    break;
+    case 115200:
+        baudrate_value = CBR_115200;
+        break;
 
-  default:
-    baudrate_value = baudrate;
-  }
+    default:
+        baudrate_value = baudrate;
+    }
 
-  GetCommState(serial->hCom, &dcb);
-  dcb.BaudRate = baudrate_value;
-  dcb.ByteSize = 8;
-  dcb.Parity = NOPARITY;
-  dcb.fParity = FALSE;
-  dcb.StopBits = ONESTOPBIT;
-  SetCommState(serial->hCom, &dcb);
+    GetCommState(serial->hCom, &dcb);
+    dcb.BaudRate = baudrate_value;
+    dcb.ByteSize = 8;
+    dcb.Parity = NOPARITY;
+    dcb.fParity = FALSE;
+    dcb.StopBits = ONESTOPBIT;
+    SetCommState(serial->hCom, &dcb);
 
-  return 0;
+    return 0;
 }
 
 
 static void set_timeout(serial_t *serial, int timeout)
 {
-  COMMTIMEOUTS timeouts;
-  GetCommTimeouts(serial->hCom, &timeouts);
+    COMMTIMEOUTS timeouts;
+    GetCommTimeouts(serial->hCom, &timeouts);
 
-  timeouts.ReadIntervalTimeout = (timeout == 0) ? MAXDWORD : 0;
-  timeouts.ReadTotalTimeoutConstant = timeout;
-  timeouts.ReadTotalTimeoutMultiplier = 0;
+    timeouts.ReadIntervalTimeout = (timeout == 0) ? MAXDWORD : 0;
+    timeouts.ReadTotalTimeoutConstant = timeout;
+    timeouts.ReadTotalTimeoutMultiplier = 0;
 
-  SetCommTimeouts(serial->hCom, &timeouts);
+    SetCommTimeouts(serial->hCom, &timeouts);
 }
 
 
@@ -91,13 +91,13 @@ int serial_open(serial_t *serial, const char *device, long baudrate)
     /* COM ポートを開く */
     _snprintf(adjusted_device, NameLength, "\\\\.\\%s", device);
     serial->hCom = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
-                                0, NULL, OPEN_EXISTING,
-                                FILE_ATTRIBUTE_NORMAL, NULL);
+                               0, NULL, OPEN_EXISTING,
+                               FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (serial->hCom == INVALID_HANDLE_VALUE) {
-      // !!! store error_message buffer
-      printf("open failed: %s\n", device);
-      return -1;
+        // !!! store error_message buffer
+        printf("open failed: %s\n", device);
+        return -1;
     }
 
     /* 通信サイズの更新 */
@@ -135,7 +135,7 @@ int serial_write(serial_t *serial, const char *data, int size)
     }
 
     if (serial->hCom == INVALID_HANDLE_VALUE) {
-      return -1;
+        return -1;
     }
 
     WriteFile(serial->hCom, data, (DWORD)size, &n, NULL);
@@ -201,7 +201,7 @@ int serial_read(serial_t *serial, char *data, int max_size, int timeout)
         read_n = buffer_size;
     }
     if (read_n > 0) {
-      ring_read(&serial->ring, &data[filled], read_n);
+        ring_read(&serial->ring, &data[filled], read_n);
         filled += read_n;
     }
 
