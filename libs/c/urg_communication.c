@@ -8,8 +8,6 @@
 */
 
 #include "urg_communication.h"
-#include "urg_serial.h"
-#include "urg_ethernet.h"
 
 
 int communication_open(communication_t *communication,

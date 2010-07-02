@@ -1,7 +1,15 @@
 #ifndef URG_DETECT_OS_H
 #define URG_DETECT_OS_H
 
-// !!!
+/*!
+  \file
+  \brief OS の検出
+
+  \author Satofumi KAMIMURA
+
+  $Id$
+*/
+
 
 #if defined _MSC_VER || defined __CYGWIN__ || defined __MINGW32__
 #define URG_WINDOWS_OS

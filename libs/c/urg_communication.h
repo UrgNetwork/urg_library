@@ -11,7 +11,7 @@
 */
 
 #include "urg_serial.h"
-#include "urg_ethernet_t.h"
+#include "urg_ethernet.h"
 
 
 /*! 定数定義 */

@@ -30,4 +30,4 @@ $(TARGET) : tiny_cunit.o ../urg_communication.o ../urg_serial.o ../urg_ethernet.
 serial_test.o: ../urg_serial.h ../urg_detect_os.h ../urg_ring_buffer.h
 urg_sensor_test.o: ../urg_sensor.c ../urg_sensor.h ../urg_communication.h
 urg_sensor_test.o: ../urg_serial.h ../urg_detect_os.h ../urg_ring_buffer.h
-urg_sensor_test.o: ../urg_ethernet_t.h ../urg_errno.h tiny_cunit.h
+urg_sensor_test.o: ../urg_errno.h tiny_cunit.h

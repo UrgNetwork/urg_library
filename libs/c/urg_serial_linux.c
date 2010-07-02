@@ -7,7 +7,6 @@
   $Id$
 */
 
-#include "urg_serial.h"
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>

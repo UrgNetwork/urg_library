@@ -10,7 +10,11 @@
   $Id$
 */
 
-#include "urg_ethernet_t.h"
+
+typedef struct
+{
+    // !!!
+} ethernet_t;
 
 
 int ethernet_open(ethernet_t *ethernet, const char *address, long port);
