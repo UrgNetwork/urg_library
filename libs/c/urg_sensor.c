@@ -13,6 +13,7 @@
 #include <stddef.h>
 #include <string.h>
 
+
 enum {
     URG_FALSE = 0,
     URG_TRUE = 1,
@@ -27,17 +28,64 @@ enum {
 };
 
 
-// !!! ボーレートを変更しながら接続を行う
+static int scip_response(urg_t *urg, const char* command,
+                         const int expected_ret[],
+                         char receive_buffer[], int receive_buffer_max_size)
+{
+    (void)urg;
+    (void)command;
+    (void)expected_ret;
+    (void)receive_buffer;
+    (void)receive_buffer_max_size;
+    // !!!
+
+    // !!! communication_write(, command, command_size);
+
+    // !!! communication_readline(, );
+
+    // !!! receive_buffer は '\0' 終端させる
+    // !!! 改行は取り除く
+
+    return -1;
+}
+
+
+// !!! ボーレートを変更しながら接続する
 static int connect_serial_device(urg_t *urg, long baudrate)
 {
     (void)urg;
     (void)baudrate;
     // !!!
 
+    // !!! long try_baudrate[] = { 19200, 38400, 115200 };
+    // !!! try_size =
+    for (;;) {
+        // !!!
+
+        // !!! QT を送信し、応答が返されるかでボーレートが一致しているかを
+        // !!! 確認する
+
+        // !!! scip_response("QT\n", 3, ...);
+
+        // !!! QT
+        // !!! - SIP1.1 の場合は E エラーが発生する
+        // !!!   - "SIP2.0" を送信する
+        // !!!
+        // !!! - 応答が 00P に一致しない場合は、連続データ取得中だったとみなし
+        // !!!
+
+        // !!! SS
+
+        if (0) {
+            return 0;
+        }
+    }
+
     return -1;
 }
 
 
+// PP コマンドの応答を urg_t に格納する
 static int receive_parameter(urg_t *urg)
 {
     (void)urg;
@@ -47,27 +95,8 @@ static int receive_parameter(urg_t *urg)
 }
 
 
-static int response(urg_t *urg, const char* command, int command_size,
-                    const int expected_ret[],
-                    char receive_buffer[], int receive_buffer_max_size)
-{
-    (void)urg;
-    (void)command;
-    (void)command_size;
-    (void)expected_ret;
-    (void)receive_buffer;
-    (void)receive_buffer_max_size;
-    // !!!
-
-    // !!! receive_buffer は '\0' 終端させる
-    // !!! 改行は取り除く
-
-    return -1;
-}
-
-
 //! チェックサムの計算
-static char checksum(const char buffer[], int size)
+static char scip_checksum(const char buffer[], int size)
 {
     unsigned char sum = 0x00;
     int i;
@@ -76,13 +105,13 @@ static char checksum(const char buffer[], int size)
         sum += buffer[i];
     }
 
-    // SCIP 仕様書を参照のこと
+    // 計算の意味は SCIP 仕様書を参照のこと
     return (sum & 0x3f) + 0x30;
 }
 
 
 //! SCIP 文字列のデコード
-static long decode(const char buffer[], int size)
+static long scip_decode(const char buffer[], int size)
 {
     (void)buffer;
     (void)size;
@@ -164,7 +193,7 @@ int urg_start_time_stamp_mode(urg_t *urg)
     }
 
     // TM0 を発行する
-    return response(urg, "TM0\n", 4, expected, NULL, 0);
+    return scip_response(urg, "TM0\n", expected, NULL, 0);
 }
 
 
@@ -178,7 +207,7 @@ long urg_time_stamp(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    ret = response(urg, "TM1\n", 4, expected, buffer, BUFFER_SIZE);
+    ret = scip_response(urg, "TM1\n", expected, buffer, BUFFER_SIZE);
     if (ret < 0) {
         return ret;
     }
@@ -187,10 +216,10 @@ long urg_time_stamp(urg_t *urg)
     if (strlen(buffer) != 5) {
         return URG_RECEIVE_ERROR;
     }
-    if (buffer[5] == checksum(buffer, 4)) {
+    if (buffer[5] == scip_checksum(buffer, 4)) {
         return URG_CHECKSUM_ERROR;
     }
-    return decode(buffer, 4);
+    return scip_decode(buffer, 4);
 }
 
 
@@ -203,7 +232,7 @@ void urg_stop_time_stamp_mode(urg_t *urg)
     }
 
     // TM2 を発行する
-    response(urg, "TM2\n", 4, expected, NULL, 0);
+    scip_response(urg, "TM2\n", expected, NULL, 0);
 }
 
 
@@ -343,7 +372,7 @@ int urg_laser_on(urg_t *urg)
     // 既にレーザが発光しているときは、コマンドを送信しないようにする
     // !!!
 
-    return response(urg, "BM\n", 3, expected, NULL, 0);
+    return scip_response(urg, "BM\n", expected, NULL, 0);
 }
 
 

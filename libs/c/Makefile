@@ -52,7 +52,7 @@ urg_ring_buffer.o: urg_ring_buffer.h
 urg_sensor.o: urg_sensor.h urg_communication.h urg_serial.h urg_detect_os.h
 urg_sensor.o: urg_ring_buffer.h urg_ethernet_t.h urg_errno.h
 urg_serial.o: urg_serial.h urg_detect_os.h urg_ring_buffer.h
-urg_serial.o: urg_serial_windows.c
+urg_serial.o: urg_serial_linux.c
 urg_serial_linux.o: urg_serial.h urg_detect_os.h urg_ring_buffer.h
 urg_serial_utils.o: urg_serial_utils_linux.c urg_serial_utils.h
 urg_serial_utils_linux.o: urg_serial_utils.h

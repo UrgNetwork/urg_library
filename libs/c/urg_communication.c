@@ -32,20 +32,29 @@ int communication_open(communication_t *communication,
 
 void communication_close(communication_t *communication)
 {
-    (void)communication;
-    // !!!
+    switch (communication->type) {
+    case URG_SERIAL:
+        serial_close(&communication->serial);
+        break;
+
+    case URG_ETHERNET:
+        ethernet_close(&communication->ethernet);
+        break;
+    }
 }
 
 
 int communication_write(communication_t *communication,
                         const char *data, int size)
 {
-    (void)communication;
-    (void)data;
-    (void)size;
-
-    // !!!
-
+    switch (communication->type) {
+    case URG_SERIAL:
+        return serial_write(&communication->serial, data, size);
+        break;
+    case URG_ETHERNET:
+        return ethernet_write(&communication->ethernet, data, size);
+        break;
+    }
     return -1;
 }
 
@@ -53,13 +62,14 @@ int communication_write(communication_t *communication,
 int communication_read(communication_t *communication,
                        char *data, int max_size, int timeout)
 {
-    (void)communication;
-    (void)data;
-    (void)max_size;
-    (void)timeout;
-
-    // !!!
-
+    switch (communication->type) {
+    case URG_SERIAL:
+        return serial_read(&communication->serial, data, max_size, timeout);
+        break;
+    case URG_ETHERNET:
+        return ethernet_read(&communication->ethernet, data, max_size, timeout);
+        break;
+    }
     return -1;
 }
 
@@ -67,11 +77,14 @@ int communication_read(communication_t *communication,
 int communication_readline(communication_t *communication,
                            char *data, int max_size, int timeout)
 {
-    (void)communication;
-    (void)data;
-    (void)max_size;
-    (void)timeout;
-    // !!!
-
+    switch (communication->type) {
+    case URG_SERIAL:
+        return serial_readline(&communication->serial, data, max_size, timeout);
+        break;
+    case URG_ETHERNET:
+        return ethernet_readline(&communication->ethernet,
+                                 data, max_size, timeout);
+        break;
+    }
     return -1;
 }

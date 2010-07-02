@@ -16,18 +16,8 @@
 
 /*! 定数定義 */
 enum {
-    COMMUNICATION_TIMEOUT = -1,    //!< タイムアウト発生エラー
+    URG_COMMUNICATION_TIMEOUT = -1,    //!< タイムアウト発生エラー
 };
-
-
-/*! 通信リソースの管理 */
-typedef struct
-{
-    serial_t serial;
-    ethernet_t ethernet;
-
-    // !!!
-} communication_t;
 
 
 /*! 通信タイプ */
@@ -35,6 +25,15 @@ typedef enum {
     URG_SERIAL,                 /*!< シリアル通信 */
     URG_ETHERNET,               /*!< イーサーネット通信 */
 } communication_type_t;
+
+
+/*! 通信リソースの管理 */
+typedef struct
+{
+    communication_type_t type;
+    serial_t serial;
+    ethernet_t ethernet;
+} communication_t;
 
 
 /*!
