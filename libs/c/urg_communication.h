@@ -10,7 +10,7 @@
   $Id$
 */
 
-#include "urg_serial_t.h"
+#include "urg_serial.h"
 #include "urg_ethernet_t.h"
 
 

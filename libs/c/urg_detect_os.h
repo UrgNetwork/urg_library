@@ -2,6 +2,16 @@
 #define URG_DETECT_OS_H
 
 // !!!
+
+#if defined _MSC_VER || defined __CYGWIN__ || defined __MINGW32__
 #define URG_WINDOWS_OS
+
+#elif defined __linux__
+#define URG_LINUX_OS
+
+#else
+// 検出できないときを、Mac 扱いにしてしまう
+#define MAC_OS
+#endif
 
 #endif /* !URG_DETECT_OS_H */
