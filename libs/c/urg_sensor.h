@@ -424,12 +424,12 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
   距離データをセンサから受信の際のデータサイズを変更します。
 
   \param[in,out] urg URG センサ管理
-  \param[in] data_size 距離値を表現するデータのバイト数
+  \param[in] range_data_byte 距離値を表現するデータのバイト数
 
   \retval 0 成功
   \retval <0 エラー
 
-  data_size には
+  range_data_byte には
 
   - URG_COMMUNICATION_3_BYTE ... 距離を 3 byte で表現する
   - URG_COMMUNICATION_2_BYTE ... 距離を 2 byte で表現する
