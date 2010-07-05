@@ -12,6 +12,7 @@
 #include "urg_errno.h"
 #include <stddef.h>
 #include <string.h>
+#include <stdio.h>
 
 
 enum {
@@ -134,7 +135,10 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // !!! - エラー
     // !!! - 受信したデータ数
     // !!! - QT, RS, RT の応答を受信した
-    // !!! (RS, RT で受信が中断するかを確認すること。まぁ、使わないけど)
+
+    // !!! urg->scanning_remain_times をデクリメントするか
+    // !!! SCIP 中の応答から残り回数を取得する
+    // !!! どちらを使うかは specified_scan_times を利用する
 
     return -1;
 }
@@ -170,7 +174,9 @@ int urg_open(urg_t *urg, communication_type_t communication_type,
 
     // 変数の初期化
     urg->last_errno = URG_NO_ERROR;
-    urg->communication_data_size = URG_COMMUNICATION_3_BYTE;
+    urg->range_data_byte = URG_COMMUNICATION_3_BYTE;
+    urg->specified_scan_times = 0;
+    urg->scanning_remain_times = 0;
 
     // パラメータ情報を取得
     return receive_parameter(urg);
@@ -236,6 +242,71 @@ void urg_stop_time_stamp_mode(urg_t *urg)
 }
 
 
+static int send_distance_command(urg_t *urg,
+                                 int scan_times, int skip_scan)
+{
+    (void)urg;
+    (void)skip_scan;
+    // !!!
+
+    char buffer[BUFFER_SIZE];
+    int actual_scan_times = (scan_times < 0) ? 0 : scan_times;
+    char range_byte_ch =
+        (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 'S' : 'D';
+    int write_size = 0;
+
+    urg->scanning_remain_times = scan_times;
+    if (actual_scan_times == 1) {
+        // GD, GS
+        write_size = snprintf(buffer, BUFFER_SIZE, "G%c%04d%04d%02d\n",
+                              range_byte_ch,
+                              urg->scanning_first_step, urg->scanning_last_step,
+                              urg->scanning_skip_step);
+    } else {
+        // MD, MS
+        write_size = snprintf(buffer, BUFFER_SIZE, "M%c%04d%04d%02d%01d%02d\n",
+                              range_byte_ch,
+                              urg->scanning_first_step, urg->scanning_last_step,
+                              urg->scanning_skip_step,
+                              skip_scan, scan_times);
+    }
+    return communication_write(&urg->communication, buffer, write_size);
+}
+
+
+static int send_distance_intensity_command(urg_t *urg,
+                                           int scan_times, int skip_scan)
+{
+    (void)urg;
+    (void)scan_times;
+    (void)skip_scan;
+    // !!!
+    return -1;
+}
+
+
+static int send_multiecho_command(urg_t *urg,
+                                  int scan_times, int skip_scan)
+{
+    (void)urg;
+    (void)scan_times;
+    (void)skip_scan;
+    // !!!
+    return -1;
+}
+
+
+static int send_multiecho_intensity_command(urg_t *urg,
+                                            int scan_times, int skip_scan)
+{
+    (void)urg;
+    (void)scan_times;
+    (void)skip_scan;
+    // !!!
+    return -1;
+}
+
+
 int urg_start_measurement(urg_t *urg, measurement_type_t type,
                           int scan_times, int skip_scan)
 {
@@ -243,16 +314,28 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
         return URG_NOT_CONNECTED;
     }
 
-    // 指定されたタイプのパケットを生成し、送信する
-    // !!! GD, GS, (GI),
-    // !!! MD, MS, MI
-    // !!! (HD), (HS), (HI)
-    // !!! ND, NS, NI
+    if ((skip_scan < 0) || (skip_scan > 9)) {
+        return URG_INVALID_PARAMETER;
+    }
 
-    (void)type;
-    (void)scan_times;
-    (void)skip_scan;
-    // !!!
+    // 指定されたタイプのパケットを生成し、送信する
+    switch (type) {
+    case URG_DISTANCE:
+        send_distance_command(urg, scan_times, skip_scan);
+        break;
+
+    case URG_DISTANCE_INTENSITY:
+        send_distance_intensity_command(urg, scan_times, skip_scan);
+        break;
+
+    case URG_MULTIECHO:
+        send_multiecho_command(urg, scan_times, skip_scan);
+        break;
+
+    case URG_MULTIECHO_INTENSITY:
+        send_multiecho_intensity_command(urg, scan_times, skip_scan);
+        break;
+    }
 
     return -1;
 }
@@ -344,18 +427,19 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 }
 
 
-int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size)
+int urg_set_communication_data_size(urg_t *urg,
+                                    range_data_byte_t range_data_byte)
 {
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
 
-    if ((data_size != URG_COMMUNICATION_3_BYTE) ||
-        (data_size != URG_COMMUNICATION_2_BYTE)) {
+    if ((range_data_byte != URG_COMMUNICATION_3_BYTE) ||
+        (range_data_byte != URG_COMMUNICATION_2_BYTE)) {
         return URG_DATA_SIZE_PARAMETER_ERROR;
     }
 
-    urg->communication_data_size = data_size;
+    urg->range_data_byte = range_data_byte;
 
     return 0;
 }
@@ -385,6 +469,12 @@ int urg_laser_off(urg_t *urg)
 int urg_reboot(urg_t *urg)
 {
     (void)urg;
+    // !!!
+
+    // RB コマンドを２回送信する
+    // !!!
+
+    // ２回目の RB 送信後、１秒以内に接続を切断する
     // !!!
 
     return -1;

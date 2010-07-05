@@ -71,7 +71,7 @@ void urg_distance_min_max(const urg_t *urg,
 
     // urg_set_communication_data_size() を反映した距離を返す
     *max_distance =
-        (urg->communication_data_size == URG_COMMUNICATION_2_BYTE) ?
+        (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
         max(urg->max_distance, 4095) : urg->max_distance;
 }
 

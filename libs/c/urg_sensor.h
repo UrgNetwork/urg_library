@@ -15,6 +15,27 @@
 #include "urg_communication.h"
 
 
+/*! 計測タイプ */
+typedef enum {
+    URG_DISTANCE,               /*!< 距離 */
+    URG_DISTANCE_INTENSITY,     /*!< 距離 + 強度 */
+    URG_MULTIECHO,              /*!< マルチエコーの距離 */
+    URG_MULTIECHO_INTENSITY,    /*!< マルチエコーの(距離 + 強度) */
+} measurement_type_t;
+
+
+/*! 距離を何 byte で表現するかの指定 */
+typedef enum {
+    URG_COMMUNICATION_3_BYTE,   /*!< 距離を 3 byte で表現する */
+    URG_COMMUNICATION_2_BYTE,   /*!< 距離を 2 byte で表現する */
+} range_data_byte_t;
+
+
+enum {
+    URG_SCAN_INFINITY = 0,      /*!< 無限回のデータ取得 */
+};
+
+
 /*! URG センサ管理 */
 typedef struct
 {
@@ -29,32 +50,14 @@ typedef struct
     int scanning_first_step;
     int scanning_last_step;
     int scanning_skip_step;
-    int communication_data_size;
+    range_data_byte_t range_data_byte;
+
+    int specified_scan_times;
+    int scanning_remain_times;
 
     // !!! 共通のパラメータは、この構造体で管理する
     char dummy;
 } urg_t;
-
-
-/*! 計測タイプ */
-typedef enum {
-    URG_DISTANCE,               /*!< 距離 */
-    URG_DISTANCE_INTENSITY,     /*!< 距離 + 強度 */
-    URG_MULTIECHO,              /*!< マルチエコーの距離 */
-    URG_MULTIECHO_iNTENSITY     /*!< マルチエコーの(距離 + 強度) */
-} measurement_type_t;
-
-
-/*! 距離を何 byte で表現するかの指定 */
-typedef enum {
-    URG_COMMUNICATION_3_BYTE,   /*!< 距離を 3 byte で表現する */
-    URG_COMMUNICATION_2_BYTE,   /*!< 距離を 2 byte で表現する */
-} range_byte_t;
-
-
-enum {
-    URG_SCAN_INFINITY = 0,      /*!< 無限回のデータ取得 */
-};
 
 
 /*!
@@ -434,7 +437,8 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
   を指定できます。\n
   初期状態では距離を 3 byte で表現するようになっています。この設定を 2 byte に設定することで、センサから受信するデータ数は 2/3 になります。ただし、取得できる距離の最大値が 4095 になるため、観測したい対象が 4 [m] 以内の範囲に存在する場合のみ利用して下さい。
 */
-int urg_set_communication_data_size(urg_t *urg, range_byte_t data_size);
+int urg_set_communication_data_size(urg_t *urg,
+                                    range_data_byte_t range_data_byte);
 
 
 /*! レーザを発光させる */
