@@ -12,6 +12,7 @@
 #include "urg_errno.h"
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 
@@ -23,6 +24,9 @@ enum {
 
     EXPECTED_END = -1,
 
+    ECHOBACK_ERROR = -1,
+    UNEXPECTED_RET = -2,
+
     RECEIVE_DATA_TIMEOUT,
     RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
     RECEIVE_DATA_QT,            /*!< QT 応答を受信 */
@@ -31,6 +35,7 @@ enum {
 };
 
 
+// 受信した応答の行数を返す
 static int scip_response(urg_t *urg, const char* command,
                          const int expected_ret[], int timeout,
                          char *receive_buffer, int receive_buffer_max_size)
@@ -43,27 +48,59 @@ static int scip_response(urg_t *urg, const char* command,
     char *p = receive_buffer;
     char buffer[BUFFER_SIZE];
     int filled_size = 0;
+    int line_no = 0;
+    int ret_val = UNEXPECTED_RET;
+
+    fprintf(stderr, "write: %s", command);
 
     int write_size = strlen(command);
     int n = connection_write(&urg->connection, command, write_size);
     if (n != write_size) {
         // !!!
-        return -1;
+        return ECHOBACK_ERROR;
     }
 
-    // !!! receive_buffer に BUFEER_SIZE 以上の空きがあるときは、直接格納する
-
-    n = connection_readline(&urg->connection,
-                            buffer, BUFFER_SIZE, timeout);
-    fprintf(stderr, "n = %d\n", n);
-
-    if (p && (n > receive_buffer_max_size - filled_size)) {
-        memcpy(p, buffer, n);
-        p += n;
-        *p++ = '\0';
+    if (p) {
+        *p = '\0';
     }
 
-    return -1;
+    do {
+        // !!! receive_buffer に BUFEER_SIZE 以上の空きがあるときは、直接格納する
+        n = connection_readline(&urg->connection,
+                                buffer, BUFFER_SIZE, timeout);
+
+        // チェックサムの評価
+        // !!!
+
+        fprintf(stderr, "line_no = %d, n = %d: %s\n", line_no, n, buffer);
+
+        if (line_no == 0) {
+            // 送信文字と受信文字が一致するかを確認する
+            // !!!
+
+        } else if (p && (n < (receive_buffer_max_size - filled_size))) {
+            memcpy(p, buffer, n);
+            p += n;
+            *p++ = '\0';
+            fprintf(stderr, "buffer: %s\n", receive_buffer);
+        }
+
+        // ステータス応答を評価して、戻り値を決定する
+        if ((line_no == 1) && (n == 3)) {
+            int i;
+            int actual_ret = strtol(buffer, NULL, 10);
+            for (i = 0; expected_ret[i] != EXPECTED_END; ++i) {
+                if (expected_ret[i] == actual_ret) {
+                    ret_val = 0;
+                    break;
+                }
+            }
+        }
+
+        ++line_no;
+    } while (n > 0);
+
+    return (ret_val < 0) ? ret_val : (line_no - 1);
 }
 
 
@@ -95,27 +132,32 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
-        fprintf(stderr, "%d: %s\n", strlen(receive_buffer), receive_buffer);
-        if (ret != 0) {
-            if (1) {
-                // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
+        fprintf(stderr, "ret = %d: %s\n", strlen(receive_buffer), receive_buffer);
+        if (ret <= 0) {
+            if (ret == UNEXPECTED_RET) {
+                // 異常なエコーバックのときは、距離データ受信中とみなして
+                // データを読み飛ばす
+                // !!! 最後の応答が QT だったら、正常応答とみなす
                 // !!!
-            } else if (0) {
-                // データを受信した場合は、距離データ受信中とみなし、データを読み飛ばす
-                // !!!
+
             } else {
-                // ボーレートを変更して、再度接続を行う
+                // 応答がないときは、ボーレートを変更して、再度接続を行う
                 continue;
             }
         } else {
-            // 正常に接続
-            // !!!
-        }
+            if (! strcmp("E", receive_buffer)) {
+                int scip20_expected[] = { 0, EXPECTED_END };
 
-        // !!! SS
-
-        if (0) {
-            return 0;
+                // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
+                ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
+                                    MAX_TIMEOUT, NULL, 0);
+                // !!!
+                fprintf(stderr, "send SCIP2.0: %d\n", ret);
+            } else if (! strcmp("00P", receive_buffer)) {
+                // 正常に接続。センサとホストのボーレートを変更して戻る
+                // !!!
+                return 0;
+            }
         }
     }
 
@@ -132,7 +174,7 @@ static int receive_parameter(urg_t *urg)
 
     urg->timeout = 100;
 
-    return -1;
+    return 0;
 }
 
 
