@@ -31,18 +31,20 @@ const char *urg_error(const urg_t *urg)
 
 
     error_messages_t errors[] = {
-        { URG_NO_ERROR, "Not implemented." },
-        { URG_UNKNOWN_ERROR, "Not implemented." },
-        { URG_NOT_CONNECTED, "Not implemented." },
-        { URG_NOT_IMPLEMENTED, "Not implemented." },
-        { URG_INVALID_RESPONSE, "Not implemented." },
-        { URG_RECEIVE_ERROR, "Not implemented." },
-        { URG_CHECKSUM_ERROR, "Not implemented." },
+        { URG_NO_ERROR, "no error." },
+        { URG_UNKNOWN_ERROR, "unknown error." },
+        { URG_NOT_CONNECTED, "not connected." },
+        { URG_NOT_IMPLEMENTED, "not implemented." },
+        { URG_INVALID_RESPONSE, "invalid response." },
+        { URG_SEND_ERROR, "send error." },
+        { URG_RECEIVE_ERROR, "receive error." },
+        { URG_CHECKSUM_ERROR, "checksum error." },
 
-        { URG_SERIAL_OPEN_ERROR, "Not implemented." },
-        { URG_ETHERNET_OPEN_ERROR, "Not implemented." },
-        { URG_SCANNING_PARAMETER_ERROR, "Not implemented." },
-        { URG_DATA_SIZE_PARAMETER_ERROR, "Not implemented." },
+        { URG_SERIAL_OPEN_ERROR, "could not open serial device." },
+        { URG_NOT_DETECT_BAUDRATE_ERROR, "could not detect serial baudrate." },
+        { URG_ETHERNET_OPEN_ERROR, "could not open ethernet port." },
+        { URG_SCANNING_PARAMETER_ERROR, "scanning parameter error." },
+        { URG_DATA_SIZE_PARAMETER_ERROR, "data size parameter error." },
     };
 
     int n = sizeof(errors) / sizeof(errors[0]);

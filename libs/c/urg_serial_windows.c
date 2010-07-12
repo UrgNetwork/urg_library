@@ -19,54 +19,6 @@ static void serial_initialize(serial_t *serial)
 }
 
 
-/* ボーレートの変更 */
-static int serial_set_baudrate(serial_t *serial, long baudrate)
-{
-    long baudrate_value;
-    DCB dcb;
-
-    switch (baudrate) {
-
-    case 4800:
-        baudrate_value = CBR_4800;
-        break;
-
-    case 9600:
-        baudrate_value = CBR_9600;
-        break;
-
-    case 19200:
-        baudrate_value = CBR_19200;
-        break;
-
-    case 38400:
-        baudrate_value = CBR_38400;
-        break;
-
-    case 57600:
-        baudrate_value = CBR_57600;
-        break;
-
-    case 115200:
-        baudrate_value = CBR_115200;
-        break;
-
-    default:
-        baudrate_value = baudrate;
-    }
-
-    GetCommState(serial->hCom, &dcb);
-    dcb.BaudRate = baudrate_value;
-    dcb.ByteSize = 8;
-    dcb.Parity = NOPARITY;
-    dcb.fParity = FALSE;
-    dcb.StopBits = ONESTOPBIT;
-    SetCommState(serial->hCom, &dcb);
-
-    return 0;
-}
-
-
 static void set_timeout(serial_t *serial, int timeout)
 {
     COMMTIMEOUTS timeouts;
@@ -123,6 +75,53 @@ void serial_close(serial_t *serial)
         CloseHandle(serial->hCom);
         serial->hCom = INVALID_HANDLE_VALUE;
     }
+}
+
+
+int serial_set_baudrate(serial_t *serial, long baudrate)
+{
+    long baudrate_value;
+    DCB dcb;
+
+    switch (baudrate) {
+
+    case 4800:
+        baudrate_value = CBR_4800;
+        break;
+
+    case 9600:
+        baudrate_value = CBR_9600;
+        break;
+
+    case 19200:
+        baudrate_value = CBR_19200;
+        break;
+
+    case 38400:
+        baudrate_value = CBR_38400;
+        break;
+
+    case 57600:
+        baudrate_value = CBR_57600;
+        break;
+
+    case 115200:
+        baudrate_value = CBR_115200;
+        break;
+
+    default:
+        baudrate_value = baudrate;
+    }
+
+    GetCommState(serial->hCom, &dcb);
+    dcb.BaudRate = baudrate_value;
+    dcb.ByteSize = 8;
+    dcb.Parity = NOPARITY;
+    dcb.fParity = FALSE;
+    dcb.StopBits = ONESTOPBIT;
+    SetCommState(serial->hCom, &dcb);
+
+    return 0;
 }
 
 

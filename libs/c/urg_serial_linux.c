@@ -36,50 +36,6 @@ static void serial_clear(serial_t* serial)
 }
 
 
-/* ボーレートの設定 */
-static int serial_set_baudrate(serial_t *serial, long baudrate)
-{
-    long baudrate_value = -1;
-
-    switch (baudrate) {
-    case 4800:
-        baudrate_value = B4800;
-        break;
-
-    case 9600:
-        baudrate_value = B9600;
-        break;
-
-    case 19200:
-        baudrate_value = B19200;
-        break;
-
-    case 38400:
-        baudrate_value = B38400;
-        break;
-
-    case 57600:
-        baudrate_value = B57600;
-        break;
-
-    case 115200:
-        baudrate_value = B115200;
-        break;
-
-    default:
-        return -1;
-    }
-
-    /* ボーレート変更 */
-    cfsetospeed(&serial->sio, baudrate_value);
-    cfsetispeed(&serial->sio, baudrate_value);
-    tcsetattr(serial->fd, TCSADRAIN, &serial->sio);
-    serial_clear(serial);
-
-    return 0;
-}
-
-
 int serial_open(serial_t *serial, const char *device, long baudrate)
 {
     int flags = 0;
@@ -130,6 +86,49 @@ void serial_close(serial_t *serial)
         close(serial->fd);
         serial->fd = INVALID_FD;
     }
+}
+
+
+int serial_set_baudrate(serial_t *serial, long baudrate)
+{
+    long baudrate_value = -1;
+
+    switch (baudrate) {
+    case 4800:
+        baudrate_value = B4800;
+        break;
+
+    case 9600:
+        baudrate_value = B9600;
+        break;
+
+    case 19200:
+        baudrate_value = B19200;
+        break;
+
+    case 38400:
+        baudrate_value = B38400;
+        break;
+
+    case 57600:
+        baudrate_value = B57600;
+        break;
+
+    case 115200:
+        baudrate_value = B115200;
+        break;
+
+    default:
+        return -1;
+    }
+
+    /* ボーレート変更 */
+    cfsetospeed(&serial->sio, baudrate_value);
+    cfsetispeed(&serial->sio, baudrate_value);
+    tcsetattr(serial->fd, TCSADRAIN, &serial->sio);
+    serial_clear(serial);
+
+    return 0;
 }
 
 

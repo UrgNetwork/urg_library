@@ -7,6 +7,8 @@
   $Id$
 */
 
+#include "urg_serial_utils.h"
+
 
 #if 0
 #include "urg_serial_utils_windows.c"

@@ -26,26 +26,42 @@ enum {
     RECEIVE_DATA_TIMEOUT,
     RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
     RECEIVE_DATA_QT,            /*!< QT 応答を受信 */
+
+    MAX_TIMEOUT = 120,
 };
 
 
 static int scip_response(urg_t *urg, const char* command,
-                         const int expected_ret[],
-                         char receive_buffer[], int receive_buffer_max_size)
+                         const int expected_ret[], int timeout,
+                         char *receive_buffer, int receive_buffer_max_size)
 {
-    (void)urg;
-    (void)command;
     (void)expected_ret;
     (void)receive_buffer;
     (void)receive_buffer_max_size;
     // !!!
 
-    // !!! communication_write(, command, command_size);
+    char *p = receive_buffer;
+    char buffer[BUFFER_SIZE];
+    int filled_size = 0;
 
-    // !!! communication_readline(, );
+    int write_size = strlen(command);
+    int n = connection_write(&urg->connection, command, write_size);
+    if (n != write_size) {
+        // !!!
+        return -1;
+    }
 
-    // !!! receive_buffer は '\0' 終端させる
-    // !!! 改行は取り除く
+    // !!! receive_buffer に BUFEER_SIZE 以上の空きがあるときは、直接格納する
+
+    n = connection_readline(&urg->connection,
+                            buffer, BUFFER_SIZE, timeout);
+    fprintf(stderr, "n = %d\n", n);
+
+    if (p && (n > receive_buffer_max_size - filled_size)) {
+        memcpy(p, buffer, n);
+        p += n;
+        *p++ = '\0';
+    }
 
     return -1;
 }
@@ -55,25 +71,46 @@ static int scip_response(urg_t *urg, const char* command,
 static int connect_serial_device(urg_t *urg, long baudrate)
 {
     (void)urg;
-    (void)baudrate;
-    // !!!
+    int i;
 
-    // !!! long try_baudrate[] = { 19200, 38400, 115200 };
-    // !!! try_times =
-    for (;;) {
-        // !!!
+    long try_baudrate[] = { 19200, 38400, 115200 };
+    int try_times = sizeof(try_baudrate) / sizeof(try_baudrate[0]);
 
-        // !!! QT を送信し、応答が返されるかでボーレートが一致しているかを
-        // !!! 確認する
+    // 指示されたボーレートから接続する
+    for (i = 0; i < try_times; ++i) {
+        if (try_baudrate[i] == baudrate) {
+            try_baudrate[i] = try_baudrate[0];
+            try_baudrate[0] = baudrate;
+            break;
+        }
+    }
 
-        // !!! scip_response("QT\n", 3, ...);
+    for (i = 0; i < try_times; ++i) {
+        connection_set_baudrate(&urg->connection, try_baudrate[i]);
 
-        // !!! QT
-        // !!! - SIP1.1 の場合は E エラーが発生する
-        // !!!   - "SIP2.0" を送信する
-        // !!!
-        // !!! - 応答が 00P に一致しない場合は、連続データ取得中だったとみなし
-        // !!!
+        enum { RECEIVE_BUFFER_SIZE = 4 };
+        int qt_expected[] = { 0, EXPECTED_END };
+        char receive_buffer[RECEIVE_BUFFER_SIZE];
+
+        // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
+        int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
+                                receive_buffer, RECEIVE_BUFFER_SIZE);
+        fprintf(stderr, "%d: %s\n", strlen(receive_buffer), receive_buffer);
+        if (ret != 0) {
+            if (1) {
+                // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
+                // !!!
+            } else if (0) {
+                // データを受信した場合は、距離データ受信中とみなし、データを読み飛ばす
+                // !!!
+            } else {
+                // ボーレートを変更して、再度接続を行う
+                continue;
+            }
+        } else {
+            // 正常に接続
+            // !!!
+        }
 
         // !!! SS
 
@@ -82,7 +119,8 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         }
     }
 
-    return -1;
+    urg->last_errno = URG_NOT_DETECT_BAUDRATE_ERROR;
+    return urg->last_errno;
 }
 
 
@@ -91,6 +129,8 @@ static int receive_parameter(urg_t *urg)
 {
     (void)urg;
     // !!!
+
+    urg->timeout = 100;
 
     return -1;
 }
@@ -144,7 +184,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 }
 
 
-int urg_open(urg_t *urg, communication_type_t communication_type,
+int urg_open(urg_t *urg, connection_type_t connection_type,
              const char *device, long baudrate)
 {
     int ret;
@@ -152,9 +192,9 @@ int urg_open(urg_t *urg, communication_type_t communication_type,
     urg->is_active = URG_FALSE;
 
     // デバイスへの接続
-    if (! communication_open(&urg->communication, communication_type,
-                             device, baudrate)) {
-        switch (communication_type) {
+    if (connection_open(&urg->connection, connection_type,
+                        device, baudrate) < 0) {
+        switch (connection_type) {
         case URG_SERIAL:
             urg->last_errno = URG_SERIAL_OPEN_ERROR;
             break;
@@ -165,9 +205,10 @@ int urg_open(urg_t *urg, communication_type_t communication_type,
     }
 
     // 指定したボーレートで URG と通信できるように調整
-    if (communication_type == URG_SERIAL) {
+    if (connection_type == URG_SERIAL) {
         ret = connect_serial_device(urg, baudrate);
         if (ret < 0) {
+            fprintf(stderr, "ret = %d\n", ret);
             return ret;
         }
     }
@@ -185,7 +226,7 @@ int urg_open(urg_t *urg, communication_type_t communication_type,
 
 void urg_close(urg_t *urg)
 {
-    communication_close(&urg->communication);
+    connection_close(&urg->connection);
     urg->is_active = URG_FALSE;
 }
 
@@ -199,7 +240,7 @@ int urg_start_time_stamp_mode(urg_t *urg)
     }
 
     // TM0 を発行する
-    return scip_response(urg, "TM0\n", expected, NULL, 0);
+    return scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
 }
 
 
@@ -213,7 +254,8 @@ long urg_time_stamp(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    ret = scip_response(urg, "TM1\n", expected, buffer, BUFFER_SIZE);
+    ret = scip_response(urg, "TM1\n", expected,
+                        urg->timeout, buffer, BUFFER_SIZE);
     if (ret < 0) {
         return ret;
     }
@@ -238,7 +280,7 @@ void urg_stop_time_stamp_mode(urg_t *urg)
     }
 
     // TM2 を発行する
-    scip_response(urg, "TM2\n", expected, NULL, 0);
+    scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
 }
 
 
@@ -265,7 +307,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
                               urg->scanning_skip_step,
                               skip_scan, scan_times);
     }
-    return communication_write(&urg->communication, buffer, write_size);
+    return connection_write(&urg->connection, buffer, write_size);
 }
 
 
@@ -389,7 +431,7 @@ int urg_stop_measurement(urg_t *urg)
     }
 
     // QT を発行する
-    communication_write(&urg->communication, "QT\n", 3);
+    connection_write(&urg->connection, "QT\n", 3);
     do {
         // QT の応答が返されるまで、距離データを読み捨てる
         ret = receive_data(urg, NULL, NULL, NULL);
@@ -422,8 +464,8 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 }
 
 
-int urg_set_communication_data_size(urg_t *urg,
-                                    range_data_byte_t range_data_byte)
+int urg_set_connection_data_size(urg_t *urg,
+                                 range_data_byte_t range_data_byte)
 {
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
@@ -451,7 +493,7 @@ int urg_laser_on(urg_t *urg)
     // 既にレーザが発光しているときは、コマンドを送信しないようにする
     // !!!
 
-    return scip_response(urg, "BM\n", expected, NULL, 0);
+    return scip_response(urg, "BM\n", expected, urg->timeout, NULL, 0);
 }
 
 

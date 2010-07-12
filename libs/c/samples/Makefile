@@ -34,15 +34,15 @@ get_distance normal_measurement intensity_measurement multiecho_measurement calc
 
 # DO NOT DELETE
 
-calculate_xy.o: ../urg_sensor.h ../urg_communication.h ../urg_serial.h
+calculate_xy.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
 calculate_xy.o: ../urg_detect_os.h ../urg_ring_buffer.h ../urg_ethernet.h
 calculate_xy.o: ../urg_utils.h
-get_distance.o: ../urg_sensor.h ../urg_communication.h ../urg_serial.h
+get_distance.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
 get_distance.o: ../urg_detect_os.h ../urg_ring_buffer.h ../urg_ethernet.h
 get_distance.o: ../urg_utils.h
-sensor_parameter.o: ../urg_sensor.h ../urg_communication.h ../urg_serial.h
+sensor_parameter.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
 sensor_parameter.o: ../urg_detect_os.h ../urg_ring_buffer.h ../urg_ethernet.h
 sensor_parameter.o: ../urg_utils.h
-sync_time_stamp.o: ../urg_sensor.h ../urg_communication.h ../urg_serial.h
+sync_time_stamp.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
 sync_time_stamp.o: ../urg_detect_os.h ../urg_ring_buffer.h ../urg_ethernet.h
 sync_time_stamp.o: ../urg_utils.h

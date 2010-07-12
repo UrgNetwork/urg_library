@@ -28,7 +28,7 @@ typedef struct
   \param[in] buffer 割り当てるバッファ
   \param[in] shift_length バッファサイズの 2 の乗数
 */
-void ring_initialize(ring_buffer_t *ring,
+extern void ring_initialize(ring_buffer_t *ring,
                             char *buffer, const int shift_length);
 
 
@@ -37,7 +37,7 @@ void ring_initialize(ring_buffer_t *ring,
 
   \param[in] ring リングバッファの構造体
 */
-void ring_clear(ring_buffer_t *ring);
+extern void ring_clear(ring_buffer_t *ring);
 
 
 /*!
@@ -45,7 +45,7 @@ void ring_clear(ring_buffer_t *ring);
 
   \param[in] ring リングバッファの構造体
 */
-int ring_size(const ring_buffer_t *ring);
+extern int ring_size(const ring_buffer_t *ring);
 
 
 /*!
@@ -53,7 +53,7 @@ int ring_size(const ring_buffer_t *ring);
 
   \param[in] ring リングバッファの構造体
 */
-int ring_capacity(const ring_buffer_t *ring);
+extern int ring_capacity(const ring_buffer_t *ring);
 
 
 /*!
@@ -65,7 +65,7 @@ int ring_capacity(const ring_buffer_t *ring);
 
   \return 格納したデータ数
 */
-int ring_write(ring_buffer_t *ring, const char *data, int size);
+extern int ring_write(ring_buffer_t *ring, const char *data, int size);
 
 
 /*!
@@ -77,8 +77,6 @@ int ring_write(ring_buffer_t *ring, const char *data, int size);
 
   \return 取り出したデータ数
 */
-int ring_read(ring_buffer_t *ring, char *buffer, int size);
-
-int ring_readPtr(ring_buffer_t *ring, char **ptr, int size);
+extern int ring_read(ring_buffer_t *ring, char *buffer, int size);
 
 #endif /* ! RING_BUFFER_H */
