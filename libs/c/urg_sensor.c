@@ -59,7 +59,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
     // !!!
 
     // !!! long try_baudrate[] = { 19200, 38400, 115200 };
-    // !!! try_size =
+    // !!! try_times =
     for (;;) {
         // !!!
 
@@ -242,13 +242,8 @@ void urg_stop_time_stamp_mode(urg_t *urg)
 }
 
 
-static int send_distance_command(urg_t *urg,
-                                 int scan_times, int skip_scan)
+static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
 {
-    (void)urg;
-    (void)skip_scan;
-    // !!!
-
     char buffer[BUFFER_SIZE];
     int actual_scan_times = (scan_times < 0) ? 0 : scan_times;
     char range_byte_ch =
