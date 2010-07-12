@@ -25,7 +25,8 @@ enum {
     EXPECTED_END = -1,
 
     ECHOBACK_ERROR = -1,
-    UNEXPECTED_RET = -2,
+    CHECKSUM_ERROR = -2,
+    UNEXPECTED_RET = -3,
 
     RECEIVE_DATA_TIMEOUT,
     RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
@@ -132,7 +133,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
-        fprintf(stderr, "ret = %d: %s\n", strlen(receive_buffer), receive_buffer);
+        fprintf(stderr, "ret = %d: %d, %s\n", ret, strlen(receive_buffer), receive_buffer);
         if (ret <= 0) {
             if (ret == UNEXPECTED_RET) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
@@ -169,8 +170,15 @@ static int connect_serial_device(urg_t *urg, long baudrate)
 // PP コマンドの応答を urg_t に格納する
 static int receive_parameter(urg_t *urg)
 {
-    (void)urg;
+    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 9, };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    int pp_expected[] = { 0, EXPECTED_END };
+
+    int ret = scip_response(urg, "PP\n", pp_expected, MAX_TIMEOUT,
+                            receive_buffer, RECEIVE_BUFFER_SIZE);
     // !!!
+    fprintf(stderr, "PP: ret = %d\n", ret);
+    fprintf(stderr, "PP: %s\n", receive_buffer);
 
     urg->timeout = 100;
 

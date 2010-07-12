@@ -9,6 +9,8 @@
 
 #include "urg_serial.h"
 
+#include <stdio.h>
+
 enum {
     False = 0,
     True,
@@ -45,6 +47,7 @@ int serial_readline(serial_t *serial, char *data, int max_size, int timeout)
     while (filled < max_size) {
         char recv_ch;
         int n = serial_read(serial, &recv_ch, 1, timeout);
+        fprintf(stderr, "[%c]", recv_ch);
         if (n <= 0) {
             is_timeout = 1;
             break;
