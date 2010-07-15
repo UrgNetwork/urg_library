@@ -56,8 +56,7 @@ typedef struct
     int specified_scan_times;
     int scanning_remain_times;
 
-    // !!! 共通のパラメータは、この構造体で管理する
-    char dummy;
+    char return_buffer[80];
 } urg_t;
 
 
@@ -452,5 +451,41 @@ extern int urg_laser_off(urg_t *urg);
 
 /*! センサを再起動する */
 extern int urg_reboot(urg_t *urg);
+
+
+/*!
+  \brief センサのシリアル ID 文字列を返す
+
+  センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
+
+  \param[in] urg URG センサ管理
+
+  \return シリアル ID 文字列
+*/
+extern const char *urg_sensor_id(urg_t *urg);
+
+
+/*!
+  \brief センサのバージョン文字列を返す
+
+  センサのソフトウェア・バージョン文字列を返す。返される文字列はセンサ依存となる。
+
+  \param[in] urg URG センサ管理
+
+  \return バージョン文字列
+*/
+extern const char *urg_sensor_version(urg_t *urg);
+
+
+/*!
+  \brief センサのステータス文字列を返す
+
+  センサのステータス文字列を返す。返される文字列はセンサ依存となる。
+
+  \param[in] urg URG センサ管理
+
+  \return ステータス文字列
+*/
+extern const char *urg_sensor_status(urg_t *urg);
 
 #endif /* !URG_SENSOR_H */

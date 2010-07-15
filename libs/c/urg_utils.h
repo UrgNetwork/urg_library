@@ -166,43 +166,6 @@ extern double urg_step2deg(const urg_t *urg, int step);
 /*! step とインデックスの変換を行う */
 extern int urg_step2index(const urg_t *urg, int step);
 
-
-/*!
-  \brief センサのシリアル ID 文字列を返す
-
-  センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
-
-  \param[in] urg URG センサ管理
-
-  \return シリアル ID 文字列
-*/
-extern const char *urg_sensor_id(const urg_t *urg);
-
-
-/*!
-  \brief センサのバージョン文字列を返す
-
-  センサのソフトウェア・バージョン文字列を返す。返される文字列はセンサ依存となる。
-
-  \param[in] urg URG センサ管理
-
-  \return バージョン文字列
-*/
-extern const char *urg_sensor_version(const urg_t *urg);
-
-
-/*!
-  \brief センサのステータス文字列を返す
-
-  センサのステータス文字列を返す。返される文字列はセンサ依存となる。
-
-  \param[in] urg URG センサ管理
-
-  \return ステータス文字列
-*/
-extern const char *urg_sensor_status(const urg_t *urg);
-
-
 // !!!
 extern int urg_find_port(char *port_name, int index);
 

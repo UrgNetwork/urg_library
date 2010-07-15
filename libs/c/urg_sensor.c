@@ -24,10 +24,6 @@ enum {
 
     EXPECTED_END = -1,
 
-    ECHOBACK_ERROR = -1,
-    CHECKSUM_ERROR = -2,
-    UNEXPECTED_RET = -3,
-
     RECEIVE_DATA_TIMEOUT,
     RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
     RECEIVE_DATA_QT,            /*!< QT 応答を受信 */
@@ -36,29 +32,26 @@ enum {
 };
 
 
+static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
+static const char RECEIVE_ERROR_MESSAGE[] = "receive error.";
+
+
 // 受信した応答の行数を返す
 static int scip_response(urg_t *urg, const char* command,
                          const int expected_ret[], int timeout,
                          char *receive_buffer, int receive_buffer_max_size)
 {
-    (void)expected_ret;
-    (void)receive_buffer;
-    (void)receive_buffer_max_size;
-    // !!!
-
     char *p = receive_buffer;
     char buffer[BUFFER_SIZE];
     int filled_size = 0;
     int line_no = 0;
-    int ret_val = UNEXPECTED_RET;
-
-    fprintf(stderr, "write: %s", command);
+    int ret_val = URG_INVALID_RESPONSE;
 
     int write_size = strlen(command);
     int n = connection_write(&urg->connection, command, write_size);
     if (n != write_size) {
         // !!!
-        return ECHOBACK_ERROR;
+        return URG_INVALID_RESPONSE;
     }
 
     if (p) {
@@ -66,14 +59,16 @@ static int scip_response(urg_t *urg, const char* command,
     }
 
     do {
-        // !!! receive_buffer に BUFEER_SIZE 以上の空きがあるときは、直接格納する
+        // !!! receive_buffer に BUFEER_SIZE 以上の空きがあるときは、p に直接格納する
         n = connection_readline(&urg->connection,
                                 buffer, BUFFER_SIZE, timeout);
+        if (n < 0) {
+            return URG_NO_RESPONSE;
+        }
 
         // チェックサムの評価
         // !!!
-
-        fprintf(stderr, "line_no = %d, n = %d: %s\n", line_no, n, buffer);
+        // !!! URG_CHECKSUM_ERROR
 
         if (line_no == 0) {
             // 送信文字と受信文字が一致するかを確認する
@@ -83,7 +78,6 @@ static int scip_response(urg_t *urg, const char* command,
             memcpy(p, buffer, n);
             p += n;
             *p++ = '\0';
-            fprintf(stderr, "buffer: %s\n", receive_buffer);
         }
 
         // ステータス応答を評価して、戻り値を決定する
@@ -133,9 +127,21 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
-        fprintf(stderr, "ret = %d: %d, %s\n", ret, strlen(receive_buffer), receive_buffer);
+
+        if (! strcmp("E", receive_buffer)) {
+            // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
+            int scip20_expected[] = { 0, EXPECTED_END };
+            ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
+                                MAX_TIMEOUT, NULL, 0);
+            // !!!
+
+            // ボーレートを変更して戻る
+            // !!!
+            return 0;
+        }
+
         if (ret <= 0) {
-            if (ret == UNEXPECTED_RET) {
+            if (ret == URG_INVALID_RESPONSE) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
                 // データを読み飛ばす
                 // !!! 最後の応答が QT だったら、正常応答とみなす
@@ -145,20 +151,10 @@ static int connect_serial_device(urg_t *urg, long baudrate)
                 // 応答がないときは、ボーレートを変更して、再度接続を行う
                 continue;
             }
-        } else {
-            if (! strcmp("E", receive_buffer)) {
-                int scip20_expected[] = { 0, EXPECTED_END };
-
-                // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
-                ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
-                                    MAX_TIMEOUT, NULL, 0);
-                // !!!
-                fprintf(stderr, "send SCIP2.0: %d\n", ret);
-            } else if (! strcmp("00P", receive_buffer)) {
-                // 正常に接続。センサとホストのボーレートを変更して戻る
-                // !!!
-                return 0;
-            }
+        } else if (! strcmp("00P", receive_buffer)) {
+            // 正常に接続。センサとホストのボーレートを変更して戻る
+            // !!!
+            return 0;
         }
     }
 
@@ -173,12 +169,41 @@ static int receive_parameter(urg_t *urg)
     enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 9, };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int pp_expected[] = { 0, EXPECTED_END };
+    char *p;
+    int i;
 
     int ret = scip_response(urg, "PP\n", pp_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
-    // !!!
-    fprintf(stderr, "PP: ret = %d\n", ret);
-    fprintf(stderr, "PP: %s\n", receive_buffer);
+    if (ret <= 0) {
+        return ret;
+    }
+
+    p = receive_buffer;
+    for (i = 0; i < (ret - 1); ++i) {
+
+        if (! strncmp(p, "DMIN:", 5)) {
+            urg->min_distance = strtol(p + 5, NULL, 10);
+
+        } else if (! strncmp(p, "DMAX:", 5)) {
+            urg->max_distance = strtol(p + 5, NULL, 10);
+
+        } else if (! strncmp(p, "ARES:", 5)) {
+            // !!!
+
+        } else if (! strncmp(p, "AMIN:", 5)) {
+            // !!!
+
+        } else if (! strncmp(p, "AMAX:", 5)) {
+            // !!!
+
+        } else if (! strncmp(p, "AFRT:", 5)) {
+            // !!!
+
+        } else if (! strncmp(p, "SCAN:", 5)) {
+            // !!!
+        }
+        p += strlen(p) + 1;
+    }
 
     urg->timeout = 100;
 
@@ -258,7 +283,6 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
     if (connection_type == URG_SERIAL) {
         ret = connect_serial_device(urg, baudrate);
         if (ret < 0) {
-            fprintf(stderr, "ret = %d\n", ret);
             return ret;
         }
     }
@@ -270,7 +294,11 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
     urg->scanning_remain_times = 0;
 
     // パラメータ情報を取得
-    return receive_parameter(urg);
+    ret = receive_parameter(urg);
+    if (ret == 0) {
+        urg->is_active = URG_TRUE;
+    }
+    return ret;
 }
 
 
@@ -565,4 +593,109 @@ int urg_reboot(urg_t *urg)
     // !!!
 
     return -1;
+}
+
+
+static char *copy_token(char *dest, char *receive_buffer,
+                        const char *start_str, char end_ch, int lines)
+{
+    char *p = receive_buffer;
+    int start_str_len = strlen(start_str);
+    int i;
+
+    for (i = 0; i < lines; ++i) {
+        if (! strncmp(p, start_str, start_str_len)) {
+
+            char *last_p = strchr(p + start_str_len, end_ch);
+            if (last_p) {
+                *last_p = '\0';
+                memcpy(dest, p + start_str_len, last_p - (p + start_str_len));
+                return dest;
+            }
+        }
+        p += strlen(p) + 1;
+    }
+    return NULL;
+}
+
+
+const char *urg_sensor_id(urg_t *urg)
+{
+    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    int vv_expected[] = { 0, EXPECTED_END };
+    int ret;
+    char *p;
+
+    if (!urg->is_active) {
+        return NOT_CONNECTED_MESSAGE;
+    }
+
+    ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
+                        receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret <= 0) {
+        return RECEIVE_ERROR_MESSAGE;
+    }
+
+    p = copy_token(urg->return_buffer, receive_buffer, "SERI:", ';', ret - 1);
+    return (p) ? p : RECEIVE_ERROR_MESSAGE;
+}
+
+
+const char *urg_sensor_version(urg_t *urg)
+{
+    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    int vv_expected[] = { 0, EXPECTED_END };
+    int ret;
+    char *p;
+
+    if (!urg->is_active) {
+        return NOT_CONNECTED_MESSAGE;
+    }
+
+    ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
+                        receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret <= 0) {
+        return RECEIVE_ERROR_MESSAGE;
+    }
+
+    p = copy_token(urg->return_buffer, receive_buffer, "FIRM:", '(', ret - 1);
+    return (p) ? p : RECEIVE_ERROR_MESSAGE;
+}
+
+
+const char *urg_sensor_status(urg_t *urg)
+{
+    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    int ii_expected[] = { 0, EXPECTED_END };
+    int ret;
+    char *p;
+
+    if (!urg->is_active) {
+        return NOT_CONNECTED_MESSAGE;
+    }
+
+    ret = scip_response(urg, "II\n", ii_expected, urg->timeout,
+                        receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret <= 0) {
+        return RECEIVE_ERROR_MESSAGE;
+    }
+
+    p = copy_token(urg->return_buffer, receive_buffer, "STAT:", ';', ret - 1);
+    return (p) ? p : RECEIVE_ERROR_MESSAGE;
+}
+
+
+int urg_find_port(char *port_name, int index)
+{
+    (void)port_name;
+    (void)index;
+
+    // !!!
+
+    // !!! ETHERNET のときは、エラーメッセージを表示する
+
+    return 0;
 }

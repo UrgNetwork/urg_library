@@ -20,7 +20,8 @@ typedef struct
 
 extern int ethernet_open(ethernet_t *ethernet, const char *address, long port);
 extern void ethernet_close(ethernet_t *ethernet);
-extern int ethernet_write(ethernet_t *ethernet, const char *data, int size);
+extern int ethernet_write(ethernet_t *ethernet,
+                          const char *data, int size);
 extern int ethernet_read(ethernet_t *ethernet,
                          char *data, int max_size, int timeout);
 extern int ethernet_readline(ethernet_t *ethernet, char *data,

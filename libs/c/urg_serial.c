@@ -9,7 +9,6 @@
 
 #include "urg_serial.h"
 
-#include <stdio.h>
 
 enum {
     False = 0,
@@ -27,27 +26,26 @@ enum {
 // 改行かどうかの判定
 static int isLF(const char ch)
 {
-  return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
+    return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
 }
 
 
 static void serial_ungetc(serial_t *serial, char ch)
 {
-  serial->has_last_ch = True;
-  serial->last_ch = ch;
+    serial->has_last_ch = True;
+    serial->last_ch = ch;
 }
 
 
 int serial_readline(serial_t *serial, char *data, int max_size, int timeout)
 {
-    /* １文字ずつ読みだして評価する */
+    /* １文字ずつ読み出して評価する */
     int filled = 0;
     int is_timeout = 0;
 
     while (filled < max_size) {
         char recv_ch;
         int n = serial_read(serial, &recv_ch, 1, timeout);
-        fprintf(stderr, "[%c]", recv_ch);
         if (n <= 0) {
             is_timeout = 1;
             break;

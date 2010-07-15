@@ -12,8 +12,6 @@
 
 #undef max
 
-static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
-
 
 static int max(int a, int b)
 {
@@ -36,9 +34,12 @@ const char *urg_error(const urg_t *urg)
         { URG_NOT_CONNECTED, "not connected." },
         { URG_NOT_IMPLEMENTED, "not implemented." },
         { URG_INVALID_RESPONSE, "invalid response." },
+        { URG_NO_RESPONSE, "no response." },
+
         { URG_SEND_ERROR, "send error." },
         { URG_RECEIVE_ERROR, "receive error." },
         { URG_CHECKSUM_ERROR, "checksum error." },
+        { URG_INVALID_PARAMETER, "invalid parameter." },
 
         { URG_SERIAL_OPEN_ERROR, "could not open serial device." },
         { URG_NOT_DETECT_BAUDRATE_ERROR, "could not detect serial baudrate." },
@@ -216,62 +217,6 @@ int urg_step2index(const urg_t *urg, int step)
 
     (void)urg;
     (void)step;
-    // !!!
-
-    return 0;
-}
-
-
-const char *urg_sensor_id(const urg_t *urg)
-{
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
-    }
-
-    (void)urg;
-    // !!!
-
-    // !!! urg 中に文字列で保持しておき、それを返す
-
-    return "Not implemented";
-}
-
-
-const char *urg_sensor_version(const urg_t *urg)
-{
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
-    }
-
-    (void)urg;
-    // !!!
-
-    // !!! urg 中に文字列で保持しておき、それを返す
-
-    return "Not implemented";
-}
-
-
-const char *urg_sensor_status(const urg_t *urg)
-{
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
-    }
-
-    (void)urg;
-    // !!!
-
-    // !!! urg 中に文字列で保持しておき、それを返す
-
-    return "Not implemented";
-}
-
-
-int urg_find_port(char *port_name, int index)
-{
-    (void)port_name;
-    (void)index;
-
     // !!!
 
     return 0;

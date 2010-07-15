@@ -193,16 +193,15 @@ static int internal_receive(char data[], int data_size_max,
 
 int serial_read(serial_t *serial, char *data, int max_size, int timeout)
 {
-    int filled;
-    int read_n;
     int buffer_size;
+    int read_n;
+    int filled = 0;
 
     if (max_size <= 0) {
         return 0;
     }
 
     /* 書き戻した１文字があれば、書き出す */
-    filled = 0;
     if (serial->has_last_ch != False) {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
@@ -224,9 +223,11 @@ int serial_read(serial_t *serial, char *data, int max_size, int timeout)
         int n = internal_receive(buffer,
                                  ring_capacity(&serial->ring) - buffer_size,
                                  serial, 0);
-        ring_write(&serial->ring, buffer, n);
+        if (n > 0) {
+            ring_write(&serial->ring, buffer, n);
+            buffer_size += n;
+        }
     }
-    buffer_size = ring_size(&serial->ring);
 
     // リングバッファ内のデータを返す
     if (read_n > buffer_size) {
@@ -238,7 +239,7 @@ int serial_read(serial_t *serial, char *data, int max_size, int timeout)
     }
 
     // データをタイムアウト付きで読み出す
-    filled += internal_receive(&data[filled],
-                               max_size - filled, serial, timeout);
+    filled += internal_receive(&data[filled], max_size - filled,
+                               serial, timeout);
     return filled;
 }

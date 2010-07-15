@@ -14,6 +14,8 @@ int connection_open(connection_t *connection,
                     connection_type_t connection_type,
                     const char *device, long baudrate_or_port)
 {
+    connection->type = connection_type;
+
     switch (connection_type) {
     case URG_SERIAL:
         return serial_open(&connection->serial, device, baudrate_or_port);

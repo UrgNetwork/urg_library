@@ -34,7 +34,7 @@ int main(void)
     printf("step: [%d, %d]\n", min_step, max_step);
 
     urg_distance_min_max(&urg, &min_distance, &max_distance);
-    printf("distance: [%ld, %ld]\n", min_distance, max_distance);
+    printf("distance: [%ld, %ld)\n", min_distance, max_distance);
 
     printf("scan: %ld [usec]\n", urg_scan_usec(&urg));
     printf("sensor data size: %d\n", urg_max_index(&urg));

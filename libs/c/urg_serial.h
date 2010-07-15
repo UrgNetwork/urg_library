@@ -39,7 +39,7 @@ typedef struct
 #endif
 
     ring_buffer_t ring;         /*!< リングバッファ */
-    char buffer[RING_BUFFER_SIZE_SHIFT];
+    char buffer[RING_BUFFER_SIZE];
     char has_last_ch;          /*!< 書き戻した文字があるかのフラグ */
     char last_ch;              /*!< 書き戻した１文字 */
     char error_string[ERROR_MESSAGE_SIZE];
