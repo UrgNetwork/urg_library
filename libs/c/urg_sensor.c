@@ -84,6 +84,7 @@ static int scip_response(urg_t *urg, const char* command,
             memcpy(p, buffer, n);
             p += n;
             *p++ = '\0';
+            filled_size += n;
         }
 
         // ステータス応答を評価して、戻り値を決定する
