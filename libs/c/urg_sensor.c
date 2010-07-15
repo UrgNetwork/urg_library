@@ -188,24 +188,24 @@ static int receive_parameter(urg_t *urg)
             urg->max_distance = strtol(p + 5, NULL, 10);
 
         } else if (! strncmp(p, "ARES:", 5)) {
-            // !!!
+            urg->area_resolution = strtol(p + 5, NULL, 10);
 
         } else if (! strncmp(p, "AMIN:", 5)) {
-            // !!!
+            urg->first_data_index = strtol(p + 5, NULL, 10);
 
         } else if (! strncmp(p, "AMAX:", 5)) {
-            // !!!
+            urg->last_data_index = strtol(p + 5, NULL, 10);
 
         } else if (! strncmp(p, "AFRT:", 5)) {
-            // !!!
+            urg->front_data_index = strtol(p + 5, NULL, 10);
 
         } else if (! strncmp(p, "SCAN:", 5)) {
-            // !!!
+            int rpm = strtol(p + 5, NULL, 10);
+            urg->scan_usec = 1000 * 1000 * 60 / rpm;
+            urg->timeout = urg->scan_usec >> (10 - 1);
         }
         p += strlen(p) + 1;
     }
-
-    urg->timeout = 100;
 
     return 0;
 }

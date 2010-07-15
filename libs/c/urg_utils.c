@@ -87,11 +87,8 @@ void urg_step_min_max(const urg_t *urg, int *min_index, int *max_index)
         return;
     }
 
-    (void)urg;
-    (void)min_index;
-    (void)max_index;
-
-    // !!!
+    *min_index = urg->first_data_index - urg->front_data_index;
+    *max_index = urg->last_data_index - urg->front_data_index;
 }
 
 
@@ -111,10 +108,7 @@ int urg_max_index(const urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    // !!!
-
-    return -1;
+    return urg->last_data_index;
 }
 
 

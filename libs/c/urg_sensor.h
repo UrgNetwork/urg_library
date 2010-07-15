@@ -43,7 +43,10 @@ typedef struct
     int last_errno;
     connection_t connection;
 
-    int max_index;
+    int first_data_index;
+    int last_data_index;
+    int front_data_index;
+    int area_resolution;
     long scan_usec;
     int min_distance;
     int max_distance;
