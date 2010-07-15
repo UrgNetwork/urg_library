@@ -28,6 +28,10 @@ enum {
     RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
     RECEIVE_DATA_QT,            /*!< QT 応答を受信 */
 
+    PP_RESPONSE_LINES = 10,
+    VV_RESPONSE_LINES = 7,
+    II_RESPONSE_LINES = 9,
+
     MAX_TIMEOUT = 120,
 };
 
@@ -68,13 +72,15 @@ static int scip_response(urg_t *urg, const char* command,
 
         // チェックサムの評価
         // !!!
+        // scip_checksum(const char buffer[], int size)
         // !!! URG_CHECKSUM_ERROR
 
         if (line_no == 0) {
             // 送信文字と受信文字が一致するかを確認する
             // !!!
 
-        } else if (p && (n < (receive_buffer_max_size - filled_size))) {
+        } else if (p && (n > 0) &&
+                   (n < (receive_buffer_max_size - filled_size))) {
             memcpy(p, buffer, n);
             p += n;
             *p++ = '\0';
@@ -99,7 +105,7 @@ static int scip_response(urg_t *urg, const char* command,
 }
 
 
-// !!! ボーレートを変更しながら接続する
+// ボーレートを変更しながら接続する
 static int connect_serial_device(urg_t *urg, long baudrate)
 {
     (void)urg;
@@ -144,8 +150,20 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             if (ret == URG_INVALID_RESPONSE) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
                 // データを読み飛ばす
-                // !!! 最後の応答が QT だったら、正常応答とみなす
+                char buffer[BUFFER_SIZE];
+                int n;
+
+                do {
+                    n = connection_readline(&urg->connection,
+                                            buffer, BUFFER_SIZE, MAX_TIMEOUT);
+                } while (n > 0);
+
+                // !!! 最後の応答が QT だったら、正常応答とみなしてもよい
                 // !!!
+
+                // ボーレートを変更して戻る
+                // !!!
+                return 0;
 
             } else {
                 // 応答がないときは、ボーレートを変更して、再度接続を行う
@@ -174,8 +192,8 @@ static int receive_parameter(urg_t *urg)
 
     int ret = scip_response(urg, "PP\n", pp_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret <= 0) {
-        return ret;
+    if (ret < PP_RESPONSE_LINES) {
+        return URG_INVALID_RESPONSE;
     }
 
     p = receive_buffer;
@@ -206,6 +224,11 @@ static int receive_parameter(urg_t *urg)
         }
         p += strlen(p) + 1;
     }
+
+    urg_set_scanning_parameter(urg,
+                               urg->first_data_index - urg->front_data_index,
+                               urg->last_data_index - urg->front_data_index,
+                               1);
 
     return 0;
 }
@@ -369,19 +392,22 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
     char range_byte_ch =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 'S' : 'D';
     int write_size = 0;
+    int front_index = urg->front_data_index;
 
     urg->scanning_remain_times = scan_times;
     if (actual_scan_times == 1) {
         // GD, GS
         write_size = snprintf(buffer, BUFFER_SIZE, "G%c%04d%04d%02d\n",
                               range_byte_ch,
-                              urg->scanning_first_step, urg->scanning_last_step,
+                              urg->scanning_first_step + front_index,
+                              urg->scanning_last_step + front_index,
                               urg->scanning_skip_step);
     } else {
         // MD, MS
         write_size = snprintf(buffer, BUFFER_SIZE, "M%c%04d%04d%02d%01d%02d\n",
                               range_byte_ch,
-                              urg->scanning_first_step, urg->scanning_last_step,
+                              urg->scanning_first_step + front_index,
+                              urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
                               skip_scan, scan_times);
     }
@@ -529,8 +555,8 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
     // 設定の範囲外を指定したときは、エラーを返す
     if (((skip_step < 0) || (skip_step >= 100)) ||
         (first_step > last_step) ||
-        (first_step < urg->scanning_first_step) ||
-        (last_step > urg->scanning_last_step)) {
+        (first_step < -urg->front_data_index) ||
+        (last_step > (urg->last_data_index - urg->front_data_index))) {
         return URG_SCANNING_PARAMETER_ERROR;
     }
 
@@ -633,7 +659,7 @@ const char *urg_sensor_id(urg_t *urg)
 
     ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
                         receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret <= 0) {
+    if (ret < VV_RESPONSE_LINES) {
         return RECEIVE_ERROR_MESSAGE;
     }
 
@@ -656,7 +682,7 @@ const char *urg_sensor_version(urg_t *urg)
 
     ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
                         receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret <= 0) {
+    if (ret < VV_RESPONSE_LINES) {
         return RECEIVE_ERROR_MESSAGE;
     }
 
@@ -679,7 +705,7 @@ const char *urg_sensor_status(urg_t *urg)
 
     ret = scip_response(urg, "II\n", ii_expected, urg->timeout,
                         receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret <= 0) {
+    if (ret < II_RESPONSE_LINES) {
         return RECEIVE_ERROR_MESSAGE;
     }
 

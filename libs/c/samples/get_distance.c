@@ -38,12 +38,12 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 int main(void)
 {
     enum {
-        CAPTURE_TIMES = 3,
+        CAPTURE_TIMES = 2,
     };
     urg_t urg;
     long *data = NULL;
     long time_stamp;
-    int ret;
+    //int ret;
     int n;
     int i;
 
@@ -60,12 +60,14 @@ int main(void)
     }
 
     // データ取得
+#if 0
     ret = urg_set_scanning_parameter(&urg,
                                      urg_deg2step(&urg, -90),
                                      urg_deg2step(&urg, +90), 0);
     if (ret < 0) {
         // !!!
     }
+#endif
 
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {

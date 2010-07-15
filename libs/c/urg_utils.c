@@ -11,11 +11,18 @@
 #include <math.h>
 
 #undef max
+#undef min
 
 
 static int max(int a, int b)
 {
     return (a > b) ? a : b;
+}
+
+
+static int min(int a, int b)
+{
+    return (a < b) ? a : b;
 }
 
 
@@ -133,22 +140,23 @@ double urg_index2deg(const urg_t *urg, int index)
 
 int urg_rad2index(const urg_t *urg, double radian)
 {
+    int index;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)radian;
+    index =
+        (int)(floor((urg->area_resolution * radian / (2.0 * M_PI) + 0.5)))
+        + urg->front_data_index;
 
-    // !!!
-
-    return 0;
+    return min(max(0, index), urg->last_data_index);
 }
 
 
 int urg_deg2index(const urg_t *urg, double degree)
 {
-    return urg_rad2step(urg, degree * M_PI / 180.0);
+    return urg_rad2index(urg, degree * M_PI / 180.0);
 }
 
 
@@ -158,27 +166,13 @@ int urg_rad2step(const urg_t *urg, double radian)
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)radian;
-
-    // !!!
-
-    return 0;
+    return urg_rad2index(urg, radian) - urg->front_data_index;
 }
 
 
 int urg_deg2step(const urg_t *urg, double degree)
 {
-    if (!urg->is_active) {
-        return URG_NOT_CONNECTED;
-    }
-
-    (void)urg;
-    (void)degree;
-
-    // !!!
-
-    return 0;
+    return urg_rad2step(urg, degree * M_PI / 180.0);
 }
 
 

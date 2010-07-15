@@ -134,8 +134,12 @@ int serial_set_baudrate(serial_t *serial, long baudrate)
 
 int serial_write(serial_t *serial, const char *data, int size)
 {
+    int i;
     if (serial->fd == INVALID_FD) {
         return -1;
+    }
+    for (i = 0; i < size; ++i) {
+        fprintf(stderr, "%c", data[i]);
     }
     return write(serial->fd, data, size);
 }
@@ -143,51 +147,51 @@ int serial_write(serial_t *serial, const char *data, int size)
 
 static int wait_receive(serial_t* serial, int timeout)
 {
-  fd_set rfds;
-  struct timeval tv;
+    fd_set rfds;
+    struct timeval tv;
 
-  // タイムアウト設定
-  FD_ZERO(&rfds);
-  FD_SET(serial->fd, &rfds);
+    // タイムアウト設定
+    FD_ZERO(&rfds);
+    FD_SET(serial->fd, &rfds);
 
-  tv.tv_sec = timeout / 1000;
-  tv.tv_usec = (timeout % 1000) * 1000;
+    tv.tv_sec = timeout / 1000;
+    tv.tv_usec = (timeout % 1000) * 1000;
 
-  if (select(serial->fd + 1, &rfds, NULL, NULL,
-             (timeout < 0) ? NULL : &tv) <= 0) {
-    /* タイムアウト発生 */
-    return 0;
-  }
-  return 1;
+    if (select(serial->fd + 1, &rfds, NULL, NULL,
+               (timeout < 0) ? NULL : &tv) <= 0) {
+        /* タイムアウト発生 */
+        return 0;
+    }
+    return 1;
 }
 
 
 static int internal_receive(char data[], int data_size_max,
                             serial_t* serial, int timeout)
 {
-  int filled = 0;
+    int filled = 0;
 
-  if (data_size_max <= 0) {
-    return 0;
-  }
-
-  while (filled < data_size_max) {
-    int require_n;
-    int read_n;
-
-    if (! wait_receive(serial, timeout)) {
-      break;
+    if (data_size_max <= 0) {
+        return 0;
     }
 
-    require_n = data_size_max - filled;
-    read_n = read(serial->fd, &data[filled], require_n);
-    if (read_n <= 0) {
-      /* 読み出しエラー。現在までの受信内容で戻る */
-      break;
+    while (filled < data_size_max) {
+        int require_n;
+        int read_n;
+
+        if (! wait_receive(serial, timeout)) {
+            break;
+        }
+
+        require_n = data_size_max - filled;
+        read_n = read(serial->fd, &data[filled], require_n);
+        if (read_n <= 0) {
+            /* 読み出しエラー。現在までの受信内容で戻る */
+            break;
+        }
+        filled += read_n;
     }
-    filled += read_n;
-  }
-  return filled;
+    return filled;
 }
 
 
