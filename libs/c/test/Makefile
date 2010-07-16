@@ -5,10 +5,10 @@
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES = -I..
 LDFLAGS =
-LDLIBS =
+LDLIBS = -lm
 
 # Target
-TARGET = urg_sensor_test serial_test
+TARGET = urg_sensor_test serial_test urg04lx_parameter_test
 
 all : $(TARGET)
 
@@ -23,7 +23,8 @@ depend :
 
 .PHONY : all clean test depend
 ######################################################################
-$(TARGET) : tiny_cunit.o ../urg_communication.o ../urg_serial.o ../urg_ethernet.o ../urg_ring_buffer.o
+$(TARGET) : tiny_cunit.o ../urg_connection.o ../urg_serial.o ../urg_ethernet.o ../urg_ring_buffer.o
+urg04lx_parameter_test : ../urg_sensor.o ../urg_utils.o
 
 # DO NOT DELETE
 

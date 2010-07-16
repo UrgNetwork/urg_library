@@ -81,7 +81,7 @@ typedef struct
   urg_t urg;
 
   if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
-  return 1;
+      return 1;
   }
 
   ...

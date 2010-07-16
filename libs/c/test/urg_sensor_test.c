@@ -10,13 +10,10 @@
 #include "tiny_cunit.h"
 
 
-int main(int argc, char *argv[])
+int main(void)
 {
-    (void)argc;
-    (void)argv;
-
     test_begin("checksum() test");
-    TEST_ASSERT_EQUAL_CHAR('P', checksum("00", 2));
+    TEST_ASSERT_EQUAL_CHAR('P', scip_checksum("00", 2));
     test_end();
 
     // !!!

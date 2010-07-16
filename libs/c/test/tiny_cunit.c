@@ -23,6 +23,24 @@ void test_end(void)
 }
 
 
+void test_assert_equal_int(const long expected, const long actual,
+                           const char* src_file, int line_no)
+{
+    if (expected == actual) {
+        return;
+    }
+
+    printf("fail!\n"
+           "\n");
+
+    printf("%s:%d:\n", src_file, line_no);
+    printf("expected: %ld\n"
+           "actual  : %ld\n", expected, actual);
+
+    exit(1);
+}
+
+
 void test_assert_equal_char(const char expected, const char actual,
                             const char* src_file, int line_no)
 {

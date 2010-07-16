@@ -48,7 +48,7 @@ static int scip_response(urg_t *urg, const char* command,
     char *p = receive_buffer;
     char buffer[BUFFER_SIZE];
     int filled_size = 0;
-    int line_no = 0;
+    int line_number = 0;
     int ret_val = URG_INVALID_RESPONSE;
 
     int write_size = strlen(command);
@@ -75,10 +75,12 @@ static int scip_response(urg_t *urg, const char* command,
         // scip_checksum(const char buffer[], int size)
         // !!! URG_CHECKSUM_ERROR
 
-        if (line_no == 0) {
-            // 送信文字と受信文字が一致するかを確認する
-            // !!!
-
+        if (line_number == 0) {
+            fprintf(stderr, "%s, %s\n", buffer, command);
+            // エコーバック文字列が、一致するかを確認する
+            if (strncmp(buffer, command, write_size - 1)) {
+                return URG_INVALID_RESPONSE;
+            }
         } else if (p && (n > 0) &&
                    (n < (receive_buffer_max_size - filled_size))) {
             memcpy(p, buffer, n);
@@ -88,21 +90,31 @@ static int scip_response(urg_t *urg, const char* command,
         }
 
         // ステータス応答を評価して、戻り値を決定する
-        if ((line_no == 1) && (n == 3)) {
-            int i;
-            int actual_ret = strtol(buffer, NULL, 10);
-            for (i = 0; expected_ret[i] != EXPECTED_END; ++i) {
-                if (expected_ret[i] == actual_ret) {
-                    ret_val = 0;
-                    break;
+        if (line_number == 1) {
+            if (n == 1) {
+                // SCIP 1.1 応答の場合は、正常応答とみなす
+                ret_val = 0;
+
+            } else if (n != 3) {
+                // !!!
+                return URG_INVALID_RESPONSE;
+
+            } else {
+                int i;
+                int actual_ret = strtol(buffer, NULL, 10);
+                for (i = 0; expected_ret[i] != EXPECTED_END; ++i) {
+                    if (expected_ret[i] == actual_ret) {
+                        ret_val = 0;
+                        break;
+                    }
                 }
             }
         }
 
-        ++line_no;
+        ++line_number;
     } while (n > 0);
 
-    return (ret_val < 0) ? ret_val : (line_no - 1);
+    return (ret_val < 0) ? ret_val : (line_number - 1);
 }
 
 
@@ -148,6 +160,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         }
 
         if (ret <= 0) {
+            fprintf(stderr, "ret = %d\n", ret);
             if (ret == URG_INVALID_RESPONSE) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
                 // データを読み飛ばす
@@ -188,6 +201,7 @@ static int receive_parameter(urg_t *urg)
     enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 9, };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int pp_expected[] = { 0, EXPECTED_END };
+    unsigned short received_bits = 0x0000;
     char *p;
     int i;
 
@@ -202,28 +216,40 @@ static int receive_parameter(urg_t *urg)
 
         if (! strncmp(p, "DMIN:", 5)) {
             urg->min_distance = strtol(p + 5, NULL, 10);
+            received_bits |= 0x0001;
 
         } else if (! strncmp(p, "DMAX:", 5)) {
             urg->max_distance = strtol(p + 5, NULL, 10);
+            received_bits |= 0x0002;
 
         } else if (! strncmp(p, "ARES:", 5)) {
             urg->area_resolution = strtol(p + 5, NULL, 10);
+            received_bits |= 0x0004;
 
         } else if (! strncmp(p, "AMIN:", 5)) {
             urg->first_data_index = strtol(p + 5, NULL, 10);
+            received_bits |= 0x0008;
 
         } else if (! strncmp(p, "AMAX:", 5)) {
             urg->last_data_index = strtol(p + 5, NULL, 10);
+            received_bits |= 0x0010;
 
         } else if (! strncmp(p, "AFRT:", 5)) {
             urg->front_data_index = strtol(p + 5, NULL, 10);
+            received_bits |= 0x0020;
 
         } else if (! strncmp(p, "SCAN:", 5)) {
             int rpm = strtol(p + 5, NULL, 10);
             urg->scan_usec = 1000 * 1000 * 60 / rpm;
             urg->timeout = urg->scan_usec >> (10 - 1);
+            received_bits |= 0x0040;
         }
         p += strlen(p) + 1;
+    }
+
+    // 全てのパラメータを受信したかをチェック
+    if (received_bits != 0x007f) {
+        return URG_RECEIVE_ERROR;
     }
 
     urg_set_scanning_parameter(urg,
@@ -231,7 +257,7 @@ static int receive_parameter(urg_t *urg)
                                urg->last_data_index - urg->front_data_index,
                                1);
 
-    return 0;
+    return URG_NO_ERROR;
 }
 
 
@@ -306,7 +332,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
     // 指定したボーレートで URG と通信できるように調整
     if (connection_type == URG_SERIAL) {
         ret = connect_serial_device(urg, baudrate);
-        if (ret < 0) {
+        if (ret != URG_NO_ERROR) {
             return ret;
         }
     }
@@ -319,7 +345,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
 
     // パラメータ情報を取得
     ret = receive_parameter(urg);
-    if (ret == 0) {
+    if (ret == URG_NO_ERROR) {
         urg->is_active = URG_TRUE;
     }
     return ret;
@@ -388,15 +414,22 @@ void urg_stop_time_stamp_mode(urg_t *urg)
 
 static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
 {
+    // !!! データを返す回数を指定することにして、
+    // !!! actual_scan_times には 0 を返す
+
     char buffer[BUFFER_SIZE];
-    int actual_scan_times = (scan_times < 0) ? 0 : scan_times;
+    int actual_scan_times = (scan_times < 0 || scan_times > 99) ? 0 : scan_times;
     char range_byte_ch =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 'S' : 'D';
     int write_size = 0;
     int front_index = urg->front_data_index;
+    int ret;
 
     urg->scanning_remain_times = scan_times;
     if (actual_scan_times == 1) {
+
+        // !!! レーザ光っていない場合には、発光させる
+
         // GD, GS
         write_size = snprintf(buffer, BUFFER_SIZE, "G%c%04d%04d%02d\n",
                               range_byte_ch,
@@ -410,9 +443,12 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
                               urg->scanning_first_step + front_index,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
-                              skip_scan, scan_times);
+                              skip_scan, actual_scan_times);
     }
-    return connection_write(&urg->connection, buffer, write_size);
+    ret = connection_write(&urg->connection, buffer, write_size);
+    // !!! 送信した文字数を比較するようにする
+
+    return ret;
 }
 
 
@@ -452,6 +488,8 @@ static int send_multiecho_intensity_command(urg_t *urg,
 int urg_start_measurement(urg_t *urg, measurement_type_t type,
                           int scan_times, int skip_scan)
 {
+    int ret;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
@@ -463,23 +501,23 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
     // 指定されたタイプのパケットを生成し、送信する
     switch (type) {
     case URG_DISTANCE:
-        send_distance_command(urg, scan_times, skip_scan);
+        ret = send_distance_command(urg, scan_times, skip_scan);
         break;
 
     case URG_DISTANCE_INTENSITY:
-        send_distance_intensity_command(urg, scan_times, skip_scan);
+        ret = send_distance_intensity_command(urg, scan_times, skip_scan);
         break;
 
     case URG_MULTIECHO:
-        send_multiecho_command(urg, scan_times, skip_scan);
+        ret = send_multiecho_command(urg, scan_times, skip_scan);
         break;
 
     case URG_MULTIECHO_INTENSITY:
-        send_multiecho_intensity_command(urg, scan_times, skip_scan);
+        ret = send_multiecho_intensity_command(urg, scan_times, skip_scan);
         break;
     }
 
-    return -1;
+    return ret;
 }
 
 
@@ -597,6 +635,8 @@ int urg_laser_on(urg_t *urg)
 
     // 既にレーザが発光しているときは、コマンドを送信しないようにする
     // !!!
+
+    // !!! レーザ故障を処理できるようにする
 
     return scip_response(urg, "BM\n", expected, urg->timeout, NULL, 0);
 }
@@ -726,3 +766,4 @@ int urg_find_port(char *port_name, int index)
 
     return 0;
 }
+
