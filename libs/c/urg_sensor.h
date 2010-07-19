@@ -21,6 +21,7 @@ typedef enum {
     URG_DISTANCE_INTENSITY,     /*!< 距離 + 強度 */
     URG_MULTIECHO,              /*!< マルチエコーの距離 */
     URG_MULTIECHO_INTENSITY,    /*!< マルチエコーの(距離 + 強度) */
+    URG_STOP,                   /*!< 計測の停止 */
 } measurement_type_t;
 
 
@@ -58,6 +59,7 @@ typedef struct
     int timeout;
     int specified_scan_times;
     int scanning_remain_times;
+    int is_laser_on;
 
     char return_buffer[80];
 } urg_t;
