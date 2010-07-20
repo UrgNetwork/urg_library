@@ -65,6 +65,7 @@ typedef struct
     int received_first_index;
     int received_last_index;
     int received_skip_step;
+    range_data_byte_t received_range_data_byte;
     //int received_buffer_filled;
     //char received_buffer[5];
 

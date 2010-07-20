@@ -290,6 +290,67 @@ static long scip_decode(const char data[], int size)
 }
 
 
+static int parse_parameter(const char *parameter, int size)
+{
+    char buffer[5];
+
+    memcpy(buffer, parameter, size);
+    buffer[size] = '\0';
+
+    return strtol(buffer, NULL, 10);
+}
+
+
+static measurement_type_t parse_gx_command(urg_t *urg,
+                                           const char echoback_line[])
+{
+    measurement_type_t ret_type;
+
+    urg->received_range_data_byte = URG_COMMUNICATION_3_BYTE;
+    if (echoback_line[1] == 'S') {
+        urg->received_range_data_byte = URG_COMMUNICATION_2_BYTE;
+        ret_type = URG_DISTANCE;
+
+    } else if (echoback_line[1] == 'D') {
+        ret_type = URG_DISTANCE;
+
+    } else if (echoback_line[1] == 'E') {
+        ret_type = URG_DISTANCE_INTENSITY;
+
+    } else {
+        return URG_UNKNOWN;
+    }
+
+    // パラメータの格納
+    urg->received_first_index = parse_parameter(&echoback_line[2], 4);
+    urg->received_last_index = parse_parameter(&echoback_line[6], 4);
+    urg->received_skip_step = parse_parameter(&echoback_line[10], 2);
+
+    return ret_type;
+}
+
+
+static measurement_type_t parse_mx_command(urg_t *urg,
+                                           const char echoback_line[])
+{
+    measurement_type_t ret_type;
+
+    ret_type = parse_gx_command(urg, echoback_line);
+    if (ret_type == URG_UNKNOWN) {
+        return ret_type;
+    }
+
+    if (echoback_line[1] == 'D') {
+        ret_type = URG_MULTIECHO;
+
+    } else if (echoback_line[1] == 'E') {
+        ret_type = URG_MULTIECHO_INTENSITY;
+    }
+
+    return ret_type;
+}
+
+
 measurement_type_t parse_distance_echoback(urg_t *urg,
                                            const char echoback_line[])
 {
@@ -302,39 +363,13 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
 
     line_length = strlen(echoback_line);
     if ((line_length == 12) &&
-        ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) &&
-        ((echoback_line[1] == 'S') || (echoback_line[1] == 'D'))) {
-        // !!!
-
-        ret_type = URG_DISTANCE;
-
-    } else if ((line_length == 12) &&
-               ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) &&
-               (echoback_line[1] == 'E')) {
-        // !!!
-
-        ret_type = URG_DISTANCE_INTENSITY;
+        ((echoback_line[0] == 'G') || (echoback_line[0] == 'M'))) {
+        ret_type = parse_gx_command(urg, echoback_line);
 
     } else if ((line_length == 15) &&
-               ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) &&
-               (echoback_line[1] == 'D')) {
-        // !!!
-
-        ret_type = URG_MULTIECHO;
-
-    } else if ((line_length == 15) &&
-               ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) &&
-               (echoback_line[1] == 'E')) {
-        // !!!
-
-        ret_type = URG_MULTIECHO_INTENSITY;
+               ((echoback_line[0] == 'H') || (echoback_line[0] == 'N'))) {
+        ret_type = parse_mx_command(urg, echoback_line);
     }
-
-    (void)urg;
-
-    // !!!
-
-    // !!!
     return ret_type;
 }
 
@@ -345,19 +380,16 @@ static int receive_data_line(urg_t *urg, long length[],
 {
     int n;
     int step_filled = 0;
-    //int length_filled = 0;
-    //int intensity_filled = 0;
     int line_filled = 0;
 
-    int each_size = (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
+    int each_size =
+        (urg->received_range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
     int data_size = each_size;
-
-    (void)length;
-    (void)intensity;
-    // !!!
+    int is_intensity = URG_FALSE;
 
     if ((type == URG_DISTANCE_INTENSITY) || (type == URG_MULTIECHO_INTENSITY)) {
         data_size *= 2;
+        is_intensity = URG_TRUE;
     }
 
     do {
@@ -370,23 +402,18 @@ static int receive_data_line(urg_t *urg, long length[],
 
         // !!! チェックサムの確認
         // !!! p から n のサイズだけチェックを行う
-        // !!! [line_filled] から n のサイズだけのチェックを行う
 
         if (n > 0) {
             line_filled += n - 1;
         }
         last_p = p + line_filled;
 
-        // !!! each_size を強度データも含む長さにするかを検討すべき
-        // !!! 同じ step のデータは一緒の方が処理しやすそう
-
+        // !!! デバッグ表示
         buffer[line_filled + 1] = '\0';
         fprintf(stderr, "%02d: %s\n", line_filled, buffer);
 
-        // バッファを指定して、格納する関数があればよさそう
-        // !!!
-
         while ((last_p - p) >= data_size) {
+            // 先頭文字が '&' だったときの処理
             // !!!
 
             // 距離データの格納
@@ -396,25 +423,23 @@ static int receive_data_line(urg_t *urg, long length[],
 
             // 強度データの格納
             // !!!
-            if (0) {
+            if (is_intensity) {
+                intensity[step_filled] = scip_decode(p, 3);
                 p += 3;
             }
 
             ++step_filled;
-
-            // 先頭文字が '&' だったときの処理
-            // !!!
-
             line_filled -= data_size;
+
+            if (step_filled >= urg->received_last_index) {
+                // データが多過ぎる場合は、残りのデータを無視して戻る
+                ignore_receive_data(&urg->connection, urg->timeout);
+                break;
+            }
         }
 
         // 次に処理する文字を退避
         memmove(buffer, p, line_filled);
-
-        //(void)intensity_filled;
-
-        // !!! データが多過ぎる場合は、残りのデータを無視して戻る
-        // !!!
 
     } while (n > 0);
 
@@ -889,16 +914,20 @@ int urg_laser_off(urg_t *urg)
 
 int urg_reboot(urg_t *urg)
 {
-    (void)urg;
-    // !!!
+    int expected[] = { 0, 1, EXPECTED_END };
+    int ret;
+    int i;
 
-    // RB コマンドを２回送信する
-    // !!!
+    // ２回目の RB 送信後、接続を切断する
+    for (i = 0; i < 2; ++i) {
+        ret = scip_response(urg, "RB\n", expected, urg->timeout, NULL, 0);
+        if (ret <= 0) {
+            return URG_INVALID_RESPONSE;
+        }
+    }
+    urg_close(urg);
 
-    // ２回目の RB 送信後、１秒以内に接続を切断する
-    // !!!
-
-    return -1;
+    return 0;
 }
 
 
