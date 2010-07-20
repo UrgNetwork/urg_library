@@ -22,6 +22,7 @@ typedef enum {
     URG_MULTIECHO,              /*!< マルチエコーの距離 */
     URG_MULTIECHO_INTENSITY,    /*!< マルチエコーの(距離 + 強度) */
     URG_STOP,                   /*!< 計測の停止 */
+    URG_UNKNOWN,                /*!< 不明 */
 } measurement_type_t;
 
 

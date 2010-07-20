@@ -26,7 +26,6 @@ enum {
 
     RECEIVE_DATA_TIMEOUT,
     RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
-    RECEIVE_DATA_QT,            /*!< QT 応答を受信 */
 
     PP_RESPONSE_LINES = 10,
     VV_RESPONSE_LINES = 7,
@@ -117,6 +116,18 @@ static int scip_response(urg_t *urg, const char* command,
 }
 
 
+static void ignore_receive_data(connection_t *connection, int timeout)
+{
+    char buffer[BUFFER_SIZE];
+    int n;
+
+    do {
+        n = connection_readline(connection,
+                                buffer, BUFFER_SIZE, timeout);
+    } while (n >= 0);
+}
+
+
 // ボーレートを変更しながら接続する
 static int connect_serial_device(urg_t *urg, long baudrate)
 {
@@ -161,13 +172,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             if (ret == URG_INVALID_RESPONSE) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
                 // データを読み飛ばす
-                char buffer[BUFFER_SIZE];
-                int n;
-
-                do {
-                    n = connection_readline(&urg->connection,
-                                            buffer, BUFFER_SIZE, MAX_TIMEOUT);
-                } while (n >= 0);
+                ignore_receive_data(&urg->connection, MAX_TIMEOUT);
 
                 // ボーレートを変更して戻る
                 // !!!
@@ -178,7 +183,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
                 continue;
             }
         } else if (!strcmp("00P", receive_buffer)) {
-            // 正常に接続。センサとホストのボーレートを変更して戻る
+            // センサとホストのボーレートを変更して戻る
             // !!!
             return 0;
         }
@@ -202,6 +207,7 @@ static int receive_parameter(urg_t *urg)
     int ret = scip_response(urg, "PP\n", pp_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
     if (ret < PP_RESPONSE_LINES) {
+        ignore_receive_data(&urg->connection, MAX_TIMEOUT);
         return URG_INVALID_RESPONSE;
     }
 
@@ -241,7 +247,7 @@ static int receive_parameter(urg_t *urg)
         p += strlen(p) + 1;
     }
 
-    // 全てのパラメータを受信したかをチェック
+    // 全てのパラメータを受信したか確認
     if (received_bits != 0x007f) {
         return URG_RECEIVE_ERROR;
     }
@@ -271,13 +277,18 @@ static char scip_checksum(const char buffer[], int size)
 
 
 //! SCIP 文字列のデコード
-static long scip_decode(const char buffer[], int size)
+static long scip_decode(const char data[], int size)
 {
-    (void)buffer;
-    (void)size;
-    // !!!
+    const char* p = data;
+    const char* last_p = p + size;
+    int value = 0;
 
-    return -1;
+    while (p < last_p) {
+        value <<= 6;
+        value &= ~0x3f;
+        value |= *p++ - 0x30;
+    }
+    return value;
 }
 
 
@@ -285,25 +296,59 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
                                            const char echoback_line[])
 {
     int line_length;
+    measurement_type_t ret_type = URG_UNKNOWN;
 
     if (!strcmp("QT", echoback_line)) {
-        return RECEIVE_DATA_QT;
+        return URG_STOP;
+    }
+
+    line_length = strlen(echoback_line);
+    if ((line_length == 12) &&
+        ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) &&
+        ((echoback_line[1] == 'S') || (echoback_line[1] == 'D'))) {
+        // !!!
+
+    } else if ((line_length == 12) &&
+               ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) &&
+               (echoback_line[1] == 'E')) {
+        // !!!
+
+    } else if ((line_length == 15) &&
+               ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) &&
+               (echoback_line[1] == 'D')) {
+        // !!!
+
+    } else if ((line_length == 15) &&
+               ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) &&
+               (echoback_line[1] == 'E')) {
+        // !!!
     }
 
     (void)urg;
-    line_length = strlen(echoback_line);
+
     // !!!
 
     // !!!
-    return URG_STOP;
+    return ret_type;
 }
 
+
+static int receive_data_line(urg_t *urg, long data[],
+                             unsigned short intensity[]) {
+    (void)urg;
+    (void)data;
+    (void)intensity;
+    // !!!
+
+    return -1;
+}
 
 //! 距離データの取得
 static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                         long *time_stamp)
 {
     measurement_type_t type;
+    int ret_code;
     char buffer[BUFFER_SIZE];
     int ret;
     int n;
@@ -311,6 +356,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // エコーバックの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
+    // !!! チェックサムの確認
     fprintf(stderr, "n = %d\n", n);
     if (n > 0) {
         fprintf(stderr, "%s\n", buffer);
@@ -323,18 +369,59 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     type = parse_distance_echoback(urg, buffer);
 
     // 応答の取得
-    // !!!
+    n = connection_readline(&urg->connection,
+                            buffer, BUFFER_SIZE, urg->timeout);
+    // !!! チェックサムの確認
+    if (n != 3) {
+        ignore_receive_data(&urg->connection, urg->timeout);
+        return URG_INVALID_RESPONSE;
+    }
+    ret_code = scip_decode(buffer, 2);
+
+    fprintf(stderr, "n2 = %d, %d\n", n, ret_code);
+    if (n > 0) {
+        fprintf(stderr, "%s\n", buffer);
+    }
+    fprintf(stderr, "specified_scan_times: %d\n", urg->specified_scan_times);
+
+    if (urg->specified_scan_times != 1) {
+        if (ret_code == 0) {
+            // 最後の空行を読み捨て、次からのデータを返す
+            n = connection_readline(&urg->connection,
+                                    buffer, BUFFER_SIZE, urg->timeout);
+            if (n != 0) {
+                ignore_receive_data(&urg->connection, urg->timeout);
+                return URG_INVALID_RESPONSE;
+            } else {
+                return receive_data(urg, data, intensity, time_stamp);
+            }
+        }
+    }
+
+    if (((urg->specified_scan_times == 1) && (ret_code != 0)) ||
+        ((urg->specified_scan_times != 1) && (ret_code != 99))) {
+        // Gx, Hx のときは 00P が返されたときがデータ
+        // Mx, Nx のときは 99b が返されたときがデータ
+        ignore_receive_data(&urg->connection, urg->timeout);
+        return URG_INVALID_RESPONSE;
+    }
 
     // タイムスタンプの取得
-    // !!!
-    (void)time_stamp;
+    n = connection_readline(&urg->connection,
+                            buffer, BUFFER_SIZE, urg->timeout);
+    fprintf(stderr, "n3 = %d\n", n);
+    if (n > 0) {
+        if (time_stamp) {
+            *time_stamp = scip_decode(buffer, 4);
+            fprintf(stderr, "timestamp: %ld\n", *time_stamp);
+        }
+        fprintf(stderr, "%s\n", buffer);
+    }
 
     // データの取得
     switch (type) {
     case URG_DISTANCE:
-        // !!!
-        (void)data;
-        ret = 0;
+        ret = receive_data_line(urg, data, NULL);
         break;
 
     case URG_DISTANCE_INTENSITY:
@@ -358,7 +445,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         break;
 
     case URG_STOP:
-        ret = RECEIVE_DATA_QT;
+    case URG_UNKNOWN:
+        ret = 0;
         break;
     }
 
@@ -487,10 +575,11 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
     int front_index = urg->front_data_index;
     int n;
 
-    urg->scanning_remain_times =
-        (scan_times < 0 || scan_times > 99) ? 0 : scan_times;
+    urg->specified_scan_times = (scan_times < 0) ? 0 : scan_times;
+    urg->scanning_remain_times = urg->specified_scan_times;
     if (urg->scanning_remain_times == 1) {
 
+        // レーザ発光を指示
         urg_laser_on(urg);
 
         // GD, GS
@@ -560,6 +649,7 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
     }
 
     if ((skip_scan < 0) || (skip_scan > 9)) {
+        ignore_receive_data(&urg->connection, urg->timeout);
         return URG_INVALID_PARAMETER;
     }
 
@@ -582,6 +672,8 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
         break;
 
     case URG_STOP:
+    case URG_UNKNOWN:
+        ignore_receive_data(&urg->connection, urg->timeout);
         ret = URG_INVALID_PARAMETER;
         break;
     }
