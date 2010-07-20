@@ -196,8 +196,13 @@ double urg_step2deg(const urg_t *urg, int step)
 
 int urg_step2index(const urg_t *urg, int step)
 {
+    int measure_step;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
-    return min(max(0, step + urg->front_data_index), urg->last_data_index);
+
+    measure_step = step - urg->received_first_index;
+    return min(max(0, measure_step + urg->front_data_index),
+               urg->last_data_index);
 }
