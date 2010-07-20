@@ -134,13 +134,8 @@ int serial_set_baudrate(serial_t *serial, long baudrate)
 
 int serial_write(serial_t *serial, const char *data, int size)
 {
-    int i;
     if (serial->fd == INVALID_FD) {
         return -1;
-    }
-    fprintf(stderr, "WRITE: ");
-    for (i = 0; i < size; ++i) {
-        fprintf(stderr, "%c", data[i]);
     }
     return write(serial->fd, data, size);
 }

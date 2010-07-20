@@ -20,7 +20,7 @@ enum {
     URG_FALSE = 0,
     URG_TRUE = 1,
 
-    BUFFER_SIZE = 64,
+    BUFFER_SIZE = 64 + 2 + 2,
 
     EXPECTED_END = -1,
 
@@ -74,7 +74,6 @@ static int scip_response(urg_t *urg, const char* command,
         // !!! URG_CHECKSUM_ERROR
 
         if (line_number == 0) {
-            fprintf(stderr, "%s, %s\n", buffer, command);
             // エコーバック文字列が、一致するかを確認する
             if (strncmp(buffer, command, write_size - 1)) {
                 return URG_INVALID_RESPONSE;
@@ -168,7 +167,6 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         }
 
         if (ret <= 0) {
-            fprintf(stderr, "ret = %d\n", ret);
             if (ret == URG_INVALID_RESPONSE) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
                 // データを読み飛ばす
@@ -308,20 +306,28 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
         ((echoback_line[1] == 'S') || (echoback_line[1] == 'D'))) {
         // !!!
 
+        ret_type = URG_DISTANCE;
+
     } else if ((line_length == 12) &&
                ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) &&
                (echoback_line[1] == 'E')) {
         // !!!
+
+        ret_type = URG_DISTANCE_INTENSITY;
 
     } else if ((line_length == 15) &&
                ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) &&
                (echoback_line[1] == 'D')) {
         // !!!
 
+        ret_type = URG_MULTIECHO;
+
     } else if ((line_length == 15) &&
                ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) &&
                (echoback_line[1] == 'E')) {
         // !!!
+
+        ret_type = URG_MULTIECHO_INTENSITY;
     }
 
     (void)urg;
@@ -334,13 +340,45 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
 
 
 static int receive_data_line(urg_t *urg, long data[],
-                             unsigned short intensity[]) {
+                             unsigned short intensity[],
+                             measurement_type_t type, char buffer[])
+{
+    int n;
+    int step_filled = 0;
+
     (void)urg;
     (void)data;
     (void)intensity;
     // !!!
 
-    return -1;
+    // !!! range_data_byte で場合分け
+
+    // !!! type で場合分け
+    (void)type;
+
+    // !!! 処理残りのデータがあるか、の処理
+
+    do {
+        // !!! 前回に残った文字を、追加する
+
+        n = connection_readline(&urg->connection,
+                                buffer, BUFFER_SIZE, urg->timeout);
+
+        // !!! チェックサムの確認
+
+        fprintf(stderr, "n = %d: %s\n", n, buffer);
+
+        // !!! データの格納
+        // !!! scip_decode()
+
+        // !!! 残った文字を退避
+
+        // !!! データが多過ぎる場合は、残りのデータを無視して戻る
+        // !!!
+
+    } while (n > 0);
+
+    return step_filled;
 }
 
 //! 距離データの取得
@@ -419,9 +457,10 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     // データの取得
+    fprintf(stderr, "type: %d\n", type);
     switch (type) {
     case URG_DISTANCE:
-        ret = receive_data_line(urg, data, NULL);
+        ret = receive_data_line(urg, data, NULL, type, buffer);
         break;
 
     case URG_DISTANCE_INTENSITY:
