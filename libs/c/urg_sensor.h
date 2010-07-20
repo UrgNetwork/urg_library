@@ -62,6 +62,12 @@ typedef struct
     int scanning_remain_times;
     int is_laser_on;
 
+    int received_first_index;
+    int received_last_index;
+    int received_skip_step;
+    //int received_buffer_filled;
+    //char received_buffer[5];
+
     char return_buffer[80];
 } urg_t;
 

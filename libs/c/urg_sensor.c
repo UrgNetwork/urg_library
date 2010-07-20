@@ -20,7 +20,7 @@ enum {
     URG_FALSE = 0,
     URG_TRUE = 1,
 
-    BUFFER_SIZE = 64 + 2 + 2,
+    BUFFER_SIZE = 64 + 2 + 5,
 
     EXPECTED_END = -1,
 
@@ -339,39 +339,79 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
 }
 
 
-static int receive_data_line(urg_t *urg, long data[],
+static int receive_data_line(urg_t *urg, long length[],
                              unsigned short intensity[],
                              measurement_type_t type, char buffer[])
 {
     int n;
     int step_filled = 0;
+    //int length_filled = 0;
+    //int intensity_filled = 0;
+    int line_filled = 0;
 
-    (void)urg;
-    (void)data;
+    int each_size = (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
+    int data_size = each_size;
+
+    (void)length;
     (void)intensity;
     // !!!
 
-    // !!! range_data_byte で場合分け
-
-    // !!! type で場合分け
-    (void)type;
-
-    // !!! 処理残りのデータがあるか、の処理
+    if ((type == URG_DISTANCE_INTENSITY) || (type == URG_MULTIECHO_INTENSITY)) {
+        data_size *= 2;
+    }
 
     do {
-        // !!! 前回に残った文字を、追加する
+        char *p = buffer;
+        char *last_p;
 
         n = connection_readline(&urg->connection,
-                                buffer, BUFFER_SIZE, urg->timeout);
+                                &buffer[line_filled], BUFFER_SIZE - line_filled,
+                                urg->timeout);
 
         // !!! チェックサムの確認
+        // !!! p から n のサイズだけチェックを行う
+        // !!! [line_filled] から n のサイズだけのチェックを行う
 
-        fprintf(stderr, "n = %d: %s\n", n, buffer);
+        if (n > 0) {
+            line_filled += n - 1;
+        }
+        last_p = p + line_filled;
 
-        // !!! データの格納
-        // !!! scip_decode()
+        // !!! each_size を強度データも含む長さにするかを検討すべき
+        // !!! 同じ step のデータは一緒の方が処理しやすそう
 
-        // !!! 残った文字を退避
+        buffer[line_filled + 1] = '\0';
+        fprintf(stderr, "%02d: %s\n", line_filled, buffer);
+
+        // バッファを指定して、格納する関数があればよさそう
+        // !!!
+
+        while ((last_p - p) >= data_size) {
+            // !!!
+
+            // 距離データの格納
+            // !!! データの格納
+            length[step_filled] = scip_decode(p, 3);
+            p += 3;
+
+            // 強度データの格納
+            // !!!
+            if (0) {
+                p += 3;
+            }
+
+            ++step_filled;
+
+            // 先頭文字が '&' だったときの処理
+            // !!!
+
+            line_filled -= data_size;
+        }
+
+        // 次に処理する文字を退避
+        memmove(buffer, p, line_filled);
+
+        //(void)intensity_filled;
 
         // !!! データが多過ぎる場合は、残りのデータを無視して戻る
         // !!!
@@ -394,11 +434,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // エコーバックの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
+
     // !!! チェックサムの確認
-    fprintf(stderr, "n = %d\n", n);
-    if (n > 0) {
-        fprintf(stderr, "%s\n", buffer);
-    }
 
     if (n <= 0) {
         return URG_NO_RESPONSE;
@@ -415,12 +452,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         return URG_INVALID_RESPONSE;
     }
     ret_code = scip_decode(buffer, 2);
-
-    fprintf(stderr, "n2 = %d, %d\n", n, ret_code);
-    if (n > 0) {
-        fprintf(stderr, "%s\n", buffer);
-    }
-    fprintf(stderr, "specified_scan_times: %d\n", urg->specified_scan_times);
 
     if (urg->specified_scan_times != 1) {
         if (ret_code == 0) {
@@ -447,17 +478,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // タイムスタンプの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
-    fprintf(stderr, "n3 = %d\n", n);
     if (n > 0) {
         if (time_stamp) {
             *time_stamp = scip_decode(buffer, 4);
-            fprintf(stderr, "timestamp: %ld\n", *time_stamp);
         }
-        fprintf(stderr, "%s\n", buffer);
     }
 
     // データの取得
-    fprintf(stderr, "type: %d\n", type);
     switch (type) {
     case URG_DISTANCE:
         ret = receive_data_line(urg, data, NULL, type, buffer);

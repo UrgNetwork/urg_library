@@ -121,14 +121,16 @@ int urg_max_index(const urg_t *urg)
 
 double urg_index2rad(const urg_t *urg, int index)
 {
+    int actual_index;
+    int step;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)index;
-    // !!!
-    return 0.0;
+    actual_index = min(max(0, index), urg->last_data_index);
+    step = actual_index - urg->front_data_index;
+    return urg_step2rad(urg, step);
 }
 
 
@@ -182,12 +184,7 @@ double urg_step2rad(const urg_t *urg, int step)
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)step;
-
-    // !!!
-
-    return 0.0;
+    return (2.0 * M_PI) * step / urg->area_resolution;
 }
 
 
@@ -202,10 +199,5 @@ int urg_step2index(const urg_t *urg, int step)
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
-
-    (void)urg;
-    (void)step;
-    // !!!
-
-    return 0;
+    return min(max(0, step + urg->front_data_index), urg->last_data_index);
 }

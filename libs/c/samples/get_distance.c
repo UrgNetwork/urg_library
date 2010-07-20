@@ -21,7 +21,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
     // 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
-    printf("%ld, (%ld)\n", data[front_index], time_stamp);
+    printf("%d, %ld, (%ld)\n", front_index, data[front_index], time_stamp);
 
 #else
     int i;
