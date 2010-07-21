@@ -413,8 +413,10 @@ static int receive_data_line(urg_t *urg, long length[],
         fprintf(stderr, "%02d: %s\n", line_filled, buffer);
 
         while ((last_p - p) >= data_size) {
-            // 先頭文字が '&' だったときの処理
-            // !!!
+            if (*p == '&') {
+                // 先頭文字が '&' だったときは、マルチエコーのデータとみなす
+                // !!!
+            }
 
             // 距離データの格納
             // !!! データの格納
@@ -422,9 +424,10 @@ static int receive_data_line(urg_t *urg, long length[],
             p += 3;
 
             // 強度データの格納
-            // !!!
             if (is_intensity) {
-                intensity[step_filled] = scip_decode(p, 3);
+                if (intensity) {
+                    intensity[step_filled] = scip_decode(p, 3);
+                }
                 p += 3;
             }
 
@@ -445,6 +448,7 @@ static int receive_data_line(urg_t *urg, long length[],
 
     return step_filled;
 }
+
 
 //! 距離データの取得
 static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
@@ -654,35 +658,31 @@ void urg_stop_time_stamp_mode(urg_t *urg)
 }
 
 
-static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
+static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
+                                 char single_scan_ch, char continuous_scan_ch,
+                                 char scan_type_ch)
 {
-    // !!! データを返す回数を指定することにして、
-    // !!! actual_scan_times には 0 を返す
-
     char buffer[BUFFER_SIZE];
-    char range_byte_ch =
-        (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 'S' : 'D';
     int write_size = 0;
     int front_index = urg->front_data_index;
     int n;
 
     urg->specified_scan_times = (scan_times < 0) ? 0 : scan_times;
     urg->scanning_remain_times = urg->specified_scan_times;
+
     if (urg->scanning_remain_times == 1) {
 
         // レーザ発光を指示
         urg_laser_on(urg);
 
-        // GD, GS
-        write_size = snprintf(buffer, BUFFER_SIZE, "G%c%04d%04d%02d\n",
-                              range_byte_ch,
+        write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d\n",
+                              single_scan_ch, scan_type_ch,
                               urg->scanning_first_step + front_index,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step);
     } else {
-        // MD, MS
-        write_size = snprintf(buffer, BUFFER_SIZE, "M%c%04d%04d%02d%01d%02d\n",
-                              range_byte_ch,
+        write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d%01d%02d\n",
+                              continuous_scan_ch, scan_type_ch,
                               urg->scanning_first_step + front_index,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
@@ -697,42 +697,10 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan)
 }
 
 
-static int send_distance_intensity_command(urg_t *urg,
-                                           int scan_times, int skip_scan)
-{
-    (void)urg;
-    (void)scan_times;
-    (void)skip_scan;
-    // !!!
-    return -1;
-}
-
-
-static int send_multiecho_command(urg_t *urg,
-                                  int scan_times, int skip_scan)
-{
-    (void)urg;
-    (void)scan_times;
-    (void)skip_scan;
-    // !!!
-    return -1;
-}
-
-
-static int send_multiecho_intensity_command(urg_t *urg,
-                                            int scan_times, int skip_scan)
-{
-    (void)urg;
-    (void)scan_times;
-    (void)skip_scan;
-    // !!!
-    return -1;
-}
-
-
 int urg_start_measurement(urg_t *urg, measurement_type_t type,
                           int scan_times, int skip_scan)
 {
+    char range_byte_ch;
     int ret;
 
     if (!urg->is_active) {
@@ -747,19 +715,25 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
     // 指定されたタイプのパケットを生成し、送信する
     switch (type) {
     case URG_DISTANCE:
-        ret = send_distance_command(urg, scan_times, skip_scan);
+        range_byte_ch =
+            (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ? 'S' : 'D';
+        ret = send_distance_command(urg, scan_times, skip_scan,
+                                    'G', 'M', range_byte_ch);
         break;
 
     case URG_DISTANCE_INTENSITY:
-        ret = send_distance_intensity_command(urg, scan_times, skip_scan);
+        ret = send_distance_command(urg, scan_times, skip_scan,
+                                    'G', 'M', 'E');
         break;
 
     case URG_MULTIECHO:
-        ret = send_multiecho_command(urg, scan_times, skip_scan);
+        ret = send_distance_command(urg, scan_times, skip_scan,
+                                    'H', 'N', 'D');
         break;
 
     case URG_MULTIECHO_INTENSITY:
-        ret = send_multiecho_intensity_command(urg, scan_times, skip_scan);
+        ret = send_distance_command(urg, scan_times, skip_scan,
+                                    'H', 'N', 'E');
         break;
 
     case URG_STOP:

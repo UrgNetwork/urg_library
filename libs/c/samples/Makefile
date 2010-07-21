@@ -30,7 +30,7 @@ REQUIRE_LIB = ../urg_c.a
 $(REQUIRE_LIB) :
 	cd $(@D)/ && $(MAKE) $(@F)
 
-get_distance normal_measurement intensity_measurement multiecho_measurement calculate_xy sync_time_stamp sensor_parameter : $(REQUIRE_LIB)
+get_distance get_distance_intensity get_multiecho get_multiecho_intensity calculate_xy sync_time_stamp sensor_parameter : $(REQUIRE_LIB)
 
 # DO NOT DELETE
 
