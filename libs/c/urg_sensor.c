@@ -39,6 +39,21 @@ static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
 static const char RECEIVE_ERROR_MESSAGE[] = "receive error.";
 
 
+//! チェックサムの計算
+static char scip_checksum(const char buffer[], int size)
+{
+    unsigned char sum = 0x00;
+    int i;
+
+    for (i = 0; i < size; ++i) {
+        sum += buffer[i];
+    }
+
+    // 計算の意味は SCIP 仕様書を参照のこと
+    return (sum & 0x3f) + 0x30;
+}
+
+
 // 受信した応答の行数を返す
 static int scip_response(urg_t *urg, const char* command,
                          const int expected_ret[], int timeout,
@@ -68,22 +83,24 @@ static int scip_response(urg_t *urg, const char* command,
             return URG_NO_RESPONSE;
         }
 
-        // チェックサムの評価
-        // !!!
-        // scip_checksum(const char buffer[], int size)
-        // !!! URG_CHECKSUM_ERROR
-
         if (line_number == 0) {
             // エコーバック文字列が、一致するかを確認する
             if (strncmp(buffer, command, write_size - 1)) {
                 return URG_INVALID_RESPONSE;
             }
-        } else if (p && (n > 0) &&
-                   (n < (receive_buffer_max_size - filled_size))) {
-            memcpy(p, buffer, n);
-            p += n;
-            *p++ = '\0';
-            filled_size += n;
+        } else if (n > 0) {
+            // エコーバック以外の行のチェックサムを評価する
+            char checksum = buffer[n - 1];
+            if ((checksum != scip_checksum(buffer, n - 1)) &&
+                (checksum != scip_checksum(buffer, n - 2))) {
+                return URG_CHECKSUM_ERROR;
+            }
+            if (p && (n < (receive_buffer_max_size - filled_size))) {
+                memcpy(p, buffer, n);
+                p += n;
+                *p++ = '\0';
+                filled_size += n;
+            }
         }
 
         // ステータス応答を評価して、戻り値を決定する
@@ -259,21 +276,6 @@ static int receive_parameter(urg_t *urg)
 }
 
 
-//! チェックサムの計算
-static char scip_checksum(const char buffer[], int size)
-{
-    unsigned char sum = 0x00;
-    int i;
-
-    for (i = 0; i < size; ++i) {
-        sum += buffer[i];
-    }
-
-    // 計算の意味は SCIP 仕様書を参照のこと
-    return (sum & 0x3f) + 0x30;
-}
-
-
 //! SCIP 文字列のデコード
 static long scip_decode(const char data[], int size)
 {
@@ -386,10 +388,14 @@ static int receive_data_line(urg_t *urg, long length[],
         (urg->received_range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
     int data_size = each_size;
     int is_intensity = URG_FALSE;
+    int is_multiecho = URG_FALSE;
 
     if ((type == URG_DISTANCE_INTENSITY) || (type == URG_MULTIECHO_INTENSITY)) {
         data_size *= 2;
         is_intensity = URG_TRUE;
+    }
+    if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
+        is_multiecho = URG_TRUE;
     }
 
     do {
@@ -400,8 +406,14 @@ static int receive_data_line(urg_t *urg, long length[],
                                 &buffer[line_filled], BUFFER_SIZE - line_filled,
                                 urg->timeout);
 
-        // !!! チェックサムの確認
-        // !!! p から n のサイズだけチェックを行う
+        if (n > 0) {
+            // チェックサムの評価
+            if (buffer[line_filled + n - 1] !=
+                scip_checksum(&buffer[line_filled], n - 1)) {
+                ignore_receive_data(&urg->connection, urg->timeout);
+                return URG_CHECKSUM_ERROR;
+            }
+        }
 
         if (n > 0) {
             line_filled += n - 1;
@@ -411,6 +423,9 @@ static int receive_data_line(urg_t *urg, long length[],
         // !!! デバッグ表示
         buffer[line_filled + 1] = '\0';
         fprintf(stderr, "%02d: %s\n", line_filled, buffer);
+
+        // !!! この変数で、処理をどうにかする
+        (void)is_multiecho;
 
         while ((last_p - p) >= data_size) {
             if (*p == '&') {
@@ -430,6 +445,11 @@ static int receive_data_line(urg_t *urg, long length[],
                 }
                 p += 3;
             }
+
+            // !!! マルチエコーのときは、
+            // !!! - データがないときには -1 を格納する
+            // !!! - '&' があるかどうかで step_filled を ++ するかが決まる
+            // !!! とかか？
 
             ++step_filled;
             line_filled -= data_size;
@@ -463,9 +483,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // エコーバックの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
-
-    // !!! チェックサムの確認
-
     if (n <= 0) {
         return URG_NO_RESPONSE;
     }
@@ -475,11 +492,17 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // 応答の取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
-    // !!! チェックサムの確認
     if (n != 3) {
         ignore_receive_data(&urg->connection, urg->timeout);
         return URG_INVALID_RESPONSE;
     }
+
+    if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
+        // チェックサムの評価
+        ignore_receive_data(&urg->connection, urg->timeout);
+        return URG_CHECKSUM_ERROR;
+    }
+
     ret_code = scip_decode(buffer, 2);
 
     if (urg->specified_scan_times != 1) {
@@ -516,27 +539,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // データの取得
     switch (type) {
     case URG_DISTANCE:
+    case URG_MULTIECHO:
         ret = receive_data_line(urg, data, NULL, type, buffer);
         break;
 
     case URG_DISTANCE_INTENSITY:
-        // !!!
-        (void)data;
-        (void)intensity;
-        ret = 0;
-        break;
-
-    case URG_MULTIECHO:
-        // !!!
-        (void)data;
-        ret = 0;
-        break;
-
     case URG_MULTIECHO_INTENSITY:
-        // !!!
-        (void)data;
-        (void)intensity;
-        ret = 0;
+        ret = receive_data_line(urg, data, intensity, type, buffer);
         break;
 
     case URG_STOP:
