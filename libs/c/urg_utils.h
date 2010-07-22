@@ -27,7 +27,7 @@
   return -1;
   } \endcode
 */
-const char *urg_error(const urg_t *urg);
+extern const char *urg_error(const urg_t *urg);
 
 
 /*!
@@ -52,8 +52,8 @@ const char *urg_error(const urg_t *urg);
   ...
   } \endcode
 */
-void urg_distance_min_max(const urg_t *urg,
-                          long *min_distance, long *max_distance);
+extern void urg_distance_min_max(const urg_t *urg,
+                                 long *min_distance, long *max_distance);
 
 
 /*!
@@ -80,15 +80,15 @@ void urg_distance_min_max(const urg_t *urg,
 
   \see urg_set_scanning_parameter(), urg_step2rad(), urg_step2deg()
 */
-void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
+extern void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
 /*! １スキャンにかかる時間 [usec] を返す */
-long urg_scan_usec(const urg_t *urg);
+extern long urg_scan_usec(const urg_t *urg);
 
 
 /*! 取得データ数の最大値を返す */
-int urg_max_index(const urg_t *urg);
+extern int urg_max_index(const urg_t *urg);
 
 
 /*!
@@ -118,19 +118,19 @@ int urg_max_index(const urg_t *urg);
 
   \see urg_index2deg(), urg_rad2index(), urg_deg2index()
 */
-double urg_index2rad(const urg_t *urg, int index);
+extern double urg_index2rad(const urg_t *urg, int index);
 
 
 /*! インデックスと角度(degree)の変換を行う */
-double urg_index2deg(const urg_t *urg, int index);
+extern double urg_index2deg(const urg_t *urg, int index);
 
 
 /*! 角度(radian)とインデックスの変換を行う */
-int urg_rad2index(const urg_t *urg, double radian);
+extern int urg_rad2index(const urg_t *urg, double radian);
 
 
 /*! 角度(degree)とインデックスの変換を行う */
-int urg_deg2index(const urg_t *urg, double degree);
+extern int urg_deg2index(const urg_t *urg, double degree);
 
 
 /*!
@@ -149,61 +149,24 @@ int urg_deg2index(const urg_t *urg, double degree);
 
   \see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
 */
-int urg_rad2step(const urg_t *urg, double radian);
+extern int urg_rad2step(const urg_t *urg, double radian);
 
 
 /*! 角度(degree)と step の変換を行う */
-int urg_deg2step(const urg_t *urg, double degree);
+extern int urg_deg2step(const urg_t *urg, double degree);
 
 
 /*! step と 角度(radian)の変換を行う */
-double urg_step2rad(const urg_t *urg, int step);
+extern double urg_step2rad(const urg_t *urg, int step);
 
 
 /*! step と 角度(degree)の変換を行う */
-double urg_step2deg(const urg_t *urg, int step);
+extern double urg_step2deg(const urg_t *urg, int step);
 
 /*! step とインデックスの変換を行う */
-int urg_step2index(const urg_t *urg, int step);
-
-
-/*!
-  \brief センサのシリアル ID 文字列を返す
-
-  センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
-
-  \param[in] urg URG センサ管理
-
-  \return シリアル ID 文字列
-*/
-const char *urg_sensor_id(const urg_t *urg);
-
-
-/*!
-  \brief センサのバージョン文字列を返す
-
-  センサのソフトウェア・バージョン文字列を返す。返される文字列はセンサ依存となる。
-
-  \param[in] urg URG センサ管理
-
-  \return バージョン文字列
-*/
-const char *urg_sensor_version(const urg_t *urg);
-
-
-/*!
-  \brief センサのステータス文字列を返す
-
-  センサのステータス文字列を返す。返される文字列はセンサ依存となる。
-
-  \param[in] urg URG センサ管理
-
-  \return ステータス文字列
-*/
-const char *urg_sensor_status(const urg_t *urg);
-
+extern int urg_step2index(const urg_t *urg, int step);
 
 // !!!
-int urg_find_port(char *port_name, int index);
+extern int urg_find_port(char *port_name, int index);
 
 #endif /* !URG_UTILS_H */

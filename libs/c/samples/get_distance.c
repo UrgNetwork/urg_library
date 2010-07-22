@@ -21,6 +21,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
     // 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
+    fprintf(stderr, "front_index: %d\n", front_index);
     printf("%ld, (%ld)\n", data[front_index], time_stamp);
 
 #else
@@ -38,7 +39,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 int main(void)
 {
     enum {
-        CAPTURE_TIMES = 3,
+        CAPTURE_TIMES = 1,
     };
     urg_t urg;
     long *data = NULL;
@@ -60,17 +61,21 @@ int main(void)
     }
 
     // データ取得
+    fprintf(stderr, "measure_start: %d\n", urg_deg2index(&urg, -90));
+#if 1
     ret = urg_set_scanning_parameter(&urg,
                                      urg_deg2step(&urg, -90),
                                      urg_deg2step(&urg, +90), 0);
     if (ret < 0) {
         // !!!
     }
+#endif
 
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
-        if (n < 0) {
+        fprintf(stderr, "[n = %d]\n", n);
+        if (n <= 0) {
             printf("urg_distance: %s\n", urg_error(&urg));
             free(data);
             urg_close(&urg);

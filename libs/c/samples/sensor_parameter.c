@@ -21,7 +21,8 @@ int main(void)
     long min_distance;
     long max_distance;
 
-    if (! urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200)) {
+
+    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
@@ -34,7 +35,7 @@ int main(void)
     printf("step: [%d, %d]\n", min_step, max_step);
 
     urg_distance_min_max(&urg, &min_distance, &max_distance);
-    printf("distance: [%ld, %ld]\n", min_distance, max_distance);
+    printf("distance: [%ld, %ld)\n", min_distance, max_distance);
 
     printf("scan: %ld [usec]\n", urg_scan_usec(&urg));
     printf("sensor data size: %d\n", urg_max_index(&urg));

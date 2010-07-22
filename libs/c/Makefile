@@ -27,7 +27,7 @@ depend :
 $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_sensor.o) \
 	$(URG_C_LIB)(urg_utils.o) \
-	$(URG_C_LIB)(urg_communication.o) \
+	$(URG_C_LIB)(urg_connection.o) \
 	$(URG_C_LIB)(urg_serial.o) \
 	$(URG_C_LIB)(urg_serial_utils.o) \
 	$(URG_C_LIB)(urg_ethernet_linux.o) \
@@ -36,26 +36,24 @@ $(URG_C_LIB) : \
 
 # DO NOT DELETE
 
-urg_communication.o: urg_serial_t.h urg_ring_buffer.h urg_ethernet_t.h
-urg_ethernet.o: urg_ethernet_t.h
-urg_sensor.o: urg_communication.h urg_serial_t.h urg_ring_buffer.h
-urg_sensor.o: urg_ethernet_t.h
-urg_serial.o: urg_serial_t.h urg_ring_buffer.h
-urg_serial_t.o: urg_ring_buffer.h
-urg_utils.o: urg_sensor.h urg_communication.h urg_serial_t.h
-urg_utils.o: urg_ring_buffer.h urg_ethernet_t.h
-urg_communication.o: urg_communication.h urg_serial_t.h urg_ring_buffer.h
-urg_communication.o: urg_ethernet_t.h urg_serial.h urg_ethernet.h
-urg_ethernet.o: urg_ethernet_linux.c urg_ethernet.h urg_ethernet_t.h
-urg_ethernet_linux.o: urg_ethernet.h urg_ethernet_t.h
+urg_connection.o: urg_serial.h urg_detect_os.h urg_ring_buffer.h
+urg_connection.o: urg_ethernet.h
+urg_sensor.o: urg_connection.h urg_serial.h urg_detect_os.h urg_ring_buffer.h
+urg_sensor.o: urg_ethernet.h
+urg_serial.o: urg_detect_os.h urg_ring_buffer.h
+urg_utils.o: urg_sensor.h urg_connection.h urg_serial.h urg_detect_os.h
+urg_utils.o: urg_ring_buffer.h urg_ethernet.h
+urg_connection.o: urg_connection.h urg_serial.h urg_detect_os.h
+urg_connection.o: urg_ring_buffer.h urg_ethernet.h
+urg_ethernet.o: urg_ethernet_linux.c urg_ethernet.h
+urg_ethernet_linux.o: urg_ethernet.h
+urg_ethernet_windows.o: urg_ethernet.h
 urg_ring_buffer.o: urg_ring_buffer.h
-urg_sensor.o: urg_sensor.h urg_communication.h urg_serial_t.h
-urg_sensor.o: urg_ring_buffer.h urg_ethernet_t.h urg_errno.h
-urg_serial.o: urg_serial_linux.c urg_serial.h urg_serial_t.h
-urg_serial.o: urg_ring_buffer.h
-urg_serial_linux.o: urg_serial.h urg_serial_t.h urg_ring_buffer.h
-urg_serial_utils.o: urg_serial_utils_linux.c urg_serial_utils.h
+urg_sensor.o: urg_sensor.h urg_connection.h urg_serial.h urg_detect_os.h
+urg_sensor.o: urg_ring_buffer.h urg_ethernet.h urg_errno.h
+urg_serial.o: urg_serial.h urg_detect_os.h urg_ring_buffer.h
+urg_serial.o: urg_serial_linux.c
+urg_serial_utils.o: urg_serial_utils.h urg_serial_utils_linux.c
 urg_serial_utils_linux.o: urg_serial_utils.h
-urg_serial_windows.o: urg_serial.h urg_serial_t.h urg_ring_buffer.h
-urg_utils.o: urg_utils.h urg_sensor.h urg_communication.h urg_serial_t.h
-urg_utils.o: urg_ring_buffer.h urg_ethernet_t.h urg_errno.h
+urg_utils.o: urg_utils.h urg_sensor.h urg_connection.h urg_serial.h
+urg_utils.o: urg_detect_os.h urg_ring_buffer.h urg_ethernet.h urg_errno.h

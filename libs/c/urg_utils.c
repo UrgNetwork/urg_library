@@ -11,13 +11,18 @@
 #include <math.h>
 
 #undef max
-
-static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
+#undef min
 
 
 static int max(int a, int b)
 {
     return (a > b) ? a : b;
+}
+
+
+static int min(int a, int b)
+{
+    return (a < b) ? a : b;
 }
 
 
@@ -31,18 +36,23 @@ const char *urg_error(const urg_t *urg)
 
 
     error_messages_t errors[] = {
-        { URG_NO_ERROR, "Not implemented." },
-        { URG_UNKNOWN_ERROR, "Not implemented." },
-        { URG_NOT_CONNECTED, "Not implemented." },
-        { URG_NOT_IMPLEMENTED, "Not implemented." },
-        { URG_INVALID_RESPONSE, "Not implemented." },
-        { URG_RECEIVE_ERROR, "Not implemented." },
-        { URG_CHECKSUM_ERROR, "Not implemented." },
+        { URG_NO_ERROR, "no error." },
+        { URG_UNKNOWN_ERROR, "unknown error." },
+        { URG_NOT_CONNECTED, "not connected." },
+        { URG_NOT_IMPLEMENTED, "not implemented." },
+        { URG_INVALID_RESPONSE, "invalid response." },
+        { URG_NO_RESPONSE, "no response." },
 
-        { URG_SERIAL_OPEN_ERROR, "Not implemented." },
-        { URG_ETHERNET_OPEN_ERROR, "Not implemented." },
-        { URG_SCANNING_PARAMETER_ERROR, "Not implemented." },
-        { URG_DATA_SIZE_PARAMETER_ERROR, "Not implemented." },
+        { URG_SEND_ERROR, "send error." },
+        { URG_RECEIVE_ERROR, "receive error." },
+        { URG_CHECKSUM_ERROR, "checksum error." },
+        { URG_INVALID_PARAMETER, "invalid parameter." },
+
+        { URG_SERIAL_OPEN_ERROR, "could not open serial device." },
+        { URG_NOT_DETECT_BAUDRATE_ERROR, "could not detect serial baudrate." },
+        { URG_ETHERNET_OPEN_ERROR, "could not open ethernet port." },
+        { URG_SCANNING_PARAMETER_ERROR, "scanning parameter error." },
+        { URG_DATA_SIZE_PARAMETER_ERROR, "data size parameter error." },
     };
 
     int n = sizeof(errors) / sizeof(errors[0]);
@@ -71,7 +81,7 @@ void urg_distance_min_max(const urg_t *urg,
 
     // urg_set_communication_data_size() を反映した距離を返す
     *max_distance =
-        (urg->communication_data_size == URG_COMMUNICATION_2_BYTE) ?
+        (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
         max(urg->max_distance, 4095) : urg->max_distance;
 }
 
@@ -84,11 +94,8 @@ void urg_step_min_max(const urg_t *urg, int *min_index, int *max_index)
         return;
     }
 
-    (void)urg;
-    (void)min_index;
-    (void)max_index;
-
-    // !!!
+    *min_index = urg->first_data_index - urg->front_data_index;
+    *max_index = urg->last_data_index - urg->front_data_index;
 }
 
 
@@ -108,23 +115,22 @@ int urg_max_index(const urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    // !!!
-
-    return -1;
+    return urg->last_data_index;
 }
 
 
 double urg_index2rad(const urg_t *urg, int index)
 {
+    int actual_index;
+    int step;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)index;
-    // !!!
-    return 0.0;
+    actual_index = min(max(0, index), urg->last_data_index);
+    step = actual_index - urg->front_data_index;
+    return urg_step2rad(urg, step);
 }
 
 
@@ -136,22 +142,23 @@ double urg_index2deg(const urg_t *urg, int index)
 
 int urg_rad2index(const urg_t *urg, double radian)
 {
+    int index;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)radian;
+    index =
+        (int)(floor((urg->area_resolution * radian / (2.0 * M_PI) + 0.5)))
+        + urg->front_data_index;
 
-    // !!!
-
-    return 0;
+    return min(max(0, index), urg->last_data_index);
 }
 
 
 int urg_deg2index(const urg_t *urg, double degree)
 {
-    return urg_rad2step(urg, degree * M_PI / 180.0);
+    return urg_rad2index(urg, degree * M_PI / 180.0);
 }
 
 
@@ -161,27 +168,13 @@ int urg_rad2step(const urg_t *urg, double radian)
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)radian;
-
-    // !!!
-
-    return 0;
+    return urg_rad2index(urg, radian) - urg->front_data_index;
 }
 
 
 int urg_deg2step(const urg_t *urg, double degree)
 {
-    if (!urg->is_active) {
-        return URG_NOT_CONNECTED;
-    }
-
-    (void)urg;
-    (void)degree;
-
-    // !!!
-
-    return 0;
+    return urg_rad2step(urg, degree * M_PI / 180.0);
 }
 
 
@@ -191,12 +184,7 @@ double urg_step2rad(const urg_t *urg, int step)
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)step;
-
-    // !!!
-
-    return 0.0;
+    return (2.0 * M_PI) * step / urg->area_resolution;
 }
 
 
@@ -208,69 +196,13 @@ double urg_step2deg(const urg_t *urg, int step)
 
 int urg_step2index(const urg_t *urg, int step)
 {
+    int measure_step;
+
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
 
-    (void)urg;
-    (void)step;
-    // !!!
-
-    return 0;
-}
-
-
-const char *urg_sensor_id(const urg_t *urg)
-{
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
-    }
-
-    (void)urg;
-    // !!!
-
-    // !!! urg 中に文字列で保持しておき、それを返す
-
-    return "Not implemented";
-}
-
-
-const char *urg_sensor_version(const urg_t *urg)
-{
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
-    }
-
-    (void)urg;
-    // !!!
-
-    // !!! urg 中に文字列で保持しておき、それを返す
-
-    return "Not implemented";
-}
-
-
-const char *urg_sensor_status(const urg_t *urg)
-{
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
-    }
-
-    (void)urg;
-    // !!!
-
-    // !!! urg 中に文字列で保持しておき、それを返す
-
-    return "Not implemented";
-}
-
-
-int urg_find_port(char *port_name, int index)
-{
-    (void)port_name;
-    (void)index;
-
-    // !!!
-
-    return 0;
+    measure_step = step - urg->received_first_index;
+    return min(max(0, measure_step + urg->front_data_index),
+               urg->last_data_index);
 }

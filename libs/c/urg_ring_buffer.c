@@ -110,26 +110,3 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
     }
     return pop_size;
 }
-
-
-int ring_readPtr(ring_buffer_t *ring, char **ptr, int size)
-{
-    int diff;
-    int readable_size;
-    int read_size;
-    int actual_size = ring_size(ring);
-
-    if (size < actual_size) {
-        actual_size = size;
-    }
-
-    *ptr = &ring->buffer[ring->first];
-    diff = ring->last - ring->first;
-    readable_size = (diff > 0) ? diff : ring->buffer_size - ring->first;
-    read_size = (readable_size > actual_size) ? actual_size : readable_size;
-
-    ring->first += read_size;
-    ring->first &= (ring->buffer_size -1);
-
-    return read_size;
-}

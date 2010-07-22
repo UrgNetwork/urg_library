@@ -79,6 +79,4 @@ extern int ring_write(ring_buffer_t *ring, const char *data, int size);
 */
 extern int ring_read(ring_buffer_t *ring, char *buffer, int size);
 
-extern int ring_readPtr(ring_buffer_t *ring, char **ptr, int size);
-
 #endif /* ! RING_BUFFER_H */
