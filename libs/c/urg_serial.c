@@ -15,7 +15,7 @@ enum {
 };
 
 
-#if 0
+#if defined(URG_WINDOWS_OS)
 #include "urg_serial_windows.c"
 #else
 #include "urg_serial_linux.c"

@@ -2,6 +2,7 @@
 # $Id$
 
 # Compile options
+CC = gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES =
 LDFLAGS =
