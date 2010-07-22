@@ -76,7 +76,6 @@ static int scip_response(urg_t *urg, const char* command,
     }
 
     do {
-        // !!! receive_buffer に BUFEER_SIZE 以上の空きがあるときは、p に直接格納する
         n = connection_readline(&urg->connection,
                                 buffer, BUFFER_SIZE, timeout);
         if (n < 0) {
@@ -110,7 +109,6 @@ static int scip_response(urg_t *urg, const char* command,
                 ret_val = 0;
 
             } else if (n != 3) {
-                // !!!
                 return URG_INVALID_RESPONSE;
 
             } else {
@@ -141,6 +139,17 @@ static void ignore_receive_data(connection_t *connection, int timeout)
         n = connection_readline(connection,
                                 buffer, BUFFER_SIZE, timeout);
     } while (n >= 0);
+}
+
+
+static int change_sensor_baudrate(long current_baudrate, long next_baudrate)
+{
+    (void)current_baudrate;
+    (void)next_baudrate;
+
+    // !!!
+
+    return 0;
 }
 
 
@@ -176,11 +185,9 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
-            // !!!
 
             // ボーレートを変更して戻る
-            // !!!
-            return 0;
+            return change_sensor_baudrate(baudrate, try_baudrate[i]);
         }
 
         if (ret <= 0) {
@@ -190,8 +197,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
                 ignore_receive_data(&urg->connection, MAX_TIMEOUT);
 
                 // ボーレートを変更して戻る
-                // !!!
-                return 0;
+                return change_sensor_baudrate(baudrate, try_baudrate[i]);
 
             } else {
                 // 応答がないときは、ボーレートを変更して、再度接続を行う
@@ -199,8 +205,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             }
         } else if (!strcmp("00P", receive_buffer)) {
             // センサとホストのボーレートを変更して戻る
-            // !!!
-            return 0;
+            return change_sensor_baudrate(baudrate, try_baudrate[i]);
         }
     }
 
@@ -383,12 +388,14 @@ static int receive_data_line(urg_t *urg, long length[],
     int n;
     int step_filled = 0;
     int line_filled = 0;
+    int multiecho_index = 0;
 
     int each_size =
         (urg->received_range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
     int data_size = each_size;
     int is_intensity = URG_FALSE;
     int is_multiecho = URG_FALSE;
+    int multiecho_max_size = 1;
 
     if ((type == URG_DISTANCE_INTENSITY) || (type == URG_MULTIECHO_INTENSITY)) {
         data_size *= 2;
@@ -396,6 +403,7 @@ static int receive_data_line(urg_t *urg, long length[],
     }
     if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = URG_TRUE;
+        multiecho_max_size = 3;
     }
 
     do {
@@ -424,32 +432,46 @@ static int receive_data_line(urg_t *urg, long length[],
         buffer[line_filled + 1] = '\0';
         fprintf(stderr, "%02d: %s\n", line_filled, buffer);
 
-        // !!! この変数で、処理をどうにかする
-        (void)is_multiecho;
-
         while ((last_p - p) >= data_size) {
+            int index;
+
             if (*p == '&') {
                 // 先頭文字が '&' だったときは、マルチエコーのデータとみなす
-                // !!!
+                --step_filled;
+                ++multiecho_index;
+                ++p;
+                --line_filled;
+
+            } else {
+                // 次のデータ
+                multiecho_index = 0;
+            }
+
+            index = (step_filled * multiecho_max_size) + multiecho_index;
+            if (is_multiecho && (multiecho_index == 0)) {
+                // マルチエコーのデータ格納先をダミーデータで埋める
+                int i;
+                for (i = 1; i < multiecho_max_size; ++i) {
+                    length[index + i] = 0;
+                }
+                if (is_intensity) {
+                    for (i = 1; i < multiecho_max_size; ++i) {
+                        intensity[index + i] = 0;
+                    }
+                }
             }
 
             // 距離データの格納
-            // !!! データの格納
-            length[step_filled] = scip_decode(p, 3);
+            length[index] = scip_decode(p, 3);
             p += 3;
 
             // 強度データの格納
             if (is_intensity) {
                 if (intensity) {
-                    intensity[step_filled] = scip_decode(p, 3);
+                    intensity[index] = scip_decode(p, 3);
                 }
                 p += 3;
             }
-
-            // !!! マルチエコーのときは、
-            // !!! - データがないときには -1 を格納する
-            // !!! - '&' があるかどうかで step_filled を ++ するかが決まる
-            // !!! とかか？
 
             ++step_filled;
             line_filled -= data_size;
