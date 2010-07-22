@@ -8,6 +8,8 @@
   \author Satofumi KAMIMURA
 
   $Id$
+
+  \todo URG の故障エラーを適切に扱えるようにする
 */
 
 enum {

@@ -61,7 +61,7 @@ int main(void)
     }
 
     // データ取得
-    fprintf(stderr, "measure_start: %d\n", urg_deg2index(&urg, -90));
+    //fprintf(stderr, "measure_start: %d\n", urg_deg2index(&urg, -90));
 #if 1
     ret = urg_set_scanning_parameter(&urg,
                                      urg_deg2step(&urg, -90),
@@ -74,7 +74,7 @@ int main(void)
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
-        fprintf(stderr, "[n = %d]\n", n);
+        //fprintf(stderr, "[n = %d]\n", n);
         if (n <= 0) {
             printf("urg_distance: %s\n", urg_error(&urg));
             free(data);

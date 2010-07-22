@@ -40,6 +40,9 @@ calculate_xy.o: ../urg_utils.h
 get_distance.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
 get_distance.o: ../urg_detect_os.h ../urg_ring_buffer.h ../urg_ethernet.h
 get_distance.o: ../urg_utils.h
+get_distance_intensity.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
+get_distance_intensity.o: ../urg_detect_os.h ../urg_ring_buffer.h
+get_distance_intensity.o: ../urg_ethernet.h ../urg_utils.h
 sensor_parameter.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
 sensor_parameter.o: ../urg_detect_os.h ../urg_ring_buffer.h ../urg_ethernet.h
 sensor_parameter.o: ../urg_utils.h

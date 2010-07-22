@@ -29,6 +29,9 @@ urg04lx_parameter_test : ../urg_sensor.o ../urg_utils.o
 # DO NOT DELETE
 
 serial_test.o: ../urg_serial.h ../urg_detect_os.h ../urg_ring_buffer.h
+urg04lx_parameter_test.o: ../urg_sensor.h ../urg_connection.h ../urg_serial.h
+urg04lx_parameter_test.o: ../urg_detect_os.h ../urg_ring_buffer.h
+urg04lx_parameter_test.o: ../urg_ethernet.h ../urg_utils.h tiny_cunit.h
 urg_sensor_test.o: ../urg_sensor.c ../urg_sensor.h ../urg_connection.h
 urg_sensor_test.o: ../urg_serial.h ../urg_detect_os.h ../urg_ring_buffer.h
 urg_sensor_test.o: ../urg_ethernet.h ../urg_errno.h tiny_cunit.h
