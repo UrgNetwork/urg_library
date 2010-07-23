@@ -1,12 +1,12 @@
 # Makefile for urgwidget
 
 all :
-	cd libs/ && $(MAKE)
-	cd doxes/ && $(MAKE)
+	cd src/ && $(MAKE)
+	cd samples/ && $(MAKE)
 
 clean :
-	cd libs/ && $(MAKE) clean
-	cd doxes/ && $(MAKE) clean
+	cd src/ && $(MAKE) clean
+	cd samples/ && $(MAKE) clean
 
 .PHONY : all clean
 ######################################################################
