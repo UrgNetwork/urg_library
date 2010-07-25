@@ -88,17 +88,17 @@ static int scip_response(urg_t *urg, const char* command,
                 return URG_INVALID_RESPONSE;
             }
         } else if (n > 0) {
-            // エコーバック以外の行のチェックサムを評価する
-            char checksum = buffer[n - 1];
-            if ((checksum != scip_checksum(buffer, n - 1)) &&
-                (checksum != scip_checksum(buffer, n - 2))) {
-                return URG_CHECKSUM_ERROR;
-            }
             if (p && (n < (receive_buffer_max_size - filled_size))) {
                 memcpy(p, buffer, n);
                 p += n;
                 *p++ = '\0';
                 filled_size += n;
+            }
+            // エコーバック以外の行のチェックサムを評価する
+            char checksum = buffer[n - 1];
+            if ((checksum != scip_checksum(buffer, n - 1)) &&
+                (checksum != scip_checksum(buffer, n - 2))) {
+                return URG_CHECKSUM_ERROR;
             }
         }
 
@@ -179,13 +179,11 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
-
         if (!strcmp("E", receive_buffer)) {
             // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
-
             // ボーレートを変更して戻る
             return change_sensor_baudrate(baudrate, try_baudrate[i]);
         }
@@ -429,8 +427,8 @@ static int receive_data_line(urg_t *urg, long length[],
         last_p = p + line_filled;
 
         // !!! デバッグ表示
-        buffer[line_filled + 1] = '\0';
-        fprintf(stderr, "%02d: %s\n", line_filled, buffer);
+        //buffer[line_filled + 1] = '\0';
+        //fprintf(stderr, "%02d: %s\n", line_filled, buffer);
 
         while ((last_p - p) >= data_size) {
             int index;
