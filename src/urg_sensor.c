@@ -270,8 +270,9 @@ static int receive_parameter(urg_t *urg)
 
         } else if (!strncmp(p, "SCAN:", 5)) {
             int rpm = strtol(p + 5, NULL, 10);
+            // タイムアウト時間は、計測周期の 4 倍程度の値にする
             urg->scan_usec = 1000 * 1000 * 60 / rpm;
-            urg->timeout = urg->scan_usec >> (10 - 1);
+            urg->timeout = urg->scan_usec >> (10 - 2);
             received_bits |= 0x0040;
         }
         p += strlen(p) + 1;
@@ -546,6 +547,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
             // 最後の空行を読み捨て、次からのデータを返す
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
+            fprintf(stderr, "timeout: %d\n", urg->timeout);
             if (n != 0) {
                 ignore_receive_data(&urg->connection, urg->timeout);
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);

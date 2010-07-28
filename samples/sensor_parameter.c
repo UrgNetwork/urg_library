@@ -21,8 +21,14 @@ int main(void)
     long min_distance;
     long max_distance;
 
+#if defined(URG_WINDOWS_OS)
+    const char device[] = "COM3";
+#elif defined(URG_LINUX_OS)
+    const char device[] = "/dev/ttyACM0";
+#else
+#endif
 
-    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
+    if (urg_open(&urg, URG_SERIAL, device, 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }

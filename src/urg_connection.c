@@ -9,6 +9,8 @@
 
 #include "urg_connection.h"
 
+//#include <stdio.h>
+
 
 int connection_open(connection_t *connection,
                     connection_type_t connection_type,
@@ -61,6 +63,15 @@ int connection_set_baudrate(connection_t *connection, long baudrate)
 int connection_write(connection_t *connection,
                      const char *data, int size)
 {
+#if 0
+    int i;
+    fprintf(stderr, "WRITE: ");
+    for (i = 0; i < size; ++i) {
+        fprintf(stderr, "%c", data[i]);
+    }
+    fprintf(stderr, "\n");
+#endif
+
     switch (connection->type) {
     case URG_SERIAL:
         return serial_write(&connection->serial, data, size);

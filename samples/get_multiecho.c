@@ -57,12 +57,15 @@ int main(void)
     int n;
     int i;
 
-    // 接続
-#if 0
-    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
+#if defined(URG_WINDOWS_OS)
+    const char device[] = "COM3";
+#elif defined(URG_LINUX_OS)
+    const char device[] = "/dev/ttyACM0";
 #else
-    if (urg_open(&urg, URG_SERIAL, "COM7", 115200) < 0) {
 #endif
+
+    // 接続
+    if (urg_open(&urg, URG_SERIAL, device, 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
