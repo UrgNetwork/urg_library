@@ -80,6 +80,14 @@ static int scip_response(urg_t *urg, const char* command,
                                 buffer, BUFFER_SIZE, timeout);
         if (n < 0) {
             return URG_NO_RESPONSE;
+
+        } else if (p && (line_number > 0)
+                   && (n < (receive_buffer_max_size - filled_size))) {
+            // エコーバックは完全一致のチェックを行うため、格納しない
+            memcpy(p, buffer, n);
+            p += n;
+            *p++ = '\0';
+            filled_size += n;
         }
 
         if (line_number == 0) {
@@ -93,12 +101,6 @@ static int scip_response(urg_t *urg, const char* command,
             if ((checksum != scip_checksum(buffer, n - 1)) &&
                 (checksum != scip_checksum(buffer, n - 2))) {
                 return URG_CHECKSUM_ERROR;
-            }
-            if (p && (n < (receive_buffer_max_size - filled_size))) {
-                memcpy(p, buffer, n);
-                p += n;
-                *p++ = '\0';
-                filled_size += n;
             }
         }
 
@@ -135,6 +137,7 @@ static void ignore_receive_data(connection_t *connection, int timeout)
     char buffer[BUFFER_SIZE];
     int n;
 
+    connection_write(connection, "QT\n", 3);
     do {
         n = connection_readline(connection,
                                 buffer, BUFFER_SIZE, timeout);
@@ -180,11 +183,14 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
 
+        //fprintf(stderr, "ret = %d\n", ret);
+        //fprintf(stderr, "%s\n", receive_buffer);
         if (!strcmp("E", receive_buffer)) {
             // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
+            ignore_receive_data(&urg->connection, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
             return change_sensor_baudrate(baudrate, try_baudrate[i]);
@@ -311,7 +317,7 @@ static int parse_parameter(const char *parameter, int size)
 static measurement_type_t parse_gx_command(urg_t *urg,
                                            const char echoback_line[])
 {
-    measurement_type_t ret_type;
+    measurement_type_t ret_type = URG_UNKNOWN;
 
     urg->received_range_data_byte = URG_COMMUNICATION_3_BYTE;
     if (echoback_line[1] == 'S') {
@@ -319,9 +325,9 @@ static measurement_type_t parse_gx_command(urg_t *urg,
         ret_type = URG_DISTANCE;
 
     } else if (echoback_line[1] == 'D') {
-        if (echoback_line[0] == 'G') {
+        if ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) {
             ret_type = URG_DISTANCE;
-        } else if (echoback_line[0] == 'H') {
+        } else if ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) {
             ret_type = URG_MULTIECHO;
         }
     } else if (echoback_line[1] == 'E') {
@@ -350,12 +356,11 @@ static measurement_type_t parse_mx_command(urg_t *urg,
         return ret_type;
     }
 
-    if (echoback_line[1] == 'D') {
-        ret_type = URG_MULTIECHO;
-
-    } else if (echoback_line[1] == 'E') {
-        ret_type = URG_MULTIECHO_INTENSITY;
-    }
+    // パラメータの格納
+    // !!! スキャンの間引き
+    // !!! 回数
+    // !!! 回数は必要ないが、スキャンの間引は、読み出して利用すべき、
+    // !!! でもないのか...
 
     return ret_type;
 }
@@ -372,7 +377,6 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
     }
 
     line_length = strlen(echoback_line);
-    //fprintf(stderr, "line_length: %d\n", line_length);
     if ((line_length == 12) &&
         ((echoback_line[0] == 'G') || (echoback_line[0] == 'H'))) {
         ret_type = parse_gx_command(urg, echoback_line);
@@ -397,10 +401,14 @@ static int receive_data_line(urg_t *urg, long length[],
     int each_size =
         (urg->received_range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
     int data_size = each_size;
+    int is_length = URG_FALSE;
     int is_intensity = URG_FALSE;
     int is_multiecho = URG_FALSE;
     int multiecho_max_size = 1;
 
+    if (length) {
+        is_length = URG_TRUE;
+    }
     if ((type == URG_DISTANCE_INTENSITY) || (type == URG_MULTIECHO_INTENSITY)) {
         data_size *= 2;
         is_intensity = URG_TRUE;
@@ -423,11 +431,6 @@ static int receive_data_line(urg_t *urg, long length[],
             // チェックサムの評価
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
-#if 0
-                fprintf(stderr, "line_filled: %d\n", line_filled);
-                fprintf(stderr, " !!! error !!!\n");
-                fprintf(stderr, "%s\n", &buffer[line_filled]);
-#endif
                 ignore_receive_data(&urg->connection, urg->timeout);
                 return URG_CHECKSUM_ERROR;
             }
@@ -480,7 +483,9 @@ static int receive_data_line(urg_t *urg, long length[],
             }
 #endif
             // 距離データの格納
-            length[index] = scip_decode(p, 3);
+            if (is_length) {
+                length[index] = scip_decode(p, 3);
+            }
             p += 3;
 
             // 強度データの格納
@@ -519,7 +524,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                         long *time_stamp)
 {
     measurement_type_t type;
-    int ret_code;
     char buffer[BUFFER_SIZE];
     int ret;
     int n;
@@ -547,10 +551,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         return URG_CHECKSUM_ERROR;
     }
 
-    ret_code = scip_decode(buffer, 2);
-
     if (urg->specified_scan_times != 1) {
-        if (ret_code == 0) {
+        if (!strncmp(buffer, "00", 2)) {
             // 最後の空行を読み捨て、次からのデータを返す
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
@@ -564,8 +566,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     //fprintf(stderr, "specified_scan_times = %d\n", urg->specified_scan_times);
-    if (((urg->specified_scan_times == 1) && (ret_code != 0)) ||
-        ((urg->specified_scan_times != 1) && (ret_code != 99))) {
+    if (((urg->specified_scan_times == 1) && (strncmp(buffer, "00", 2))) ||
+        ((urg->specified_scan_times != 1) && (strncmp(buffer, "99", 2)))) {
         // Gx, Hx のときは 00P が返されたときがデータ
         // Mx, Nx のときは 99b が返されたときがデータ
         ignore_receive_data(&urg->connection, urg->timeout);
@@ -866,6 +868,7 @@ int urg_stop_measurement(urg_t *urg)
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
         // QT の応答が返されるまで、距離データを読み捨てる
+        //ignore_receive_data(&urg->connection, urg->timeout);
         ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == URG_STOP) {
             // 正常応答

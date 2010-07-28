@@ -9,6 +9,8 @@
 
 #include "urg_serial.h"
 
+#include <stdio.h>
+
 
 enum {
     False = 0,

@@ -39,12 +39,12 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 int main(void)
 {
     enum {
-        CAPTURE_TIMES = 1,
+        CAPTURE_TIMES = 2,
     };
     urg_t urg;
     long *data = NULL;
     long time_stamp;
-    int ret;
+    //int ret;
     int n;
     int i;
 
@@ -54,7 +54,8 @@ int main(void)
         return 1;
     }
 
-    data = malloc(urg_max_index(&urg) * sizeof(data[0]));
+    data = malloc((urg_max_index(&urg) + 1) * sizeof(data[0]));
+    fprintf(stderr, "buffer size: %d\n", urg_max_index(&urg) + 1);
     if (!data) {
         perror("urg_max_index()");
         return 1;
@@ -62,7 +63,7 @@ int main(void)
 
     // データ取得
     fprintf(stderr, "measure_start: %d\n", urg_deg2index(&urg, -90));
-#if 1
+#if 0
     ret = urg_set_scanning_parameter(&urg,
                                      urg_deg2step(&urg, -90),
                                      urg_deg2step(&urg, +90), 0);
