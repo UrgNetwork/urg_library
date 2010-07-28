@@ -1,8 +1,7 @@
 /*!
   \brief URG センサ制御
 
-  URG 用の基本的な関数を提供します。
-
+  URG 用の基本皁E��関数を提供します、E
   \author Satofumi KAMIMURA
 
   $Id$
@@ -25,7 +24,7 @@ enum {
     EXPECTED_END = -1,
 
     RECEIVE_DATA_TIMEOUT,
-    RECEIVE_DATA_COMPLETE,      /*!< データを正常に受信 */
+    RECEIVE_DATA_COMPLETE,      /*!< チE�Eタを正常に受信 */
 
     PP_RESPONSE_LINES = 10,
     VV_RESPONSE_LINES = 7,
@@ -39,8 +38,7 @@ static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
 static const char RECEIVE_ERROR_MESSAGE[] = "receive error.";
 
 
-//! チェックサムの計算
-static char scip_checksum(const char buffer[], int size)
+//! チェチE��サムの計箁Estatic char scip_checksum(const char buffer[], int size)
 {
     unsigned char sum = 0x00;
     int i;
@@ -49,12 +47,12 @@ static char scip_checksum(const char buffer[], int size)
         sum += buffer[i];
     }
 
-    // 計算の意味は SCIP 仕様書を参照のこと
+    // 計算�E意味は SCIP 仕様書を参照のこと
     return (sum & 0x3f) + 0x30;
 }
 
 
-// 受信した応答の行数を返す
+// 受信した応答�E行数を返す
 static int scip_response(urg_t *urg, const char* command,
                          const int expected_ret[], int timeout,
                          char *receive_buffer, int receive_buffer_max_size)
@@ -83,20 +81,18 @@ static int scip_response(urg_t *urg, const char* command,
 
         } else if (p && (line_number > 0)
                    && (n < (receive_buffer_max_size - filled_size))) {
-            // エコーバックは完全一致のチェックを行うため、格納しない
-            memcpy(p, buffer, n);
+            // エコーバックは完�E一致のチェチE��を行うため、格納しなぁE            memcpy(p, buffer, n);
             p += n;
             *p++ = '\0';
             filled_size += n;
         }
 
         if (line_number == 0) {
-            // エコーバック文字列が、一致するかを確認する
-            if (strncmp(buffer, command, write_size - 1)) {
+            // エコーバック斁E���Eが、一致��るかを確認すめE            if (strncmp(buffer, command, write_size - 1)) {
                 return URG_INVALID_RESPONSE;
             }
         } else if (n > 0) {
-            // エコーバック以外の行のチェックサムを評価する
+            // エコーバック以外�E行�EチェチE��サムを評価する
             char checksum = buffer[n - 1];
             if ((checksum != scip_checksum(buffer, n - 1)) &&
                 (checksum != scip_checksum(buffer, n - 2))) {
@@ -104,11 +100,9 @@ static int scip_response(urg_t *urg, const char* command,
             }
         }
 
-        // ステータス応答を評価して、戻り値を決定する
-        if (line_number == 1) {
+        // スチE�Eタス応答を評価して、戻り値を決定すめE        if (line_number == 1) {
             if (n == 1) {
-                // SCIP 1.1 応答の場合は、正常応答とみなす
-                ret_val = 0;
+                // SCIP 1.1 応答�E場合�E、正常応答とみなぁE                ret_val = 0;
 
             } else if (n != 3) {
                 return URG_INVALID_RESPONSE;
@@ -156,15 +150,13 @@ static int change_sensor_baudrate(long current_baudrate, long next_baudrate)
 }
 
 
-// ボーレートを変更しながら接続する
-static int connect_serial_device(urg_t *urg, long baudrate)
+// ボ�Eレートを変更しながら接続すめEstatic int connect_serial_device(urg_t *urg, long baudrate)
 {
     long try_baudrate[] = { 19200, 38400, 115200 };
     int try_times = sizeof(try_baudrate) / sizeof(try_baudrate[0]);
     int i;
 
-    // 指示されたボーレートから接続する
-    for (i = 0; i < try_times; ++i) {
+    // 持E��された�Eーレートから接続すめE    for (i = 0; i < try_times; ++i) {
         if (try_baudrate[i] == baudrate) {
             try_baudrate[i] = try_baudrate[0];
             try_baudrate[0] = baudrate;
@@ -179,39 +171,33 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         int qt_expected[] = { 0, EXPECTED_END };
         char receive_buffer[RECEIVE_BUFFER_SIZE];
 
-        // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
-        int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
+        // QT を送信し、応答が返されるかでボ�Eレートが一致してぁE��かを確認すめE        int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
 
         //fprintf(stderr, "ret = %d\n", ret);
         //fprintf(stderr, "%s\n", receive_buffer);
         if (!strcmp("E", receive_buffer)) {
-            // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
+            // "E" が返された場合�E、SCIP 1.1 とみなぁE"SCIP2.0" を送信する
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
             ignore_receive_data(&urg->connection, MAX_TIMEOUT);
 
-            // ボーレートを変更して戻る
-            return change_sensor_baudrate(baudrate, try_baudrate[i]);
+            // ボ�Eレートを変更して戻めE            return change_sensor_baudrate(baudrate, try_baudrate[i]);
         }
 
         if (ret <= 0) {
             if (ret == URG_INVALID_RESPONSE) {
-                // 異常なエコーバックのときは、距離データ受信中とみなして
-                // データを読み飛ばす
-                ignore_receive_data(&urg->connection, MAX_TIMEOUT);
+                // 異常なエコーバックのとき�E、距離チE�Eタ受信中とみなして
+                // チE�Eタを読み飛�EぁE                ignore_receive_data(&urg->connection, MAX_TIMEOUT);
 
-                // ボーレートを変更して戻る
-                return change_sensor_baudrate(baudrate, try_baudrate[i]);
+                // ボ�Eレートを変更して戻めE                return change_sensor_baudrate(baudrate, try_baudrate[i]);
 
             } else {
-                // 応答がないときは、ボーレートを変更して、再度接続を行う
-                continue;
+                // 応答がなぁE��き�E、�Eーレートを��更して、�E度��続を�ぁE                continue;
             }
         } else if (!strcmp("00P", receive_buffer)) {
-            // センサとホストのボーレートを変更して戻る
-            return change_sensor_baudrate(baudrate, try_baudrate[i]);
+            // センサとホスト�Eボ�Eレートを変更して戻めE            return change_sensor_baudrate(baudrate, try_baudrate[i]);
         }
     }
 
@@ -220,8 +206,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
 }
 
 
-// PP コマンドの応答を urg_t に格納する
-static int receive_parameter(urg_t *urg)
+// PP コマンド�E応答を urg_t に格納すめEstatic int receive_parameter(urg_t *urg)
 {
     enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 9, };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
@@ -273,8 +258,7 @@ static int receive_parameter(urg_t *urg)
         p += strlen(p) + 1;
     }
 
-    // 全てのパラメータを受信したか確認
-    if (received_bits != 0x007f) {
+    // 全てのパラメータを受信したか確誁E    if (received_bits != 0x007f) {
         return URG_RECEIVE_ERROR;
     }
 
@@ -287,8 +271,7 @@ static int receive_parameter(urg_t *urg)
 }
 
 
-//! SCIP 文字列のデコード
-static long scip_decode(const char data[], int size)
+//! SCIP 斁E���EのチE��ーチEstatic long scip_decode(const char data[], int size)
 {
     const char* p = data;
     const char* last_p = p + size;
@@ -331,14 +314,16 @@ static measurement_type_t parse_gx_command(urg_t *urg,
             ret_type = URG_MULTIECHO;
         }
     } else if (echoback_line[1] == 'E') {
-        ret_type = URG_DISTANCE_INTENSITY;
-
+        if (echoback_line[0] == 'G') {
+            ret_type = URG_DISTANCE_INTENSITY;
+        } else if (echoback_line[0] == 'H') {
+            ret_type = URG_MULTIECHO_INTENSITY;
+        }
     } else {
         return URG_UNKNOWN;
     }
 
-    // パラメータの格納
-    urg->received_first_index = parse_parameter(&echoback_line[2], 4);
+    // パラメータの格紁E    urg->received_first_index = parse_parameter(&echoback_line[2], 4);
     urg->received_last_index = parse_parameter(&echoback_line[6], 4);
     urg->received_skip_step = parse_parameter(&echoback_line[10], 2);
 
@@ -356,11 +341,9 @@ static measurement_type_t parse_mx_command(urg_t *urg,
         return ret_type;
     }
 
-    // パラメータの格納
-    // !!! スキャンの間引き
+    // パラメータの格紁E    // !!! スキャンの間引き
     // !!! 回数
-    // !!! 回数は必要ないが、スキャンの間引は、読み出して利用すべき、
-    // !!! でもないのか...
+    // !!! 回数は忁E��なぁE��、スキャンの間引�E、読み出して利用すべき、E    // !!! でもなぁE�EぁE..
 
     return ret_type;
 }
@@ -415,7 +398,7 @@ static int receive_data_line(urg_t *urg, long length[],
     }
     if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = URG_TRUE;
-        // !!! 3 をマクロにする
+        // !!! 3 を�Eクロにする
         multiecho_max_size = 3;
     }
 
@@ -428,7 +411,7 @@ static int receive_data_line(urg_t *urg, long length[],
                                 urg->timeout);
 
         if (n > 0) {
-            // チェックサムの評価
+            // チェチE��サムの評価
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
                 ignore_receive_data(&urg->connection, urg->timeout);
@@ -441,7 +424,7 @@ static int receive_data_line(urg_t *urg, long length[],
         }
         last_p = p + line_filled;
 
-        // !!! デバッグ表示
+        // !!! チE����グ表示
         //fprintf(stderr, "line_filled: %d, %d\n", line_filled, n);
         buffer[line_filled + 1] = '\0';
         //fprintf(stderr, "%02d: %s\n", line_filled, buffer);
@@ -450,8 +433,7 @@ static int receive_data_line(urg_t *urg, long length[],
             int index;
 
             if (*p == '&') {
-                // 先頭文字が '&' だったときは、マルチエコーのデータとみなす
-                --step_filled;
+                // 先頭斁E��が '&' だったとき�E、�EルチエコーのチE�EタとみなぁE                --step_filled;
                 ++multiecho_index;
                 ++p;
                 --line_filled;
@@ -460,7 +442,7 @@ static int receive_data_line(urg_t *urg, long length[],
                     break;
                 }
             } else {
-                // 次のデータ
+                // 次のチE�Eタ
                 multiecho_index = 0;
             }
 
@@ -470,8 +452,7 @@ static int receive_data_line(urg_t *urg, long length[],
 #if 1
             // !!! 仮にコメントアウト中
             if (is_multiecho && (multiecho_index == 0)) {
-                // マルチエコーのデータ格納先をダミーデータで埋める
-                int i;
+                // マルチエコーのチE�Eタ格納�Eをダミ�EチE�Eタで埋めめE                int i;
                 for (i = 1; i < multiecho_max_size; ++i) {
                     length[index + i] = 0;
                 }
@@ -482,14 +463,12 @@ static int receive_data_line(urg_t *urg, long length[],
                 }
             }
 #endif
-            // 距離データの格納
-            if (is_length) {
+            // 距離チE�Eタの格紁E            if (is_length) {
                 length[index] = scip_decode(p, 3);
             }
             p += 3;
 
-            // 強度データの格納
-            if (is_intensity) {
+            // 強度チE�Eタの格紁E            if (is_intensity) {
                 if (intensity) {
                     intensity[index] = scip_decode(p, 3);
                 }
@@ -501,13 +480,12 @@ static int receive_data_line(urg_t *urg, long length[],
             line_filled -= data_size;
 
             if (step_filled >= urg->received_last_index) {
-                // データが多過ぎる場合は、残りのデータを無視して戻る
-                ignore_receive_data(&urg->connection, urg->timeout);
+                // チE�Eタが多過ぎる場合�E、残りのチE�Eタを無視して戻めE                ignore_receive_data(&urg->connection, urg->timeout);
                 break;
             }
         }
 
-        // 次に処理する文字を退避
+        // 次に処琁E���斁E��を退��
         //fprintf(stderr, "line_filled: %d, %d\n", line_filled, data_size);
 
         memmove(buffer, p, line_filled);
@@ -519,8 +497,7 @@ static int receive_data_line(urg_t *urg, long length[],
 }
 
 
-//! 距離データの取得
-static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
+//! 距離チE�Eタの取征Estatic int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                         long *time_stamp)
 {
     measurement_type_t type;
@@ -528,17 +505,14 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     int ret;
     int n;
 
-    // エコーバックの取得
-    n = connection_readline(&urg->connection,
+    // エコーバックの取征E    n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n <= 0) {
         return URG_NO_RESPONSE;
     }
-    // エコーバックの解析
-    type = parse_distance_echoback(urg, buffer);
+    // エコーバックの解极E    type = parse_distance_echoback(urg, buffer);
 
-    // 応答の取得
-    n = connection_readline(&urg->connection,
+    // 応答�E取征E    n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n != 3) {
         ignore_receive_data(&urg->connection, urg->timeout);
@@ -546,14 +520,14 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
-        // チェックサムの評価
+        // チェチE��サムの評価
         ignore_receive_data(&urg->connection, urg->timeout);
         return URG_CHECKSUM_ERROR;
     }
 
     if (urg->specified_scan_times != 1) {
         if (!strncmp(buffer, "00", 2)) {
-            // 最後の空行を読み捨て、次からのデータを返す
+            // 最後�E空行を読み捨て、次からのチE�Eタを返す
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
             if (n != 0) {
@@ -568,14 +542,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     //fprintf(stderr, "specified_scan_times = %d\n", urg->specified_scan_times);
     if (((urg->specified_scan_times == 1) && (strncmp(buffer, "00", 2))) ||
         ((urg->specified_scan_times != 1) && (strncmp(buffer, "99", 2)))) {
-        // Gx, Hx のときは 00P が返されたときがデータ
-        // Mx, Nx のときは 99b が返されたときがデータ
+        // Gx, Hx のとき�E 00P が返されたときがチE�Eタ
+        // Mx, Nx のとき�E 99b が返されたときがチE�Eタ
         ignore_receive_data(&urg->connection, urg->timeout);
         return URG_INVALID_RESPONSE;
     }
 
-    // タイムスタンプの取得
-    n = connection_readline(&urg->connection,
+    // タイムスタンプ�E取征E    n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n > 0) {
         if (time_stamp) {
@@ -583,8 +556,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         }
     }
 
-    // データの取得
-    //fprintf(stderr, "type = %d\n", type);
+    // チE�Eタの取征E    //fprintf(stderr, "type = %d\n", type);
     switch (type) {
     case URG_DISTANCE:
     case URG_MULTIECHO:
@@ -604,7 +576,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 
     if ((urg->specified_scan_times > 0) && (urg->scanning_remain_times > 0)) {
         if (--urg->scanning_remain_times <= 0) {
-            // データの停止のみを行う
+            // チE�Eタの停止のみを行う
             connection_write(&urg->connection, "QT\n", 3);
         }
     }
@@ -619,8 +591,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
 
     urg->is_active = URG_FALSE;
 
-    // デバイスへの接続
-    if (connection_open(&urg->connection, connection_type,
+    // チE��イスへの接綁E    if (connection_open(&urg->connection, connection_type,
                         device, baudrate) < 0) {
         switch (connection_type) {
         case URG_SERIAL:
@@ -632,7 +603,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
         return urg->last_errno;
     }
 
-    // 指定したボーレートで URG と通信できるように調整
+    // 持E��した�Eーレートで URG と通信できるように調整
     if (connection_type == URG_SERIAL) {
         ret = connect_serial_device(urg, baudrate);
         if (ret != URG_NO_ERROR) {
@@ -640,15 +611,13 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
         }
     }
 
-    // 変数の初期化
-    urg->last_errno = URG_NO_ERROR;
+    // 変数の初期匁E    urg->last_errno = URG_NO_ERROR;
     urg->range_data_byte = URG_COMMUNICATION_3_BYTE;
     urg->specified_scan_times = 0;
     urg->scanning_remain_times = 0;
     urg->is_laser_on = URG_FALSE;
 
-    // パラメータ情報を取得
-    ret = receive_parameter(urg);
+    // パラメータ惁E��を取征E    ret = receive_parameter(urg);
     if (ret == URG_NO_ERROR) {
         urg->is_active = URG_TRUE;
     }
@@ -671,8 +640,7 @@ int urg_start_time_stamp_mode(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    // TM0 を発行する
-    return scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
+    // TM0 を発行すめE    return scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
 }
 
 
@@ -711,8 +679,7 @@ void urg_stop_time_stamp_mode(urg_t *urg)
         return;
     }
 
-    // TM2 を発行する
-    scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
+    // TM2 を発行すめE    scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
 }
 
 
@@ -730,7 +697,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
 
     if (urg->scanning_remain_times == 1) {
 
-        // レーザ発光を指示
+        // レーザ発光を持E��
         urg_laser_on(urg);
 
         write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d\n",
@@ -771,7 +738,7 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
         return URG_INVALID_PARAMETER;
     }
 
-    // 指定されたタイプのパケットを生成し、送信する
+    // 持E��されたタイプ�EパケチE��を生成し、E��信する
     switch (type) {
     case URG_DISTANCE:
         range_byte_ch =
@@ -861,19 +828,16 @@ int urg_stop_measurement(urg_t *urg)
         return URG_NOT_CONNECTED;
     }
 
-    // QT を発行する
-    n = connection_write(&urg->connection, "QT\n", 3);
+    // QT を発行すめE    n = connection_write(&urg->connection, "QT\n", 3);
     if (n != 3) {
         return URG_SEND_ERROR;
     }
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
-        // QT の応答が返されるまで、距離データを読み捨てる
-        //ignore_receive_data(&urg->connection, urg->timeout);
+        // QT の応答が返されるまで、距離チE�Eタを読み捨てめE        //ignore_receive_data(&urg->connection, urg->timeout);
         ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == URG_STOP) {
-            // 正常応答
-            ret = 0;
+            // 正常応筁E            ret = 0;
             break;
         }
     }
@@ -884,7 +848,7 @@ int urg_stop_measurement(urg_t *urg)
 int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
                                int skip_step)
 {
-    // 設定の範囲外を指定したときは、エラーを返す
+    // 設定�E篁E��外を持E��したとき�E、エラーを返す
     if (((skip_step < 0) || (skip_step >= 100)) ||
         (first_step > last_step) ||
         (first_step < -urg->front_data_index) ||
@@ -928,7 +892,7 @@ int urg_laser_on(urg_t *urg)
     }
 
     if (urg->is_laser_on != URG_FALSE) {
-        // 既にレーザが発光しているときは、コマンドを送信しないようにする
+        // 既にレーザが発光してぁE��とき�E、コマンドを送信しなぁE��ぁE��する
         return 0;
     }
 
@@ -952,7 +916,7 @@ int urg_reboot(urg_t *urg)
     int ret;
     int i;
 
-    // ２回目の RB 送信後、接続を切断する
+    // �E�回目の RB 送信後、接続を刁E��する
     for (i = 0; i < 2; ++i) {
         ret = scip_response(urg, "RB\n", expected, urg->timeout, NULL, 0);
         if (ret <= 0) {
@@ -1064,7 +1028,7 @@ int urg_find_port(char *port_name, int index)
 
     // !!!
 
-    // !!! ETHERNET のときは、エラーメッセージを表示する
+    // !!! ETHERNET のとき�E、エラーメチE��ージを表示する
 
     return 0;
 }
