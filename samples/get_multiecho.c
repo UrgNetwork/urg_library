@@ -66,7 +66,7 @@ int main(void)
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
-    data = malloc((urg_max_index(&urg) + 1) * 3 * sizeof(data[0]));
+    data = malloc(urg_max_data_size(&urg) * 3 * sizeof(data[0]));
     if (!data) {
         perror("urg_max_index()");
         return 1;

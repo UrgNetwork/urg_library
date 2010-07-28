@@ -88,7 +88,7 @@ extern long urg_scan_usec(const urg_t *urg);
 
 
 /*! 取得データ数の最大値を返す */
-extern int urg_max_index(const urg_t *urg);
+extern int urg_max_data_size(const urg_t *urg);
 
 
 /*!

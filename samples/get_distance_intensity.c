@@ -42,6 +42,7 @@ int main(void)
         CAPTURE_TIMES = 1,
     };
     urg_t urg;
+    int max_data_size;
     long *data = NULL;
     unsigned short *intensity = NULL;
     long time_stamp;
@@ -55,12 +56,13 @@ int main(void)
         return 1;
     }
 
-    data = malloc(urg_max_index(&urg) * sizeof(data[0]));
+    max_data_size = urg_max_data_size(&urg);
+    data = malloc(max_data_size * sizeof(data[0]));
     if (!data) {
         perror("urg_max_index()");
         return 1;
     }
-    intensity = malloc(urg_max_index(&urg) * sizeof(intensity[0]));
+    intensity = malloc(max_data_size * sizeof(intensity[0]));
     if (!intensity) {
         perror("urg_max_index()");
         return 1;
