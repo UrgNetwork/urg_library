@@ -372,7 +372,7 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
     }
 
     line_length = strlen(echoback_line);
-    fprintf(stderr, "line_length: %d\n", line_length);
+    //fprintf(stderr, "line_length: %d\n", line_length);
     if ((line_length == 12) &&
         ((echoback_line[0] == 'G') || (echoback_line[0] == 'H'))) {
         ret_type = parse_gx_command(urg, echoback_line);
@@ -407,6 +407,7 @@ static int receive_data_line(urg_t *urg, long length[],
     }
     if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = URG_TRUE;
+        // !!! 3 をマクロにする
         multiecho_max_size = 3;
     }
 
@@ -422,6 +423,11 @@ static int receive_data_line(urg_t *urg, long length[],
             // チェックサムの評価
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
+#if 0
+                fprintf(stderr, "line_filled: %d\n", line_filled);
+                fprintf(stderr, " !!! error !!!\n");
+                fprintf(stderr, "%s\n", &buffer[line_filled]);
+#endif
                 ignore_receive_data(&urg->connection, urg->timeout);
                 return URG_CHECKSUM_ERROR;
             }
@@ -435,7 +441,7 @@ static int receive_data_line(urg_t *urg, long length[],
         // !!! デバッグ表示
         //fprintf(stderr, "line_filled: %d, %d\n", line_filled, n);
         buffer[line_filled + 1] = '\0';
-        fprintf(stderr, "%02d: %s\n", line_filled, buffer);
+        //fprintf(stderr, "%02d: %s\n", line_filled, buffer);
 
         while ((last_p - p) >= data_size) {
             int index;
@@ -447,6 +453,9 @@ static int receive_data_line(urg_t *urg, long length[],
                 ++p;
                 --line_filled;
 
+                if ((last_p - p) < data_size) {
+                    break;
+                }
             } else {
                 // 次のデータ
                 multiecho_index = 0;
@@ -454,7 +463,9 @@ static int receive_data_line(urg_t *urg, long length[],
 
             index = (step_filled * multiecho_max_size) + multiecho_index;
             //fprintf(stderr, "(%d),", index);
-/*
+
+#if 1
+            // !!! 仮にコメントアウト中
             if (is_multiecho && (multiecho_index == 0)) {
                 // マルチエコーのデータ格納先をダミーデータで埋める
                 int i;
@@ -467,7 +478,7 @@ static int receive_data_line(urg_t *urg, long length[],
                     }
                 }
             }
-*/
+#endif
             // 距離データの格納
             length[index] = scip_decode(p, 3);
             p += 3;
@@ -481,6 +492,7 @@ static int receive_data_line(urg_t *urg, long length[],
             }
 
             ++step_filled;
+            //fprintf(stderr, "line_filled: %d, %d\n", line_filled, data_size);
             line_filled -= data_size;
 
             if (step_filled >= urg->received_last_index) {
@@ -491,6 +503,8 @@ static int receive_data_line(urg_t *urg, long length[],
         }
 
         // 次に処理する文字を退避
+        //fprintf(stderr, "line_filled: %d, %d\n", line_filled, data_size);
+
         memmove(buffer, p, line_filled);
 
         //fprintf(stderr, "n:%d,%d , ", n, line_filled);
@@ -549,7 +563,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         }
     }
 
-    fprintf(stderr, "specified_scan_times = %d\n", urg->specified_scan_times);
+    //fprintf(stderr, "specified_scan_times = %d\n", urg->specified_scan_times);
     if (((urg->specified_scan_times == 1) && (ret_code != 0)) ||
         ((urg->specified_scan_times != 1) && (ret_code != 99))) {
         // Gx, Hx のときは 00P が返されたときがデータ
@@ -568,7 +582,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     // データの取得
-    fprintf(stderr, "type = %d\n", type);
+    //fprintf(stderr, "type = %d\n", type);
     switch (type) {
     case URG_DISTANCE:
     case URG_MULTIECHO:
@@ -731,7 +745,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     }
 
     n = connection_write(&urg->connection, buffer, write_size);
-    fprintf(stderr, "n = %d\n", n);
+    //fprintf(stderr, "n = %d\n", n);
     if (n != 3) {
         return URG_SEND_ERROR;
     }
