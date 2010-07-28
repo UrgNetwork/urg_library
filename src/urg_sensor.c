@@ -325,8 +325,11 @@ static measurement_type_t parse_gx_command(urg_t *urg,
             ret_type = URG_MULTIECHO;
         }
     } else if (echoback_line[1] == 'E') {
-        ret_type = URG_DISTANCE_INTENSITY;
-
+        if (echoback_line[0] == 'G') {
+            ret_type = URG_DISTANCE_INTENSITY;
+        } else if (echoback_line[0] == 'H') {
+            ret_type = URG_MULTIECHO_INTENSITY;
+        }
     } else {
         return URG_UNKNOWN;
     }
