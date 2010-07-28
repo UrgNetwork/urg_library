@@ -1,8 +1,6 @@
 /*!
   \brief URG センサ制御
 
-  URG 用の基本的な関数を提供します。
-
   \author Satofumi KAMIMURA
 
   $Id$
