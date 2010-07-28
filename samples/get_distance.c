@@ -49,7 +49,7 @@ int main(void)
     int i;
 
 #if defined(URG_WINDOWS_OS)
-    const char device[] = "COM3";
+    const char device[] = "COM4";
 #elif defined(URG_LINUX_OS)
     const char device[] = "/dev/ttyACM0";
 #else
