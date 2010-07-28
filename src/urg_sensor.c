@@ -604,8 +604,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 
     if ((urg->specified_scan_times > 0) && (urg->scanning_remain_times > 0)) {
         if (--urg->scanning_remain_times <= 0) {
-            fprintf(stderr, "end.\n");
-            urg_laser_off(urg);
+            // データの停止のみを行う
+            connection_write(&urg->connection, "QT\n", 3);
         }
     }
     return ret;
