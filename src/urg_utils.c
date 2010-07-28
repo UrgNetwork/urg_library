@@ -109,13 +109,12 @@ long urg_scan_usec(const urg_t *urg)
 }
 
 
-int urg_max_index(const urg_t *urg)
+int urg_max_data_size(const urg_t *urg)
 {
     if (!urg->is_active) {
         return URG_NOT_CONNECTED;
     }
-
-    return urg->last_data_index;
+    return urg->last_data_index + 1;
 }
 
 

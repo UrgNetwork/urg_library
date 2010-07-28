@@ -209,13 +209,13 @@ extern int urg_start_measurement(urg_t *urg, measurement_type_t type,
   \retval >=0 受信したデータ個数
   \retval <0 エラー
 
-  data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_index() で取得できます。
+  data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_data_size() で取得できます。
 
   time_stamp には、センサ内部のタイムスタンプが格納されます。time_stamp を取得したくない場合 NULL を指定して下さい。
 
   Example
   \code
-  long *data = malloc(urg_max_index() * sizeof(data[0]));
+  long *data = malloc(urg_max_data_size() * sizeof(data[0]));
 
   ...
 
@@ -230,7 +230,7 @@ extern int urg_start_measurement(urg_t *urg, measurement_type_t type,
   urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
   n = urg_get_distance(&urg, data, &time_stamp); \endcode
 
-  \see urg_start_measurement(), urg_max_index()
+  \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
@@ -252,11 +252,11 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
   data, time_stamp については urg_get_distance() と同じです。
 
-  intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_index() で取得できます。
+  intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_data_size() で取得できます。
 
   Example
   \code
-  int data_size = urg_max_index();
+  int data_size = urg_max_data_size();
   long *data = malloc(data_size * sizeof(long));
   long *intensity = malloc(data_size * sizeof(unsigned short));
 
@@ -265,7 +265,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
   urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
   int n = urg_get_distance_intensity(&urg, data, intesnity, NULLL); \endcode
 
-  \see urg_start_measurement(), urg_max_index()
+  \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_distance_intensity(urg_t *urg, long data[],
                                       unsigned short intensity[],
@@ -306,14 +306,14 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   Example
   \code
-  long *data_multi = malloc(3 * urg_max_index() * sizeof(long));
+  long *data_multi = malloc(3 * urg_max_data_size() * sizeof(long));
 
   ...
 
   urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
   int n = urg_get_distance_intensity(&urg, data_multi, NULLL); \endcode
 
-  \see urg_start_measurement(), urg_max_index()
+  \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
@@ -333,11 +333,11 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
   data_multi, time_stamp については urg_get_multiecho() と同じです。
 
-  intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_index() で取得できます。
+  intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_data_size() で取得できます。
 
   Example
   \code
-  int data_size = urg_max_index();
+  int data_size = urg_max_data_size();
   long *data_multi = malloc(3 * data_size * sizeof(long));
   long *intensity_multi = malloc(3 * data_size * sizeof(unsigned short));
 
@@ -347,7 +347,7 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
   int n = urg_get_multiecho_intensity(&urg, data_multi,
   intesnity_multi, NULLL); \endcode
 
-  \see urg_start_measurement(), urg_max_index()
+  \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
                                        unsigned short intensity_multi[],

@@ -21,13 +21,13 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
     // 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
-    fprintf(stderr, "front_index: %d\n", front_index);
-    printf("%ld, (%ld)\n", data[front_index], time_stamp);
+    printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
 
 #else
     int i;
 
-    // 全てのデータを表示
+    // 全てのデータの X-Y の位置を表示
+    // !!! 修正する
     printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
     for (i = 0; i < n; ++i) {
         printf("%d, %ld\n", i, data[i]);
@@ -54,15 +54,13 @@ int main(void)
         return 1;
     }
 
-    data = malloc((urg_max_index(&urg) + 1) * sizeof(data[0]));
-    fprintf(stderr, "buffer size: %d\n", urg_max_index(&urg) + 1);
+    data = malloc(urg_max_data_size(&urg) * sizeof(data[0]));
     if (!data) {
         perror("urg_max_index()");
         return 1;
     }
 
     // データ取得
-    fprintf(stderr, "measure_start: %d\n", urg_deg2index(&urg, -90));
 #if 0
     ret = urg_set_scanning_parameter(&urg,
                                      urg_deg2step(&urg, -90),
@@ -71,11 +69,11 @@ int main(void)
         // !!!
     }
 #endif
+    urg_set_scanning_parameter(&urg, 0, 3, 0);
 
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
-        fprintf(stderr, "[n = %d]\n", n);
         if (n <= 0) {
             printf("urg_distance: %s\n", urg_error(&urg));
             free(data);

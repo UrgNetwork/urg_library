@@ -28,7 +28,7 @@ int main(void)
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
-    data = malloc(urg_max_index(&urg) * sizeof(data[0]));
+    data = malloc(urg_max_data_size(&urg) * sizeof(data[0]));
 
     // データ取得
     urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
