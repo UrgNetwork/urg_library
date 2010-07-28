@@ -9,15 +9,13 @@ LDFLAGS =
 LDLIBS =
 
 # Target
-URG_C_LIB = urg_c.a
+URG_C_LIB = liburg_c.a
 TARGET = $(URG_C_LIB)
 
 all : $(TARGET)
 
 clean :
 	$(RM) *.o $(TARGET)
-	cd samples/ && $(MAKE) clean
-	cd test/ && $(MAKE) clean
 
 depend :
 	makedepend -Y -- $(INCLUDES) -- $(wildcard *.h *.c)

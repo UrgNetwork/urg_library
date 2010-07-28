@@ -12,6 +12,8 @@
 #include <errno.h>
 #include <unistd.h>
 
+//#include <stdio.h>
+
 
 enum {
     INVALID_FD = -1,
@@ -134,9 +136,19 @@ int serial_set_baudrate(serial_t *serial, long baudrate)
 
 int serial_write(serial_t *serial, const char *data, int size)
 {
+    //int i;
+
     if (serial->fd == INVALID_FD) {
         return -1;
     }
+
+#if 0
+    fprintf(stderr, "WRITE: ");
+    for (i = 0; i < size; ++i) {
+        fprintf(stderr, "%c", data[i]);
+    }
+    fprintf(stderr, "\n");
+#endif
     return write(serial->fd, data, size);
 }
 

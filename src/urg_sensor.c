@@ -88,17 +88,17 @@ static int scip_response(urg_t *urg, const char* command,
                 return URG_INVALID_RESPONSE;
             }
         } else if (n > 0) {
-            if (p && (n < (receive_buffer_max_size - filled_size))) {
-                memcpy(p, buffer, n);
-                p += n;
-                *p++ = '\0';
-                filled_size += n;
-            }
             // エコーバック以外の行のチェックサムを評価する
             char checksum = buffer[n - 1];
             if ((checksum != scip_checksum(buffer, n - 1)) &&
                 (checksum != scip_checksum(buffer, n - 2))) {
                 return URG_CHECKSUM_ERROR;
+            }
+            if (p && (n < (receive_buffer_max_size - filled_size))) {
+                memcpy(p, buffer, n);
+                p += n;
+                *p++ = '\0';
+                filled_size += n;
             }
         }
 
@@ -179,11 +179,13 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
+
         if (!strcmp("E", receive_buffer)) {
             // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
+
             // ボーレートを変更して戻る
             return change_sensor_baudrate(baudrate, try_baudrate[i]);
         }
@@ -317,11 +319,17 @@ static measurement_type_t parse_gx_command(urg_t *urg,
         ret_type = URG_DISTANCE;
 
     } else if (echoback_line[1] == 'D') {
-        ret_type = URG_DISTANCE;
-
+        if (echoback_line[0] == 'G') {
+            ret_type = URG_DISTANCE;
+        } else if (echoback_line[0] == 'H') {
+            ret_type = URG_MULTIECHO;
+        }
     } else if (echoback_line[1] == 'E') {
-        ret_type = URG_DISTANCE_INTENSITY;
-
+        if (echoback_line[0] == 'G') {
+            ret_type = URG_DISTANCE_INTENSITY;
+        } else if (echoback_line[0] == 'H') {
+            ret_type = URG_MULTIECHO_INTENSITY;
+        }
     } else {
         return URG_UNKNOWN;
     }
@@ -367,12 +375,13 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
     }
 
     line_length = strlen(echoback_line);
+    //fprintf(stderr, "line_length: %d\n", line_length);
     if ((line_length == 12) &&
-        ((echoback_line[0] == 'G') || (echoback_line[0] == 'M'))) {
+        ((echoback_line[0] == 'G') || (echoback_line[0] == 'H'))) {
         ret_type = parse_gx_command(urg, echoback_line);
 
     } else if ((line_length == 15) &&
-               ((echoback_line[0] == 'H') || (echoback_line[0] == 'N'))) {
+               ((echoback_line[0] == 'M') || (echoback_line[0] == 'N'))) {
         ret_type = parse_mx_command(urg, echoback_line);
     }
     return ret_type;
@@ -401,6 +410,7 @@ static int receive_data_line(urg_t *urg, long length[],
     }
     if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = URG_TRUE;
+        // !!! 3 をマクロにする
         multiecho_max_size = 3;
     }
 
@@ -416,6 +426,11 @@ static int receive_data_line(urg_t *urg, long length[],
             // チェックサムの評価
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
+#if 0
+                fprintf(stderr, "line_filled: %d\n", line_filled);
+                fprintf(stderr, " !!! error !!!\n");
+                fprintf(stderr, "%s\n", &buffer[line_filled]);
+#endif
                 ignore_receive_data(&urg->connection, urg->timeout);
                 return URG_CHECKSUM_ERROR;
             }
@@ -427,7 +442,8 @@ static int receive_data_line(urg_t *urg, long length[],
         last_p = p + line_filled;
 
         // !!! デバッグ表示
-        //buffer[line_filled + 1] = '\0';
+        //fprintf(stderr, "line_filled: %d, %d\n", line_filled, n);
+        buffer[line_filled + 1] = '\0';
         //fprintf(stderr, "%02d: %s\n", line_filled, buffer);
 
         while ((last_p - p) >= data_size) {
@@ -440,12 +456,19 @@ static int receive_data_line(urg_t *urg, long length[],
                 ++p;
                 --line_filled;
 
+                if ((last_p - p) < data_size) {
+                    break;
+                }
             } else {
                 // 次のデータ
                 multiecho_index = 0;
             }
 
             index = (step_filled * multiecho_max_size) + multiecho_index;
+            //fprintf(stderr, "(%d),", index);
+
+#if 1
+            // !!! 仮にコメントアウト中
             if (is_multiecho && (multiecho_index == 0)) {
                 // マルチエコーのデータ格納先をダミーデータで埋める
                 int i;
@@ -458,7 +481,7 @@ static int receive_data_line(urg_t *urg, long length[],
                     }
                 }
             }
-
+#endif
             // 距離データの格納
             length[index] = scip_decode(p, 3);
             p += 3;
@@ -472,6 +495,7 @@ static int receive_data_line(urg_t *urg, long length[],
             }
 
             ++step_filled;
+            //fprintf(stderr, "line_filled: %d, %d\n", line_filled, data_size);
             line_filled -= data_size;
 
             if (step_filled >= urg->received_last_index) {
@@ -482,8 +506,11 @@ static int receive_data_line(urg_t *urg, long length[],
         }
 
         // 次に処理する文字を退避
+        //fprintf(stderr, "line_filled: %d, %d\n", line_filled, data_size);
+
         memmove(buffer, p, line_filled);
 
+        //fprintf(stderr, "n:%d,%d , ", n, line_filled);
     } while (n > 0);
 
     return step_filled;
@@ -539,6 +566,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         }
     }
 
+    //fprintf(stderr, "specified_scan_times = %d\n", urg->specified_scan_times);
     if (((urg->specified_scan_times == 1) && (ret_code != 0)) ||
         ((urg->specified_scan_times != 1) && (ret_code != 99))) {
         // Gx, Hx のときは 00P が返されたときがデータ
@@ -557,6 +585,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     // データの取得
+    //fprintf(stderr, "type = %d\n", type);
     switch (type) {
     case URG_DISTANCE:
     case URG_MULTIECHO:
@@ -719,6 +748,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     }
 
     n = connection_write(&urg->connection, buffer, write_size);
+    //fprintf(stderr, "n = %d\n", n);
     if (n != 3) {
         return URG_SEND_ERROR;
     }
@@ -1037,4 +1067,3 @@ int urg_find_port(char *port_name, int index)
 
     return 0;
 }
-
