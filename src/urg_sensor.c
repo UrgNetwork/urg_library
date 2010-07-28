@@ -73,7 +73,7 @@ static int scip_response(urg_t *urg, const char* command,
     int write_size = strlen(command);
     int n = connection_write(&urg->connection, command, write_size);
     if (n != write_size) {
-        return set_errno_and_return(urg, URG_SEND_ERROR);
+        return set_errno_and_return(urg, (int)URG_SEND_ERROR);
     }
 
     if (p) {
@@ -84,7 +84,7 @@ static int scip_response(urg_t *urg, const char* command,
         n = connection_readline(&urg->connection,
                                 buffer, BUFFER_SIZE, timeout);
         if (n < 0) {
-            return set_errno_and_return(urg, URG_NO_RESPONSE);
+            return set_errno_and_return(urg, (int)URG_NO_RESPONSE);
 
         } else if (p && (line_number > 0)
                    && (n < (receive_buffer_max_size - filled_size))) {
@@ -98,14 +98,14 @@ static int scip_response(urg_t *urg, const char* command,
         if (line_number == 0) {
             // エコーバック文字列が、一致するかを確認する
             if (strncmp(buffer, command, write_size - 1)) {
-                return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+                return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
             }
         } else if (n > 0) {
             // エコーバック以外の行のチェックサムを評価する
             char checksum = buffer[n - 1];
             if ((checksum != scip_checksum(buffer, n - 1)) &&
                 (checksum != scip_checksum(buffer, n - 2))) {
-                return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+                return set_errno_and_return(urg, (int)URG_CHECKSUM_ERROR);
             }
         }
 
@@ -116,7 +116,7 @@ static int scip_response(urg_t *urg, const char* command,
                 ret = 0;
 
             } else if (n != 3) {
-                return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+                return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
 
             } else {
                 int i;
@@ -158,7 +158,7 @@ static int change_sensor_baudrate(urg_t *urg,
 
     // !!! last_errno を更新すること
 
-    return set_errno_and_return(urg, URG_NO_ERROR);
+    return set_errno_and_return(urg, (int)URG_NO_ERROR);
 }
 
 
@@ -218,7 +218,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         }
     }
 
-    return set_errno_and_return(urg, URG_NOT_DETECT_BAUDRATE_ERROR);
+    return set_errno_and_return(urg, (int)URG_NOT_DETECT_BAUDRATE_ERROR);
 }
 
 
@@ -238,7 +238,7 @@ static int receive_parameter(urg_t *urg)
         return ret;
     } else if (ret < PP_RESPONSE_LINES) {
         ignore_receive_data(&urg->connection, MAX_TIMEOUT);
-        return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+        return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
     }
 
     p = receive_buffer;
@@ -280,7 +280,7 @@ static int receive_parameter(urg_t *urg)
 
     // 全てのパラメータを受信したか確認
     if (received_bits != 0x007f) {
-        return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+        return set_errno_and_return(urg, (int)URG_RECEIVE_ERROR);
     }
 
     urg_set_scanning_parameter(urg,
@@ -288,7 +288,7 @@ static int receive_parameter(urg_t *urg)
                                urg->last_data_index - urg->front_data_index,
                                1);
 
-    return set_errno_and_return(urg, URG_NO_ERROR);
+    return set_errno_and_return(urg, (int)URG_NO_ERROR);
 }
 
 
@@ -437,7 +437,7 @@ static int receive_data_line(urg_t *urg, long length[],
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
                 ignore_receive_data(&urg->connection, urg->timeout);
-                return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+                return set_errno_and_return(urg, (int)URG_CHECKSUM_ERROR);
             }
         }
 
@@ -523,7 +523,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n <= 0) {
-        return set_errno_and_return(urg, URG_NO_RESPONSE);
+        return set_errno_and_return(urg, (int)URG_NO_RESPONSE);
     }
     // エコーバックの解析
     type = parse_distance_echoback(urg, buffer);
@@ -533,13 +533,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n != 3) {
         ignore_receive_data(&urg->connection, urg->timeout);
-        return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+        return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
     }
 
     if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
         // チェックサムの評価
         ignore_receive_data(&urg->connection, urg->timeout);
-        return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+        return set_errno_and_return(urg, (int)URG_CHECKSUM_ERROR);
     }
 
     if (urg->specified_scan_times != 1) {
@@ -550,7 +550,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
             fprintf(stderr, "timeout: %d\n", urg->timeout);
             if (n != 0) {
                 ignore_receive_data(&urg->connection, urg->timeout);
-                return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+                return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
 
             } else {
                 return receive_data(urg, data, intensity, time_stamp);
@@ -563,7 +563,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         // Gx, Hx のときは 00P が返されたときがデータ
         // Mx, Nx のときは 99b が返されたときがデータ
         ignore_receive_data(&urg->connection, urg->timeout);
-        return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+        return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
     }
 
     // タイムスタンプの取得
@@ -668,7 +668,7 @@ int urg_start_time_stamp_mode(urg_t *urg)
     const int expected[] = { 0, EXPECTED_END };
 
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     // TM0 を発行する
@@ -683,7 +683,7 @@ long urg_time_stamp(urg_t *urg)
     int ret;
 
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     ret = scip_response(urg, "TM1\n", expected,
@@ -694,10 +694,10 @@ long urg_time_stamp(urg_t *urg)
 
     // buffer からタイムスタンプを取得し、デコードして返す
     if (strlen(buffer) != 5) {
-        return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+        return set_errno_and_return(urg, (int)URG_RECEIVE_ERROR);
     }
     if (buffer[5] == scip_checksum(buffer, 4)) {
-        return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+        return set_errno_and_return(urg, (int)URG_CHECKSUM_ERROR);
     }
     return scip_decode(buffer, 4);
 }
@@ -749,7 +749,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
 
     n = connection_write(&urg->connection, buffer, write_size);
     if (n != 3) {
-        return set_errno_and_return(urg, URG_SEND_ERROR);
+        return set_errno_and_return(urg, (int)URG_SEND_ERROR);
     }
     return 0;
 }
@@ -762,12 +762,12 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
     int ret;
 
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     if ((skip_scan < 0) || (skip_scan > 9)) {
         ignore_receive_data(&urg->connection, urg->timeout);
-        return set_errno_and_return(urg, URG_INVALID_PARAMETER);
+        return set_errno_and_return(urg, (int)URG_INVALID_PARAMETER);
     }
 
     // 指定されたタイプのパケットを生成し、送信する
@@ -809,7 +809,7 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
 int urg_get_distance(urg_t *urg, long data[], long *time_stamp)
 {
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
     return receive_data(urg, data, NULL, time_stamp);
 }
@@ -820,7 +820,7 @@ int urg_get_distance_intensity(urg_t *urg,
                                long *time_stamp)
 {
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     return receive_data(urg, data, intensity, time_stamp);
@@ -830,7 +830,7 @@ int urg_get_distance_intensity(urg_t *urg,
 int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp)
 {
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     return receive_data(urg, data_multi, NULL, time_stamp);
@@ -843,7 +843,7 @@ int urg_get_multiecho_intensity(urg_t *urg,
                                 long *time_stamp)
 {
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     return receive_data(urg, data_multi, intensity_multi, time_stamp);
@@ -858,13 +858,13 @@ int urg_stop_measurement(urg_t *urg)
     int i;
 
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     // QT を発行する
     n = connection_write(&urg->connection, "QT\n", 3);
     if (n != 3) {
-        return set_errno_and_return(urg, URG_SEND_ERROR);
+        return set_errno_and_return(urg, (int)URG_SEND_ERROR);
     }
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
@@ -873,7 +873,7 @@ int urg_stop_measurement(urg_t *urg)
         ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == URG_STOP) {
             // 正常応答
-            return set_errno_and_return(urg, URG_NO_ERROR);
+            return set_errno_and_return(urg, (int)URG_NO_ERROR);
         }
     }
     return ret;
@@ -888,14 +888,14 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
         (first_step > last_step) ||
         (first_step < -urg->front_data_index) ||
         (last_step > (urg->last_data_index - urg->front_data_index))) {
-        return set_errno_and_return(urg, URG_SCANNING_PARAMETER_ERROR);
+        return set_errno_and_return(urg, (int)URG_SCANNING_PARAMETER_ERROR);
     }
 
     urg->scanning_first_step = first_step;
     urg->scanning_last_step = last_step;
     urg->scanning_skip_step = skip_step;
 
-    return set_errno_and_return(urg, URG_NO_ERROR);
+    return set_errno_and_return(urg, (int)URG_NO_ERROR);
 }
 
 
@@ -903,17 +903,17 @@ int urg_set_connection_data_size(urg_t *urg,
                                  range_data_byte_t range_data_byte)
 {
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     if ((range_data_byte != URG_COMMUNICATION_3_BYTE) ||
         (range_data_byte != URG_COMMUNICATION_2_BYTE)) {
-        return set_errno_and_return(urg, URG_DATA_SIZE_PARAMETER_ERROR);
+        return set_errno_and_return(urg, (int)URG_DATA_SIZE_PARAMETER_ERROR);
     }
 
     urg->range_data_byte = range_data_byte;
 
-    return set_errno_and_return(urg, URG_NO_ERROR);
+    return set_errno_and_return(urg, (int)URG_NO_ERROR);
 }
 
 
@@ -923,7 +923,7 @@ int urg_laser_on(urg_t *urg)
     int ret;
 
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     if (urg->is_laser_on != URG_FALSE) {
@@ -953,14 +953,14 @@ int urg_reboot(urg_t *urg)
     int i;
 
     if (!urg->is_active) {
-        return set_errno_and_return(urg, URG_NOT_CONNECTED);
+        return set_errno_and_return(urg, (int)URG_NOT_CONNECTED);
     }
 
     // ２回目の RB 送信後、接続を切断する
     for (i = 0; i < 2; ++i) {
         ret = scip_response(urg, "RB\n", expected, urg->timeout, NULL, 0);
         if (ret <= 0) {
-            return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+            return set_errno_and_return(urg, (int)URG_INVALID_RESPONSE);
         }
     }
     urg_close(urg);
