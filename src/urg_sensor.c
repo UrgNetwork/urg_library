@@ -186,7 +186,8 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         char receive_buffer[RECEIVE_BUFFER_SIZE];
 
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
-        int ret = scip_response(urg, "QT;first\n", qt_expected, MAX_TIMEOUT,
+        //int ret = scip_response(urg, "QT;first\n", qt_expected, MAX_TIMEOUT,
+        int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
         if (!strcmp("E", receive_buffer)) {
             // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
@@ -465,6 +466,18 @@ static int receive_data_line(urg_t *urg, long length[],
             }
 
             index = (step_filled * multiecho_max_size) + multiecho_index;
+
+            if (step_filled >
+                (urg->received_last_index - urg->received_first_index)) {
+                //fprintf(stderr, "[%d, %d]\n", step_filled, urg->received_last_index);
+                //fprintf(stderr, "too much\n");
+                // データが多過ぎる場合は、残りのデータを無視して戻る
+                ignore_receive_data(&urg->connection, urg->timeout);
+                return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+            }
+
+
+            //fprintf(stderr, "(%d),", index);
             if (is_multiecho && (multiecho_index == 0)) {
                 // マルチエコーのデータ格納先をダミーデータで埋める
                 int i;
@@ -494,12 +507,6 @@ static int receive_data_line(urg_t *urg, long length[],
 
             ++step_filled;
             line_filled -= data_size;
-
-            if (step_filled >= urg->received_last_index) {
-                // データが多過ぎる場合は、残りのデータを無視して戻る
-                ignore_receive_data(&urg->connection, urg->timeout);
-                break;
-            }
         }
 
         // 次に処理する文字を退避
@@ -547,7 +554,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
             // 最後の空行を読み捨て、次からのデータを返す
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
-            fprintf(stderr, "timeout: %d\n", urg->timeout);
             if (n != 0) {
                 ignore_receive_data(&urg->connection, urg->timeout);
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);

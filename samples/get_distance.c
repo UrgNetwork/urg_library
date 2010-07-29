@@ -39,7 +39,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 int main(void)
 {
     enum {
-        CAPTURE_TIMES = 2,
+        CAPTURE_TIMES = 10,
     };
     urg_t urg;
     long *data = NULL;
@@ -81,6 +81,7 @@ int main(void)
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
+        //fprintf(stderr, "urg_get_distance: %d\n", n);
         if (n <= 0) {
             printf("urg_distance: %s\n", urg_error(&urg));
             free(data);
