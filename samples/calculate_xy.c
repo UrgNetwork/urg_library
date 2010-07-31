@@ -1,6 +1,8 @@
 /*!
   \example calculate_xy.c X-Y 座標系での位置を計算する
 
+  センサ前方が X 軸の方向とみなした直行座標上で、距離データを位置を出力する。
+
   \author Satofumi KAMIMURA
 
   $Id$
@@ -60,22 +62,23 @@ int main(int argc, char *argv[])
     for (i = 0; i < n; ++i) {
         long distance = data[i];
         double radian;
-        double x;
-        double y;
+        long x;
+        long y;
 
         if ((distance < min_distance) || (distance > max_distance)) {
             continue;
         }
 
         radian = urg_index2rad(&urg, i);
-        x = distance * cos(radian);
-        y = distance * sin(radian);
+        x = (long)(distance * cos(radian));
+        y = (long)(distance * sin(radian));
 
-        printf("%.1f, %.1f\n", x, y);
+        printf("%ld, %ld\n", x, y);
     }
     printf("\n");
 
     // 切断
+    free(data);
     urg_close(&urg);
 
     return 0;

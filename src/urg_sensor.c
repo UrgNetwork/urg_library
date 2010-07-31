@@ -153,12 +153,27 @@ static void ignore_receive_data(connection_t *connection, int timeout)
 static int change_sensor_baudrate(urg_t *urg,
                                   long current_baudrate, long next_baudrate)
 {
-    (void)current_baudrate;
-    (void)next_baudrate;
+    enum { SS_COMMAND_SIZE = 10 };
+    char buffer[SS_COMMAND_SIZE];
+    int ss_expected[] = { 0, 3, 4, EXPECTED_END };
+    int ret;
 
-    // !!! last_errno を更新すること
+    if (current_baudrate == next_baudrate) {
+        // 現在のボーレートと設定するボーレートが一緒ならば、戻る
+        return set_errno_and_return(urg, URG_NO_ERROR);
+    }
 
-    return set_errno_and_return(urg, URG_NO_ERROR);
+    // "SS" コマンドでボーレートを変更する
+    snprintf(buffer, SS_COMMAND_SIZE, "SS%06ld\n", next_baudrate);
+    ret = scip_response(urg, buffer, ss_expected, urg->timeout, NULL, 0);
+    if (ret <= 0) {
+        return set_errno_and_return(urg, URG_INVALID_PARAMETER);
+    }
+
+    // 正常応答ならば、ホスト側のボーレートを変更する
+    ret = connection_set_baudrate(&urg->connection, next_baudrate);
+
+    return set_errno_and_return(urg, ret);
 }
 
 
@@ -320,8 +335,8 @@ static int parse_parameter(const char *parameter, int size)
 }
 
 
-static measurement_type_t parse_gx_command(urg_t *urg,
-                                           const char echoback_line[])
+static measurement_type_t parse_distance_parameter(urg_t *urg,
+                                                   const char echoback_line[])
 {
     measurement_type_t ret_type = URG_UNKNOWN;
 
@@ -352,26 +367,6 @@ static measurement_type_t parse_gx_command(urg_t *urg,
 }
 
 
-static measurement_type_t parse_mx_command(urg_t *urg,
-                                           const char echoback_line[])
-{
-    measurement_type_t ret_type;
-
-    ret_type = parse_gx_command(urg, echoback_line);
-    if (ret_type == URG_UNKNOWN) {
-        return ret_type;
-    }
-
-    // パラメータの格納
-    // !!! スキャンの間引き
-    // !!! 回数
-    // !!! 回数は必要ないが、スキャンの間引は、読み出して利用すべき、
-    // !!! でもないのか...
-
-    return ret_type;
-}
-
-
 measurement_type_t parse_distance_echoback(urg_t *urg,
                                            const char echoback_line[])
 {
@@ -385,11 +380,11 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
     line_length = strlen(echoback_line);
     if ((line_length == 12) &&
         ((echoback_line[0] == 'G') || (echoback_line[0] == 'H'))) {
-        ret_type = parse_gx_command(urg, echoback_line);
+        ret_type = parse_distance_parameter(urg, echoback_line);
 
     } else if ((line_length == 15) &&
                ((echoback_line[0] == 'M') || (echoback_line[0] == 'N'))) {
-        ret_type = parse_mx_command(urg, echoback_line);
+        ret_type = parse_distance_parameter(urg, echoback_line);
     }
     return ret_type;
 }

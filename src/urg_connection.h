@@ -97,7 +97,7 @@ extern int connection_open(connection_t *connection,
 extern void connection_close(connection_t *connection);
 
 
-// !!!
+//! ボーレートを設定する
 extern int connection_set_baudrate(connection_t *connection, long baudrate);
 
 

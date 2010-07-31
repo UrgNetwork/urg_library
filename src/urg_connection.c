@@ -48,15 +48,19 @@ void connection_close(connection_t *connection)
 
 int connection_set_baudrate(connection_t *connection, long baudrate)
 {
+    int ret = -1;
+
     switch (connection->type) {
     case URG_SERIAL:
-        return serial_set_baudrate(&connection->serial, baudrate);
+        ret = serial_set_baudrate(&connection->serial, baudrate);
         break;
+
     case URG_ETHERNET:
-        return 0;
+        ret = 0;
         break;
     }
-    return -1;
+
+    return ret;
 }
 
 
