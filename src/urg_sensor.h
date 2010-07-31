@@ -35,6 +35,7 @@ typedef enum {
 
 enum {
     URG_SCAN_INFINITY = 0,      /*!< 無限回のデータ取得 */
+    URG_MAX_MULTIECHO = 3,
 };
 
 

@@ -421,8 +421,7 @@ static int receive_data_line(urg_t *urg, long length[],
     }
     if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = URG_TRUE;
-        // !!! 3 をマクロにする
-        multiecho_max_size = 3;
+        multiecho_max_size = URG_MAX_MULTIECHO;
     }
 
     do {

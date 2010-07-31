@@ -4,22 +4,22 @@
   \author Satofumi KAMIMURA
 
   $Id$
-
-  \todo Windows の場合に COMx が選択されるようにする
 */
 
 #include "urg_sensor.h"
 #include "urg_utils.h"
 #include <stdio.h>
+#include <string.h>
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
     enum {
         TIME_STAMP_RECEIVE_TIMES = 5,
     };
 
     urg_t urg;
+    connection_type_t connection_type = URG_SERIAL;
     long time_stamp;
     int i;
 
@@ -30,27 +30,37 @@ int main(void)
 #else
 #endif
 
+    // 接続タイプの切替え
+    for (i = 1; i < argc; ++i) {
+        if (!strcmp(argv[i], "-e")) {
+            connection_type = URG_ETHERNET;
+        }
+    }
+
     // 接続
-    if (urg_open(&urg, URG_SERIAL, device, 115200) < 0) {
+    if (urg_open(&urg, connection_type, device, 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
 
+    // URG のタイムスタンプと PC のタイムスタンプを表示
     // !!!
 
-    // !!!
+    // URG のタイムスタンプと PC のタイムスタンプを比較し、
+    // 出力結果を同期させるための補正値を計算する
     urg_start_time_stamp_mode(&urg);
     for (i = 0; i < TIME_STAMP_RECEIVE_TIMES; ++i) {
         time_stamp = urg_time_stamp(&urg);
         if (time_stamp < 0) {
-            // !!! error_handling
-            // !!!
+            printf("urg_time_stamp: %s\n", urg_error(&urg));
+            return 1;
         }
         // !!!
     }
     urg_stop_time_stamp_mode(&urg);
 
-    // !!! URG のタイムスタンプと PC の時間の関係を出力する
+    // URG の補正後のタイムスタンプと PC タイムスタンプを表示
+    // !!!
 
     urg_close(&urg);
 
