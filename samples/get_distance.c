@@ -4,8 +4,6 @@
   \author Satofumi KAMIMURA
 
   $Id$
-
-  \todo Windows の場合に COMx が選択されるようにする
 */
 
 #include "urg_sensor.h"
