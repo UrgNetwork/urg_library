@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
 
     // データ取得
 #if 0
+    // データの取得範囲を変更する場合
     urg_set_scanning_parameter(&urg,
                                urg_deg2step(&urg, -90),
                                urg_deg2step(&urg, +90), 0);

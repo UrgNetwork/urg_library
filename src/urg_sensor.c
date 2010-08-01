@@ -204,10 +204,20 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         //int ret = scip_response(urg, "QT;first\n", qt_expected, MAX_TIMEOUT,
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
-        if (!strcmp("E", receive_buffer)) {
+        if (!strcmp(receive_buffer, "E")) {
             // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
+                                MAX_TIMEOUT, NULL, 0);
+            ignore_receive_data(&urg->connection, MAX_TIMEOUT);
+
+            // ボーレートを変更して戻る
+            return change_sensor_baudrate(urg, baudrate, try_baudrate[i]);
+
+        } else if (!strcmp(receive_buffer, "0Ee")) {
+            // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
+            int tm2_expected[] = { 0, EXPECTED_END };
+            ret = scip_response(urg, "TM2\n", tm2_expected,
                                 MAX_TIMEOUT, NULL, 0);
             ignore_receive_data(&urg->connection, MAX_TIMEOUT);
 
@@ -463,15 +473,12 @@ static int receive_data_line(urg_t *urg, long length[],
 
             if (step_filled >
                 (urg->received_last_index - urg->received_first_index)) {
-                //fprintf(stderr, "[%d, %d]\n", step_filled, urg->received_last_index);
-                //fprintf(stderr, "too much\n");
                 // データが多過ぎる場合は、残りのデータを無視して戻る
                 ignore_receive_data(&urg->connection, urg->timeout);
                 return set_errno_and_return(urg, URG_RECEIVE_ERROR);
             }
 
 
-            //fprintf(stderr, "(%d),", index);
             if (is_multiecho && (multiecho_index == 0)) {
                 // マルチエコーのデータ格納先をダミーデータで埋める
                 int i;
@@ -680,6 +687,7 @@ long urg_time_stamp(urg_t *urg)
 {
     const int expected[] = { 0, EXPECTED_END };
     char buffer[BUFFER_SIZE];
+    char *p;
     int ret;
 
     if (!urg->is_active) {
@@ -693,13 +701,18 @@ long urg_time_stamp(urg_t *urg)
     }
 
     // buffer からタイムスタンプを取得し、デコードして返す
-    if (strlen(buffer) != 5) {
+    if (strcmp(buffer, "00P")) {
+        // 最初の応答が "00P" でなければ戻る
         return set_errno_and_return(urg, URG_RECEIVE_ERROR);
     }
-    if (buffer[5] == scip_checksum(buffer, 4)) {
+    p = buffer + 4;
+    if (strlen(p) != 5) {
+        return set_errno_and_return(urg, URG_RECEIVE_ERROR);
+    }
+    if (p[5] == scip_checksum(p, 4)) {
         return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
     }
-    return scip_decode(buffer, 4);
+    return scip_decode(p, 4);
 }
 
 
