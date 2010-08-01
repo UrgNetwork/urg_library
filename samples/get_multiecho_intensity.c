@@ -26,12 +26,12 @@ static void print_data(urg_t *urg, long data[],
 
     // [mm], [mm], [mm], [1], [1], [1], [msec]
     printf("%ld, %ld, %ld, %d, %d, %d, %ld\n",
-           data[front_index + 0],
-           data[front_index + 1],
-           data[front_index + 2],
-           intensity[front_index + 0],
-           intensity[front_index + 1],
-           intensity[front_index + 2],
+           data[(3 * front_index) + 0],
+           data[(3 * front_index) + 1],
+           data[(3 * front_index) + 2],
+           intensity[(3 * front_index) + 0],
+           intensity[(3 * front_index) + 1],
+           intensity[(3 * front_index) + 2],
            time_stamp);
 
 #else
@@ -42,8 +42,12 @@ static void print_data(urg_t *urg, long data[],
     for (i = 0; i < data_n; ++i) {
         // [mm], [mm], [mm], [1], [1], [1]
         printf("%ld, %ld, %ld, %d, %d, %d, %ld\n",
-               data[i + 0], data[i + 1], data[i + 2],
-               intensity[i + 0], intensity[i + 1], intensity[i + 2]);
+               data[(3 * i) + 0],
+               data[(3 * i) + 1],
+               data[(3 * i) + 2],
+               intensity[(3 * i) + 0],
+               intensity[(3 * i) + 1],
+               intensity[(3 * i) + 2]);
     }
 #endif
 }

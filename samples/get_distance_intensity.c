@@ -21,7 +21,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 
     // 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
-    printf("%ld [mm], %d, (%ld [msec])\n",
+    printf("%ld [mm], %d [1], (%ld [msec])\n",
            data[front_index], intensity[front_index], time_stamp);
 
 #else
