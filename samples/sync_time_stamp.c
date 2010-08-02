@@ -110,5 +110,8 @@ int main(int argc, char *argv[])
 
     urg_close(&urg);
 
+#if defined(URG_MSC)
+    getchar();
+#endif
     return 0;
 }
