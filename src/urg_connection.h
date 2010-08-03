@@ -11,7 +11,7 @@
 */
 
 #include "urg_serial.h"
-#include "urg_ethernet.h"
+#include "urg_tcpclient.h"
 
 
 /*! 定数定義 */
@@ -32,7 +32,7 @@ typedef struct
 {
     connection_type_t type;
     serial_t serial;
-    ethernet_t ethernet;
+    tcpclient_t tcpclient;
 } connection_t;
 
 

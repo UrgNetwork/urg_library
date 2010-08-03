@@ -24,7 +24,7 @@ int connection_open(connection_t *connection,
         break;
 
     case URG_ETHERNET:
-        return ethernet_open(&connection->ethernet,
+        return tcpclient_open(&connection->tcpclient,
                              device, baudrate_or_port);
         break;
     }
@@ -40,7 +40,7 @@ void connection_close(connection_t *connection)
         break;
 
     case URG_ETHERNET:
-        ethernet_close(&connection->ethernet);
+        tcpclient_close(&connection->tcpclient);
         break;
     }
 }
@@ -81,7 +81,7 @@ int connection_write(connection_t *connection,
         return serial_write(&connection->serial, data, size);
         break;
     case URG_ETHERNET:
-        return ethernet_write(&connection->ethernet, data, size);
+        return tcpclient_write(&connection->tcpclient, data, size);
         break;
     }
     return -1;
@@ -96,7 +96,7 @@ int connection_read(connection_t *connection,
         return serial_read(&connection->serial, data, max_size, timeout);
         break;
     case URG_ETHERNET:
-        return ethernet_read(&connection->ethernet, data, max_size, timeout);
+        return tcpclient_read(&connection->tcpclient, data, max_size, timeout);
         break;
     }
     return -1;
@@ -111,7 +111,7 @@ int connection_readline(connection_t *connection,
         return serial_readline(&connection->serial, data, max_size, timeout);
         break;
     case URG_ETHERNET:
-        return ethernet_readline(&connection->ethernet,
+        return tcpclient_readline(&connection->tcpclient,
                                  data, max_size, timeout);
         break;
     }
