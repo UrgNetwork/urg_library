@@ -1,0 +1,143 @@
+#include <stdio.h>  /* printf() */
+#include <stdlib.h> /* malloc() */
+
+#include <string.h>
+#include <strings.h>
+#include <sys/time.h> /* timeval */
+
+#include "urg_tcpclient.h"
+
+static void tcpclient_buffer_init( tcpclient_t* cli )
+{
+  ring_initialize( &cli->rb, cli->buf, BUFSIZE_BITSHIFT );
+}
+
+// get number of data in buffer.
+static int tcpclient_buffer_data_num( tcpclient_t* cli )
+{
+  ring_size( &cli->rb );
+}
+
+static int tcpclient_buffer_write( tcpclient_t* cli, const char* data, int size )
+{
+  ring_write( &cli->rb, data, size );
+}
+
+static int tcpclient_buffer_read( tcpclient_t* cli, char* data, int size )
+{
+  ring_read( &cli->rb, data, size );
+}
+
+
+int tcpclient_open(tcpclient_t* cli, char* ip_str, int port_num)
+{
+  struct hostent* hp;
+  struct sockaddr_in in;
+
+  tcpclient_buffer_init( cli );
+
+  cli->sock_addr_size = sizeof (struct sockaddr_in);
+
+  if ( (cli->sock_desc = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    perror("socket");
+    exit(COMMTCP_ERR);
+  }
+
+  bzero( (char*)&(cli->server_addr), sizeof(cli->sock_addr_size) );
+  cli->server_addr.sin_family      = AF_INET;
+  cli->server_addr.sin_port        = htons(port_num);
+
+  /* bind is not required, and port number is dynamic */
+
+  /*
+  if ( cli->server_addr.sin_addr.s_addr  = hostGetByName(ip_str)) < 0 )
+  */
+
+  if ( (cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) < 0 ) {
+    perror("unknown server name");
+    return (COMMTCP_ERR);
+  }
+
+  if ( connect(cli->sock_desc, (const struct sockaddr *) &(cli->server_addr),
+                cli->sock_addr_size) < 0 ) {
+    perror("connect");
+    close(cli->sock_desc);
+    exit(COMMTCP_ERR);
+  }
+
+}
+
+
+void tcpclient_close(tcpclient_t* cli)
+{
+  close( cli->sock_desc);
+}
+
+int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
+{
+  
+  // number of data in buffer.
+  int num_in_buf = tcpclient_buffer_data_num(cli); 
+  int sock       = cli->sock_desc;
+  int rem_size   = req_size;  // remaining size to be sent back.
+  int n;
+
+printf("bang1: num_in_buf %d\n", num_in_buf);
+  // copy data in buffer to user buffer and return with requested size.
+  if ( 0 < num_in_buf ) {
+    n = tcpclient_buffer_read( cli, userbuf, req_size );
+    // n never be greater than req_size
+    rem_size = req_size - n;  // lacking size.
+    if ( rem_size <= 0 ) {
+printf("bang2: return with filled\n");
+      return req_size;
+    }
+
+    num_in_buf = tcpclient_buffer_data_num(cli); 
+printf("bang3: num_in_buf %d\n", num_in_buf);
+  }
+
+  // data in buffer was not enough, read from socket to fill buffer,
+  // without blocking, i.e. read from system's buffer.
+  {
+    char tmpbuf[ BUFSIZE ];
+    // receive with non-blocking mode.
+    n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, MSG_DONTWAIT);
+printf("bang5: received %d\n", n);
+    if ( 0 < n ) {
+      tcpclient_buffer_write( cli, tmpbuf, n ); // copy socket to my buffer
+    }
+
+    n = tcpclient_buffer_read( cli, & userbuf[req_size-rem_size], rem_size );
+printf("bang6: copy userbuf: %d bytes\n", n);
+    // n never be greater than rem_size
+    rem_size -= n;
+    if ( rem_size <= 0 ) {
+printf("bang7: return with filled\n");
+      return req_size;
+    }
+  }
+
+  //  lastly recv with blocking but with time out to read necessary size.
+  {
+    struct timeval tv;
+    tv.tv_sec = timeout/1000; // millisecond to seccond
+    tv.tv_usec = (timeout % 1000) * 1000; // millisecond to microsecond
+printf("bang8-0: timeout %d %d\n", (int)tv.tv_sec, (int)tv.tv_usec);
+    setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval) );
+    n = recv(sock, & userbuf[req_size-rem_size], rem_size, 0); //4th arg 0:no flag
+printf("bang8: received %d\n", n);
+    // n never be greater than rem_size
+    if ( 0 < n ) rem_size -= n;
+  }
+
+printf("bang9: return with filled: %d\n", req_size-rem_size);
+  return (req_size - rem_size); // last return may be less than req_size;
+}
+
+void tcpclient_write(tcpclient_t* cli, char* buf, int size)
+{
+  // blocking if data size is larger than system's buffer.
+  send(cli->sock_desc, buf, size, 0);  //4th arg 0: no flag
+}
+

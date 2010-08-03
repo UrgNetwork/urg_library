@@ -36,14 +36,14 @@ get_distance get_distance_intensity get_multiecho get_multiecho_intensity calcul
 # DO NOT DELETE
 
 calculate_xy.o: $(SRCDIR)/urg_sensor.h $(SRCDIR)/urg_connection.h $(SRCDIR)/urg_serial.h
-calculate_xy.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_ethernet.h
+calculate_xy.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_tcpclient.h
 calculate_xy.o: $(SRCDIR)/urg_utils.h
 get_distance.o: $(SRCDIR)/urg_sensor.h $(SRCDIR)/urg_connection.h $(SRCDIR)/urg_serial.h
-get_distance.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_ethernet.h
+get_distance.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_tcpclient.h
 get_distance.o: $(SRCDIR)/urg_utils.h
 sensor_parameter.o: $(SRCDIR)/urg_sensor.h $(SRCDIR)/urg_connection.h $(SRCDIR)/urg_serial.h
-sensor_parameter.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_ethernet.h
+sensor_parameter.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_tcpclient.h
 sensor_parameter.o: $(SRCDIR)/urg_utils.h
 sync_time_stamp.o: $(SRCDIR)/urg_sensor.h $(SRCDIR)/urg_connection.h $(SRCDIR)/urg_serial.h
-sync_time_stamp.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_ethernet.h
+sync_time_stamp.o: $(SRCDIR)/urg_detect_os.h $(SRCDIR)/urg_ring_buffer.h $(SRCDIR)/urg_tcpclient.h
 sync_time_stamp.o: $(SRCDIR)/urg_utils.h
