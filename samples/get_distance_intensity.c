@@ -10,6 +10,7 @@
 #include "urg_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 static void print_data(urg_t *urg, long data[], unsigned short intensity[],
@@ -20,8 +21,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 
     // 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
-    fprintf(stderr, "front_index: %d\n", front_index);
-    printf("%ld [mm], %d, (%ld [msec])\n",
+    printf("%ld [mm], %d [1], (%ld [msec])\n",
            data[front_index], intensity[front_index], time_stamp);
 
 #else
@@ -36,22 +36,36 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 }
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
     enum {
         CAPTURE_TIMES = 1,
     };
     urg_t urg;
+    connection_type_t connection_type = URG_SERIAL;
     int max_data_size;
     long *data = NULL;
     unsigned short *intensity = NULL;
     long time_stamp;
-    int ret;
     int n;
     int i;
 
+#if defined(URG_WINDOWS_OS)
+    const char device[] = "COM3";
+#elif defined(URG_LINUX_OS)
+    const char device[] = "/dev/ttyACM0";
+#else
+#endif
+
+    // 接続タイプの切替え
+    for (i = 1; i < argc; ++i) {
+        if (!strcmp(argv[i], "-e")) {
+            connection_type = URG_ETHERNET;
+        }
+    }
+
     // 接続
-    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
+    if (urg_open(&urg, URG_SERIAL, device, 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
@@ -69,20 +83,9 @@ int main(void)
     }
 
     // データ取得
-    fprintf(stderr, "measure_start: %d\n", urg_deg2index(&urg, -90));
-#if 1
-    ret = urg_set_scanning_parameter(&urg,
-                                     urg_deg2step(&urg, -90),
-                                     urg_deg2step(&urg, +90), 0);
-    if (ret < 0) {
-        // !!!
-    }
-#endif
-
     urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
-        fprintf(stderr, "[n = %d]\n", n);
         if (n <= 0) {
             printf("urg_distance: %s\n", urg_error(&urg));
             free(data);
@@ -97,5 +100,8 @@ int main(void)
     free(data);
     urg_close(&urg);
 
+#if defined(URG_MSC)
+    getchar();
+#endif
     return 0;
 }

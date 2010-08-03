@@ -4,25 +4,39 @@
   \author Satofumi KAMIMURA
 
   $Id$
-
-  \todo Windows の場合に COMx が選択されるようにする
 */
 
 #include "urg_sensor.h"
 #include "urg_utils.h"
 #include <stdio.h>
+#include <string.h>
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
     urg_t urg;
+    connection_type_t connection_type = URG_SERIAL;
     int min_step;
     int max_step;
     long min_distance;
     long max_distance;
+    int i;
 
+#if defined(URG_WINDOWS_OS)
+    const char device[] = "COM3";
+#elif defined(URG_LINUX_OS)
+    const char device[] = "/dev/ttyACM0";
+#else
+#endif
 
-    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
+    // 接続タイプの切替え
+    for (i = 1; i < argc; ++i) {
+        if (!strcmp(argv[i], "-e")) {
+            connection_type = URG_ETHERNET;
+        }
+    }
+
+    if (urg_open(&urg, URG_SERIAL, device, 115200) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
@@ -42,5 +56,8 @@ int main(void)
 
     urg_close(&urg);
 
+#if defined(URG_MSC)
+    getchar();
+#endif
     return 0;
 }

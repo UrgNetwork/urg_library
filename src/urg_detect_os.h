@@ -11,10 +11,14 @@
 */
 
 
-#if defined _MSC_VER || defined __CYGWIN__ || defined __MINGW32__
+#if defined(_MSC_VER) || defined(__CYGWIN__) || defined(__MINGW32__)
 #define URG_WINDOWS_OS
 
-#elif defined __linux__
+#if defined(_MSC_VER)
+#define URG_MSC
+#endif
+
+#elif defined(__linux__)
 #define URG_LINUX_OS
 
 #else

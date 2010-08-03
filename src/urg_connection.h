@@ -11,7 +11,7 @@
 */
 
 #include "urg_serial.h"
-#include "urg_ethernet.h"
+#include "urg_tcpclient.h"
 
 
 /*! 定数定義 */
@@ -32,7 +32,7 @@ typedef struct
 {
     connection_type_t type;
     serial_t serial;
-    ethernet_t ethernet;
+    tcpclient_t tcpclient;
 } connection_t;
 
 
@@ -97,7 +97,7 @@ extern int connection_open(connection_t *connection,
 extern void connection_close(connection_t *connection);
 
 
-// !!!
+//! ボーレートを設定する
 extern int connection_set_baudrate(connection_t *connection, long baudrate);
 
 

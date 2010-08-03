@@ -9,6 +9,8 @@
 
 #include "urg_connection.h"
 
+//#include <stdio.h>
+
 
 int connection_open(connection_t *connection,
                     connection_type_t connection_type,
@@ -22,7 +24,7 @@ int connection_open(connection_t *connection,
         break;
 
     case URG_ETHERNET:
-        return ethernet_open(&connection->ethernet,
+        return tcpclient_open(&connection->tcpclient,
                              device, baudrate_or_port);
         break;
     }
@@ -38,7 +40,7 @@ void connection_close(connection_t *connection)
         break;
 
     case URG_ETHERNET:
-        ethernet_close(&connection->ethernet);
+        tcpclient_close(&connection->tcpclient);
         break;
     }
 }
@@ -46,27 +48,40 @@ void connection_close(connection_t *connection)
 
 int connection_set_baudrate(connection_t *connection, long baudrate)
 {
+    int ret = -1;
+
     switch (connection->type) {
     case URG_SERIAL:
-        return serial_set_baudrate(&connection->serial, baudrate);
+        ret = serial_set_baudrate(&connection->serial, baudrate);
         break;
+
     case URG_ETHERNET:
-        return 0;
+        ret = 0;
         break;
     }
-    return -1;
+
+    return ret;
 }
 
 
 int connection_write(connection_t *connection,
                      const char *data, int size)
 {
+#if 0
+    int i;
+    fprintf(stderr, "WRITE: ");
+    for (i = 0; i < size; ++i) {
+        fprintf(stderr, "%c", data[i]);
+    }
+    fprintf(stderr, "\n");
+#endif
+
     switch (connection->type) {
     case URG_SERIAL:
         return serial_write(&connection->serial, data, size);
         break;
     case URG_ETHERNET:
-        return ethernet_write(&connection->ethernet, data, size);
+        return tcpclient_write(&connection->tcpclient, data, size);
         break;
     }
     return -1;
@@ -81,7 +96,7 @@ int connection_read(connection_t *connection,
         return serial_read(&connection->serial, data, max_size, timeout);
         break;
     case URG_ETHERNET:
-        return ethernet_read(&connection->ethernet, data, max_size, timeout);
+        return tcpclient_read(&connection->tcpclient, data, max_size, timeout);
         break;
     }
     return -1;
@@ -96,7 +111,7 @@ int connection_readline(connection_t *connection,
         return serial_readline(&connection->serial, data, max_size, timeout);
         break;
     case URG_ETHERNET:
-        return ethernet_readline(&connection->ethernet,
+        return tcpclient_readline(&connection->tcpclient,
                                  data, max_size, timeout);
         break;
     }
