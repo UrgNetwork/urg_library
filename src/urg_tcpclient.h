@@ -1,11 +1,14 @@
+#include "urg_ring_buffer.h"
+#include "urg_detect_os.h"
 /* sockets */
 #include <sys/types.h>
+#if defined(URG_WINDOWS_OS)
+#include <winsock2.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-
-
-#include "urg_ring_buffer.h"
+#endif
 
 // -- NOT INTERFACE, for internal use only --
 enum { SOCK_ADDR_SIZE = sizeof(struct sockaddr_in) };

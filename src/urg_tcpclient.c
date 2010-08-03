@@ -8,6 +8,10 @@
 
 #include "urg_tcpclient.h"
 
+#if defined(URG_WINDOWS_OS)
+enum { MSG_DONTWAIT = 1 };
+#endif
+
 static void tcpclient_buffer_init( tcpclient_t* cli )
 {
   ring_initialize( &cli->rb, cli->buf, BUFSIZE_BITSHIFT );
@@ -43,7 +47,7 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
     exit(COMMTCP_ERR);
   }
 
-  bzero( (char*)&(cli->server_addr), sizeof(cli->sock_addr_size) );
+  memset( (char*)&(cli->server_addr), 0, sizeof(cli->sock_addr_size) );
   cli->server_addr.sin_family      = AF_INET;
   cli->server_addr.sin_port        = htons(port_num);
 
@@ -118,7 +122,11 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
     struct timeval tv;
     tv.tv_sec = timeout/1000; // millisecond to seccond
     tv.tv_usec = (timeout % 1000) * 1000; // millisecond to microsecond
+#if defined(URG_WINDOWS_OS)
+    setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(struct timeval) );
+#else
     setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval) );
+#endif
     n = recv(sock, & userbuf[req_size-rem_size], rem_size, 0); //4th arg 0:no flag
     // n never be greater than rem_size
     if ( 0 < n ) rem_size -= n;
