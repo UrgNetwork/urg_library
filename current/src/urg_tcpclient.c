@@ -170,7 +170,7 @@ int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeou
 
   userbuf[i] = '\0';
 
-  if ( n <= 0 ) { // error
+  if ( i==0 && n <= 0 ) { // error
     return -1;
   }
 
