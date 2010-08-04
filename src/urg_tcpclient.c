@@ -174,6 +174,7 @@ int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeou
     return -1;
   }
 
+  printf("TCP:%d:%s\n", i, userbuf);
   return i; // the number of characters filled into user buffer.
 }
 

@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
             baudrate_or_port = 10940;
-            if (argc >= (i + 1)) {
+            if (argc > (i + 1)) {
                 device = argv[i + 1];
             } else {
                 device = ip_address;
