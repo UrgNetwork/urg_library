@@ -69,13 +69,26 @@ int main(int argc, char *argv[])
     int i;
 
 #if defined(URG_WINDOWS_OS)
-    const char device[] = "COM3";
+    const char *device = "COM3";
 #elif defined(URG_LINUX_OS)
-    const char device[] = "/dev/ttyACM0";
+    const char *device = "/dev/ttyACM0";
 #else
 #endif
+    long baudrate_or_port = 115200;
+    const char *ip_address = "192.168.0.10";
 
     // 接続タイプの切替え
+    for (i = 1; i < argc; ++i) {
+        if (!strcmp(argv[i], "-e")) {
+            connection_type = URG_ETHERNET;
+            baudrate_or_port = 10940;
+            if (argc > (i + 1)) {
+                device = argv[i + 1];
+            } else {
+                device = ip_address;
+            }
+        }
+    }
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
