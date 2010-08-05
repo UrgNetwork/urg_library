@@ -8,6 +8,7 @@ SRCDIR = ../src
 INCLUDES = -I$(SRCDIR)
 LDFLAGS =
 LDLIBS = -lm -lrt
+#LDLIBS = -lm -lwsock32 #-lrt
 
 # Target
 TARGET = \
