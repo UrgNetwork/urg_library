@@ -47,6 +47,14 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
 {
   cli->pushed_back = -1; // no pushed back char.
 
+#if defined(URG_WINDOWS_OS)
+  {
+    WORD wVersionRequested = 0x0202;
+    LPWSADATA lpWSAData;
+    WSAstartup(wVersionRequested, lpWSAData);
+  }
+#endif
+
   tcpclient_buffer_init( cli );
 
   cli->sock_addr_size = sizeof (struct sockaddr_in);
