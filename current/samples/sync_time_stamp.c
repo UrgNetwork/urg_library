@@ -17,21 +17,17 @@
 static int pc_msec_time(void)
 {
     static bool is_initialized = false;
-    static struct timespec first_timespec;
-    struct timespec timespec;
+    static clock_t first_clock;
+    clock_t current_clock;
     long msec_time;
 
     if (!is_initialized) {
-        clock_gettime(CLOCK_REALTIME, &first_timespec);
+        first_clock = clock();
         is_initialized = true;
     }
+    current_clock = clock();
 
-    clock_gettime(CLOCK_REALTIME, &timespec);
-
-    msec_time =
-        1000 * (timespec.tv_sec - first_timespec.tv_sec) +
-        ((timespec.tv_nsec - first_timespec.tv_nsec) / 1000000);
-
+    msec_time = current_clock / (CLOCKS_PER_SEC / 1000);
     return msec_time;
 }
 

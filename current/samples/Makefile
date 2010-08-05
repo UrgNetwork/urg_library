@@ -7,8 +7,8 @@ CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 SRCDIR = ../src
 INCLUDES = -I$(SRCDIR)
 LDFLAGS =
-LDLIBS = -lm -lrt
-#LDLIBS = -lm -lwsock32 #-lrt
+LDLIBS = -lm
+#LDLIBS = -lm -lwsock32
 
 # Target
 TARGET = \
