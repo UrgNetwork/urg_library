@@ -60,8 +60,13 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
 #if defined(URG_WINDOWS_OS)
   {
     WORD wVersionRequested = 0x0202;
-    LPWSADATA lpWSAData;
-    WSAStartup(wVersionRequested, lpWSAData);
+    WSADATA WSAData;
+    int err;
+    err = WSAStartup(wVersionRequested, &WSAData);
+    if ( err != 0 ) {
+      printf("WSAStartup failed with error: %d\n", err);
+      return -1;
+    }
   }
 #endif
 
