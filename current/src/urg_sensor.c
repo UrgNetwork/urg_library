@@ -439,7 +439,6 @@ static int receive_data_line(urg_t *urg, long length[],
 
         if (n > 0) {
             // チェックサムの評価
-printf("bang1\n");
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
                 ignore_receive_data(&urg->connection, urg->timeout);
@@ -545,7 +544,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
     }
 
-printf("bang2\n");
     if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
         // チェックサムの評価
         ignore_receive_data(&urg->connection, urg->timeout);
@@ -711,7 +709,6 @@ long urg_time_stamp(urg_t *urg)
     if (strlen(p) != 5) {
         return set_errno_and_return(urg, URG_RECEIVE_ERROR);
     }
-printf("bang3\n");
     if (p[5] == scip_checksum(p, 4)) {
         return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
     }

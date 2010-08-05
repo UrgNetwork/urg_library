@@ -11,11 +11,17 @@
 #endif
 
 // -- NOT INTERFACE, for internal use only --
+
 enum { SOCK_ADDR_SIZE = sizeof(struct sockaddr_in) };
-enum { COMMTCP_ERR = 1 };
-enum { BUFSIZE_BITSHIFT = 8 }; /* bit shift is necessary
-                                  for urg_ring_buffer I/F. */
-enum { BUFSIZE = 1<<BUFSIZE_BITSHIFT };
+
+// For urg_ringbuffer.h
+// The size of buffer must be specified by the power of 2
+// i.e. ring buffer size = two to the RB_BITSHIFT-th power.
+enum { RB_BITSHIFT = 8 };
+enum { RB_SIZE     = 1<<RB_BITSHIFT };
+// caution ! available buffer size is less than the
+//           size given to the ring buffer(RB_SIZE).
+enum { BUFSIZE     = RB_SIZE-1 };
 
 typedef struct _tcpclient {
   // socket
@@ -25,7 +31,7 @@ typedef struct _tcpclient {
 
   // buffer
   ring_buffer_t rb;  // ring buffer
-  char buf[BUFSIZE];
+  char buf[RB_SIZE];
 
   // line reading functions
   int pushed_back; // for pushded back char

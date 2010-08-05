@@ -14,7 +14,7 @@ enum { MSG_DONTWAIT = 1 };
 
 static void tcpclient_buffer_init( tcpclient_t* cli )
 {
-  ring_initialize( &cli->rb, cli->buf, BUFSIZE_BITSHIFT );
+  ring_initialize( &cli->rb, cli->buf, RB_BITSHIFT );
 }
 
 // get number of data in buffer.
@@ -25,12 +25,21 @@ static int tcpclient_buffer_data_num( tcpclient_t* cli )
 
 static int tcpclient_buffer_write( tcpclient_t* cli, const char* data, int size )
 {
-  return ring_write( &cli->rb, data, size );
+  int ret;
+  ret = ring_write( &cli->rb, data, size );
+  //  {int rem = ring_size(&cli->rb);
+  //    printf("\n(BUFW:rem%d:%d:", rem,size);{int i;for(i=0; i<size; i++)putchar(data[i]);}printf(")\n");
+  //  }
+  return ret;
 }
 
 static int tcpclient_buffer_read( tcpclient_t* cli, char* data, int size )
 {
-  return ring_read( &cli->rb, data, size );
+  int ret = ring_read( &cli->rb, data, size );
+  //{int rem = ring_size(&cli->rb);
+  //    printf("\n(BUFR:rem%d:%d:", rem,size);{int i;for(i=0; i<size; i++)putchar(data[i]);}printf(")\n");
+  //  }
+  return ret;
 }
 
 
@@ -44,7 +53,7 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
 
   if ( (cli->sock_desc = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     perror("socket");
-    exit(COMMTCP_ERR);
+    exit(-1);
   }
 
   memset( (char*)&(cli->server_addr), 0, sizeof(cli->sock_addr_size) );
@@ -105,8 +114,10 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
     char tmpbuf[ BUFSIZE ];
     // receive with non-blocking mode.
     n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, MSG_DONTWAIT);
+    //{int i;printf("(SOCK!%d!",n);for(i=0;i<n;i++)putchar(tmpbuf[i]);printf(")\n");}
     if ( 0 < n ) {
       tcpclient_buffer_write( cli, tmpbuf, n ); // copy socket to my buffer
+      //printf("(mybuf-n=%d)",n);
     }
 
     n = tcpclient_buffer_read( cli, & userbuf[req_size-rem_size], rem_size );
@@ -128,6 +139,7 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
     setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval) );
 #endif
     n = recv(sock, & userbuf[req_size-rem_size], rem_size, 0); //4th arg 0:no flag
+    //{int i;printf("(SOCK2!%d!",n);for(i=0;i<n;i++)putchar(userbuf[req_size-rem_size+i]);printf(")\n");}
     // n never be greater than rem_size
     if ( 0 < n ) rem_size -= n;
   }
@@ -174,7 +186,7 @@ int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeou
     return -1;
   }
 
-  printf("TCP:%d:%s\n", i, userbuf);
+  //printf("TCP:%d:%s\n", i, userbuf);
   return i; // the number of characters filled into user buffer.
 }
 
