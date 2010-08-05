@@ -1,3 +1,5 @@
+#include "urg_detect_os.h"
+
 #include <stdio.h>  /* printf() */
 #include <stdlib.h> /* malloc() */
 #include <unistd.h> /* close() */
@@ -6,11 +8,19 @@
 #include <strings.h>
 #include <sys/time.h> /* timeval */
 
-#include "urg_tcpclient.h"
-
 #if defined(URG_WINDOWS_OS)
+//#pragma comment(lib, "wininet.lib")
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
+
 enum { MSG_DONTWAIT = 1 };
+#else
+#include <sys/types.h>
+#include <sys/socket.h>
 #endif
+
+#include "urg_tcpclient.h"
 
 static void tcpclient_buffer_init( tcpclient_t* cli )
 {
@@ -51,7 +61,7 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
   {
     WORD wVersionRequested = 0x0202;
     LPWSADATA lpWSAData;
-    WSAstartup(wVersionRequested, lpWSAData);
+    WSAStartup(wVersionRequested, lpWSAData);
   }
 #endif
 
