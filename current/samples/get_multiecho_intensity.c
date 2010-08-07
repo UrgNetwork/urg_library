@@ -22,7 +22,7 @@ static void print_data(urg_t *urg, long data[],
     (void)data_n;
 
     // 前方のデータのみを表示
-    int front_index = 3 * urg_step2index(urg, 0);
+    int front_index = urg_step2index(urg, 0);
 
     // [mm], [mm], [mm], [1], [1], [1], [msec]
     printf("%ld, %ld, %ld, %d, %d, %d, %ld\n",
@@ -56,7 +56,7 @@ static void print_data(urg_t *urg, long data[],
 int main(int argc, char *argv[])
 {
     enum {
-        CAPTURE_TIMES = 1,
+        CAPTURE_TIMES = 10,
     };
     urg_t urg;
     connection_type_t connection_type = URG_SERIAL;

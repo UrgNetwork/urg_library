@@ -20,7 +20,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     (void)data_n;
 
     // 前方のデータのみを表示
-    int front_index = 3 * urg_step2index(urg, 0);
+    int front_index = urg_step2index(urg, 0);
 
     // [mm], [mm], [mm], [msec]
     printf("%ld, %ld, %ld, %ld\n",
@@ -38,9 +38,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
         // [mm], [mm], [mm]
         printf("%ld, %ld, %ld\n",
-               data[(3 * front_index) + 0],
-               data[(3 * front_index) + 1],
-               data[(3 * front_index) + 2]);
+               data[(3 * i) + 0], data[(3 * i) + 1], data[(3 * i) + 2]);
     }
     printf("\n");
 #endif

@@ -39,7 +39,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 int main(int argc, char *argv[])
 {
     enum {
-        CAPTURE_TIMES = 1,
+        CAPTURE_TIMES = 10,
     };
     urg_t urg;
     connection_type_t connection_type = URG_SERIAL;
