@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     }
 
     // 接続
-    if (urg_open(&urg, connection_type, device, 115200) < 0) {
+    if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
