@@ -67,6 +67,7 @@ typedef struct
     int received_last_index;
     int received_skip_step;
     range_data_byte_t received_range_data_byte;
+    int is_sending;
 
     char return_buffer[80];
 } urg_t;

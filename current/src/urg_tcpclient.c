@@ -13,8 +13,6 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
-
-enum { MSG_DONTWAIT = 1 };
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -101,6 +99,7 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
     return -1;
   }
 
+  //fprintf(stderr, "tcpclient_open() ... O.K.\n");
   return 0;
 }
 
@@ -120,6 +119,7 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
   int n;
 
   // copy data in buffer to user buffer and return with requested size.
+  //fprintf(stderr, "num_in_buf: %d\n", num_in_buf);
   if ( 0 < num_in_buf ) {
     n = tcpclient_buffer_read( cli, userbuf, req_size );
     // n never be greater than req_size
@@ -136,7 +136,13 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
   {
     char tmpbuf[ BUFSIZE ];
     // receive with non-blocking mode.
+#if defined(URG_WINDOWS_OS)
+    int no_timeout = 1;
+    setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, (const char *)&no_timeout, sizeof(struct timeval) );
+    n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, 0);
+#else
     n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, MSG_DONTWAIT);
+#endif
     //{int i;printf("(SOCK!%d!",n);for(i=0;i<n;i++)putchar(tmpbuf[i]);printf(")\n");}
     if ( 0 < n ) {
       tcpclient_buffer_write( cli, tmpbuf, n ); // copy socket to my buffer
@@ -153,12 +159,12 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
 
   //  lastly recv with blocking but with time out to read necessary size.
   {
+#if defined(URG_WINDOWS_OS)
+    setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, (const char *)&timeout, sizeof(struct timeval) );
+#else
     struct timeval tv;
     tv.tv_sec = timeout/1000; // millisecond to seccond
     tv.tv_usec = (timeout % 1000) * 1000; // millisecond to microsecond
-#if defined(URG_WINDOWS_OS)
-    setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(struct timeval) );
-#else
     setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval) );
 #endif
     n = recv(sock, & userbuf[req_size-rem_size], rem_size, 0); //4th arg 0:no flag
@@ -187,13 +193,16 @@ int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeou
   }
   for ( ; i<buf_size; i++) {
     char ch;
+    //fprintf(stderr, "tcpclient_read(): ");
     n = tcpclient_read( cli, &ch, 1, timeout);
+    //fprintf(stderr, "n = %d\n", n);
     if ( n <= 0 ) {
       break; // error
     }
     if ( ch=='\n' || ch=='\r' ) {
       break; // success
     }
+    //fprintf(stderr, "%c", ch);
     userbuf[i] = ch;
   }
 

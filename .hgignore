@@ -13,3 +13,4 @@ sensor_parameter
 test/urg_sensor_test
 test/serial_test
 test/urg04lx_parameter_test
+glob:*.exe

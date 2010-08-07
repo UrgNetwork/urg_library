@@ -72,6 +72,7 @@ static int scip_response(urg_t *urg, const char* command,
 
     int write_size = strlen(command);
     int n = connection_write(&urg->connection, command, write_size);
+    urg->is_sending = URG_TRUE;
     if (n != write_size) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
@@ -137,16 +138,23 @@ static int scip_response(urg_t *urg, const char* command,
 }
 
 
-static void ignore_receive_data(connection_t *connection, int timeout)
+static void ignore_receive_data(urg_t *urg,
+				int timeout)
 {
     char buffer[BUFFER_SIZE];
     int n;
 
-    connection_write(connection, "QT\n", 3);
+    if (urg->is_sending == URG_FALSE) {
+        return;
+    }
+
+    connection_write(&urg->connection, "QT\n", 3);
     do {
-        n = connection_readline(connection,
+        n = connection_readline(&urg->connection,
                                 buffer, BUFFER_SIZE, timeout);
     } while (n >= 0);
+
+    urg->is_sending = URG_FALSE;
 }
 
 
@@ -209,7 +217,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
-            ignore_receive_data(&urg->connection, MAX_TIMEOUT);
+            ignore_receive_data(urg, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
             return change_sensor_baudrate(urg, baudrate, try_baudrate[i]);
@@ -219,7 +227,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             int tm2_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "TM2\n", tm2_expected,
                                 MAX_TIMEOUT, NULL, 0);
-            ignore_receive_data(&urg->connection, MAX_TIMEOUT);
+            ignore_receive_data(urg, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
             return change_sensor_baudrate(urg, baudrate, try_baudrate[i]);
@@ -229,7 +237,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             if (ret == URG_INVALID_RESPONSE) {
                 // 異常なエコーバックのときは、距離データ受信中とみなして
                 // データを読み飛ばす
-                ignore_receive_data(&urg->connection, MAX_TIMEOUT);
+                ignore_receive_data(urg, MAX_TIMEOUT);
 
                 // ボーレートを変更して戻る
                 return change_sensor_baudrate(urg, baudrate, try_baudrate[i]);
@@ -263,7 +271,7 @@ static int receive_parameter(urg_t *urg)
     if (ret < 0) {
         return ret;
     } else if (ret < PP_RESPONSE_LINES) {
-        ignore_receive_data(&urg->connection, MAX_TIMEOUT);
+        ignore_receive_data(urg, MAX_TIMEOUT);
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
     }
 
@@ -441,7 +449,7 @@ static int receive_data_line(urg_t *urg, long length[],
             // チェックサムの評価
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
-                ignore_receive_data(&urg->connection, urg->timeout);
+                ignore_receive_data(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
             }
         }
@@ -474,7 +482,7 @@ static int receive_data_line(urg_t *urg, long length[],
             if (step_filled >
                 (urg->received_last_index - urg->received_first_index)) {
                 // データが多過ぎる場合は、残りのデータを無視して戻る
-                ignore_receive_data(&urg->connection, urg->timeout);
+                ignore_receive_data(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_RECEIVE_ERROR);
             }
 
@@ -540,13 +548,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n != 3) {
-        ignore_receive_data(&urg->connection, urg->timeout);
+        ignore_receive_data(urg, urg->timeout);
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
     }
 
     if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
         // チェックサムの評価
-        ignore_receive_data(&urg->connection, urg->timeout);
+        ignore_receive_data(urg, urg->timeout);
         return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
     }
 
@@ -556,7 +564,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
             if (n != 0) {
-                ignore_receive_data(&urg->connection, urg->timeout);
+                ignore_receive_data(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
 
             } else {
@@ -569,7 +577,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         ((urg->specified_scan_times != 1) && (strncmp(buffer, "99", 2)))) {
         // Gx, Hx のときは 00P が返されたときがデータ
         // Mx, Nx のときは 99b が返されたときがデータ
-        ignore_receive_data(&urg->connection, urg->timeout);
+        ignore_receive_data(urg, urg->timeout);
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
     }
 
@@ -616,6 +624,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
     int ret;
 
     urg->is_active = URG_FALSE;
+    urg->is_sending = URG_TRUE;
 
     // デバイスへの接続
     if (connection_open(&urg->connection, connection_type,
@@ -663,7 +672,7 @@ int urg_open(urg_t *urg, connection_type_t connection_type,
 void urg_close(urg_t *urg)
 {
     if (urg->is_active) {
-        ignore_receive_data(&urg->connection, urg->timeout);
+        ignore_receive_data(urg, urg->timeout);
     }
     connection_close(&urg->connection);
     urg->is_active = URG_FALSE;
@@ -761,6 +770,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     }
 
     n = connection_write(&urg->connection, buffer, write_size);
+    urg->is_sending = URG_TRUE;
     if (n != 3) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
@@ -779,7 +789,7 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
     }
 
     if ((skip_scan < 0) || (skip_scan > 9)) {
-        ignore_receive_data(&urg->connection, urg->timeout);
+        ignore_receive_data(urg, urg->timeout);
         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
     }
 
@@ -809,7 +819,7 @@ int urg_start_measurement(urg_t *urg, measurement_type_t type,
 
     case URG_STOP:
     case URG_UNKNOWN:
-        ignore_receive_data(&urg->connection, urg->timeout);
+        ignore_receive_data(urg, urg->timeout);
         urg->last_errno = URG_INVALID_PARAMETER;
         ret = urg->last_errno;
         break;
@@ -886,6 +896,7 @@ int urg_stop_measurement(urg_t *urg)
         ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == URG_STOP) {
             // 正常応答
+	  urg->is_sending = URG_FALSE;
             return set_errno_and_return(urg, URG_NO_ERROR);
         }
     }
