@@ -444,7 +444,6 @@ static int receive_data_line(urg_t *urg, long length[],
         n = connection_readline(&urg->connection,
                                 &buffer[line_filled], BUFFER_SIZE - line_filled,
                                 urg->timeout);
-
         if (n > 0) {
             // チェックサムの評価
             if (buffer[line_filled + n - 1] !=

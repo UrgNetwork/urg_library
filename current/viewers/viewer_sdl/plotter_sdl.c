@@ -4,58 +4,245 @@
 
   \author Satofumi KAMIMURA
 
+  \todo glDrawElements() を使うように修正する
+
   $Id$
 */
 
+#define GL_GLEXT_PROTOTYPES
 #include "plotter_sdl.h"
+#include <SDL.h>
+#include <SDL_opengl.h>
+
+
+enum {
+    SCREEN_WIDTH = 640,
+    SCREEN_HEIGHT = 480,
+
+    MAX_POINTS = 1081,
+};
+
+
+typedef struct
+{
+    GLfloat x;
+    GLfloat y;
+} vector_t;
+
+
+static SDL_Surface *screen = NULL;
+static vector_t points[MAX_POINTS];
+static size_t points_size = 0;
+static GLuint buffer_id = 0;
+
+
+static void opengl_initialize(void)
+{
+    int bpp = SDL_GetVideoInfo()->vfmt->BitsPerPixel;
+
+    // Initialize the display
+    int rgb_size[3];
+    switch (bpp) {
+    case 8:
+        rgb_size[0] = 3;
+        rgb_size[1] = 3;
+        rgb_size[2] = 2;
+        break;
+
+    case 15:
+    case 16:
+        rgb_size[0] = 5;
+        rgb_size[1] = 5;
+        rgb_size[2] = 5;
+        break;
+
+    default:
+        rgb_size[0] = 8;
+        rgb_size[1] = 8;
+        rgb_size[2] = 8;
+        break;
+    }
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, rgb_size[0]);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, rgb_size[1]);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, rgb_size[2]);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
+}
+
+
+static void opengl_setup(void)
+{
+    glPushAttrib(GL_ENABLE_BIT);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glViewport(-1, -1, +1, +1);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho(-1.0, +1.0, -1.0, +1.0, -10.0, +10.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glShadeModel(GL_SMOOTH);
+}
+
+
+static void draw_points(void)
+{
+    fprintf(stderr, "%d, ", points_size);
+    if (points_size <= 0) {
+        return;
+    }
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+    glBufferData(GL_ARRAY_BUFFER, points_size, points, GL_STATIC_DRAW);
+    glInterleavedArrays(GL_V2F, 0, NULL);
+    glDrawArrays(GL_POINTS, 0, points_size);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+
+    points_size = 0;
+}
+
+
+void enter2D(void)
+{
+    glPushAttrib(GL_ENABLE_BIT);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+
+    glOrtho(0.0, SCREEN_WIDTH - 1.0, SCREEN_HEIGHT - 1.0, 0.0, 0.0, 1.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+}
 
 
 bool plotter_initialize(void)
 {
-    // !!!
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL_Init: %s\n", SDL_GetError());
+        return false;
+    }
 
-    return false;
+    // 画面の作成
+    opengl_initialize();
+    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_OPENGL);
+    if (!screen) {
+        return false;
+    }
+    opengl_setup();
+
+    // 描画設定
+    glPointSize(2.0);
+    glGenBuffers(1, &buffer_id);
+
+    // !!! 作りなおす
+    enter2D();
+
+    return true;
 }
 
 
 void plotter_terminate(void)
 {
-    // !!!
+    SDL_Quit();
 }
 
 
 void plotter_clear(void)
 {
-    // !!!
+    glClearColor(0x00, 0x00, 0x00, 0xff);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    fprintf(stderr, "\n");
 }
 
 
 void plotter_swap(void)
 {
-    // !!!
+    // 表示を入れ換えるときに、まだ描画していない内容を描画する
+    draw_points();
+
+    SDL_GL_SwapBuffers();
 }
 
 
 void plotter_set_color(unsigned char r, unsigned g, unsigned b)
 {
-    (void)r;
-    (void)g;
-    (void)b;
-    // !!!
+    // 色を変更するときに、まとめて描画を行う
+    draw_points();
+
+    glColor3f(r / 255.0, g / 255.0, b / 255.0);
 }
 
 
-void plotter_plot(long x, long y)
+void plotter_plot(float x, float y)
 {
-    (void)x;
-    (void)y;
-    // !!!
+    if (points_size >= MAX_POINTS) {
+        return;
+    }
+
+    points[points_size].x = x;
+    points[points_size].y = y;
+    ++points_size;
 }
 
 
 bool plotter_is_quit(void)
 {
-    // !!!
+    bool is_quit = false;
 
-    return true;
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+
+        case SDL_QUIT:
+            is_quit = true;
+            break;
+
+        case SDL_KEYDOWN:
+            if ((event.key.keysym.sym == SDLK_q) ||
+                (event.key.keysym.sym == SDLK_F4)) {
+                is_quit = true;
+            }
+            break;
+
+        case SDL_MOUSEBUTTONDOWN:
+            if (event.button.button == SDL_BUTTON_WHEELUP) {
+                // !!!
+            } else if (event.button.button == SDL_BUTTON_WHEELUP) {
+                // !!!
+            }
+            break;
+        }
+    }
+
+    // !!! 描画の拡大率を変更する
+
+    return is_quit;
 }

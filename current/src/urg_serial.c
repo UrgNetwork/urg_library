@@ -9,8 +9,6 @@
 
 #include "urg_serial.h"
 
-#include <stdio.h>
-
 
 enum {
     False = 0,
@@ -63,10 +61,8 @@ int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
     data[filled] = '\0';
 
     if ((filled == 0) && is_timeout) {
-        //fprintf(stderr, "%02d:\n", -1);
         return -1;
     } else {
-        //fprintf(stderr, "%02d: %s\n", filled, data);
         return filled;
     }
 }

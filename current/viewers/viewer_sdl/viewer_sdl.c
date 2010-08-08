@@ -32,9 +32,18 @@ typedef struct
 } scan_mode_t;
 
 
-static void help_exit(void)
+static void help_exit(const char *program_name)
 {
-    // !!!
+    printf("URG simple data viewer\n"
+           "usage:\n"
+           "    %s [options]\n"
+           "\n"
+           "options:\n"
+           "  -h, --help    display this help and exit\n"
+           "  -i,           intensity mode\n"
+           "  -m,           multiecho mode\n"
+           "\n",
+           program_name);
 }
 
 
@@ -52,7 +61,7 @@ static void parse_args(scan_mode_t *mode, int argc, char *argv[])
         const char *token = argv[i];
 
         if (!strcmp(token, "-h") || !strcmp(token, "--help")) {
-            help_exit();
+            help_exit(argv[0]);
 
         } else if (!strcmp(token, "-e")) {
             mode->connection_type = URG_ETHERNET;
@@ -90,9 +99,17 @@ static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
     last_index = (step * data_n) + offset;
     for (index = offset; index < last_index; index += step) {
         long l = (data) ? data[index] : intensity[index];
-        double rad = urg_index2rad(urg, index);
-        long x = (long)(l * cos(rad));
-        long y = (long)(l * sin(rad));
+        double rad;
+        float x;
+        float y;
+
+        if ((l <= min_distance) || (l >= max_distance)) {
+            continue;
+        }
+
+        rad = urg_index2rad(urg, index);
+        x = l * cos(rad);
+        y = l * sin(rad);
         plotter_plot(x, y);
     }
 }
@@ -116,16 +133,18 @@ static void plot_data(urg_t *urg,
         plot_data_point(urg, data, NULL, data_n, is_multiecho, 2);
     }
 
-    // 強度
-    plotter_set_color(0xff, 0xff, 0x00);
-    plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 0);
+    if (intensity) {
+        // 強度
+        plotter_set_color(0xff, 0xff, 0x00);
+        plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 0);
 
-    if (is_multiecho) {
-        plotter_set_color(0xff, 0x00, 0x00);
-        plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 1);
+        if (is_multiecho) {
+            plotter_set_color(0xff, 0x00, 0x00);
+            plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 1);
 
-        plotter_set_color(0x00, 0xff, 0x00);
-        plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 2);
+            plotter_set_color(0x00, 0xff, 0x00);
+            plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 2);
+        }
     }
 
     plotter_swap();
@@ -136,10 +155,11 @@ int main(int argc, char *argv[])
 {
     scan_mode_t mode;
     urg_t urg;
-    long *data;
-    unsigned short *intensity;
+    long *data = NULL;
+    unsigned short *intensity = NULL;
     int data_size;
     bool is_multiecho;
+    bool is_intensity;
 
 
     // 引数の解析
@@ -148,7 +168,7 @@ int main(int argc, char *argv[])
     // URG に接続
     if (urg_open(&urg, mode.connection_type,
                  mode.device, mode.baudrate_or_port)) {
-        // !!!
+        printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
 
@@ -163,20 +183,27 @@ int main(int argc, char *argv[])
         (mode.measurement_type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = true;
     }
+    is_intensity = false;
+    if ((mode.measurement_type == URG_DISTANCE_INTENSITY) ||
+        (mode.measurement_type == URG_MULTIECHO_INTENSITY)) {
+        is_intensity = true;
+    }
+
     data_size = urg_max_data_size(&urg);
     if (is_multiecho) {
         data_size *= 3;
     }
     data = malloc(data_size * sizeof(data[0]));
-    intensity = malloc(data_size * sizeof(intensity[0]));
+    if (is_intensity) {
+        intensity = malloc(data_size * sizeof(intensity[0]));
+    }
 
     // データの取得と描画
+    urg_start_measurement(&urg, mode.measurement_type,
+                          URG_SCAN_INFINITY, 0);
+
     while (1) {
         int n;
-
-        urg_start_measurement(&urg, mode.measurement_type,
-                              URG_SCAN_INFINITY, 0);
-
         switch (mode.measurement_type) {
         case URG_DISTANCE:
             n = urg_get_distance(&urg, data, NULL);
@@ -196,6 +223,11 @@ int main(int argc, char *argv[])
 
         default:
             n = 0;
+            break;
+        }
+
+        if (n <= 0) {
+            printf("urg_get_function: %s\n", urg_error(&urg));
             break;
         }
 

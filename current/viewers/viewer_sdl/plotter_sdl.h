@@ -18,7 +18,7 @@ extern void plotter_terminate(void);
 extern void plotter_clear(void);
 extern void plotter_swap(void);
 extern void plotter_set_color(unsigned char r, unsigned g, unsigned b);
-extern void plotter_plot(long x, long y);
+extern void plotter_plot(float x, float y);
 extern bool plotter_is_quit(void);
 
 #endif /* !PLOTTER_SDL_H */
