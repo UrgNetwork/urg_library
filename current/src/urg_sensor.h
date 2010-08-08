@@ -155,7 +155,7 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
 /*!
   \brief 距離データの取得を開始
 
-  距離データの取得を開始します。実際のデータは get_distance(), get_distance_intensity(), get_multiecho() で取得できます。
+  距離データの取得を開始します。実際のデータは urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity() で取得できます。
 
   \param[in,out] urg URG センサ管理
   \param[in] type データ・タイプ
@@ -175,7 +175,7 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
   scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INTENSITY を指定した場合は、無限回のデータを取得します。\n
   開始した計測を中断するには urg_stop_measurement() を使います。
 
-  skip_scan はミラーの回転数のうち、スキャン後に、何回スキャンしないかを指定します。skip_scan に指定できる範囲は [0, 9] です。
+  skip_scan はミラーの回転数のうち、１回のスキャン後に何回スキャンしないかを指定します。skip_scan に指定できる範囲は [0, 9] です。
 
   \image html scip_scan_image.jpg 何回に１回だけ計測するか
 

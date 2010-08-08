@@ -2,6 +2,7 @@ syntax: glob
 *~
 *.o
 *.a
+*.exe
 release
 generated_html
 get_distance
@@ -14,4 +15,4 @@ sensor_parameter
 test/urg_sensor_test
 test/serial_test
 test/urg04lx_parameter_test
-glob:*.exe
+viewer_sdl/viewer_sdl
