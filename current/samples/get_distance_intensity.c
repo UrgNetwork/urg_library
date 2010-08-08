@@ -64,11 +64,7 @@ int main(int argc, char *argv[])
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
             baudrate_or_port = 10940;
-            if (argc > (i + 1)) {
-                device = argv[i + 1];
-            } else {
-                device = ip_address;
-            }
+            device = ip_address;
         }
     }
 
@@ -91,7 +87,7 @@ int main(int argc, char *argv[])
     }
 
     // データ取得
-    urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
+    urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
         if (n <= 0) {

@@ -10,7 +10,7 @@ all :
 
 clean : release_clean
 	cd current/ && $(MAKE) clean
-	- rmdir $(RELEASE_DIR)
+	-rmdir $(RELEASE_DIR)
 
 dist : release_clean
 	mkdir -p $(RELEASE_DIR)
