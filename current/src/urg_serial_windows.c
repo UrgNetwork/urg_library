@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 
-static void serial_initialize(serial_t *serial)
+static void serial_initialize(urg_serial_t *serial)
 {
     serial->hCom = INVALID_HANDLE_VALUE;
     serial->has_last_ch = False;
@@ -19,7 +19,7 @@ static void serial_initialize(serial_t *serial)
 }
 
 
-static void set_timeout(serial_t *serial, int timeout)
+static void set_timeout(urg_serial_t *serial, int timeout)
 {
     COMMTIMEOUTS timeouts;
     GetCommTimeouts(serial->hCom, &timeouts);
@@ -32,7 +32,7 @@ static void set_timeout(serial_t *serial, int timeout)
 }
 
 
-int serial_open(serial_t *serial, const char *device, long baudrate)
+int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 {
     // COM10 以降への対応用
     enum { NameLength = 11 };
@@ -69,7 +69,7 @@ int serial_open(serial_t *serial, const char *device, long baudrate)
 }
 
 
-void serial_close(serial_t *serial)
+void serial_close(urg_serial_t *serial)
 {
     if (serial->hCom != INVALID_HANDLE_VALUE) {
         CloseHandle(serial->hCom);
@@ -78,7 +78,7 @@ void serial_close(serial_t *serial)
 }
 
 
-int serial_set_baudrate(serial_t *serial, long baudrate)
+int serial_set_baudrate(urg_serial_t *serial, long baudrate)
 {
     long baudrate_value;
     DCB dcb;
@@ -125,7 +125,7 @@ int serial_set_baudrate(serial_t *serial, long baudrate)
 }
 
 
-int serial_write(serial_t *serial, const char *data, int size)
+int serial_write(urg_serial_t *serial, const char *data, int size)
 {
     DWORD n;
 
@@ -143,7 +143,7 @@ int serial_write(serial_t *serial, const char *data, int size)
 
 
 static int internal_receive(char data[], int max_size,
-                            serial_t* serial, int timeout)
+                            urg_serial_t* serial, int timeout)
 {
     int filled = 0;
     DWORD n;
@@ -159,7 +159,7 @@ static int internal_receive(char data[], int max_size,
 }
 
 
-int serial_read(serial_t *serial, char *data, int max_size, int timeout)
+int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
 {
     int filled = 0;
     int buffer_size;
