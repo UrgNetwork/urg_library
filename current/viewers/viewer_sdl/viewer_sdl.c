@@ -29,6 +29,8 @@ typedef struct
     const char *device;
     long baudrate_or_port;
     urg_measurement_type_t measurement_type;
+    bool is_intensity;
+    bool is_multiecho;
 } scan_mode_t;
 
 
@@ -49,13 +51,13 @@ static void help_exit(const char *program_name)
 
 static void parse_args(scan_mode_t *mode, int argc, char *argv[])
 {
-    bool is_intensity = false;
-    bool is_multiecho = false;
     int i;
 
     mode->connection_type = URG_SERIAL;
     mode->device = serial_device;
     mode->baudrate_or_port = 115200;
+    mode->is_intensity = false;
+    mode->is_multiecho = false;
 
     for (i = 1; i < argc; ++i) {
         const char *token = argv[i];
@@ -69,18 +71,18 @@ static void parse_args(scan_mode_t *mode, int argc, char *argv[])
             mode->baudrate_or_port = 10940;
 
         } else if (!strcmp(token, "-m")) {
-            is_multiecho = true;
+            mode->is_multiecho = true;
         } else if (!strcmp(token, "-i")) {
-            is_intensity = true;
+            mode->is_intensity = true;
         }
     }
 
-    if (is_multiecho) {
+    if (mode->is_multiecho) {
         mode->measurement_type =
-            (is_intensity) ? URG_MULTIECHO_INTENSITY : URG_MULTIECHO;
+            (mode->is_intensity) ? URG_MULTIECHO_INTENSITY : URG_MULTIECHO;
     } else {
         mode->measurement_type =
-            (is_intensity) ? URG_DISTANCE_INTENSITY : URG_DISTANCE;
+            (mode->is_intensity) ? URG_DISTANCE_INTENSITY : URG_DISTANCE;
     }
 }
 
@@ -93,6 +95,7 @@ static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
     int step = (is_multiecho) ? 3 : 1;
     int index;
     int last_index;
+    const double radian_offset = M_PI / 2.0;
 
     urg_distance_min_max(urg, &min_distance, &max_distance);
 
@@ -107,7 +110,7 @@ static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
             continue;
         }
 
-        rad = urg_index2rad(urg, index);
+        rad = urg_index2rad(urg, index) + radian_offset;
         x = l * cos(rad);
         y = l * sin(rad);
         plotter_plot(x, y);
@@ -158,8 +161,6 @@ int main(int argc, char *argv[])
     long *data = NULL;
     unsigned short *intensity = NULL;
     int data_size;
-    bool is_multiecho;
-    bool is_intensity;
 
 
     // 引数の解析
@@ -178,23 +179,12 @@ int main(int argc, char *argv[])
     }
 
     // データ取得の準備
-    is_multiecho = false;
-    if ((mode.measurement_type == URG_MULTIECHO) ||
-        (mode.measurement_type == URG_MULTIECHO_INTENSITY)) {
-        is_multiecho = true;
-    }
-    is_intensity = false;
-    if ((mode.measurement_type == URG_DISTANCE_INTENSITY) ||
-        (mode.measurement_type == URG_MULTIECHO_INTENSITY)) {
-        is_intensity = true;
-    }
-
     data_size = urg_max_data_size(&urg);
-    if (is_multiecho) {
+    if (mode.is_multiecho) {
         data_size *= 3;
     }
     data = malloc(data_size * sizeof(data[0]));
-    if (is_intensity) {
+    if (mode.is_intensity) {
         intensity = malloc(data_size * sizeof(intensity[0]));
     }
 
@@ -231,7 +221,7 @@ int main(int argc, char *argv[])
             break;
         }
 
-        plot_data(&urg, data, intensity, n, is_multiecho);
+        plot_data(&urg, data, intensity, n, mode.is_multiecho);
         if (plotter_is_quit()) {
             break;
         }

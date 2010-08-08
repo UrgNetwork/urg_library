@@ -34,6 +34,7 @@ static SDL_Surface *screen = NULL;
 static vector_t points[MAX_POINTS];
 static size_t points_size = 0;
 static GLuint buffer_id = 0;
+static double draw_magnify = 0.1;
 
 
 static void opengl_initialize(void)
@@ -97,16 +98,19 @@ static void opengl_setup(void)
 
 static void draw_points(void)
 {
-    fprintf(stderr, "%d, ", points_size);
+    int memory_size;
     if (points_size <= 0) {
         return;
     }
+
+    memory_size = points_size * sizeof(points[0]);
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
 
     glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-    glBufferData(GL_ARRAY_BUFFER, points_size, points, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, memory_size, points, GL_STATIC_DRAW);
+
     glInterleavedArrays(GL_V2F, 0, NULL);
     glDrawArrays(GL_POINTS, 0, points_size);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -118,28 +122,23 @@ static void draw_points(void)
 }
 
 
-void enter2D(void)
+static void enter2D(void)
 {
-    glPushAttrib(GL_ENABLE_BIT);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
 
-    glOrtho(0.0, SCREEN_WIDTH - 1.0, SCREEN_HEIGHT - 1.0, 0.0, 0.0, 1.0);
+    glOrtho(0.0, SCREEN_WIDTH - 1.0, 0.0, SCREEN_HEIGHT - 1.0, 0.0, 1.0);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+    glTranslatef(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0);
 }
 
 
@@ -179,7 +178,6 @@ void plotter_clear(void)
 {
     glClearColor(0x00, 0x00, 0x00, 0xff);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    fprintf(stderr, "\n");
 }
 
 
@@ -207,8 +205,8 @@ void plotter_plot(float x, float y)
         return;
     }
 
-    points[points_size].x = x;
-    points[points_size].y = y;
+    points[points_size].x = draw_magnify * x;
+    points[points_size].y = draw_magnify * y;
     ++points_size;
 }
 
@@ -234,15 +232,20 @@ bool plotter_is_quit(void)
 
         case SDL_MOUSEBUTTONDOWN:
             if (event.button.button == SDL_BUTTON_WHEELUP) {
-                // !!!
-            } else if (event.button.button == SDL_BUTTON_WHEELUP) {
-                // !!!
+                draw_magnify *= 0.90;
+            } else if (event.button.button == SDL_BUTTON_WHEELDOWN) {
+                draw_magnify *= 1.10;
             }
             break;
         }
     }
 
-    // !!! 描画の拡大率を変更する
+    // 描画の拡大率を変更する
+    if (draw_magnify < 0.001) {
+        draw_magnify = 0.001;
+    } else if (draw_magnify > 10.0) {
+        draw_magnify = 10.0;
+    }
 
     return is_quit;
 }
