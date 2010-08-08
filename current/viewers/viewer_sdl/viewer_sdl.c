@@ -56,8 +56,8 @@ static void parse_args(scan_mode_t *mode, int argc, char *argv[])
     mode->connection_type = URG_SERIAL;
     mode->device = serial_device;
     mode->baudrate_or_port = 115200;
-    mode->is_intensity = false;
     mode->is_multiecho = false;
+    mode->is_intensity = false;
 
     for (i = 1; i < argc; ++i) {
         const char *token = argv[i];
@@ -92,15 +92,14 @@ static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
 {
     long min_distance;
     long max_distance;
-    int step = (is_multiecho) ? 3 : 1;
-    int index;
-    int last_index;
     const double radian_offset = M_PI / 2.0;
+    int step = (is_multiecho) ? 3 : 1;
+    int i;
 
     urg_distance_min_max(urg, &min_distance, &max_distance);
 
-    last_index = (step * data_n) + offset;
-    for (index = offset; index < last_index; index += step) {
+    for (i = 0; i < data_n; ++i) {
+        int index = (step * i) + offset;
         long l = (data) ? data[index] : intensity[index];
         double rad;
         float x;
@@ -110,7 +109,7 @@ static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
             continue;
         }
 
-        rad = urg_index2rad(urg, index) + radian_offset;
+        rad = urg_index2rad(urg, i) + radian_offset;
         x = l * cos(rad);
         y = l * sin(rad);
         plotter_plot(x, y);

@@ -160,8 +160,6 @@ bool plotter_initialize(void)
     // 描画設定
     glPointSize(2.0);
     glGenBuffers(1, &buffer_id);
-
-    // !!! 作りなおす
     enter2D();
 
     return true;

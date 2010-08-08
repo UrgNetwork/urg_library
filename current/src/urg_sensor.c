@@ -370,8 +370,11 @@ static urg_measurement_type_t parse_distance_parameter(urg_t *urg,
             ret_type = URG_MULTIECHO;
         }
     } else if (echoback[1] == 'E') {
-        ret_type = URG_DISTANCE_INTENSITY;
-
+        if ((echoback[0] == 'G') || (echoback[0] == 'M')) {
+            ret_type = URG_DISTANCE_INTENSITY;
+        } else if ((echoback[0] == 'H') || (echoback[0] == 'N')) {
+            ret_type = URG_MULTIECHO_INTENSITY;
+        }
     } else {
         return URG_UNKNOWN;
     }
@@ -434,7 +437,7 @@ static int receive_data_line(urg_t *urg, long length[],
     }
     if ((type == URG_MULTIECHO) || (type == URG_MULTIECHO_INTENSITY)) {
         is_multiecho = URG_TRUE;
-        multiecho_max_size = URG_MAX_MULTIECHO;
+        multiecho_max_size = URG_MAX_ECHO;
     }
 
     do {
