@@ -7,7 +7,7 @@ CC = gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES = -I$(SRCDIR)
 LDFLAGS =
-LDLIBS = -lm `/bin/sh ld_wsock.sh`
+LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_rt.sh`
 
 # Target
 TARGET = \
