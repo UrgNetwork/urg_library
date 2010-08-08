@@ -184,8 +184,9 @@ int tcpclient_write(urg_tcpclient_t* cli, const char* buf, int size)
 
 int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size, int timeout)
 {
-  int n;
+  int n = 0;
   int i = 0;
+
   if ( 0 < cli->pushed_back ) {
     userbuf[i] = cli->pushed_back;
     i++;
@@ -193,16 +194,13 @@ int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size, int ti
   }
   for ( ; i<buf_size; i++) {
     char ch;
-    //fprintf(stderr, "tcpclient_read(): ");
     n = tcpclient_read( cli, &ch, 1, timeout);
-    //fprintf(stderr, "n = %d\n", n);
     if ( n <= 0 ) {
       break; // error
     }
     if ( ch=='\n' || ch=='\r' ) {
       break; // success
     }
-    //fprintf(stderr, "%c", ch);
     userbuf[i] = ch;
   }
 

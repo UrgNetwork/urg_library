@@ -534,7 +534,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 {
     urg_measurement_type_t type;
     char buffer[BUFFER_SIZE];
-    int ret;
+    int ret = 0;
     int n;
 
     // エコーバックの取得
@@ -784,7 +784,7 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
                           int scan_times, int skip_scan)
 {
     char range_byte_ch;
-    int ret;
+    int ret = 0;
 
     if (!urg->is_active) {
         return set_errno_and_return(urg, URG_NOT_CONNECTED);

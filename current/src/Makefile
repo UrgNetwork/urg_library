@@ -3,6 +3,7 @@
 
 # Compile options
 CC = gcc
+#CFLAGS = -O2 -Wall -Werror -W $(INCLUDES)
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES =
 LDFLAGS =

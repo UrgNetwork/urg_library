@@ -3,6 +3,7 @@
 # Compile options
 SRCDIR = ../../src
 CC = gcc
+#CFLAGS = -O2 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
 INCLUDE = -I$(SRCDIR)
 LDFLAGS = -L/usr/X11/lib
