@@ -7,6 +7,8 @@ CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
 INCLUDE = -I$(SRCDIR)
 LDFLAGS = -L/usr/X11/lib
 LDLIBS = `sdl-config --libs` -lGL
+#LDLIBS = `sdl-config --libs` -lopengl32 -lwsock32
+
 
 TARGET = viewer_sdl
 

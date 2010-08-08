@@ -9,7 +9,8 @@
   $Id$
 */
 
-#define GL_GLEXT_PROTOTYPES
+#define GL_GLEXT_PROTOTYPES 1
+#define GL3_PROTOTYPES 1
 #include "plotter_sdl.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
