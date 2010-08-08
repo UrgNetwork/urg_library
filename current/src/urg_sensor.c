@@ -353,23 +353,23 @@ static int parse_parameter(const char *parameter, int size)
 }
 
 
-static measurement_type_t parse_distance_parameter(urg_t *urg,
-                                                   const char echoback_line[])
+static urg_measurement_type_t parse_distance_parameter(urg_t *urg,
+                                                       const char echoback[])
 {
-    measurement_type_t ret_type = URG_UNKNOWN;
+    urg_measurement_type_t ret_type = URG_UNKNOWN;
 
     urg->received_range_data_byte = URG_COMMUNICATION_3_BYTE;
-    if (echoback_line[1] == 'S') {
+    if (echoback[1] == 'S') {
         urg->received_range_data_byte = URG_COMMUNICATION_2_BYTE;
         ret_type = URG_DISTANCE;
 
-    } else if (echoback_line[1] == 'D') {
-        if ((echoback_line[0] == 'G') || (echoback_line[0] == 'M')) {
+    } else if (echoback[1] == 'D') {
+        if ((echoback[0] == 'G') || (echoback[0] == 'M')) {
             ret_type = URG_DISTANCE;
-        } else if ((echoback_line[0] == 'H') || (echoback_line[0] == 'N')) {
+        } else if ((echoback[0] == 'H') || (echoback[0] == 'N')) {
             ret_type = URG_MULTIECHO;
         }
-    } else if (echoback_line[1] == 'E') {
+    } else if (echoback[1] == 'E') {
         ret_type = URG_DISTANCE_INTENSITY;
 
     } else {
@@ -377,32 +377,32 @@ static measurement_type_t parse_distance_parameter(urg_t *urg,
     }
 
     // パラメータの格納
-    urg->received_first_index = parse_parameter(&echoback_line[2], 4);
-    urg->received_last_index = parse_parameter(&echoback_line[6], 4);
-    urg->received_skip_step = parse_parameter(&echoback_line[10], 2);
+    urg->received_first_index = parse_parameter(&echoback[2], 4);
+    urg->received_last_index = parse_parameter(&echoback[6], 4);
+    urg->received_skip_step = parse_parameter(&echoback[10], 2);
 
     return ret_type;
 }
 
 
-measurement_type_t parse_distance_echoback(urg_t *urg,
-                                           const char echoback_line[])
+static urg_measurement_type_t parse_distance_echoback(urg_t *urg,
+                                                      const char echoback[])
 {
     int line_length;
-    measurement_type_t ret_type = URG_UNKNOWN;
+    urg_measurement_type_t ret_type = URG_UNKNOWN;
 
-    if (!strcmp("QT", echoback_line)) {
+    if (!strcmp("QT", echoback)) {
         return URG_STOP;
     }
 
-    line_length = strlen(echoback_line);
+    line_length = strlen(echoback);
     if ((line_length == 12) &&
-        ((echoback_line[0] == 'G') || (echoback_line[0] == 'H'))) {
-        ret_type = parse_distance_parameter(urg, echoback_line);
+        ((echoback[0] == 'G') || (echoback[0] == 'H'))) {
+        ret_type = parse_distance_parameter(urg, echoback);
 
     } else if ((line_length == 15) &&
-               ((echoback_line[0] == 'M') || (echoback_line[0] == 'N'))) {
-        ret_type = parse_distance_parameter(urg, echoback_line);
+               ((echoback[0] == 'M') || (echoback[0] == 'N'))) {
+        ret_type = parse_distance_parameter(urg, echoback);
     }
     return ret_type;
 }
@@ -410,7 +410,7 @@ measurement_type_t parse_distance_echoback(urg_t *urg,
 
 static int receive_data_line(urg_t *urg, long length[],
                              unsigned short intensity[],
-                             measurement_type_t type, char buffer[])
+                             urg_measurement_type_t type, char buffer[])
 {
     int n;
     int step_filled = 0;
@@ -530,7 +530,7 @@ static int receive_data_line(urg_t *urg, long length[],
 static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                         long *time_stamp)
 {
-    measurement_type_t type;
+    urg_measurement_type_t type;
     char buffer[BUFFER_SIZE];
     int ret;
     int n;
@@ -618,7 +618,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 }
 
 
-int urg_open(urg_t *urg, connection_type_t connection_type,
+int urg_open(urg_t *urg, urg_connection_type_t connection_type,
              const char *device, long baudrate)
 {
     int ret;
@@ -778,7 +778,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
 }
 
 
-int urg_start_measurement(urg_t *urg, measurement_type_t type,
+int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
                           int scan_times, int skip_scan)
 {
     char range_byte_ch;
@@ -924,18 +924,18 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 
 
 int urg_set_connection_data_size(urg_t *urg,
-                                 range_data_byte_t range_data_byte)
+                                 urg_range_data_byte_t data_byte)
 {
     if (!urg->is_active) {
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    if ((range_data_byte != URG_COMMUNICATION_3_BYTE) ||
-        (range_data_byte != URG_COMMUNICATION_2_BYTE)) {
+    if ((data_byte != URG_COMMUNICATION_3_BYTE) ||
+        (data_byte != URG_COMMUNICATION_2_BYTE)) {
         return set_errno_and_return(urg, URG_DATA_SIZE_PARAMETER_ERROR);
     }
 
-    urg->range_data_byte = range_data_byte;
+    urg->range_data_byte = data_byte;
 
     return set_errno_and_return(urg, URG_NO_ERROR);
 }

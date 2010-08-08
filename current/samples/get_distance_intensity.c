@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
         CAPTURE_TIMES = 10,
     };
     urg_t urg;
-    connection_type_t connection_type = URG_SERIAL;
+    urg_connection_type_t connection_type = URG_SERIAL;
     int max_data_size;
     long *data = NULL;
     unsigned short *intensity = NULL;

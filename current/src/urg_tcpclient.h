@@ -23,7 +23,7 @@ enum { RB_SIZE     = 1<<RB_BITSHIFT };
 //           size given to the ring buffer(RB_SIZE).
 enum { BUFSIZE     = RB_SIZE-1 };
 
-typedef struct _tcpclient {
+typedef struct {
   // socket
   struct sockaddr_in server_addr; /* socket */
   int    sock_desc;		          /* socket file descriptor */
@@ -36,24 +36,24 @@ typedef struct _tcpclient {
   // line reading functions
   int pushed_back; // for pushded back char
 
-} tcpclient_t;
+} urg_tcpclient_t;
 // -- end of NON INTERFACE definitions --
 
 
 // -- belows are MODULE INTERFACES --
 
-int tcpclient_open(tcpclient_t* tcpc,
+int tcpclient_open(urg_tcpclient_t* tcpc,
                    const char* server_ip_str, int port_num);
 
-void tcpclient_close(tcpclient_t* tcpc);
+void tcpclient_close(urg_tcpclient_t* tcpc);
 
 // Read from socket.
 // userbuf : buffer to store read data.
 // req_size: size requested to read.
 // timeout : unit is microsecond.
 // returns the number of data returned.
-int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout);
-int tcpclient_write(tcpclient_t* cli, const char* userbuf, int req_size);
-int tcpclient_error( tcpclient_t* cli, char* errror_message, int max);
+int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeout);
+int tcpclient_write(urg_tcpclient_t* cli, const char* userbuf, int req_size);
+int tcpclient_error( urg_tcpclient_t* cli, char* errror_message, int max);
 
-int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeout);
+int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size, int timeout);

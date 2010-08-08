@@ -12,8 +12,8 @@
 //#include <stdio.h>
 
 
-int connection_open(connection_t *connection,
-                    connection_type_t connection_type,
+int connection_open(urg_connection_t *connection,
+                    urg_connection_type_t connection_type,
                     const char *device, long baudrate_or_port)
 {
     connection->type = connection_type;
@@ -32,7 +32,7 @@ int connection_open(connection_t *connection,
 }
 
 
-void connection_close(connection_t *connection)
+void connection_close(urg_connection_t *connection)
 {
     switch (connection->type) {
     case URG_SERIAL:
@@ -46,7 +46,7 @@ void connection_close(connection_t *connection)
 }
 
 
-int connection_set_baudrate(connection_t *connection, long baudrate)
+int connection_set_baudrate(urg_connection_t *connection, long baudrate)
 {
     int ret = -1;
 
@@ -64,7 +64,7 @@ int connection_set_baudrate(connection_t *connection, long baudrate)
 }
 
 
-int connection_write(connection_t *connection,
+int connection_write(urg_connection_t *connection,
                      const char *data, int size)
 {
 #if 0
@@ -88,7 +88,7 @@ int connection_write(connection_t *connection,
 }
 
 
-int connection_read(connection_t *connection,
+int connection_read(urg_connection_t *connection,
                     char *data, int max_size, int timeout)
 {
     switch (connection->type) {
@@ -103,7 +103,7 @@ int connection_read(connection_t *connection,
 }
 
 
-int connection_readline(connection_t *connection,
+int connection_readline(urg_connection_t *connection,
                         char *data, int max_size, int timeout)
 {
     switch (connection->type) {

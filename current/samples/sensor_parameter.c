@@ -15,7 +15,7 @@
 int main(int argc, char *argv[])
 {
     urg_t urg;
-    connection_type_t connection_type = URG_SERIAL;
+    urg_connection_type_t connection_type = URG_SERIAL;
     int min_step;
     int max_step;
     long min_distance;

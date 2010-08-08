@@ -2,9 +2,9 @@
 # $Id$
 
 # Compile options
+SRCDIR = ../src
 CC = gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
-SRCDIR = ../src
 INCLUDES = -I$(SRCDIR)
 LDFLAGS =
 LDLIBS = -lm `/bin/sh ld_wsock.sh`
@@ -30,7 +30,7 @@ depend :
 .PHONY : all depend clean
 ######################################################################
 REQUIRE_LIB = $(SRCDIR)/liburg_c.a
-$(REQUIRE_LIB) :
+$(REQUIRE_LIB) : $(wildcard $(SRCDIR)/*.[ch])
 	cd $(@D)/ && $(MAKE) $(@F)
 
 get_distance get_distance_intensity get_multiecho get_multiecho_intensity calculate_xy sync_time_stamp sensor_parameter : $(REQUIRE_LIB)

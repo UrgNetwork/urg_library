@@ -7,6 +7,7 @@ all :
 clean :
 	cd src/ && $(MAKE) clean
 	cd samples/ && $(MAKE) clean
+	-cd viewers/ && $(MAKE) clean
 
 .PHONY : all clean
 ######################################################################

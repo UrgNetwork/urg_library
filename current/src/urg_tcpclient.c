@@ -20,18 +20,18 @@
 
 #include "urg_tcpclient.h"
 
-static void tcpclient_buffer_init( tcpclient_t* cli )
+static void tcpclient_buffer_init( urg_tcpclient_t* cli )
 {
   ring_initialize( &cli->rb, cli->buf, RB_BITSHIFT );
 }
 
 // get number of data in buffer.
-static int tcpclient_buffer_data_num( tcpclient_t* cli )
+static int tcpclient_buffer_data_num( urg_tcpclient_t* cli )
 {
   return ring_size( &cli->rb );
 }
 
-static int tcpclient_buffer_write( tcpclient_t* cli, const char* data, int size )
+static int tcpclient_buffer_write( urg_tcpclient_t* cli, const char* data, int size )
 {
   int ret;
   ret = ring_write( &cli->rb, data, size );
@@ -41,7 +41,7 @@ static int tcpclient_buffer_write( tcpclient_t* cli, const char* data, int size 
   return ret;
 }
 
-static int tcpclient_buffer_read( tcpclient_t* cli, char* data, int size )
+static int tcpclient_buffer_read( urg_tcpclient_t* cli, char* data, int size )
 {
   int ret = ring_read( &cli->rb, data, size );
   //{int rem = ring_size(&cli->rb);
@@ -51,7 +51,7 @@ static int tcpclient_buffer_read( tcpclient_t* cli, char* data, int size )
 }
 
 
-int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
+int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 {
   cli->pushed_back = -1; // no pushed back char.
 
@@ -104,12 +104,12 @@ int tcpclient_open(tcpclient_t* cli, const char* ip_str, int port_num)
 }
 
 
-void tcpclient_close(tcpclient_t* cli)
+void tcpclient_close(urg_tcpclient_t* cli)
 {
   close( cli->sock_desc);
 }
 
-int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
+int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeout)
 {
   
   // number of data in buffer.
@@ -176,13 +176,13 @@ int tcpclient_read(tcpclient_t* cli, char* userbuf, int req_size, int timeout)
   return (req_size - rem_size); // last return may be less than req_size;
 }
 
-int tcpclient_write(tcpclient_t* cli, const char* buf, int size)
+int tcpclient_write(urg_tcpclient_t* cli, const char* buf, int size)
 {
   // blocking if data size is larger than system's buffer.
   return send(cli->sock_desc, buf, size, 0);  //4th arg 0: no flag
 }
 
-int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeout)
+int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size, int timeout)
 {
   int n;
   int i = 0;
@@ -222,9 +222,8 @@ int tcpclient_readline(tcpclient_t* cli, char* userbuf, int buf_size, int timeou
   return i; // the number of characters filled into user buffer.
 }
 
-//int tcpclient_error( tcpclient_t* cli, char* error_message, int max)
+//int tcpclient_error( urg_tcpclient_t* cli, char* error_message, int max)
 //{
 //  error_message[0] = '\0';
 //  return 0;
 //}
-

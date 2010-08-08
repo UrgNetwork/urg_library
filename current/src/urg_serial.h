@@ -43,17 +43,17 @@ typedef struct
     char has_last_ch;          /*!< 書き戻した文字があるかのフラグ */
     char last_ch;              /*!< 書き戻した１文字 */
     char error_string[ERROR_MESSAGE_SIZE];
-} serial_t;
+} urg_serial_t;
 
 
-extern int serial_open(serial_t *serial, const char *device, long baudrate);
-extern void serial_close(serial_t *serial);
-extern int serial_set_baudrate(serial_t *serial, long baudrate);
-extern int serial_write(serial_t *serial, const char *data, int size);
-extern int serial_read(serial_t *serial,
+extern int serial_open(urg_serial_t *serial, const char *device, long baudrate);
+extern void serial_close(urg_serial_t *serial);
+extern int serial_set_baudrate(urg_serial_t *serial, long baudrate);
+extern int serial_write(urg_serial_t *serial, const char *data, int size);
+extern int serial_read(urg_serial_t *serial,
                        char *data, int max_size, int timeout);
-extern int serial_readline(serial_t *serial,
+extern int serial_readline(urg_serial_t *serial,
                            char *data, int max_size, int timeout);
-extern int serial_error(serial_t *serial, char *error_message, int max_size);
+extern int serial_error(urg_serial_t *serial, char *error_message, int max_size);
 
 #endif /* !URG_SERIAL_H */

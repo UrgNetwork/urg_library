@@ -18,7 +18,7 @@ enum {
 };
 
 
-static void serial_initialize(serial_t *serial)
+static void serial_initialize(urg_serial_t *serial)
 {
     serial->fd = INVALID_FD;
     serial->has_last_ch = False;
@@ -27,7 +27,7 @@ static void serial_initialize(serial_t *serial)
 }
 
 
-static void serial_clear(serial_t* serial)
+static void serial_clear(urg_serial_t* serial)
 {
     tcdrain(serial->fd);
     tcflush(serial->fd, TCIOFLUSH);
@@ -36,7 +36,7 @@ static void serial_clear(serial_t* serial)
 }
 
 
-int serial_open(serial_t *serial, const char *device, long baudrate)
+int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 {
     int flags = 0;
     int ret = 0;
@@ -80,7 +80,7 @@ int serial_open(serial_t *serial, const char *device, long baudrate)
 }
 
 
-void serial_close(serial_t *serial)
+void serial_close(urg_serial_t *serial)
 {
     if (serial->fd >= 0) {
         close(serial->fd);
@@ -89,7 +89,7 @@ void serial_close(serial_t *serial)
 }
 
 
-int serial_set_baudrate(serial_t *serial, long baudrate)
+int serial_set_baudrate(urg_serial_t *serial, long baudrate)
 {
     long baudrate_value = -1;
 
@@ -132,7 +132,7 @@ int serial_set_baudrate(serial_t *serial, long baudrate)
 }
 
 
-int serial_write(serial_t *serial, const char *data, int size)
+int serial_write(urg_serial_t *serial, const char *data, int size)
 {
     //int i;
 
@@ -143,7 +143,7 @@ int serial_write(serial_t *serial, const char *data, int size)
 }
 
 
-static int wait_receive(serial_t* serial, int timeout)
+static int wait_receive(urg_serial_t* serial, int timeout)
 {
     fd_set rfds;
     struct timeval tv;
@@ -165,7 +165,7 @@ static int wait_receive(serial_t* serial, int timeout)
 
 
 static int internal_receive(char data[], int data_size_max,
-                            serial_t* serial, int timeout)
+                            urg_serial_t* serial, int timeout)
 {
     int filled = 0;
 
@@ -193,7 +193,7 @@ static int internal_receive(char data[], int data_size_max,
 }
 
 
-int serial_read(serial_t *serial, char *data, int max_size, int timeout)
+int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
 {
     int buffer_size;
     int read_n;

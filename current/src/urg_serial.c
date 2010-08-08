@@ -32,14 +32,14 @@ static int isLF(const char ch)
 }
 
 
-static void serial_ungetc(serial_t *serial, char ch)
+static void serial_ungetc(urg_serial_t *serial, char ch)
 {
     serial->has_last_ch = True;
     serial->last_ch = ch;
 }
 
 
-int serial_readline(serial_t *serial, char *data, int max_size, int timeout)
+int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
 {
     /* １文字ずつ読み出して評価する */
     int filled = 0;

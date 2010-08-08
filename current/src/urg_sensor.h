@@ -23,14 +23,14 @@ typedef enum {
     URG_MULTIECHO_INTENSITY,    /*!< マルチエコーの(距離 + 強度) */
     URG_STOP,                   /*!< 計測の停止 */
     URG_UNKNOWN,                /*!< 不明 */
-} measurement_type_t;
+} urg_measurement_type_t;
 
 
 /*! 距離を何 byte で表現するかの指定 */
 typedef enum {
     URG_COMMUNICATION_3_BYTE,   /*!< 距離を 3 byte で表現する */
     URG_COMMUNICATION_2_BYTE,   /*!< 距離を 2 byte で表現する */
-} range_data_byte_t;
+} urg_range_data_byte_t;
 
 
 enum {
@@ -44,7 +44,7 @@ typedef struct
 {
     int is_active;
     int last_errno;
-    connection_t connection;
+    urg_connection_t connection;
 
     int first_data_index;
     int last_data_index;
@@ -56,7 +56,7 @@ typedef struct
     int scanning_first_step;
     int scanning_last_step;
     int scanning_skip_step;
-    range_data_byte_t range_data_byte;
+    urg_range_data_byte_t range_data_byte;
 
     int timeout;
     int specified_scan_times;
@@ -66,7 +66,7 @@ typedef struct
     int received_first_index;
     int received_last_index;
     int received_skip_step;
-    range_data_byte_t received_range_data_byte;
+    urg_range_data_byte_t received_range_data_byte;
     int is_sending;
 
     char return_buffer[80];
@@ -102,7 +102,7 @@ typedef struct
 
   \see urg_close()
 */
-extern int urg_open(urg_t *urg, connection_type_t connection_type,
+extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
                     const char *device, long baudrate_or_port);
 
 
@@ -195,7 +195,7 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
 
   \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
 */
-extern int urg_start_measurement(urg_t *urg, measurement_type_t type,
+extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
                                  int scan_times, int skip_scan);
 
 
@@ -451,7 +451,7 @@ extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
   初期状態では距離を 3 byte で表現するようになっています。この設定を 2 byte に設定することで、センサから受信するデータ数は 2/3 になります。ただし、取得できる距離の最大値が 4095 になるため、観測したい対象が 4 [m] 以内の範囲に存在する場合のみ利用して下さい。
 */
 extern int urg_set_communication_data_size(urg_t *urg,
-                                           range_data_byte_t range_data_byte);
+                                           urg_range_data_byte_t data_byte);
 
 
 /*! レーザを発光させる */

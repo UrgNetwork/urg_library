@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         CAPTURE_TIMES = 10,
     };
     urg_t urg;
-    connection_type_t connection_type = URG_SERIAL;
+    urg_connection_type_t connection_type = URG_SERIAL;
     long *data = NULL;
     long time_stamp;
     int n;

@@ -24,16 +24,16 @@ enum {
 typedef enum {
     URG_SERIAL,                 /*!< シリアル通信 */
     URG_ETHERNET,               /*!< イーサーネット通信 */
-} connection_type_t;
+} urg_connection_type_t;
 
 
 /*! 通信リソースの管理 */
 typedef struct
 {
-    connection_type_t type;
-    serial_t serial;
-    tcpclient_t tcpclient;
-} connection_t;
+    urg_connection_type_t type;
+    urg_serial_t serial;
+    urg_tcpclient_t tcpclient;
+} urg_connection_t;
 
 
 /*!
@@ -77,8 +77,8 @@ typedef struct
 
   \see connection_close()
 */
-extern int connection_open(connection_t *connection,
-                           connection_type_t connection_type,
+extern int connection_open(urg_connection_t *connection,
+                           urg_connection_type_t connection_type,
                            const char *device, long baudrate_or_port);
 
 
@@ -94,11 +94,11 @@ extern int connection_open(connection_t *connection,
 
   \see connection_open()
 */
-extern void connection_close(connection_t *connection);
+extern void connection_close(urg_connection_t *connection);
 
 
 //! ボーレートを設定する
-extern int connection_set_baudrate(connection_t *connection, long baudrate);
+extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
 
 
 /*!
@@ -119,7 +119,7 @@ extern int connection_set_baudrate(connection_t *connection, long baudrate);
 
   \see connection_read(), connection_readline()
 */
-extern int connection_write(connection_t *connection,
+extern int connection_write(urg_connection_t *connection,
                             const char *data, int size);
 
 
@@ -151,7 +151,7 @@ extern int connection_write(connection_t *connection,
 
   \see connection_write(), connection_readline()
 */
-extern int connection_read(connection_t *connection,
+extern int connection_read(urg_connection_t *connection,
                            char *data, int max_size, int timeout);
 
 
@@ -176,7 +176,7 @@ extern int connection_read(connection_t *connection,
 
   \see connection_write(), connection_read()
 */
-extern int connection_readline(connection_t *connection,
+extern int connection_readline(urg_connection_t *connection,
                                char *data, int max_size, int timeout);
 
 #endif /* !URG_CONNECTION_H */
