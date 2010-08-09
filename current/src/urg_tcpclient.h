@@ -42,18 +42,43 @@ typedef struct {
 
 // -- belows are MODULE INTERFACES --
 
-int tcpclient_open(urg_tcpclient_t* tcpc,
+/* constructor of tcp client module
+ * cli          : tcp client type variable which must be allocated by a caller.
+ * server_ip_str: IP address expressed in string, i.e. "192.168.0.1"
+ * port_num     : port number expressed in integer, i.e. port_num = 10200
+ * returns -1 when error, 0 when succeeded.
+ */
+int tcpclient_open(urg_tcpclient_t* cli,
                    const char* server_ip_str, int port_num);
 
+/* destructor of tcp client module
+ * cli : tcp client type variable which must be deallocated by a caller
+ *       after closing.
+ */
 void tcpclient_close(urg_tcpclient_t* tcpc);
 
-// Read from socket.
-// userbuf : buffer to store read data.
-// req_size: size requested to read.
-// timeout : unit is microsecond.
-// returns the number of data returned.
+/* read from socket.
+ * userbuf : buffer to store read data which must be allocated by a caller.
+ * req_size: data size requested to read in byte.
+ * timeout : time out specification which unit is microsecond.
+ * returns the number of data read, -1 when error.
+ */
 int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeout);
+
+/* write to socket.
+ * userbuf : data to write.
+ * req_size: data size requested to write in byte.
+ * returns the number of data wrote, -1 when error.
+ */
 int tcpclient_write(urg_tcpclient_t* cli, const char* userbuf, int req_size);
+
+// not implemented yet.
 int tcpclient_error( urg_tcpclient_t* cli, char* errror_message, int max);
 
+/* read one line from socket.
+ * userbuf : buffer to store read data which must be allocated by a caller.
+ * req_size: data size requested to read in byte.
+ * timeout : time out specification which unit is microsecond.
+ * returns the number of data read, -1 when error.
+ */
 int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size, int timeout);
