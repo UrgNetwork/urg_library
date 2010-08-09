@@ -213,6 +213,7 @@ void plotter_plot(float x, float y)
 bool plotter_is_quit(void)
 {
     bool is_quit = false;
+    int magnify = 0;
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -227,19 +228,33 @@ bool plotter_is_quit(void)
                 (event.key.keysym.sym == SDLK_F4)) {
                 is_quit = true;
             }
+            if (event.key.keysym.sym == SDLK_COMMA) {
+                --magnify;
+            }
+            if (event.key.keysym.sym == SDLK_PERIOD) {
+                ++magnify;
+            }
             break;
 
         case SDL_MOUSEBUTTONDOWN:
             if (event.button.button == SDL_BUTTON_WHEELUP) {
-                draw_magnify *= 0.90;
+                --magnify;
             } else if (event.button.button == SDL_BUTTON_WHEELDOWN) {
-                draw_magnify *= 1.10;
+                ++magnify;
             }
             break;
         }
     }
 
     // 描画の拡大率を変更する
+    while (magnify < 0) {
+        draw_magnify *= 0.90;
+        ++magnify;
+    }
+    while (magnify > 0) {
+        draw_magnify *= 1.10;
+        --magnify;
+    }
     if (draw_magnify < 0.001) {
         draw_magnify = 0.001;
     } else if (draw_magnify > 10.0) {
