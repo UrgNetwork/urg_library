@@ -12,13 +12,21 @@ clean : release_clean
 	cd current/ && $(MAKE) clean
 	-rmdir $(RELEASE_DIR)
 
+# !!! use for
+TARGET_DIR = $(PACKAGE_EN_DIR) $(PACKAGE_JP_DIR)
 dist : release_clean
 	mkdir -p $(RELEASE_DIR)
-	mkdir -p $(RELEASE_DIR)/$(PACKAGE_EN_DIR)
-	mkdir -p $(RELEASE_DIR)/$(PACKAGE_JP_DIR)
-	ls # !!! copy files
-	cd $(RELEASE_DIR)/ && (zip -r $(PACKAGE_EN_DIR).zip $(PACKAGE_EN_DIR)) && mv $(PACKAGE_EN_DIR).zip ../
-	cd $(RELEASE_DIR)/ && (zip -r $(PACKAGE_JP_DIR).zip $(PACKAGE_JP_DIR)) && mv $(PACKAGE_JP_DIR).zip ../
+	for i in $(TARGET_DIR) ; \
+	do \
+		cd $(PWD); \
+		mkdir -p $(RELEASE_DIR)/$$i; \
+		mkdir -p $(RELEASE_DIR)/$$i/include; \
+		mkdir -p $(RELEASE_DIR)/$$i/src; \
+		mkdir -p $(RELEASE_DIR)/$$i/samples; \
+		cp current/COPYRIGHT current/Install.txt Readme.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
+		ls; \
+		cd $(RELEASE_DIR)/ && (zip -r $$i.zip $$i) && mv $$i.zip ../; \
+	done
 
 release_clean :
 	$(RM) -rf $(RELEASE_DIR)/$(PACKAGE_EN_DIR) $(RELEASE_DIR)/$(PACKAGE_JP_DIR)
