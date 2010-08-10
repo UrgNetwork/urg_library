@@ -1,24 +1,14 @@
 #include "urg_detect_os.h"
-
-#include <stdio.h>  /* printf() */
-#include <stdlib.h> /* malloc() */
 #include <unistd.h> /* close() */
-
 #include <string.h>
-#include <strings.h>
-#include <sys/time.h> /* timeval */
-
 #if defined(URG_WINDOWS_OS)
 //#pragma comment(lib, "wininet.lib")
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
-#else
-#include <sys/types.h>
-#include <sys/socket.h>
 #endif
-
 #include "urg_tcpclient.h"
+
 
 static void tcpclient_buffer_init( urg_tcpclient_t* cli )
 {
@@ -73,8 +63,9 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
   cli->sock_addr_size = sizeof (struct sockaddr_in);
 
   if ( (cli->sock_desc = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    perror("socket");
-    exit(-1);
+    //perror("socket");
+    //exit(-1);
+    return -1;
   }
 
   memset( (char*)&(cli->server_addr), 0, sizeof(cli->sock_addr_size) );
@@ -88,13 +79,13 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
   */
 
   if ( (cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) == INADDR_NONE ) {
-    perror("unknown server name");
+    //perror("unknown server name");
     return -1;
   }
 
   if ( connect(cli->sock_desc, (const struct sockaddr *) &(cli->server_addr),
                 cli->sock_addr_size) < 0 ) {
-    perror("connect");
+    //perror("connect");
     close(cli->sock_desc);
     return -1;
   }
@@ -111,7 +102,6 @@ void tcpclient_close(urg_tcpclient_t* cli)
 
 int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeout)
 {
-  
   // number of data in buffer.
   int num_in_buf = tcpclient_buffer_data_num(cli); 
   int sock       = cli->sock_desc;
@@ -128,7 +118,7 @@ int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeou
       return req_size;
     }
 
-    num_in_buf = tcpclient_buffer_data_num(cli); 
+    num_in_buf = tcpclient_buffer_data_num(cli);
   }
 
   // data in buffer was not enough, read from socket to fill buffer,

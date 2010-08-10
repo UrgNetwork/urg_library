@@ -48,7 +48,7 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 
     if (serial->hCom == INVALID_HANDLE_VALUE) {
         // !!! store error_message buffer
-        printf("open failed: %s\n", device);
+        //printf("open failed: %s\n", device);
         return -1;
     }
 

@@ -8,8 +8,6 @@
 */
 
 #include <fcntl.h>
-#include <string.h>
-#include <errno.h>
 #include <unistd.h>
 
 
@@ -49,7 +47,7 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     serial->fd = open(device, O_RDWR | O_EXLOCK | O_NONBLOCK | O_NOCTTY);
     if (serial->fd < 0) {
         /* 接続に失敗 */
-        strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
+        //strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
         return -1;
     }
 

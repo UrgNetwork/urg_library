@@ -42,7 +42,6 @@ typedef struct
     char buffer[RING_BUFFER_SIZE];
     char has_last_ch;          /*!< 書き戻した文字があるかのフラグ */
     char last_ch;              /*!< 書き戻した１文字 */
-    char error_string[ERROR_MESSAGE_SIZE];
 } urg_serial_t;
 
 
