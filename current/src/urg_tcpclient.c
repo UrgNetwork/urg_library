@@ -52,7 +52,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     int err;
     err = WSAStartup(wVersionRequested, &WSAData);
     if ( err != 0 ) {
-      printf("WSAStartup failed with error: %d\n", err);
+      //printf("WSAStartup failed with error: %d\n", err);
       return -1;
     }
   }
