@@ -1,5 +1,5 @@
 #!/bin/sh
 
-if test x$OSTYPE == x"linux"; then
+if test x$OS != x"Windows_NT"; then
   echo "-lrt"
 fi
