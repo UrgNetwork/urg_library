@@ -1,4 +1,5 @@
 /*!
+  \~japanese
   \example sensor_parameter.c センサ情報の出力
 
   \author Satofumi KAMIMURA
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
     long baudrate_or_port = 115200;
     const char *ip_address = "192.168.0.10";
 
-    // 接続タイプの切替え
+    // \~japanese 接続タイプの切替え
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;

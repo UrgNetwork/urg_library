@@ -1,4 +1,5 @@
 /*!
+  \~japanese
   \example get_distance_intensity.c 距離・強度データを取得する
 
   \author Satofumi KAMIMURA
@@ -19,7 +20,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 #if 1
     (void)data_n;
 
-    // 前方のデータのみを表示
+    // \~japanese 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
     printf("%ld [mm], %d [1], (%ld [msec])\n",
            data[front_index], intensity[front_index], time_stamp);
@@ -27,7 +28,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 #else
     int i;
 
-    // 全てのデータを表示
+    // \~japanese 全てのデータを表示
     printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
     for (i = 0; i < n; ++i) {
         printf("%d, %ld, %d\n", i, data[i], intensity[i]);
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
     long baudrate_or_port = 115200;
     const char *ip_address = "192.168.0.10";
 
-    // 接続タイプの切替え
+    // \~japanese 接続タイプの切替え
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // 接続
+    // \~japanese 接続
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
@@ -86,7 +87,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // データ取得
+    // \~japanese データ取得
     urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, intensity, n, time_stamp);
     }
 
-    // 切断
+    // \~japanese 切断
     free(intensity);
     free(data);
     urg_close(&urg);

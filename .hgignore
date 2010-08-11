@@ -3,6 +3,8 @@ syntax: glob
 *.o
 *.a
 *.exe
+current/html
+current/html_jp
 release
 generated_html
 get_distance

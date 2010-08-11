@@ -3,10 +3,12 @@
 
 /*!
   \file
+  \~japanese
   \brief URG センサ制御
 
   URG 用の基本的な関数を提供します。
 
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -15,31 +17,40 @@
 #include "urg_connection.h"
 
 
-/*! 計測タイプ */
+/*!
+  \~japanese
+  \brief 計測タイプ
+*/
 typedef enum {
-    URG_DISTANCE,               /*!< 距離 */
-    URG_DISTANCE_INTENSITY,     /*!< 距離 + 強度 */
-    URG_MULTIECHO,              /*!< マルチエコーの距離 */
-    URG_MULTIECHO_INTENSITY,    /*!< マルチエコーの(距離 + 強度) */
-    URG_STOP,                   /*!< 計測の停止 */
-    URG_UNKNOWN,                /*!< 不明 */
+    URG_DISTANCE,               /*!< \~japanese 距離 */
+    URG_DISTANCE_INTENSITY,     /*!< \~japanese 距離 + 強度 */
+    URG_MULTIECHO,              /*!< \~japanese マルチエコーの距離 */
+    URG_MULTIECHO_INTENSITY,    /*!< \~japanese マルチエコーの(距離 + 強度) */
+    URG_STOP,                   /*!< \~japanese 計測の停止 */
+    URG_UNKNOWN,                /*!< \~japanese 不明 */
 } urg_measurement_type_t;
 
 
-/*! 距離を何 byte で表現するかの指定 */
+/*!
+  \~japanese
+  \brief 距離を何 byte で表現するかの指定
+*/
 typedef enum {
-    URG_COMMUNICATION_3_BYTE,   /*!< 距離を 3 byte で表現する */
-    URG_COMMUNICATION_2_BYTE,   /*!< 距離を 2 byte で表現する */
+    URG_COMMUNICATION_3_BYTE,   /*!< \~japanese 距離を 3 byte で表現する */
+    URG_COMMUNICATION_2_BYTE,   /*!< \~japanese 距離を 2 byte で表現する */
 } urg_range_data_byte_t;
 
 
 enum {
-    URG_SCAN_INFINITY = 0,      /*!< 無限回のデータ取得 */
+    URG_SCAN_INFINITY = 0,      /*!< \~japanese 無限回のデータ取得 */
     URG_MAX_ECHO = 3,
 };
 
 
-/*! URG センサ管理 */
+/*!
+  \~japanese
+  \brief URG センサ管理
+*/
 typedef struct
 {
     int is_active;
@@ -74,6 +85,7 @@ typedef struct
 
 
 /*!
+  \~japanese
   \brief 接続
 
   指定したデバイスに接続し、距離を計測できるようにする。
@@ -100,6 +112,7 @@ typedef struct
 
   \attention URG C ライブラリの他の関数を呼び出す前に、この関数を呼び出す必要があります。
 
+  \~
   \see urg_close()
 */
 extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
@@ -107,22 +120,25 @@ extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 
 
 /*!
+  \~japanese
   \brief 切断
 
   レーザを消灯し、URG との接続を切断します。
 
   \param[in,out] urg URG センサ管理
 
+  \~
   \see urg_open()
 */
 extern void urg_close(urg_t *urg);
 
 
-/*! タイムスタンプモードの開始 */
+/*! \~japanese タイムスタンプモードの開始 */
 extern int urg_start_time_stamp_mode(urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief タイムスタンプの取得
 
   \param[in,out] urg URG センサ管理
@@ -148,11 +164,12 @@ extern int urg_start_time_stamp_mode(urg_t *urg);
 extern long urg_time_stamp(urg_t *urg);
 
 
-/*! タイムスタンプモードの終了 */
+/*! \~japanese タイムスタンプモードの終了 */
 extern void urg_stop_time_stamp_mode(urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief 距離データの取得を開始
 
   距離データの取得を開始します。実際のデータは urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity() で取得できます。
@@ -193,6 +210,7 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
   ...
   } \endcode
 
+  \~
   \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
 */
 extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
@@ -200,6 +218,7 @@ extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
 
 
 /*!
+  \~japanese
   \brief 距離データの取得
 
   センサから距離データを取得します。事前に urg_start_measurement() を #URG_DISTANCE 指定で呼び出しておく必要があります。
@@ -232,12 +251,14 @@ extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
   urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
   n = urg_get_distance(&urg, data, &time_stamp); \endcode
 
+  \~
   \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
 
 /*!
+  \~japanese
   \brief 距離と強度データの取得
 
   urg_get_distance() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY 指定で呼び出しておく必要があります。
@@ -256,6 +277,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
   intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_data_size() で取得できます。
 
+  \~
   Example
   \code
   int data_size = urg_max_data_size();
@@ -267,6 +289,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
   urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
   int n = urg_get_distance_intensity(&urg, data, intesnity, NULLL); \endcode
 
+  \~
   \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_distance_intensity(urg_t *urg, long data[],
@@ -275,6 +298,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
 
 /*!
+  \~japanese
   \brief 距離データの取得 (マルチエコー版)
 
   マルチエコー版の距離データ取得関数です。事前に urg_start_measurement() を #URG_MULTIECHO 指定で呼び出しておく必要があります。
@@ -306,6 +330,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
   格納順は、各 step において urg_get_distance() のときと同じ距離のデータが (3n + 0) の位置に格納され、それ以外のデータが (3n + 1), (3n + 2) の位置に降順に格納されます。\n
   つまり data_multi[3n + 1] >= data_multi[3n + 2] になることは保証されますが data_multi[3n + 0] と data_multi[3n + 1] の関係は未定義です。(data_multi[3n + 1] == data_multi[3n + 2] が成り立つのはデータ値が -1 のとき。)
 
+  \~
   Example
   \code
   long *data_multi = malloc(3 * urg_max_data_size() * sizeof(long));
@@ -315,12 +340,14 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
   urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
   int n = urg_get_distance_intensity(&urg, data_multi, NULLL); \endcode
 
+  \~
   \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
 
 /*!
+  \~japanese
   \brief 距離と強度データの取得 (マルチエコー版)
 
   urg_get_multiecho() に加え、強度データの取得できる関数です。事前に urg_start_measurement() を #URG_MULTIECHO_INTENSITY 指定で呼び出しておく必要があります。
@@ -337,6 +364,7 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
 
   intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_data_size() で取得できます。
 
+  \~
   Example
   \code
   int data_size = urg_max_data_size();
@@ -349,6 +377,7 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
   int n = urg_get_multiecho_intensity(&urg, data_multi,
   intesnity_multi, NULLL); \endcode
 
+  \~
   \see urg_start_measurement(), urg_max_data_size()
 */
 extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
@@ -357,6 +386,7 @@ extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
 
 
 /*!
+  \~japanese
   \brief 計測を中断し、レーザを消灯させます
 
   \ref urg_start_measurement() の計測を中断します。
@@ -366,6 +396,7 @@ extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
   \retval 0 正常
   \retval <0 エラー
 
+  \~
   Example
   \code
   urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
@@ -374,12 +405,14 @@ extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
   }
   urg_stop_measurement(&urg); \endcode
 
+  \~
   \see urg_start_measurement()
 */
 extern int urg_stop_measurement(urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief 計測範囲を設定します
 
   センサが計測する範囲を step 値で指定します。urg_get_distance() などの距離データ取得の関数で返されるデータ数は、ここで指定した範囲で制限されます。
@@ -414,6 +447,7 @@ extern int urg_stop_measurement(urg_t *urg);
 
   データは、まとめるデータのうち、一番小さな値のデータが用いられます。
 
+  \~
   Example
   \code
   // センサ前方 90 度の範囲のデータを取得する
@@ -425,6 +459,7 @@ extern int urg_stop_measurement(urg_t *urg);
   printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
   } \endcode
 
+  \~
   \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
 */
 extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
@@ -432,6 +467,7 @@ extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 
 
 /*!
+  \~japanese
   \brief 通信データのサイズ変更
 
   距離データをセンサから受信の際のデータサイズを変更します。
@@ -454,19 +490,20 @@ extern int urg_set_communication_data_size(urg_t *urg,
                                            urg_range_data_byte_t data_byte);
 
 
-/*! レーザを発光させる */
+/*! \~japanese レーザを発光させる */
 extern int urg_laser_on(urg_t *urg);
 
 
-/*! レーザを消灯する */
+/*! \~japanese レーザを消灯する */
 extern int urg_laser_off(urg_t *urg);
 
 
-/*! センサを再起動する */
+/*! \~japanese センサを再起動する */
 extern int urg_reboot(urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief センサのシリアル ID 文字列を返す
 
   センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
@@ -479,6 +516,7 @@ extern const char *urg_sensor_id(urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief センサのバージョン文字列を返す
 
   センサのソフトウェア・バージョン文字列を返す。返される文字列はセンサ依存となる。
@@ -491,6 +529,7 @@ extern const char *urg_sensor_version(urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief センサのステータス文字列を返す
 
   センサのステータス文字列を返す。返される文字列はセンサ依存となる。

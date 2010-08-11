@@ -16,14 +16,14 @@
 
 /*! 定数定義 */
 enum {
-    URG_CONNECTION_TIMEOUT = -1,    //!< タイムアウト発生エラー
+    URG_CONNECTION_TIMEOUT = -1,
 };
 
 
 /*! 通信タイプ */
 typedef enum {
-    URG_SERIAL,                 /*!< シリアル通信 */
-    URG_ETHERNET,               /*!< イーサーネット通信 */
+    URG_SERIAL,
+    URG_ETHERNET,
 } urg_connection_type_t;
 
 
@@ -97,7 +97,7 @@ extern int connection_open(urg_connection_t *connection,
 extern void connection_close(urg_connection_t *connection);
 
 
-//! ボーレートを設定する
+/*! ボーレートを設定する */
 extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
 
 
@@ -142,12 +142,12 @@ extern int connection_write(urg_connection_t *connection,
 
   Example
   \code
-  enum {
-  BUFFER_SIZE = 256,
-  TIMEOUT = 1000,           // [msec]
-  };
-  char buffer[BUFFER_SIZE];
-  n = connection_read(&connection, buffer, BUFFER_SIZE, TIMEOUT); \endcode
+enum {
+    BUFFER_SIZE = 256,
+    TIMEOUT_MSEC = 1000,
+};
+char buffer[BUFFER_SIZE];
+n = connection_read(&connection, buffer, BUFFER_SIZE, TIMEOUT_MSEC); \endcode
 
   \see connection_write(), connection_readline()
 */

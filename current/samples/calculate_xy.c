@@ -1,4 +1,5 @@
 /*!
+  \~japanese
   \example calculate_xy.c X-Y 座標系での位置を計算する
 
   センサ前方が X 軸の方向とみなした直行座標上で、距離データを位置を出力する。
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
     long baudrate_or_port = 115200;
     const char *ip_address = "192.168.0.10";
 
-    // 接続タイプの切替え
+    // \~japanese 接続タイプの切替え
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
@@ -45,14 +46,14 @@ int main(int argc, char *argv[])
         }
     }
 
-    // 接続
+    // \~japanese 接続
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
     data = malloc(urg_max_data_size(&urg) * sizeof(data[0]));
 
-    // データ取得
+    // \~japanese データ取得
     urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
     n = urg_get_distance(&urg, data, &time_stamp);
     if (n < 0) {
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // X-Y 座標系の値を出力
+    // \~japanese X-Y 座標系の値を出力
     urg_distance_min_max(&urg, &min_distance, &max_distance);
     for (i = 0; i < n; ++i) {
         long distance = data[i];
@@ -81,7 +82,7 @@ int main(int argc, char *argv[])
     }
     printf("\n");
 
-    // 切断
+    // \~japanese 切断
     free(data);
     urg_close(&urg);
 

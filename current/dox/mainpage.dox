@@ -1,0 +1,41 @@
+/*!
+  \mainpage
+  \~japanese
+
+  \section mainpage_what これは何か
+
+  !!!
+
+  - 動作確認をしているプラットフォーム
+    - Visual Studio 2005
+    - gcc 4.3.4
+
+  \section mainpage_license ライセンス
+
+  修正 BSD ライセンスに基づいて配布します。\n
+  ライセンスの詳細はライブラリ付属の COPYRIGHT ファイルをご覧下さい。
+
+  \section mainpage_install インストール
+
+  !!! からダウンロードできます。
+
+  \section mainpage_install_vc Visual Studio 2005, 2010
+
+  !!!
+
+  \section mainpage_install_gcc gcc (Linux, Mac, Windows(MinGW))
+
+  !!!
+
+  \section mainpage_usage 使い方
+
+  !!!
+
+  \section mainpage_usage_vc Visual Studio 2005, 2010
+
+  !!!
+
+  \section mainpage_usage_gcc gcc (Linux, Mac, Windows(MinGW))
+
+  !!!
+*/

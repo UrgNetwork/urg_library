@@ -1,4 +1,5 @@
  /*!
+   \~japanese
   \example get_multiecho.c 距離データ(マルチエコー)を取得する
 
   \author Satofumi KAMIMURA
@@ -19,7 +20,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 #if 1
     (void)data_n;
 
-    // 前方のデータのみを表示
+    // \~japanese 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
 
     // [mm], [mm], [mm], [msec]
@@ -32,7 +33,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 #else
     int i;
 
-    // 全てのデータを表示
+    // \~japanese 全てのデータを表示
     printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
 
@@ -54,7 +55,6 @@ int main(int argc, char *argv[])
     urg_connection_type_t connection_type = URG_SERIAL;
     long *data = NULL;
     long time_stamp;
-    //int ret;
     int n;
     int i;
 
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // 接続
+    // \~japanese 接続
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // データ取得
+    // \~japanese データ取得
     urg_start_measurement(&urg, URG_MULTIECHO, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, n, time_stamp);
     }
 
-    // 切断
+    // \~japanese 切断
     free(data);
     urg_close(&urg);
 

@@ -14,5 +14,5 @@ html :
 	doxygen Doxyfile
 	doxygen Doxyfile_jp
 
-.PHONY : all clean
+.PHONY : all clean html
 ######################################################################

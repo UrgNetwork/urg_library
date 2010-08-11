@@ -3,8 +3,10 @@
 
 /*!
   \file
+  \~japanese
   \brief URG センサ用の補助関数
 
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -14,12 +16,14 @@
 
 
 /*!
+  \~japanese
   \brief URG のエラーを示す文字列を返す
 
   \param[in] urg URG センサ管理
 
   \retval URG のエラーを示す文字列
 
+  \~
   Example
   \code
   if (!urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL)) {
@@ -31,6 +35,7 @@ extern const char *urg_error(const urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief センサが返す距離の最大値、最小値を返す
 
   センサが返す距離を [最小値, 最大値] で返します。
@@ -39,6 +44,7 @@ extern const char *urg_error(const urg_t *urg);
   \param[out] min_distance 最小値 [mm]
   \param[out] max_distance 最大値 [mm]
 
+  \~
   Example
   \code
   long min_distance, max_distance;
@@ -57,6 +63,7 @@ extern void urg_distance_min_max(const urg_t *urg,
 
 
 /*!
+  \~japanese
   \brief 計測 step の最大値、最小値を返す
 
   urg_set_scanning_parameter() で指定できる範囲を [最小値, 最大値] で返す。
@@ -71,6 +78,7 @@ extern void urg_distance_min_max(const urg_t *urg,
 
   min_step, max_step の値はセンサによって異なる。
 
+  \~
   Example
   \code
   urg_step_min_max(&urg, &min_step, &max_step);
@@ -83,15 +91,16 @@ extern void urg_distance_min_max(const urg_t *urg,
 extern void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
-/*! １スキャンにかかる時間 [usec] を返す */
+/*! \~japanese １スキャンにかかる時間 [usec] を返す */
 extern long urg_scan_usec(const urg_t *urg);
 
 
-/*! 取得データ数の最大値を返す */
+/*! \~japanese 取得データ数の最大値を返す */
 extern int urg_max_data_size(const urg_t *urg);
 
 
 /*!
+  \~japanese
   \brief インデックスと角度(radian)の変換を行う
 
   インデックとは urg_get_distance() などの距離データ取得関数が返したデータ配列についての値である。この関数は、最後に行った距離データ取得関数のデータ配列について有効となる。
@@ -105,6 +114,7 @@ extern int urg_max_data_size(const urg_t *urg);
 
   \image html sensor_index_image.jpg センサの計測範囲とインデックスの関係
 
+  \~
   Example
   \code
   int n = urg_get_distance(&urg, data, NULL);
@@ -121,19 +131,20 @@ extern int urg_max_data_size(const urg_t *urg);
 extern double urg_index2rad(const urg_t *urg, int index);
 
 
-/*! インデックスと角度(degree)の変換を行う */
+/*! \~japanese インデックスと角度(degree)の変換を行う */
 extern double urg_index2deg(const urg_t *urg, int index);
 
 
-/*! 角度(radian)とインデックスの変換を行う */
+/*! \~japanese 角度(radian)とインデックスの変換を行う */
 extern int urg_rad2index(const urg_t *urg, double radian);
 
 
-/*! 角度(degree)とインデックスの変換を行う */
+/*! \~japanese 角度(degree)とインデックスの変換を行う */
 extern int urg_deg2index(const urg_t *urg, double degree);
 
 
 /*!
+  \~japanese
   \brief 角度(radian)と step の変換を行う
 
   urg_step_min_max() で定義されている step について、角度(radian)と step の変換を行う。
@@ -147,23 +158,24 @@ extern int urg_deg2index(const urg_t *urg, double degree);
 
   角度から step へ変換した結果が整数でない場合、結果は 0 の方向に切り捨てられた値となる。
 
+  \~
   \see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
 */
 extern int urg_rad2step(const urg_t *urg, double radian);
 
 
-/*! 角度(degree)と step の変換を行う */
+/*! \~japanese 角度(degree)と step の変換を行う */
 extern int urg_deg2step(const urg_t *urg, double degree);
 
 
-/*! step と 角度(radian)の変換を行う */
+/*! \~japanese step と 角度(radian)の変換を行う */
 extern double urg_step2rad(const urg_t *urg, int step);
 
 
-/*! step と 角度(degree)の変換を行う */
+/*! \~japanese step と 角度(degree)の変換を行う */
 extern double urg_step2deg(const urg_t *urg, int step);
 
-/*! step とインデックスの変換を行う */
+/*! \~japanese step とインデックスの変換を行う */
 extern int urg_step2index(const urg_t *urg, int step);
 
 // !!!

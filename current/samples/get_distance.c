@@ -1,4 +1,5 @@
 /*!
+  \~japanese
   \example get_distance.c 距離データを取得する
 
   \author Satofumi KAMIMURA
@@ -18,7 +19,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 #if 1
     (void)data_n;
 
-    // 前方のデータのみを表示
+    // \~japanese 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
     printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
 
@@ -27,7 +28,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     int min_distance;
     int max_distance;
 
-    // 全てのデータの X-Y の位置を表示
+    // \~japanese 全てのデータの X-Y の位置を表示
     urg_distance_min_max(urg, &min_distance, &max_distance);
     for (i = 0; i < data_n; ++i) {
         long l = data[i];
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
     long baudrate_or_port = 115200;
     const char *ip_address = "192.168.0.10";
 
-    // 接続タイプの切替え
+    // \~japanese 接続タイプの切替え
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // 接続
+    // \~japanese 接続
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
@@ -89,9 +90,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // データ取得
+    // \~japanese データ取得
 #if 0
-    // データの取得範囲を変更する場合
+    // \~japanese データの取得範囲を変更する場合
     urg_set_scanning_parameter(&urg,
                                urg_deg2step(&urg, -90),
                                urg_deg2step(&urg, +90), 0);
@@ -109,7 +110,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, n, time_stamp);
     }
 
-    // 切断
+    // \~japanese 切断
     free(data);
     urg_close(&urg);
 

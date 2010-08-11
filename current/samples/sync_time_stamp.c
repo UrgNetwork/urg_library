@@ -1,4 +1,5 @@
 /*!
+  \~japanese
   \example sync_time_stamp.c センサと PC のタイムスタンプを同期する
 
   \author Satofumi KAMIMURA
@@ -47,7 +48,10 @@ static int pc_msec_time(void)
 }
 
 
-// PC のタイムスタンプに補正するための値を返す
+/*!
+  \~japanese
+  \brief PC のタイムスタンプに補正するための値を返す
+*/
 static long print_time_stamp(urg_t *urg, long time_stamp_offset)
 {
     long sensor_time_stamp;
@@ -98,7 +102,7 @@ int main(int argc, char *argv[])
     long baudrate_or_port = 115200;
     const char *ip_address = "192.168.0.10";
 
-    // 接続タイプの切替え
+    // \~japanese 接続タイプの切替え
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
@@ -112,7 +116,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // 接続
+    // \~japanese 接続
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
@@ -120,10 +124,10 @@ int main(int argc, char *argv[])
 
     printf("# pc,\tsensor\n");
 
-    // URG のタイムスタンプと PC のタイムスタンプを表示
+    // \~japanese URG のタイムスタンプと PC のタイムスタンプを表示
     time_stamp_offset = print_time_stamp(&urg, 0);
 
-    // URG の補正後のタイムスタンプと PC タイムスタンプを表示
+    // \~japanese URG の補正後のタイムスタンプと PC タイムスタンプを表示
     for (i = 0; i < TIME_STAMP_PRINT_TIMES; ++i) {
         print_time_stamp(&urg, time_stamp_offset);
     }
