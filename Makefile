@@ -18,13 +18,16 @@ dist : release_clean
 	mkdir -p $(RELEASE_DIR)
 	for i in $(TARGET_DIR) ; \
 	do \
-		cd $(PWD); \
 		mkdir -p $(RELEASE_DIR)/$$i; \
 		mkdir -p $(RELEASE_DIR)/$$i/include; \
 		mkdir -p $(RELEASE_DIR)/$$i/src; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
 		cp current/COPYRIGHT current/Install.txt Readme.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
-		ls; \
+	done
+	ls # copy source files
+	for i in $(TARGET_DIR) ; \
+	do \
+		cd $(PWD); \
 		cd $(RELEASE_DIR)/ && (zip -r $$i.zip $$i) && mv $$i.zip ../; \
 	done
 
