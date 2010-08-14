@@ -1,0 +1,16 @@
+TARGET = sensor_parameter get_distance get_distance_intensity get_multiecho get_multiecho_intensity sync_time_stamp calculate_xy
+
+URG_LIB = ../src/liburg_c.a
+
+CFLAGS = -O2 $(INCLUDES) -I../include
+LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_rt.sh`
+
+all : $(TARGET)
+
+clean :
+	$(RM) *.o $(TARGET)
+
+$(TARGET) : $(URG_LIB)
+
+$(URG_LIB) :
+	cd $(@D)/ && $(MAKE) $(@F)

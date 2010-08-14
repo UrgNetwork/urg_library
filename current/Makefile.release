@@ -5,12 +5,13 @@ all :
 	cd src/ && $(MAKE)
 
 clean :
-      cd src/ && $(MAKE) clean
+	cd src/ && $(MAKE) clean
 
 install : all
 	install -d $(PREFIX)/include/urg_c/
-	install -m 644 include/*.h $(PREFIX)/urg_c/
+	install -m 644 include/*.h $(PREFIX)/include/urg_c/
 	install -d $(PREFIX)/lib/
 	install -m 644 src/liburg_c.a $(PREFIX)/lib/
 	install -d $(PREFIX)/bin/
+	ls # !!! sed urg_c-config
 	install -m 755 urg_c-config $(PREFIX)/bin/

@@ -1,8 +1,7 @@
 #include "urg_detect_os.h"
-#include <unistd.h> /* close() */
+#include <unistd.h>
 #include <string.h>
 #if defined(URG_WINDOWS_OS)
-//#pragma comment(lib, "wininet.lib")
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
@@ -23,21 +22,12 @@ static int tcpclient_buffer_data_num( urg_tcpclient_t* cli )
 
 static int tcpclient_buffer_write( urg_tcpclient_t* cli, const char* data, int size )
 {
-  int ret;
-  ret = ring_write( &cli->rb, data, size );
-  //  {int rem = ring_size(&cli->rb);
-  //    printf("\n(BUFW:rem%d:%d:", rem,size);{int i;for(i=0; i<size; i++)putchar(data[i]);}printf(")\n");
-  //  }
-  return ret;
+  return ring_write( &cli->rb, data, size );
 }
 
 static int tcpclient_buffer_read( urg_tcpclient_t* cli, char* data, int size )
 {
-  int ret = ring_read( &cli->rb, data, size );
-  //{int rem = ring_size(&cli->rb);
-  //    printf("\n(BUFR:rem%d:%d:", rem,size);{int i;for(i=0; i<size; i++)putchar(data[i]);}printf(")\n");
-  //  }
-  return ret;
+  return ring_read( &cli->rb, data, size );
 }
 
 
@@ -52,7 +42,6 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     int err;
     err = WSAStartup(wVersionRequested, &WSAData);
     if ( err != 0 ) {
-      //printf("WSAStartup failed with error: %d\n", err);
       return -1;
     }
   }
@@ -63,8 +52,6 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
   cli->sock_addr_size = sizeof (struct sockaddr_in);
 
   if ( (cli->sock_desc = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    //perror("socket");
-    //exit(-1);
     return -1;
   }
 
@@ -73,24 +60,15 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
   cli->server_addr.sin_port        = htons(port_num);
 
   /* bind is not required, and port number is dynamic */
-
-  /*
-  if ( cli->server_addr.sin_addr.s_addr  = hostGetByName(ip_str)) < 0 )
-  */
-
   if ( (cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) == INADDR_NONE ) {
-    //perror("unknown server name");
     return -1;
   }
 
   if ( connect(cli->sock_desc, (const struct sockaddr *) &(cli->server_addr),
                 cli->sock_addr_size) < 0 ) {
-    //perror("connect");
     close(cli->sock_desc);
     return -1;
   }
-
-  //fprintf(stderr, "tcpclient_open() ... O.K.\n");
   return 0;
 }
 
@@ -112,7 +90,6 @@ int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeou
   //fprintf(stderr, "num_in_buf: %d\n", num_in_buf);
   if ( 0 < num_in_buf ) {
     n = tcpclient_buffer_read( cli, userbuf, req_size );
-    // n never be greater than req_size
     rem_size = req_size - n;  // lacking size.
     if ( rem_size <= 0 ) {
       return req_size;
@@ -133,10 +110,8 @@ int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeou
 #else
     n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, MSG_DONTWAIT);
 #endif
-    //{int i;printf("(SOCK!%d!",n);for(i=0;i<n;i++)putchar(tmpbuf[i]);printf(")\n");}
     if ( 0 < n ) {
       tcpclient_buffer_write( cli, tmpbuf, n ); // copy socket to my buffer
-      //printf("(mybuf-n=%d)",n);
     }
 
     n = tcpclient_buffer_read( cli, & userbuf[req_size-rem_size], rem_size );
@@ -158,7 +133,6 @@ int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeou
     setsockopt( sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval) );
 #endif
     n = recv(sock, & userbuf[req_size-rem_size], rem_size, 0); //4th arg 0:no flag
-    //{int i;printf("(SOCK2!%d!",n);for(i=0;i<n;i++)putchar(userbuf[req_size-rem_size+i]);printf(")\n");}
     // n never be greater than rem_size
     if ( 0 < n ) rem_size -= n;
   }
@@ -199,19 +173,11 @@ int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size, int ti
     cli->pushed_back = userbuf[buf_size-1] & 0xff;
     userbuf[buf_size-1] = '\0';
   }
-
   userbuf[i] = '\0';
 
   if ( i==0 && n <= 0 ) { // error
     return -1;
   }
 
-  //printf("TCP:%d:%s\n", i, userbuf);
   return i; // the number of characters filled into user buffer.
 }
-
-//int tcpclient_error( urg_tcpclient_t* cli, char* error_message, int max)
-//{
-//  error_message[0] = '\0';
-//  return 0;
-//}

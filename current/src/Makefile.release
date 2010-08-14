@@ -1,0 +1,17 @@
+LIB_URG = liburg_c.a
+
+CFLAGS = -O2 $(INCLUDES) -I../include
+
+all : $(LIB_URG)
+
+clean :
+	$(RM) *.o $(OBJS)
+
+$(LIB_URG) : \
+	$(LIB_URG)(urg_sensor.o) \
+	$(LIB_URG)(urg_utils.o) \
+	$(LIB_URG)(urg_connection.o) \
+	$(LIB_URG)(urg_ring_buffer.o) \
+	$(LIB_URG)(urg_serial.o) \
+	$(LIB_URG)(urg_serial_utils.o) \
+	$(LIB_URG)(urg_tcpclient.o) \

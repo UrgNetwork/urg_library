@@ -10,7 +10,7 @@
 #include "urg_serial_utils.h"
 
 
-#if 0
+#if defined(URG_WINDOWS_OS)
 #include "urg_serial_utils_windows.c"
 #else
 #include "urg_serial_utils_linux.c"
