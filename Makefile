@@ -22,7 +22,9 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i/include; \
 		mkdir -p $(RELEASE_DIR)/$$i/src; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
-		cp current/COPYRIGHT current/Install.txt Readme.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
+		cp current/COPYRIGHT current/Install.txt Readme.txt Releasenotes.txt Makefile.release $(RELEASE_DIR)/$$i/; \
+		cp Makefile.release $(RELEASE_DIR)/$$i/Makefile; \
+		cp current/include/*.h $(RELEASE_DIR)/$$i/include/; \
 	done
 	ls # copy source files
 	for i in $(TARGET_DIR) ; \

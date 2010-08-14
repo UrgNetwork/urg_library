@@ -21,9 +21,21 @@
 
   \section mainpage_install_vc Visual Studio 2005, 2010
 
-  !!!
+  !!! vcproj ファイルから Visual Studio を起動して、ライブラリをビルドします。
+
+  !!! 使うプロジェクトで、!!! 指定してコンパイルして下さい。
+
+  !!! プロジェクトに、include/ 以下の .h ファイルと src/ 以下の .c ファイルをプロジェクトに追加しても利用できます。
+
 
   \section mainpage_install_gcc gcc (Linux, Mac, Windows(MinGW))
+
+  !!! make でコンパイルして下さい。
+
+  !!! Makefile を調整して、make install でインストールできます。
+
+  - !!! urg_c-config スクリプトも使えます
+    - !!! 本当に使えるようにできるかは不明
 
   !!!
 
