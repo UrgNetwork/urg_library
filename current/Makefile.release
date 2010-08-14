@@ -1,7 +1,9 @@
 PREFIX = /usr/local
 
 
-all :
+CONFIG_FILE = urg_c-config
+S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
+all : $(CONFIG_FILE)
 	cd src/ && $(MAKE)
 
 clean :
@@ -13,5 +15,7 @@ install : all
 	install -d $(PREFIX)/lib/
 	install -m 644 src/liburg_c.a $(PREFIX)/lib/
 	install -d $(PREFIX)/bin/
-	ls # !!! sed urg_c-config
-	install -m 755 urg_c-config $(PREFIX)/bin/
+	install -m 755 $(CONFIG_FILE) $(PREFIX)/bin/
+
+$(CONFIG_FILE) : urg_c-config.in
+	cat $(CONFIG_FILE).in | sed "s/PREFIX/$(S_PREFIX)/g" > $(CONFIG_FILE)
