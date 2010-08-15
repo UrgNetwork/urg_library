@@ -28,10 +28,15 @@ dist : release_clean
 		cp current/samples/Makefile.release $(RELEASE_DIR)/$$i/samples/Makefile ; \
 		cp current/include/*.h $(RELEASE_DIR)/$$i/include/; \
 		cp current/src/*.c $(RELEASE_DIR)/$$i/src/; \
-		cp current/samples/*.c current/samples/*.sh $(RELEASE_DIR)/$$i/samples/; \
+		cp current/samples/*.sh $(RELEASE_DIR)/$$i/samples/; \
 		cat current/urg_c-config.in | sed -e "s/VERSION/$(VERSION)/g" > $(RELEASE_DIR)/$$i/urg_c-config.in ; \
 	done
-	ls # copy source files
+	ruby split_comment.rb -e current/include/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/include/
+	ruby split_comment.rb -e current/src/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/src/
+	ruby split_comment.rb -e current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/
+	ruby split_comment.rb -e current/include/*.h $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/include/
+	ruby split_comment.rb -e current/src/*.c $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/src/
+	ruby split_comment.rb -e current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/samples/
 	for i in $(TARGET_DIR) ; \
 	do \
 		cd $(PWD); \

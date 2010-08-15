@@ -27,8 +27,8 @@
   Example
   \code
   if (!urg_open(&urg, "/dev/ttyACM0", 115200, URG_SERIAL)) {
-  printf("urg_open: %s\n", urg_error(&urg));
-  return -1;
+      printf("urg_open: %s\n", urg_error(&urg));
+      return -1;
   } \endcode
 */
 extern const char *urg_error(const urg_t *urg);
@@ -51,11 +51,11 @@ extern const char *urg_error(const urg_t *urg);
   urg_distance_min_max(&urg, &min_distance, &max_distance);
 
   for (int i = 0; i < n; ++i) {
-  long distance = data[i];
-  if ((distance < min_distance) || (distance > max_distance)) {
-  continue;
-  }
-  ...
+      long distance = data[i];
+      if ((distance < min_distance) || (distance > max_distance)) {
+          continue;
+      }
+      ...
   } \endcode
 */
 extern void urg_distance_min_max(const urg_t *urg,
@@ -119,11 +119,11 @@ extern int urg_max_data_size(const urg_t *urg);
   \code
   int n = urg_get_distance(&urg, data, NULL);
   for (int i = 0; i < n; ++i) {
-  long distance = data[i];
-  double radian = urg_index2rad(i);
-  double x = distance * cos(radian);
-  double y = distance * sin(radian);
-  printf("%.1f, %.1f\n", x, y);
+      long distance = data[i];
+      double radian = urg_index2rad(i);
+      double x = distance * cos(radian);
+      double y = distance * sin(radian);
+      printf("%.1f, %.1f\n", x, y);
   } \endcode
 
   \see urg_index2deg(), urg_rad2index(), urg_deg2index()

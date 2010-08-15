@@ -204,7 +204,7 @@ extern void urg_stop_time_stamp_mode(urg_t *urg);
   urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
 
   for (i = 0; i < CAPTURE_TIMES; ++i) {
-  int n = urg_get_distance(&urg, data, &time_stamp);
+      int n = urg_get_distance(&urg, data, &time_stamp);
 
   // 受信したデータの利用
   ...
@@ -401,7 +401,7 @@ extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
   \code
   urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
   for (int i = 0; i < 10; ++i) {
-  urg_get_distance(&urg, data, NULL);
+      urg_get_distance(&urg, data, NULL);
   }
   urg_stop_measurement(&urg); \endcode
 
@@ -456,7 +456,7 @@ extern int urg_stop_measurement(urg_t *urg);
   urg_start_measurement(&urg, URG_DISTANCE, 0);
   int n = urg_get_distance(&urg, data, NULL);
   for (int i = 0; i < n; ++i) {
-  printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
+      printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
   } \endcode
 
   \~
