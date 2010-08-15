@@ -450,9 +450,8 @@ extern int urg_stop_measurement(urg_t *urg);
   \~
   Example
   \code
-  // センサ前方 90 度の範囲のデータを取得する
   urg_set_scanning_parameter(&urg, urg_deg2step(&urg, -45),
-  urg_deg2step(&urg, +45), 1);
+                                   urg_deg2step(&urg, +45), 1);
   urg_start_measurement(&urg, URG_DISTANCE, 0);
   int n = urg_get_distance(&urg, data, NULL);
   for (int i = 0; i < n; ++i) {
