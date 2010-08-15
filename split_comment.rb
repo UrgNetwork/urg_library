@@ -31,11 +31,22 @@ target_files = ARGV
 def split_single_line(line, mode, output_mode)
 
   # 現在のモードに従ったコメントのみを出力する
-  if line =~ /\\\~japanese .+ ([\*\\])/ and output_mode == "-e"
-    line = $` + $1 + $'
+  if output_mode == "-e" then
+    if line =~ /\\\~japanese .+ ([\*\\])/
+      line = $` + $1 + $'
+    end
+    if line =~ /\\\~english /
+      line = $` + $'
+    end
   end
-  if line =~ /\\\~english .+ ([\*\\])/ and output_mode == "-j"
-    line = $` + $1 + $'
+
+  if output_mode == "-j"
+    if line =~ /\\\~english .+ ([\*\\])/
+      line = $` + $1 + $'
+    end
+    if line =~ /\\\~japanese /
+      line = $` + $'
+    end
   end
 
   return line
