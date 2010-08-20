@@ -2,10 +2,11 @@
 
 # Compile options
 SRCDIR = ../../src
+INCLUDEDIR = ../../include
 CC = gcc
 #CFLAGS = -O2 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
-INCLUDE = -I$(SRCDIR)
+INCLUDE = -I$(INCLUDEDIR)
 LDFLAGS = -L/usr/X11/lib
 LDLIBS = `sdl-config --libs` -lGL
 #LDLIBS = `sdl-config --libs` -lopengl32 -lwsock32
