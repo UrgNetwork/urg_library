@@ -10,7 +10,6 @@
   $Id$
 */
 
-
 #if defined(_MSC_VER) || defined(__CYGWIN__) || defined(__MINGW32__)
 #define URG_WINDOWS_OS
 

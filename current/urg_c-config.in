@@ -2,7 +2,7 @@
 
 version=VERSION
 prefix=PREFIX
-includedir=${prefix}/urg_c
+includedir=${prefix}/include/urg_c
 installlib=${prefix}/lib
 
 usage="Usage: urg_c-config [--version] [--cflags] [--libs]"
@@ -22,7 +22,7 @@ while test $# -gt 0; do
       echo -I${includedir}
       ;;
     --libs)
-      echo ${installlib}
+      echo -L${installlib} -lurg_c
       ;;
     *)
       echo "${usage}" 1>&2

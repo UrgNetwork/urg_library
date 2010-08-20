@@ -81,7 +81,7 @@ void tcpclient_close(urg_tcpclient_t* cli)
 int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size, int timeout)
 {
   // number of data in buffer.
-  int num_in_buf = tcpclient_buffer_data_num(cli); 
+  int num_in_buf = tcpclient_buffer_data_num(cli);
   int sock       = cli->sock_desc;
   int rem_size   = req_size;  // remaining size to be sent back.
   int n;

@@ -14,6 +14,10 @@
   $Id$
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "urg_connection.h"
 
 
@@ -538,5 +542,10 @@ extern const char *urg_sensor_version(urg_t *urg);
   \return ステータス文字列
 */
 extern const char *urg_sensor_status(urg_t *urg);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !URG_SENSOR_H */

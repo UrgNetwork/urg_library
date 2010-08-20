@@ -12,6 +12,11 @@
   $Id$
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #include "urg_sensor.h"
 
 
@@ -180,5 +185,10 @@ extern int urg_step2index(const urg_t *urg, int step);
 
 // !!!
 extern int urg_find_port(char *port_name, int index);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !URG_UTILS_H */
