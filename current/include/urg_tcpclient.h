@@ -24,17 +24,17 @@ enum { RB_SIZE     = 1<<RB_BITSHIFT };
 enum { BUFSIZE     = RB_SIZE-1 };
 
 typedef struct {
-  // socket
-  struct sockaddr_in server_addr; /* socket */
-  int    sock_desc;		          /* socket file descriptor */
-  int    sock_addr_size;
+    // socket
+    struct sockaddr_in server_addr; /* socket */
+    int sock_desc;                  /* socket file descriptor */
+    int sock_addr_size;
 
-  // buffer
-  ring_buffer_t rb;  // ring buffer
-  char buf[RB_SIZE];
+    // buffer
+    ring_buffer_t rb;  // ring buffer
+    char buf[RB_SIZE];
 
-  // line reading functions
-  int pushed_back; // for pushded back char
+    // line reading functions
+    int pushed_back; // for pushded back char
 
 } urg_tcpclient_t;
 // -- end of NON INTERFACE definitions --

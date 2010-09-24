@@ -82,8 +82,7 @@ static int scip_response(urg_t *urg, const char* command,
     }
 
     do {
-        n = connection_readline(&urg->connection,
-                                buffer, BUFFER_SIZE, timeout);
+        n = connection_readline(&urg->connection, buffer, BUFFER_SIZE, timeout);
         if (n < 0) {
             return set_errno_and_return(urg, URG_NO_RESPONSE);
 
@@ -138,8 +137,7 @@ static int scip_response(urg_t *urg, const char* command,
 }
 
 
-static void ignore_receive_data(urg_t *urg,
-				int timeout)
+static void ignore_receive_data(urg_t *urg, int timeout)
 {
     char buffer[BUFFER_SIZE];
     int n;
@@ -209,7 +207,6 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         char receive_buffer[RECEIVE_BUFFER_SIZE];
 
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
-        //int ret = scip_response(urg, "QT;first\n", qt_expected, MAX_TIMEOUT,
         int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
         if (!strcmp(receive_buffer, "E")) {
@@ -411,9 +408,9 @@ static urg_measurement_type_t parse_distance_echoback(urg_t *urg,
 }
 
 
-static int receive_data_line(urg_t *urg, long length[],
-                             unsigned short intensity[],
-                             urg_measurement_type_t type, char buffer[])
+static int receive_length_data(urg_t *urg, long length[],
+                               unsigned short intensity[],
+                               urg_measurement_type_t type, char buffer[])
 {
     int n;
     int step_filled = 0;
@@ -447,6 +444,7 @@ static int receive_data_line(urg_t *urg, long length[],
         n = connection_readline(&urg->connection,
                                 &buffer[line_filled], BUFFER_SIZE - line_filled,
                                 urg->timeout);
+
         if (n > 0) {
             // チェックサムの評価
             if (buffer[line_filled + n - 1] !=
@@ -536,10 +534,12 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     char buffer[BUFFER_SIZE];
     int ret = 0;
     int n;
+    int extended_timeout = urg->timeout
+        + (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
 
     // エコーバックの取得
     n = connection_readline(&urg->connection,
-                            buffer, BUFFER_SIZE, urg->timeout);
+                            buffer, BUFFER_SIZE, extended_timeout);
     if (n <= 0) {
         return set_errno_and_return(urg, URG_NO_RESPONSE);
     }
@@ -596,12 +596,12 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     switch (type) {
     case URG_DISTANCE:
     case URG_MULTIECHO:
-        ret = receive_data_line(urg, data, NULL, type, buffer);
+        ret = receive_length_data(urg, data, NULL, type, buffer);
         break;
 
     case URG_DISTANCE_INTENSITY:
     case URG_MULTIECHO_INTENSITY:
-        ret = receive_data_line(urg, data, intensity, type, buffer);
+        ret = receive_length_data(urg, data, intensity, type, buffer);
         break;
 
     case URG_STOP:
@@ -751,6 +751,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
 
     urg->specified_scan_times = (scan_times < 0) ? 0 : scan_times;
     urg->scanning_remain_times = urg->specified_scan_times;
+    urg->scanning_skip_scan = (skip_scan < 0) ? 0 : skip_scan;
 
     if (urg->scanning_remain_times == 1) {
 
@@ -894,11 +895,10 @@ int urg_stop_measurement(urg_t *urg)
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
         // QT の応答が返されるまで、距離データを読み捨てる
-        //ignore_receive_data(&urg->connection, urg->timeout);
         ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == URG_STOP) {
             // 正常応答
-	  urg->is_sending = URG_FALSE;
+            urg->is_sending = URG_FALSE;
             return set_errno_and_return(urg, URG_NO_ERROR);
         }
     }

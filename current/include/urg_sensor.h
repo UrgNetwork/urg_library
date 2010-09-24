@@ -71,6 +71,7 @@ typedef struct
     int scanning_first_step;
     int scanning_last_step;
     int scanning_skip_step;
+    int scanning_skip_scan;
     urg_range_data_byte_t range_data_byte;
 
     int timeout;

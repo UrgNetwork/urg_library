@@ -63,7 +63,7 @@ typedef struct
   \code
   connection_t connection;
   if (! connection_open(&connection, URG_SERIAL, "COM1", 115200)) {
-  return 1;
+      return 1;
   } \endcode
 
   また、イーサーネット通信の場合は以下のようになる。
@@ -72,7 +72,7 @@ typedef struct
   \code
   connection_t connection;
   if (! connection_open(&connection, URG_ETHERNET, "192.168.0.10", 10940)) {
-  return 1;
+      return 1;
   } \endcode
 
   \see connection_close()
