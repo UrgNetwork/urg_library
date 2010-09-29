@@ -40,11 +40,6 @@ int main(int argc, char *argv[])
             device = ip_address;
         }
     }
-    for (i = 1; i < argc; ++i) {
-        if (!strcmp(argv[i], "-e")) {
-            connection_type = URG_ETHERNET;
-        }
-    }
 
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(&urg));
@@ -52,7 +47,7 @@ int main(int argc, char *argv[])
     }
 
     printf("Sensor firmware version: %s\n", urg_sensor_version(&urg));
-    printf("Sensor serial ID: %s\n", urg_sensor_id(&urg));
+    printf("Sensor serial ID: %s\n", urg_sensor_serial_id(&urg));
     printf("Sensor status: %s\n", urg_sensor_status(&urg));
 
     urg_step_min_max(&urg, &min_step, &max_step);

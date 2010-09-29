@@ -75,11 +75,6 @@ int main(int argc, char *argv[])
             device = ip_address;
         }
     }
-    for (i = 1; i < argc; ++i) {
-        if (!strcmp(argv[i], "-e")) {
-            connection_type = URG_ETHERNET;
-        }
-    }
 
     // \~japanese 接続
     if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {

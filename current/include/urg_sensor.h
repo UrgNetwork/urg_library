@@ -516,7 +516,7 @@ extern int urg_reboot(urg_t *urg);
 
   \return シリアル ID 文字列
 */
-extern const char *urg_sensor_id(urg_t *urg);
+extern const char *urg_sensor_serial_id(urg_t *urg);
 
 
 /*!

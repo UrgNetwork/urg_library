@@ -1019,7 +1019,7 @@ static char *copy_token(char *dest, char *receive_buffer,
 }
 
 
-const char *urg_sensor_id(urg_t *urg)
+const char *urg_sensor_serial_id(urg_t *urg)
 {
     enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
