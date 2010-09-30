@@ -773,10 +773,11 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     }
 
     n = connection_write(&urg->connection, buffer, write_size);
-    urg->is_sending = URG_TRUE;
-    if (n != 3) {
+    if (n != write_size) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
+    urg->is_sending = URG_TRUE;
+
     return 0;
 }
 
@@ -822,6 +823,7 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
 
     case URG_STOP:
     case URG_UNKNOWN:
+    default:
         ignore_receive_data(urg, urg->timeout);
         urg->last_errno = URG_INVALID_PARAMETER;
         ret = urg->last_errno;
@@ -959,8 +961,9 @@ int urg_laser_on(urg_t *urg)
     }
 
     ret = scip_response(urg, "BM\n", expected, urg->timeout, NULL, 0);
-    if (ret == URG_NO_ERROR) {
+    if (ret >= 0) {
         urg->is_laser_on = URG_TRUE;
+        ret = 0;
     }
     return ret;
 }

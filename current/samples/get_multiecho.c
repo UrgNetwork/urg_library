@@ -31,10 +31,12 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
            time_stamp);
 
 #else
+    (void)urg;
+
     int i;
 
     // \~japanese 全てのデータを表示
-    printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
+    printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
 
         // [mm], [mm], [mm]

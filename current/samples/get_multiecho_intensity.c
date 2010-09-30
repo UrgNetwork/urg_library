@@ -36,13 +36,15 @@ static void print_data(urg_t *urg, long data[],
            time_stamp);
 
 #else
+    (void)urg;
+
     int i;
 
     // \~japanese 全てのデータを表示
-    printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
+    printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
         // [mm], [mm], [mm], [1], [1], [1]
-        printf("%ld, %ld, %ld, %d, %d, %d, %ld\n",
+        printf("%ld, %ld, %ld, %d, %d, %d\n",
                data[(3 * i) + 0],
                data[(3 * i) + 1],
                data[(3 * i) + 2],

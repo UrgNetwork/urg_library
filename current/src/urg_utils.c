@@ -47,6 +47,7 @@ const char *urg_error(const urg_t *urg)
         { URG_RECEIVE_ERROR, "receive error." },
         { URG_CHECKSUM_ERROR, "checksum error." },
         { URG_INVALID_PARAMETER, "invalid parameter." },
+        { URG_MEASUREMENT_TYPE_MISMATCH, "measurement type mismatch." },
 
         { URG_SERIAL_OPEN_ERROR, "could not open serial device." },
         { URG_NOT_DETECT_BAUDRATE_ERROR, "could not detect serial baudrate." },

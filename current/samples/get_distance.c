@@ -9,6 +9,7 @@
 
 #include "urg_sensor.h"
 #include "urg_utils.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,9 +25,11 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
 
 #else
+    (void)time_stamp;
+
     int i;
-    int min_distance;
-    int max_distance;
+    long min_distance;
+    long max_distance;
 
     // \~japanese 全てのデータの X-Y の位置を表示
     urg_distance_min_max(urg, &min_distance, &max_distance);
@@ -39,10 +42,10 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
         if ((l <= min_distance) || (l >= max_distance)) {
             continue;
         }
-        radian = urg_index2rad(urg);
+        radian = urg_index2rad(urg, i);
         x = (long)(l * cos(radian));
         y = (long)(l * sin(radian));
-        printf("(%d, %d), ", x, y);
+        printf("(%ld, %ld), ", x, y);
     }
     printf("\n");
 #endif

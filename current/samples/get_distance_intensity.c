@@ -26,11 +26,13 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
            data[front_index], intensity[front_index], time_stamp);
 
 #else
+    (void)urg;
+
     int i;
 
     // \~japanese 全てのデータを表示
-    printf("# n = %d, time_stamp = %d\n", data_n, time_stamp);
-    for (i = 0; i < n; ++i) {
+    printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
+    for (i = 0; i < data_n; ++i) {
         printf("%d, %ld, %d\n", i, data[i], intensity[i]);
     }
 #endif
