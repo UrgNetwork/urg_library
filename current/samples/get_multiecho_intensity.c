@@ -7,12 +7,28 @@
   $Id$
 */
 
-
 #include "urg_sensor.h"
 #include "urg_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+static void print_echo_data(long data[], unsigned short intensity[],
+                            int index)
+{
+    int i;
+
+    // [mm]
+    for (i = 0; i < URG_MAX_ECHO; ++i) {
+        printf("%ld, ", data[(URG_MAX_ECHO * index) + i]);
+    }
+
+    // [1]
+    for (i = 0; i < URG_MAX_ECHO; ++i) {
+        printf("%d, ", intensity[(URG_MAX_ECHO * index) + i]);
+    }
+}
 
 
 // \~japanese 距離、強度のデータを表示する
@@ -24,33 +40,18 @@ static void print_data(urg_t *urg, long data[],
 
     // \~japanese 前方のデータのみを表示
     int front_index = urg_step2index(urg, 0);
-
-    // [mm], [mm], [mm], [1], [1], [1], [msec]
-    printf("%ld, %ld, %ld, %d, %d, %d, %ld\n",
-           data[(3 * front_index) + 0],
-           data[(3 * front_index) + 1],
-           data[(3 * front_index) + 2],
-           intensity[(3 * front_index) + 0],
-           intensity[(3 * front_index) + 1],
-           intensity[(3 * front_index) + 2],
-           time_stamp);
+    print_echo_data(data, intensity, front_index);
+    printf("%ld\n", time_stamp);
 
 #else
     (void)urg;
-
     int i;
 
     // \~japanese 全てのデータを表示
     printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
-        // [mm], [mm], [mm], [1], [1], [1]
-        printf("%ld, %ld, %ld, %d, %d, %d\n",
-               data[(3 * i) + 0],
-               data[(3 * i) + 1],
-               data[(3 * i) + 2],
-               intensity[(3 * i) + 0],
-               intensity[(3 * i) + 1],
-               intensity[(3 * i) + 2]);
+        print_echo_data(data, intensity, i);
+        printf("\n");
     }
 #endif
 }
