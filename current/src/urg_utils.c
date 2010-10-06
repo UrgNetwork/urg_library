@@ -206,3 +206,21 @@ int urg_step2index(const urg_t *urg, int step)
     return min(max(0, measure_step + urg->front_data_index),
                urg->last_data_index);
 }
+
+
+int urg_raw_write(urg_t *urg, const char *data, int data_size)
+{
+    return connection_write(&urg->connection, data, data_size);
+}
+
+
+int urg_raw_read(urg_t *urg, char *data, int max_data_size, int timeout)
+{
+    return connection_read(&urg->connection, data, max_data_size, timeout);
+}
+
+
+int urg_raw_readline(urg_t *urg, char *data, int max_data_size, int timeout)
+{
+    return connection_readline(&urg->connection, data, max_data_size, timeout);
+}

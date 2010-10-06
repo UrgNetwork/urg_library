@@ -187,6 +187,12 @@ extern int urg_step2index(const urg_t *urg, int step);
 extern int urg_find_port(char *port_name, int index);
 
 
+extern int urg_raw_write(urg_t *urg, const char *data, int data_size);
+extern int urg_raw_read(urg_t *urg, char *data, int max_data_size,
+                        int timeout);
+extern int urg_raw_readline(urg_t *urg,char *data, int max_data_size,
+                            int timeout);
+
 #ifdef __cplusplus
 }
 #endif

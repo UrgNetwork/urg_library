@@ -627,6 +627,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 
     urg->is_active = URG_FALSE;
     urg->is_sending = URG_TRUE;
+    urg->last_errno = URG_NOT_CONNECTED;
 
     // デバイスへの接続
     if (connection_open(&urg->connection, connection_type,
