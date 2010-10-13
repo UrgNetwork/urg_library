@@ -22,7 +22,7 @@ while test $# -gt 0; do
       echo -I${includedir}
       ;;
     --libs)
-      echo -L${installlib} -lurg_c
+      echo -lurg_c
       ;;
     *)
       echo "${usage}" 1>&2
