@@ -5,7 +5,7 @@ CFLAGS = -O2 $(INCLUDES) -I../include
 all : $(LIB_URG)
 
 clean :
-	$(RM) *.o $(OBJS)
+	$(RM) *.o $(LIB_URG)
 
 $(LIB_URG) : \
 	$(LIB_URG)(urg_sensor.o) \
