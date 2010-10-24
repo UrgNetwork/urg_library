@@ -155,9 +155,9 @@ extern int urg_start_time_stamp_mode(urg_t *urg);
   \code
   urg_start_time_stamp_mode(&urg);
 
-  before_ticks = urg_ticks();
-  time_stamp = urg_time_stamp();
-  after_ticks = urg_ticks();
+  before_ticks = get_pc_msec_function();
+  time_stamp = urg_time_stamp(&urg);
+  after_ticks = get_pc_msec_function();
 
   // タイムスタンプについての計算
   ...
@@ -170,7 +170,7 @@ extern long urg_time_stamp(urg_t *urg);
 
 
 /*! \~japanese タイムスタンプモードの終了 */
-extern void urg_stop_time_stamp_mode(urg_t *urg);
+extern int urg_stop_time_stamp_mode(urg_t *urg);
 
 
 /*!

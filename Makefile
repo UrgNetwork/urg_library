@@ -12,6 +12,9 @@ clean : release_clean
 	cd current/ && $(MAKE) clean
 	-rmdir $(RELEASE_DIR)
 
+install :
+	cd $(RELEASE_DIR)/$(PACKAGE_JP_DIR) && $(MAKE) install
+
 # !!! use for
 TARGET_DIR = $(PACKAGE_EN_DIR) $(PACKAGE_JP_DIR)
 dist : release_clean

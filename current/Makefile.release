@@ -17,5 +17,5 @@ install : all
 	install -d $(PREFIX)/bin/
 	install -m 755 $(CONFIG_FILE) $(PREFIX)/bin/
 
-$(CONFIG_FILE) : urg_c-config.in
+$(CONFIG_FILE) : urg_c-config.in Makefile
 	cat $(CONFIG_FILE).in | sed "s/PREFIX/$(S_PREFIX)/g" > $(CONFIG_FILE)

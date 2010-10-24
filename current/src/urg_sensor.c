@@ -29,7 +29,7 @@ enum {
     VV_RESPONSE_LINES = 7,
     II_RESPONSE_LINES = 9,
 
-    MAX_TIMEOUT = 120,
+    MAX_TIMEOUT = 140,
 };
 
 
@@ -214,7 +214,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
-            ignore_receive_data(urg, MAX_TIMEOUT);
+            //ignore_receive_data(urg, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
             return change_sensor_baudrate(urg, baudrate, try_baudrate[i]);
@@ -222,9 +222,9 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         } else if (!strcmp(receive_buffer, "0Ee")) {
             // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
             int tm2_expected[] = { 0, EXPECTED_END };
-            ret = scip_response(urg, "TM2\n", tm2_expected,
+            scip_response(urg, "TM2\n", tm2_expected,
                                 MAX_TIMEOUT, NULL, 0);
-            ignore_receive_data(urg, MAX_TIMEOUT);
+            //ignore_receive_data(urg, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
             return change_sensor_baudrate(urg, baudrate, try_baudrate[i]);
@@ -241,6 +241,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
 
             } else {
                 // 応答がないときは、ボーレートを変更して、再度接続を行う
+                ignore_receive_data(urg, MAX_TIMEOUT);
                 continue;
             }
         } else if (!strcmp("00P", receive_buffer)) {
@@ -535,7 +536,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     int ret = 0;
     int n;
     int extended_timeout = urg->timeout
-        + (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
+        + 2 * (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
 
     // エコーバックの取得
     n = connection_readline(&urg->connection,
@@ -611,7 +612,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     if ((urg->specified_scan_times > 0) && (urg->scanning_remain_times > 0)) {
-        if (--urg->scanning_remain_times <= 0) {
+        if (--urg->scanning_remain_times < 0) {
             // データの停止のみを行う
             connection_write(&urg->connection, "QT\n", 3);
         }
@@ -685,13 +686,19 @@ void urg_close(urg_t *urg)
 int urg_start_time_stamp_mode(urg_t *urg)
 {
     const int expected[] = { 0, EXPECTED_END };
+    int n;
 
     if (!urg->is_active) {
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
     // TM0 を発行する
-    return scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
+    n = scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
+    if (n <= 0) {
+        return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+    } else {
+        return 0;
+    }
 }
 
 
@@ -728,16 +735,22 @@ long urg_time_stamp(urg_t *urg)
 }
 
 
-void urg_stop_time_stamp_mode(urg_t *urg)
+int urg_stop_time_stamp_mode(urg_t *urg)
 {
     int expected[] = { 0, EXPECTED_END };
+    int n;
 
     if (!urg->is_active) {
-        return;
+        return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
     // TM2 を発行する
-    scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
+    n = scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
+    if (n <= 0) {
+        return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+    } else {
+        return 0;
+    }
 }
 
 
@@ -770,7 +783,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
                               urg->scanning_first_step + front_index,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
-                              skip_scan, 0);
+                              skip_scan, urg->specified_scan_times);
     }
 
     n = connection_write(&urg->connection, buffer, write_size);

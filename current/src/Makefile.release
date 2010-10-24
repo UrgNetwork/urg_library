@@ -1,5 +1,6 @@
 LIB_URG = liburg_c.a
 
+CC = gcc
 CFLAGS = -O2 $(INCLUDES) -I../include
 
 all : $(LIB_URG)
