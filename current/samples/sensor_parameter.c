@@ -46,7 +46,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    printf("Sensor firmware version: %s\n", urg_sensor_version(&urg));
+    printf("Sensor product type: %s\n", urg_sensor_product_type(&urg));
+    printf("Sensor firmware version: %s\n", urg_sensor_firmware_version(&urg));
     printf("Sensor serial ID: %s\n", urg_sensor_serial_id(&urg));
     printf("Sensor status: %s\n", urg_sensor_status(&urg));
 

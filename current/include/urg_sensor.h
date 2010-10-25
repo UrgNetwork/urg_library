@@ -508,6 +508,19 @@ extern int urg_reboot(urg_t *urg);
 
 /*!
   \~japanese
+  \brief センサ型式を文字列で返す
+
+  センサの型式を文字列で返す。返される文字列はセンサ依存となる。
+
+  \param[in] urg URG センサ管理
+
+  \return センサ型式の文字列
+*/
+extern const char *urg_sensor_product_type(urg_t *urg);
+
+
+/*!
+  \~japanese
   \brief センサのシリアル ID 文字列を返す
 
   センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
@@ -529,7 +542,7 @@ extern const char *urg_sensor_serial_id(urg_t *urg);
 
   \return バージョン文字列
 */
-extern const char *urg_sensor_version(urg_t *urg);
+extern const char *urg_sensor_firmware_version(urg_t *urg);
 
 
 /*!

@@ -1026,7 +1026,8 @@ static char *copy_token(char *dest, char *receive_buffer,
             char *last_p = strchr(p + start_str_len, end_ch);
             if (last_p) {
                 *last_p = '\0';
-                memcpy(dest, p + start_str_len, last_p - (p + start_str_len));
+                memcpy(dest, p + start_str_len,
+                       last_p - (p + start_str_len) + 1);
                 return dest;
             }
         }
@@ -1036,9 +1037,35 @@ static char *copy_token(char *dest, char *receive_buffer,
 }
 
 
-const char *urg_sensor_serial_id(urg_t *urg)
+const char *urg_sensor_product_type(urg_t *urg)
 {
     enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    int vv_expected[] = { 0, EXPECTED_END };
+    int ret;
+    char *p;
+
+    if (!urg->is_active) {
+        return NOT_CONNECTED_MESSAGE;
+    }
+
+    ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
+                        receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret < VV_RESPONSE_LINES) {
+        return RECEIVE_ERROR_MESSAGE;
+    }
+
+    p = copy_token(urg->return_buffer, receive_buffer, "PROD:", ';', ret - 1);
+    return (p) ? p : RECEIVE_ERROR_MESSAGE;
+}
+
+
+const char *urg_sensor_serial_id(urg_t *urg)
+{
+    enum {
+        VV_DATA_LINES = 5,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+    };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int vv_expected[] = { 0, EXPECTED_END };
     int ret;
@@ -1059,9 +1086,12 @@ const char *urg_sensor_serial_id(urg_t *urg)
 }
 
 
-const char *urg_sensor_version(urg_t *urg)
+const char *urg_sensor_firmware_version(urg_t *urg)
 {
-    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
+    enum {
+        VV_DATA_LINES = 5,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+    };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int vv_expected[] = { 0, EXPECTED_END };
     int ret;
@@ -1084,7 +1114,10 @@ const char *urg_sensor_version(urg_t *urg)
 
 const char *urg_sensor_status(urg_t *urg)
 {
-    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
+    enum {
+        VV_DATA_LINES = 5,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+    };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int ii_expected[] = { 0, EXPECTED_END };
     int ret;
