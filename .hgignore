@@ -14,6 +14,7 @@ get_multiecho_intensity
 calculate_xy
 sync_time_stamp
 sensor_parameter
+find_port
 test/urg_sensor_test
 test/serial_test
 test/urg04lx_parameter_test

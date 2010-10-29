@@ -766,6 +766,10 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     urg->specified_scan_times = (scan_times < 0) ? 0 : scan_times;
     urg->scanning_remain_times = urg->specified_scan_times;
     urg->scanning_skip_scan = (skip_scan < 0) ? 0 : skip_scan;
+    if (scan_times >= 100) {
+        // 計測回数が 99 を越える場合は、無限回のスキャンを行う
+        urg->specified_scan_times = 0;
+    }
 
     if (urg->scanning_remain_times == 1) {
 

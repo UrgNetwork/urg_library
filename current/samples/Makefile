@@ -19,6 +19,7 @@ TARGET = \
 	calculate_xy \
 	sync_time_stamp \
 	sensor_parameter \
+	find_port \
 
 all : $(TARGET)
 
@@ -34,7 +35,7 @@ REQUIRE_LIB = $(SRCDIR)/liburg_c.a
 $(REQUIRE_LIB) : $(wildcard $(SRCDIR)/*.[ch])
 	cd $(@D)/ && $(MAKE) $(@F)
 
-get_distance get_distance_intensity get_multiecho get_multiecho_intensity calculate_xy sync_time_stamp sensor_parameter : $(REQUIRE_LIB)
+get_distance get_distance_intensity get_multiecho get_multiecho_intensity calculate_xy sync_time_stamp sensor_parameter find_port : $(REQUIRE_LIB)
 
 # DO NOT DELETE
 
