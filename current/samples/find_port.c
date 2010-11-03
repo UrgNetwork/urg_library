@@ -13,7 +13,7 @@
 
 int main(void)
 {
-    int found_port_size = serial_find_port();
+    int found_port_size = urg_serial_find_port();
     int i;
 
     if (found_port_size == 0) {
@@ -22,7 +22,7 @@ int main(void)
     }
 
     for (i = 0; i < found_port_size; ++i) {
-        printf("%s\n", serial_port_name(i));
+        printf("%s\n", urg_serial_port_name(i));
     }
 
     return 0;

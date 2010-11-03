@@ -11,8 +11,6 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <string.h>
-//#include <unistd.h>
-
 #include <stdio.h>
 
 
@@ -24,6 +22,7 @@ enum {
 
 static char found_ports[MAX_PORTS][DEVICE_NAME_SIZE];
 static int found_ports_size = 0;
+
 static char *search_dir_names[] = {
     "/dev",
     "/dev/usb",
@@ -31,6 +30,7 @@ static char *search_dir_names[] = {
 static char *search_base_names[] = {
     "ttyACM",
     "ttyUSB",
+    "tty.usbmodem",
 };
 
 
@@ -50,7 +50,7 @@ static void check_base_name(const char* dir_name, const char *file_name)
 }
 
 
-int serial_find_port(void)
+int urg_serial_find_port(void)
 {
     int n = sizeof(search_dir_names) / sizeof(search_dir_names[0]);
     int i;
@@ -72,11 +72,20 @@ int serial_find_port(void)
 }
 
 
-const char *serial_port_name(int index)
+const char *urg_serial_port_name(int index)
 {
     if ((index < 0) || (index >= found_ports_size)) {
         return "";
     } else {
         return found_ports[index];
     }
+}
+
+
+int urg_serial_is_urg_port(int index)
+{
+    // Linux の場合、ポートが URG かどうかは断定できない
+    // !!! 余力があれば、dmesg などの出力から判定するようにしてもよい
+    (void)index;
+    return 0;
 }

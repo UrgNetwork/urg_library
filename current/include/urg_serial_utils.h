@@ -11,13 +11,17 @@
 */
 
 
-// !!! port_name == NULL のときは、デバイスの数を返す
-// !!! index 番目のデバイス名を port_name に格納する
-// !!! index に特殊な値を指定したときは、デバイスの数を返す
-// !!! バッファサイズは 64 byte 以上必要です
-//extern int serial_find_port(char *port_name, int index);
+extern int urg_serial_find_port(void);
+extern const char *urg_serial_port_name(int index);
 
-extern int serial_find_port(void);
-extern const char *serial_port_name(int index);
+
+/*!
+  \brief ポートが URG かどうか
+
+  \retval 1 URG のポート
+  \retval 0 不明
+  \retval <0 エラー
+*/
+extern int urg_serial_is_urg_port(int index);
 
 #endif /* !URG_SERIAL_UTILS_H */
