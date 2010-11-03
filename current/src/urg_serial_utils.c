@@ -8,6 +8,7 @@
 */
 
 #include "urg_serial_utils.h"
+#include "urg_detect_os.h"
 
 
 #if defined(URG_WINDOWS_OS)

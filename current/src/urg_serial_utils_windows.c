@@ -11,6 +11,10 @@
 */
 
 #include "urg_serial_utils.h"
+#include <windows.h>
+#include <setupapi.h>
+#include <string.h>
+#include <stdio.h>
 
 
 enum {
