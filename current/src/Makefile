@@ -32,6 +32,8 @@ $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_tcpclient.o) \
 	$(URG_C_LIB)(urg_ring_buffer.o) \
 
+urg_serial_utils.o : urg_serial_utils_windows.c urg_serial_utils_linux.c
+
 # DO NOT DELETE
 
 urg_connection.o: ../include/urg_connection.h ../include/urg_serial.h

@@ -58,7 +58,7 @@ static void sort_ports(void)
     int i;
 
     for (i = 0; i < found_ports_size; ++i) {
-        if (is_urg_ports[i] != 1) {
+        if ((is_urg_ports[i] == 1) && (last_index < i)) {
             swap_item(i, last_index);
             last_index = i + 1;
         }
@@ -160,7 +160,7 @@ const char *urg_serial_port_name(int index)
 }
 
 
-int urg_seril_is_urg_port(int index)
+int urg_serial_is_urg_port(int index)
 {
     if ((index < 0) || (index >= found_ports_size)) {
         return -1;

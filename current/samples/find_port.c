@@ -22,7 +22,11 @@ int main(void)
     }
 
     for (i = 0; i < found_port_size; ++i) {
-        printf("%s\n", urg_serial_port_name(i));
+        printf("%s", urg_serial_port_name(i));
+        if (urg_serial_is_urg_port(i)) {
+          printf(" [URG]");
+        }
+        printf("\n");
     }
 
     return 0;
