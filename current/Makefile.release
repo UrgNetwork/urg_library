@@ -4,6 +4,7 @@ PREFIX = /usr/local
 
 CONFIG_FILE = urg_c-config
 S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
+S_LIBS = $(shell if test x$(MSYSTEM) == x"MINGW32"; then echo "-lwsock32 -lsetupapi"; else echo "-lrt"; fi)
 all : $(CONFIG_FILE)
 	cd src/ && $(MAKE)
 
@@ -19,4 +20,4 @@ install : all
 	install -m 755 $(CONFIG_FILE) $(PREFIX)/bin/
 
 $(CONFIG_FILE) : urg_c-config.in Makefile
-	cat $(CONFIG_FILE).in | sed "s/PREFIX/$(S_PREFIX)/g" > $(CONFIG_FILE)
+	cat $(CONFIG_FILE).in | sed "s/PREFIX/$(S_PREFIX)/g" | sed "s/LIBS/$(S_LIBS)/g" > $(CONFIG_FILE)
