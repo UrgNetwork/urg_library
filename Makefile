@@ -10,7 +10,7 @@ all :
 
 clean : release_clean
 	cd current/ && $(MAKE) clean
-	-rmdir $(RELEASE_DIR)
+	$(RM) -rf $(RELEASE_DIR)
 
 install :
 	cd $(RELEASE_DIR)/$(PACKAGE_JP_DIR) && $(MAKE) install
