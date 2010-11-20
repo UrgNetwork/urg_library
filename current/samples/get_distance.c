@@ -2,6 +2,7 @@
   \~japanese
   \example get_distance.c 距離データを取得する
 
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -9,10 +10,9 @@
 
 #include "urg_sensor.h"
 #include "urg_utils.h"
-#include <math.h>
-#include <stdio.h>
+#include "open_urg_sensor.h"
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 
 
 static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
@@ -58,32 +58,12 @@ int main(int argc, char *argv[])
         CAPTURE_TIMES = 10,
     };
     urg_t urg;
-    urg_connection_type_t connection_type = URG_SERIAL;
     long *data = NULL;
     long time_stamp;
     int n;
     int i;
-#if defined(URG_WINDOWS_OS)
-    const char *device = "COM4";
-#elif defined(URG_LINUX_OS)
-    const char *device = "/dev/ttyACM0";
-#else
-#endif
-    long baudrate_or_port = 115200;
-    const char *ip_address = "192.168.0.10";
 
-    // \~japanese 接続タイプの切替え
-    for (i = 1; i < argc; ++i) {
-        if (!strcmp(argv[i], "-e")) {
-            connection_type = URG_ETHERNET;
-            baudrate_or_port = 10940;
-            device = ip_address;
-        }
-    }
-
-    // \~japanese 接続
-    if (urg_open(&urg, connection_type, device, baudrate_or_port) < 0) {
-        printf("urg_open: %s\n", urg_error(&urg));
+    if (open_urg_sensor(&urg, argc, argv) < 0) {
         return 1;
     }
 
