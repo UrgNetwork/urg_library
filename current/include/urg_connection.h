@@ -10,6 +10,10 @@
   $Id$
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "urg_serial.h"
 #include "urg_tcpclient.h"
 
@@ -178,5 +182,9 @@ extern int connection_read(urg_connection_t *connection,
 */
 extern int connection_readline(urg_connection_t *connection,
                                char *data, int max_size, int timeout);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !URG_CONNECTION_H */

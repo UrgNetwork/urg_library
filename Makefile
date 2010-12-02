@@ -12,7 +12,7 @@ clean : release_clean
 	cd current/ && $(MAKE) clean
 	$(RM) -rf $(RELEASE_DIR)
 
-install :
+install : dist
 	cd $(RELEASE_DIR)/$(PACKAGE_JP_DIR) && $(MAKE) install
 
 # !!! use for

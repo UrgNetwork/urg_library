@@ -14,6 +14,8 @@
 #include <SDL.h>
 #include <math.h>
 
+#include <stdio.h>
+
 
 #if defined(URG_WINDOWS_OS)
 static const char *serial_device = "COM4";
@@ -159,6 +161,7 @@ int main(int argc, char *argv[])
     urg_t urg;
     long *data = NULL;
     unsigned short *intensity = NULL;
+    long timestamp;
     int data_size;
 
 
@@ -195,19 +198,19 @@ int main(int argc, char *argv[])
         int n;
         switch (mode.measurement_type) {
         case URG_DISTANCE:
-            n = urg_get_distance(&urg, data, NULL);
+            n = urg_get_distance(&urg, data, &timestamp);
             break;
 
         case URG_DISTANCE_INTENSITY:
-            n = urg_get_distance_intensity(&urg, data, intensity, NULL);
+            n = urg_get_distance_intensity(&urg, data, intensity, &timestamp);
             break;
 
         case URG_MULTIECHO:
-            n = urg_get_multiecho(&urg, data, NULL);
+            n = urg_get_multiecho(&urg, data, &timestamp);
             break;
 
         case URG_MULTIECHO_INTENSITY:
-            n = urg_get_multiecho_intensity(&urg, data, intensity, NULL);
+            n = urg_get_multiecho_intensity(&urg, data, intensity, &timestamp);
             break;
 
         default:
@@ -219,6 +222,8 @@ int main(int argc, char *argv[])
             printf("urg_get_function: %s\n", urg_error(&urg));
             break;
         }
+
+        //fprintf(stderr, "%ld\n", timestamp);
 
         plot_data(&urg, data, intensity, n, mode.is_multiecho);
         if (plotter_is_quit()) {

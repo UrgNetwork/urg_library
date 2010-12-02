@@ -4,9 +4,10 @@
 
   \author Satofumi KAMIMURA
 
-  \todo glDrawElements() を使うように修正する
-
   $Id$
+
+  \todo glDrawElements() を使うように修正する
+  \todo MAX_POINTS の 1081 の数をセンサからの情報で初期化する
 */
 
 #define GL_GLEXT_PROTOTYPES 1
@@ -100,6 +101,7 @@ static void opengl_setup(void)
 static void draw_points(void)
 {
     int memory_size;
+
     if (points_size <= 0) {
         return;
     }
