@@ -774,7 +774,6 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     }
 
     if (urg->scanning_remain_times == 1) {
-
         // レーザ発光を指示
         urg_laser_on(urg);
 
