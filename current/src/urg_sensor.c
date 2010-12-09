@@ -4,6 +4,8 @@
   \author Satofumi KAMIMURA
 
   $Id$
+
+  \todo Mx 計測中に他の Mx コマンドを送信したときに、適切に動作するようにする
 */
 
 #include "urg_sensor.h"
@@ -815,6 +817,11 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
     }
 
+    // !!! Mx 系, Nx 系の計測中のときは、QT を発行してから
+    // !!! 計測開始コマンドを送信するようにする
+    // !!! ただし、MD 計測中に MD を発行するように、同じコマンドの場合は
+    // !!! Mx 系, Nx 系の計測は上書きすることができるようにする
+
     // 指定されたタイプのパケットを生成し、送信する
     switch (type) {
     case URG_DISTANCE:
@@ -1111,7 +1118,7 @@ const char *urg_sensor_firmware_version(urg_t *urg)
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "FIRM:", '(', ret - 1);
+    p = copy_token(urg->return_buffer, receive_buffer, "FIRM:", ' ', ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
