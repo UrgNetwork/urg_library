@@ -7,9 +7,11 @@ S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
 S_LIBS = $(shell if test x$(MSYSTEM) == x"MINGW32"; then echo "-lwsock32 -lsetupapi"; else echo "-lrt"; fi)
 all : $(CONFIG_FILE)
 	cd src/ && $(MAKE)
+	cd samples/ && $(MAKE)
 
 clean :
 	cd src/ && $(MAKE) clean
+	cd samples/ && $(MAKE) clean
 
 install : all
 	install -d $(PREFIX)/include/urg_c/

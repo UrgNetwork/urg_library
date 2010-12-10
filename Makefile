@@ -37,9 +37,16 @@ dist : release_clean
 	ruby split_comment.rb -e current/include/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/include/
 	ruby split_comment.rb -e current/src/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/src/
 	ruby split_comment.rb -e current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/
+	ruby split_comment.rb -e current/samples/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/
 	ruby split_comment.rb -j current/include/*.h $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/include/
 	ruby split_comment.rb -j current/src/*.c $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/src/
 	ruby split_comment.rb -j current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/samples/
+	ruby split_comment.rb -j current/samples/*.h $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/samples/
+	for i in $(TARGET_DIR) ; \
+	do \
+		cd $(PWD); \
+		cd $(RELEASE_DIR)/$$i && $(MAKE) && $(MAKE) clean; \
+	done
 	for i in $(TARGET_DIR) ; \
 	do \
 		cd $(PWD); \

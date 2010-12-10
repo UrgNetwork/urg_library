@@ -10,7 +10,7 @@ all : $(TARGET)
 clean :
 	$(RM) *.o $(TARGET)
 
-$(TARGET) : $(URG_LIB)
+$(TARGET) : open_urg_sensor.o $(URG_LIB)
 
 $(URG_LIB) :
 	cd $(@D)/ && $(MAKE) $(@F)
