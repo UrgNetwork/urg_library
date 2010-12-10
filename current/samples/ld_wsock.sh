@@ -1,5 +1,5 @@
 #!/bin/sh
 
-if test x$MSYSTEM == x"MINGW32"; then
+if [ "${MSYSTEM}" = "MINGW32" ] ; then
   echo "-lwsock32"
 fi
