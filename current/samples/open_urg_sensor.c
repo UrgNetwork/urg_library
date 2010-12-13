@@ -21,6 +21,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
 #if defined(URG_WINDOWS_OS)
     const char *device = "COM4";
 #elif defined(URG_LINUX_OS)
+    //const char *device = "/dev/ttyUSB0";
     const char *device = "/dev/ttyACM0";
 #else
 #endif
