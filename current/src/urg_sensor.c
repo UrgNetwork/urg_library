@@ -1043,24 +1043,28 @@ int urg_reboot(urg_t *urg)
 
 
 static char *copy_token(char *dest, char *receive_buffer,
-                        const char *start_str, char end_ch, int lines)
+                        const char *start_str, const char *end_ch, int lines)
 {
     char *p = receive_buffer;
     int start_str_len = strlen(start_str);
+    int end_ch_len = strlen(end_ch);
     int i;
+    int j;
 
-    for (i = 0; i < lines; ++i) {
-        if (!strncmp(p, start_str, start_str_len)) {
+    for (j = 0; j < end_ch_len; ++j) {
+        for (i = 0; i < lines; ++i) {
+            if (!strncmp(p, start_str, start_str_len)) {
 
-            char *last_p = strchr(p + start_str_len, end_ch);
-            if (last_p) {
-                *last_p = '\0';
-                memcpy(dest, p + start_str_len,
-                       last_p - (p + start_str_len) + 1);
-                return dest;
+                char *last_p = strchr(p + start_str_len, end_ch[j]);
+                if (last_p) {
+                    *last_p = '\0';
+                    memcpy(dest, p + start_str_len,
+                           last_p - (p + start_str_len) + 1);
+                    return dest;
+                }
             }
+            p += strlen(p) + 1;
         }
-        p += strlen(p) + 1;
     }
     return NULL;
 }
@@ -1084,7 +1088,7 @@ const char *urg_sensor_product_type(urg_t *urg)
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "PROD:", ';', ret - 1);
+    p = copy_token(urg->return_buffer, receive_buffer, "PROD:", ";", ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1110,7 +1114,7 @@ const char *urg_sensor_serial_id(urg_t *urg)
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "SERI:", ';', ret - 1);
+    p = copy_token(urg->return_buffer, receive_buffer, "SERI:", ";", ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1136,7 +1140,7 @@ const char *urg_sensor_firmware_version(urg_t *urg)
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "FIRM:", ' ', ret - 1);
+    p = copy_token(urg->return_buffer, receive_buffer, "FIRM:", " (", ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1162,7 +1166,7 @@ const char *urg_sensor_status(urg_t *urg)
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "STAT:", ';', ret - 1);
+    p = copy_token(urg->return_buffer, receive_buffer, "STAT:", ";", ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
