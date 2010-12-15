@@ -1045,13 +1045,14 @@ int urg_reboot(urg_t *urg)
 static char *copy_token(char *dest, char *receive_buffer,
                         const char *start_str, const char *end_ch, int lines)
 {
-    char *p = receive_buffer;
     int start_str_len = strlen(start_str);
     int end_ch_len = strlen(end_ch);
     int i;
     int j;
 
     for (j = 0; j < end_ch_len; ++j) {
+        const char *p = receive_buffer;
+
         for (i = 0; i < lines; ++i) {
             if (!strncmp(p, start_str, start_str_len)) {
 
