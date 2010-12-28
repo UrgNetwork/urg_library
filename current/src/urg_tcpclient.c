@@ -1,4 +1,4 @@
-// http://www.ne.jp/asahi/hishidama/home/tech/lang/socket.html より
+// http://www.ne.jp/asahi/hishidama/home/tech/lang/socket.html
 
 #include "urg_detect_os.h"
 #include <unistd.h>
@@ -44,13 +44,15 @@ static int tcpclient_buffer_read(urg_tcpclient_t* cli, char* data, int size)
 
 int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 {
-#if !defined(URG_WINDOWS_OS)
     enum { Connect_timeout_second = 2 };
-    fd_set rmask,wmask;
-    struct timeval tv= { Connect_timeout_second, 0 };
+    fd_set rmask, wmask;
+    struct timeval tv = { Connect_timeout_second, 0 };
+#if defined(URG_WINDOWS_OS)
+    u_long flag;
+#else
     int flag;
-    int ret;
 #endif
+    int ret;
 
     cli->pushed_back = -1; // no pushed back char.
 
@@ -85,14 +87,19 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
 #if defined(URG_WINDOWS_OS)
     //ノンブロックに変更
+    flag = 1;
     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
 
     if (connect(cli->sock_desc, (const struct sockaddr *)&(cli->server_addr),
                 cli->sock_addr_size) == SOCKET_ERROR) {
-        int errno = WSAGetLastError();
-        if (errno != WSAEWOULDBLOCK) {
+        int error_number = WSAGetLastError();
+        if (error_number != WSAEWOULDBLOCK) {
             return -1;
         }
+
+        FD_ZERO(&rmask);
+        FD_SET((SOCKET)cli->sock_desc, &rmask);
+        wmask = rmask;
 
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
@@ -103,7 +110,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     }
     //ブロックモードにする
     flag = 0;
-    ioctlsocket(soc, FIONBIO, &flag);
+    ioctlsocket(cli->sock_desc, FIONBIO, &flag);
 
 #else
     //ノンブロックに変更
@@ -120,7 +127,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         // EINPROGRESS:コネクション要求は始まったが、まだ完了していない
         FD_ZERO(&rmask);
         FD_SET(cli->sock_desc, &rmask);
-        wmask=rmask;
+        wmask = rmask;
 
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
