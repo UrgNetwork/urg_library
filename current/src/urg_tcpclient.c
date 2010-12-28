@@ -1,3 +1,5 @@
+// http://www.ne.jp/asahi/hishidama/home/tech/lang/socket.html より
+
 #include "urg_detect_os.h"
 #include <unistd.h>
 #include <string.h>
@@ -5,8 +7,13 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
+#else
+#include <fcntl.h>
+#include <errno.h>
 #endif
 #include "urg_tcpclient.h"
+
+#include <stdio.h>
 
 
 static void tcpclient_buffer_init(urg_tcpclient_t* cli)
@@ -37,6 +44,14 @@ static int tcpclient_buffer_read(urg_tcpclient_t* cli, char* data, int size)
 
 int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 {
+#if !defined(URG_WINDOWS_OS)
+    enum { Connect_timeout_second = 2 };
+    fd_set rmask,wmask;
+    struct timeval tv= { Connect_timeout_second, 0 };
+    int flag;
+    int ret;
+#endif
+
     cli->pushed_back = -1; // no pushed back char.
 
 #if defined(URG_WINDOWS_OS)
@@ -60,19 +75,65 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     }
 
     memset((char*)&(cli->server_addr), 0, sizeof(cli->sock_addr_size));
-    cli->server_addr.sin_family      = AF_INET;
-    cli->server_addr.sin_port        = htons(port_num);
+    cli->server_addr.sin_family = AF_INET;
+    cli->server_addr.sin_port = htons(port_num);
 
     /* bind is not required, and port number is dynamic */
     if ((cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) == INADDR_NONE) {
         return -1;
     }
 
-    if (connect(cli->sock_desc, (const struct sockaddr *) &(cli->server_addr),
-                 cli->sock_addr_size) < 0) {
-        tcpclient_close(cli);
-        return -1;
+#if defined(URG_WINDOWS_OS)
+    //ノンブロックに変更
+    ioctlsocket(cli->sock_desc, FIONBIO, &flag);
+
+    if (connect(cli->sock_desc, (const struct sockaddr *)&(cli->server_addr),
+                cli->sock_addr_size) == SOCKET_ERROR) {
+        int errno = WSAGetLastError();
+        if (errno != WSAEWOULDBLOCK) {
+            return -1;
+        }
+
+        ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
+        if (ret == 0) {
+            // タイムアウト
+            // !!!
+            return -2;
+        }
     }
+    //ブロックモードにする
+    flag = 0;
+    ioctlsocket(soc, FIONBIO, &flag);
+
+#else
+    //ノンブロックに変更
+    flag = fcntl(cli->sock_desc, F_GETFL, 0);
+    fcntl(cli->sock_desc, F_SETFL, flag | O_NONBLOCK);
+
+    if (connect(cli->sock_desc, (const struct sockaddr *)&(cli->server_addr),
+                cli->sock_addr_size) < 0) {
+        if (errno != EINPROGRESS) {
+            tcpclient_close(cli);
+            return -1;
+        }
+
+        // EINPROGRESS:コネクション要求は始まったが、まだ完了していない
+        FD_ZERO(&rmask);
+        FD_SET(cli->sock_desc, &rmask);
+        wmask=rmask;
+
+        ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
+        if (ret == 0) {
+            // タイムアウト処理
+            // !!!
+            tcpclient_close(cli);
+            return -2;
+        }
+        //フラグを元に戻す
+        fcntl(cli->sock_desc, F_SETFL, flag);
+    }
+#endif
+
     return 0;
 }
 

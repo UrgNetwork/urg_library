@@ -1,6 +1,5 @@
 #include "urg_ring_buffer.h"
 #include "urg_detect_os.h"
-/* sockets */
 #include <sys/types.h>
 #if defined(URG_WINDOWS_OS)
 #include <winsock2.h>

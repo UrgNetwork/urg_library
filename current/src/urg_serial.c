@@ -63,6 +63,7 @@ int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
     if ((filled == 0) && is_timeout) {
         return -1;
     } else {
+        //fprintf(stderr, "%s\n", data);
         return filled;
     }
 }
