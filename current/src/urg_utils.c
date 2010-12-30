@@ -1,5 +1,5 @@
 /*!
-  \brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
+  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
 
   \author Satofumi KAMIMURA
 
@@ -80,7 +80,7 @@ void urg_distance_min_max(const urg_t *urg,
 
     *min_distance = urg->min_distance;
 
-    // urg_set_communication_data_size() ã‚’åæ˜ ã—ãŸè·é›¢ã‚’è¿”ã™
+    // urg_set_communication_data_size() ‚ð”½‰f‚µ‚½‹——£‚ð•Ô‚·
     *max_distance =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
         max(urg->max_distance, 4095) : urg->max_distance;

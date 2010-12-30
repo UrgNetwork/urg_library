@@ -1,6 +1,6 @@
 /*!
   \file
-  \brief é€šä¿¡ã®å‡¦ç†
+  \brief ’ÊM‚Ìˆ—
 
   \author Satofumi KAMIMURA
 

@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_multiecho_intensity.c è·é›¢ãƒ»å¼·åº¦ãƒ‡ãƒ¼ã‚¿(ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼)ã‚’å–å¾—ã™ã‚‹
+  \example get_multiecho_intensity.c ‹——£E‹­“xƒf[ƒ^(ƒ}ƒ‹ƒ`ƒGƒR[)‚ğæ“¾‚·‚é
 
   \author Satofumi KAMIMURA
 
@@ -31,14 +31,14 @@ static void print_echo_data(long data[], unsigned short intensity[],
 }
 
 
-// \~japanese è·é›¢ã€å¼·åº¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºã™ã‚‹
+// \~japanese ‹——£A‹­“x‚Ìƒf[ƒ^‚ğ•\¦‚·‚é
 static void print_data(urg_t *urg, long data[],
                        unsigned short intensity[], int data_n, long time_stamp)
 {
 #if 1
     (void)data_n;
 
-    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
+    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
     int front_index = urg_step2index(urg, 0);
     print_echo_data(data, intensity, front_index);
     printf("%ld\n", time_stamp);
@@ -47,7 +47,7 @@ static void print_data(urg_t *urg, long data[],
     (void)urg;
     int i;
 
-    // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
+    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
     printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
         print_echo_data(data, intensity, i);
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+    // \~japanese ƒf[ƒ^æ“¾
     urg_start_measurement(&urg, URG_MULTIECHO_INTENSITY, CAPTURE_TIMES, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, intensity, n, time_stamp);
     }
 
-    // \~japanese åˆ‡æ–­
+    // \~japanese Ø’f
     free(data);
     free(intensity);
     urg_close(&urg);

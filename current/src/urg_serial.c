@@ -1,6 +1,6 @@
 /*!
   \file
-  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+  \brief ƒVƒŠƒAƒ‹’ÊM
 
   \author Satofumi KAMIMURA
 
@@ -23,7 +23,7 @@ enum {
 #endif
 
 
-// æ”¹è¡Œã‹ã©ã†ã‹ã®åˆ¤å®š
+// ‰üs‚©‚Ç‚¤‚©‚Ì”»’è
 static int isLF(const char ch)
 {
     return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
@@ -39,7 +39,7 @@ static void serial_ungetc(urg_serial_t *serial, char ch)
 
 int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
 {
-    /* ï¼‘æ–‡å­—ãšã¤èª­ã¿å‡ºã—ã¦è©•ä¾¡ã™ã‚‹ */
+    /* ‚P•¶š‚¸‚Â“Ç‚İo‚µ‚Ä•]‰¿‚·‚é */
     int filled = 0;
     int is_timeout = 0;
 

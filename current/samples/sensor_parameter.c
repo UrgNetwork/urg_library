@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example sensor_parameter.c ã‚»ãƒ³ã‚µæƒ…å ±ã®å‡ºåŠ›
+  \example sensor_parameter.c ƒZƒ“ƒTî•ñ‚Ìo—Í
 
   \author Satofumi KAMIMURA
 

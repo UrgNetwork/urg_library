@@ -3,7 +3,7 @@
 
 /*!
   \file
-  \brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
+  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
 
   \author Satofumi KAMIMURA
 
@@ -16,11 +16,11 @@ extern const char *urg_serial_port_name(int index);
 
 
 /*!
-  \brief ãƒãƒ¼ãƒˆãŒ URG ã‹ã©ã†ã‹
+  \brief ƒ|[ƒg‚ª URG ‚©‚Ç‚¤‚©
 
-  \retval 1 URG ã®ãƒãƒ¼ãƒˆ
-  \retval 0 ä¸æ˜
-  \retval <0 ã‚¨ãƒ©ãƒ¼
+  \retval 1 URG ‚Ìƒ|[ƒg
+  \retval 0 •s–¾
+  \retval <0 ƒGƒ‰[
 */
 extern int urg_serial_is_urg_port(int index);
 

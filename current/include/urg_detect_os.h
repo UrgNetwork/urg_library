@@ -3,7 +3,7 @@
 
 /*!
   \file
-  \brief OS の検出
+  \brief OS �̌��o
 
   \author Satofumi KAMIMURA
 
@@ -21,7 +21,7 @@
 #define URG_LINUX_OS
 
 #else
-// 検出できないときを、Mac 扱いにしてしまう
+// ���o�ł��Ȃ��Ƃ����AMac �����ɂ��Ă��܂�
 #define MAC_OS
 #endif
 

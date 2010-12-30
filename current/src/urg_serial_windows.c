@@ -1,6 +1,6 @@
 /*!
   \file
-  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+  \brief ƒVƒŠƒAƒ‹’ÊM
 
   \author Satofumi KAMIMURA
 
@@ -34,13 +34,13 @@ static void set_timeout(urg_serial_t *serial, int timeout)
 
 int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 {
-    // COM10 ä»¥é™ã¸ã®å¯¾å¿œç”¨
+    // COM10 ˆÈ~‚Ö‚Ì‘Î‰—p
     enum { NameLength = 11 };
     char adjusted_device[NameLength];
 
     serial_initialize(serial);
 
-    /* COM ãƒãƒ¼ãƒˆã‚’é–‹ã */
+    /* COM ƒ|[ƒg‚ğŠJ‚­ */
     _snprintf(adjusted_device, NameLength, "\\\\.\\%s", device);
     serial->hCom = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
                                0, NULL, OPEN_EXISTING,
@@ -52,16 +52,16 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
         return -1;
     }
 
-    /* é€šä¿¡ã‚µã‚¤ã‚ºã®æ›´æ–° */
+    /* ’ÊMƒTƒCƒY‚ÌXV */
     SetupComm(serial->hCom, 4096 * 8, 4096);
 
-    /* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã®å¤‰æ›´ */
+    /* ƒ{[ƒŒ[ƒg‚Ì•ÏX */
     serial_set_baudrate(serial, baudrate);
 
-    /* ã‚·ãƒªã‚¢ãƒ«åˆ¶å¾¡æ§‹é€ ä½“ã®åˆæœŸåŒ– */
+    /* ƒVƒŠƒAƒ‹§Œä\‘¢‘Ì‚Ì‰Šú‰» */
     serial->has_last_ch = False;
 
-    /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®š */
+    /* ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’è */
     serial->current_timeout = 0;
     set_timeout(serial, serial->current_timeout);
 
@@ -169,7 +169,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         return 0;
     }
 
-    /* æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—ãŒã‚ã‚Œã°ã€æ›¸ãå‡ºã™ */
+    /* ‘‚«–ß‚µ‚½‚P•¶š‚ª‚ ‚ê‚ÎA‘‚«o‚· */
     if (serial->has_last_ch) {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
@@ -186,7 +186,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
     if (buffer_size < read_n) {
-        // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã§è¶³ã‚Šãªã‘ã‚Œã°ã€ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¶³ã™
+        // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚Å‘«‚è‚È‚¯‚ê‚ÎAƒf[ƒ^‚ğ“Ç‚İ‘«‚·
         char buffer[RING_BUFFER_SIZE];
         int n = internal_receive(buffer,
                                  ring_capacity(&serial->ring) - buffer_size,
@@ -195,7 +195,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     }
     buffer_size = ring_size(&serial->ring);
 
-    // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
+    // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚ğ•Ô‚·
     if (read_n > buffer_size) {
         read_n = buffer_size;
     }
@@ -204,7 +204,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         filled += read_n;
     }
 
-    // ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãã§èª­ã¿å‡ºã™
+    // ƒf[ƒ^‚ğƒ^ƒCƒ€ƒAƒEƒg•t‚«‚Å“Ç‚İo‚·
     filled += internal_receive(&data[filled],
                                max_size - filled, serial, timeout);
     return filled;

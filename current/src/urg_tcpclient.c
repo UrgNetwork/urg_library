@@ -86,7 +86,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     }
 
 #if defined(URG_WINDOWS_OS)
-    //ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
+    //ƒmƒ“ƒuƒƒbƒN‚É•ÏX
     flag = 1;
     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
 
@@ -103,17 +103,17 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
-            // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
+            // ƒ^ƒCƒ€ƒAƒEƒg
             // !!!
             return -2;
         }
     }
-    //ãƒ–ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
+    //ƒuƒƒbƒNƒ‚[ƒh‚É‚·‚é
     flag = 0;
     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
 
 #else
-    //ãƒŽãƒ³ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
+    //ƒmƒ“ƒuƒƒbƒN‚É•ÏX
     flag = fcntl(cli->sock_desc, F_GETFL, 0);
     fcntl(cli->sock_desc, F_SETFL, flag | O_NONBLOCK);
 
@@ -124,19 +124,19 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
             return -1;
         }
 
-        // EINPROGRESS:ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³è¦æ±‚ã¯å§‹ã¾ã£ãŸãŒã€ã¾ã å®Œäº†ã—ã¦ã„ãªã„
+        // EINPROGRESS:ƒRƒlƒNƒVƒ‡ƒ“—v‹‚ÍŽn‚Ü‚Á‚½‚ªA‚Ü‚¾Š®—¹‚µ‚Ä‚¢‚È‚¢
         FD_ZERO(&rmask);
         FD_SET(cli->sock_desc, &rmask);
         wmask = rmask;
 
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
-            // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå‡¦ç†
+            // ƒ^ƒCƒ€ƒAƒEƒgˆ—
             // !!!
             tcpclient_close(cli);
             return -2;
         }
-        //ãƒ•ãƒ©ã‚°ã‚’å…ƒã«æˆ»ã™
+        //ƒtƒ‰ƒO‚ðŒ³‚É–ß‚·
         fcntl(cli->sock_desc, F_SETFL, flag);
     }
 #endif

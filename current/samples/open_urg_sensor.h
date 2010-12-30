@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief URG との接続
+  \brief URG �Ƃ̐ڑ�
 
   \~
   \author Satofumi KAMIMURA

@@ -1,6 +1,6 @@
 /*!
   \file
-  \brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
+  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@
 
   \author Satofumi KAMIMURA
 
@@ -54,9 +54,9 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
     int free_size = ring_capacity(ring) - ring_size(ring);
     int push_size = (size > free_size) ? free_size : size;
 
-    // ãƒ‡ãƒ¼ã‚¿é…ç½®
+    // ƒf[ƒ^”z’u
     if (ring->first <= ring->last) {
-        // last ã‹ã‚‰ buffer_size çµ‚ç«¯ã¾ã§ã«é…ç½®
+        // last ‚©‚ç buffer_size I’[‚Ü‚Å‚É”z’u
         int left_size = 0;
         int to_end = ring->buffer_size - ring->last;
         int move_size = (to_end > push_size) ? push_size : to_end;
@@ -67,12 +67,12 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
 
         left_size = push_size - move_size;
         if (left_size > 0) {
-            // 0 ã‹ã‚‰ first ã®å‰ã¾ã§ã‚’é…ç½®
+            // 0 ‚©‚ç first ‚Ì‘O‚Ü‚Å‚ð”z’u
             byte_move(ring->buffer, &data[move_size], left_size);
             ring->last = left_size;
         }
     } else {
-        // last ã‹ã‚‰ first ã®å‰ã¾ã§é…ç½®
+        // last ‚©‚ç first ‚Ì‘O‚Ü‚Å”z’u
         byte_move(&ring->buffer[ring->last], data, size);
         ring->last += push_size;
     }
@@ -82,7 +82,7 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
 
 int ring_read(ring_buffer_t *ring, char *buffer, int size)
 {
-    // ãƒ‡ãƒ¼ã‚¿å–å¾—
+    // ƒf[ƒ^Žæ“¾
     int now_size = ring_size(ring);
     int pop_size = (size > now_size) ? now_size : size;
 
@@ -91,7 +91,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
         ring->first += pop_size;
 
     } else {
-        // first ã‹ã‚‰ buffer_size çµ‚ç«¯ã¾ã§ã‚’é…ç½®
+        // first ‚©‚ç buffer_size I’[‚Ü‚Å‚ð”z’u
         int left_size = 0;
         int to_end = ring->buffer_size - ring->first;
         int move_size = (to_end > pop_size) ? pop_size : to_end;
@@ -102,7 +102,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
 
         left_size = pop_size - move_size;
         if (left_size > 0) {
-            // 0 ã‹ã‚‰ last ã®å‰ã¾ã§ã‚’é…ç½®
+            // 0 ‚©‚ç last ‚Ì‘O‚Ü‚Å‚ð”z’u
             byte_move(&buffer[move_size], ring->buffer, left_size);
 
             ring->first = left_size;

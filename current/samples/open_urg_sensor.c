@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief URG との接続
+  \brief URG �Ƃ̐ڑ�
 
   \~
   \author Satofumi KAMIMURA
@@ -30,7 +30,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
     const char *ip_address = "192.168.0.10";
     int i;
 
-    // \~japanese 接続タイプの切替え
+    // \~japanese �ڑ��^�C�v�̐ؑւ�
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
@@ -39,7 +39,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
         }
     }
 
-    // \~japanese 接続
+    // \~japanese �ڑ�
     if (urg_open(urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s\n", urg_error(urg));
         return -1;

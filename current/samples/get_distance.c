@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_distance.c è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+  \example get_distance.c ‹——£ƒf[ƒ^‚ğæ“¾‚·‚é
 
   \~
   \author Satofumi KAMIMURA
@@ -20,7 +20,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 #if 1
     (void)data_n;
 
-    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
+    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
     int front_index = urg_step2index(urg, 0);
     printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
 
@@ -31,7 +31,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     long min_distance;
     long max_distance;
 
-    // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã® X-Y ã®ä½ç½®ã‚’è¡¨ç¤º
+    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚Ì X-Y ‚ÌˆÊ’u‚ğ•\¦
     urg_distance_min_max(urg, &min_distance, &max_distance);
     for (i = 0; i < data_n; ++i) {
         long l = data[i];
@@ -73,9 +73,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
+    // \~japanese ƒf[ƒ^æ“¾
 #if 0
-    // \~japanese ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ç¯„å›²ã‚’å¤‰æ›´ã™ã‚‹å ´åˆ
+    // \~japanese ƒf[ƒ^‚Ìæ“¾”ÍˆÍ‚ğ•ÏX‚·‚éê‡
     urg_set_scanning_parameter(&urg,
                                urg_deg2step(&urg, -90),
                                urg_deg2step(&urg, +90), 0);
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, n, time_stamp);
     }
 
-    // \~japanese åˆ‡æ–­
+    // \~japanese Ø’f
     free(data);
     urg_close(&urg);
 

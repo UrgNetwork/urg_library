@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
+  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
 
   \~
   \author Satofumi KAMIMURA
@@ -22,11 +22,11 @@ extern "C" {
 
 /*!
   \~japanese
-  \brief URG ã®ã‚¨ãƒ©ãƒ¼ã‚’ç¤ºã™æ–‡å­—åˆ—ã‚’è¿”ã™
+  \brief URG ‚ÌƒGƒ‰[‚ğ¦‚·•¶š—ñ‚ğ•Ô‚·
 
-  \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+  \param[in] urg URG ƒZƒ“ƒTŠÇ—
 
-  \retval URG ã®ã‚¨ãƒ©ãƒ¼ã‚’ç¤ºã™æ–‡å­—åˆ—
+  \retval URG ‚ÌƒGƒ‰[‚ğ¦‚·•¶š—ñ
 
   \~
   Example
@@ -41,13 +41,13 @@ extern const char *urg_error(const urg_t *urg);
 
 /*!
   \~japanese
-  \brief ã‚»ãƒ³ã‚µãŒè¿”ã™è·é›¢ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã‚’è¿”ã™
+  \brief ƒZƒ“ƒT‚ª•Ô‚·‹——£‚ÌÅ‘å’lAÅ¬’l‚ğ•Ô‚·
 
-  ã‚»ãƒ³ã‚µãŒè¿”ã™è·é›¢ã‚’ [æœ€å°å€¤, æœ€å¤§å€¤] ã§è¿”ã—ã¾ã™ã€‚
+  ƒZƒ“ƒT‚ª•Ô‚·‹——£‚ğ [Å¬’l, Å‘å’l] ‚Å•Ô‚µ‚Ü‚·B
 
-  \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
-  \param[out] min_distance æœ€å°å€¤ [mm]
-  \param[out] max_distance æœ€å¤§å€¤ [mm]
+  \param[in] urg URG ƒZƒ“ƒTŠÇ—
+  \param[out] min_distance Å¬’l [mm]
+  \param[out] max_distance Å‘å’l [mm]
 
   \~
   Example
@@ -69,19 +69,19 @@ extern void urg_distance_min_max(const urg_t *urg,
 
 /*!
   \~japanese
-  \brief è¨ˆæ¸¬ step ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã‚’è¿”ã™
+  \brief Œv‘ª step ‚ÌÅ‘å’lAÅ¬’l‚ğ•Ô‚·
 
-  urg_set_scanning_parameter() ã§æŒ‡å®šã§ãã‚‹ç¯„å›²ã‚’ [æœ€å°å€¤, æœ€å¤§å€¤] ã§è¿”ã™ã€‚
+  urg_set_scanning_parameter() ‚Åw’è‚Å‚«‚é”ÍˆÍ‚ğ [Å¬’l, Å‘å’l] ‚Å•Ô‚·B
 
-  \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
-  \param[out] min_step æœ€å°å€¤
-  \param[out] max_step æœ€å¤§å€¤
+  \param[in] urg URG ƒZƒ“ƒTŠÇ—
+  \param[out] min_step Å¬’l
+  \param[out] max_step Å‘å’l
 
-  step ã¯ã‚»ãƒ³ã‚µæ­£é¢ãŒ 0 ã§ã‚ã‚Šã€ã‚»ãƒ³ã‚µä¸Šéƒ¨ã‹ã‚‰è¦‹ãŸå ´åˆã®åæ™‚è¨ˆã¾ã‚ã‚Šã®æ–¹å‘ãŒæ­£ã€æ™‚è¨ˆã¾ã‚ã‚Šã®æ–¹å‘ãŒè² ã® step å€¤ã¨ãªã‚‹ã€‚
+  step ‚ÍƒZƒ“ƒT³–Ê‚ª 0 ‚Å‚ ‚èAƒZƒ“ƒTã•”‚©‚çŒ©‚½ê‡‚Ì”½Œv‚Ü‚í‚è‚Ì•ûŒü‚ª³AŒv‚Ü‚í‚è‚Ì•ûŒü‚ª•‰‚Ì step ’l‚Æ‚È‚éB
 
-  \image html sensor_step_image.jpg ã‚»ãƒ³ã‚µã¨ step ã®é–¢ä¿‚
+  \image html sensor_step_image.jpg ƒZƒ“ƒT‚Æ step ‚ÌŠÖŒW
 
-  min_step, max_step ã®å€¤ã¯ã‚»ãƒ³ã‚µã«ã‚ˆã£ã¦ç•°ãªã‚‹ã€‚
+  min_step, max_step ‚Ì’l‚ÍƒZƒ“ƒT‚É‚æ‚Á‚ÄˆÙ‚È‚éB
 
   \~
   Example
@@ -96,28 +96,28 @@ extern void urg_distance_min_max(const urg_t *urg,
 extern void urg_step_min_max(const urg_t *urg, int *min_step, int *max_step);
 
 
-/*! \~japanese ï¼‘ã‚¹ã‚­ãƒ£ãƒ³ã«ã‹ã‹ã‚‹æ™‚é–“ [usec] ã‚’è¿”ã™ */
+/*! \~japanese ‚PƒXƒLƒƒƒ“‚É‚©‚©‚éŠÔ [usec] ‚ğ•Ô‚· */
 extern long urg_scan_usec(const urg_t *urg);
 
 
-/*! \~japanese å–å¾—ãƒ‡ãƒ¼ã‚¿æ•°ã®æœ€å¤§å€¤ã‚’è¿”ã™ */
+/*! \~japanese æ“¾ƒf[ƒ^”‚ÌÅ‘å’l‚ğ•Ô‚· */
 extern int urg_max_data_size(const urg_t *urg);
 
 
 /*!
   \~japanese
-  \brief ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¨è§’åº¦(radian)ã®å¤‰æ›ã‚’è¡Œã†
+  \brief ƒCƒ“ƒfƒbƒNƒX‚ÆŠp“x(radian)‚Ì•ÏŠ·‚ğs‚¤
 
-  ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã¨ã¯ urg_get_distance() ãªã©ã®è·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ãŒè¿”ã—ãŸãƒ‡ãƒ¼ã‚¿é…åˆ—ã«ã¤ã„ã¦ã®å€¤ã§ã‚ã‚‹ã€‚ã“ã®é–¢æ•°ã¯ã€æœ€å¾Œã«è¡Œã£ãŸè·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ã®ãƒ‡ãƒ¼ã‚¿é…åˆ—ã«ã¤ã„ã¦æœ‰åŠ¹ã¨ãªã‚‹ã€‚
+  ƒCƒ“ƒfƒbƒN‚Æ‚Í urg_get_distance() ‚È‚Ç‚Ì‹——£ƒf[ƒ^æ“¾ŠÖ”‚ª•Ô‚µ‚½ƒf[ƒ^”z—ñ‚É‚Â‚¢‚Ä‚Ì’l‚Å‚ ‚éB‚±‚ÌŠÖ”‚ÍAÅŒã‚És‚Á‚½‹——£ƒf[ƒ^æ“¾ŠÖ”‚Ìƒf[ƒ^”z—ñ‚É‚Â‚¢‚Ä—LŒø‚Æ‚È‚éB
 
-  \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
-  \param[in] index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+  \param[in] urg URG ƒZƒ“ƒTŠÇ—
+  \param[in] index ƒCƒ“ƒfƒbƒNƒX
 
-  \return è§’åº¦ [radian]
+  \return Šp“x [radian]
 
-  index ã¯ã€å–å¾—ã—ãŸè¨ˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦ã®å€¤ã§ã‚ã‚Š step ã‚„è§’åº¦ã¨ã®é–¢ä¿‚ã¯å–å¾—è¨­å®šã«ã‚ˆã‚Šç•°ãªã‚‹ã€‚
+  index ‚ÍAæ“¾‚µ‚½Œv‘ªƒf[ƒ^‚É‚Â‚¢‚Ä‚Ì’l‚Å‚ ‚è step ‚âŠp“x‚Æ‚ÌŠÖŒW‚Íæ“¾İ’è‚É‚æ‚èˆÙ‚È‚éB
 
-  \image html sensor_index_image.jpg ã‚»ãƒ³ã‚µã®è¨ˆæ¸¬ç¯„å›²ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–¢ä¿‚
+  \image html sensor_index_image.jpg ƒZƒ“ƒT‚ÌŒv‘ª”ÍˆÍ‚ÆƒCƒ“ƒfƒbƒNƒX‚ÌŠÖŒW
 
   \~
   Example
@@ -136,32 +136,32 @@ extern int urg_max_data_size(const urg_t *urg);
 extern double urg_index2rad(const urg_t *urg, int index);
 
 
-/*! \~japanese ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¨è§’åº¦(degree)ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese ƒCƒ“ƒfƒbƒNƒX‚ÆŠp“x(degree)‚Ì•ÏŠ·‚ğs‚¤ */
 extern double urg_index2deg(const urg_t *urg, int index);
 
 
-/*! \~japanese è§’åº¦(radian)ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese Šp“x(radian)‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤ */
 extern int urg_rad2index(const urg_t *urg, double radian);
 
 
-/*! \~japanese è§’åº¦(degree)ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese Šp“x(degree)‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤ */
 extern int urg_deg2index(const urg_t *urg, double degree);
 
 
 /*!
   \~japanese
-  \brief è§’åº¦(radian)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†
+  \brief Šp“x(radian)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤
 
-  urg_step_min_max() ã§å®šç¾©ã•ã‚Œã¦ã„ã‚‹ step ã«ã¤ã„ã¦ã€è§’åº¦(radian)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†ã€‚
+  urg_step_min_max() ‚Å’è‹`‚³‚ê‚Ä‚¢‚é step ‚É‚Â‚¢‚ÄAŠp“x(radian)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤B
 
-  \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
-  \param[in] radian è§’åº¦ [radian]
+  \param[in] urg URG ƒZƒ“ƒTŠÇ—
+  \param[in] radian Šp“x [radian]
 
   \return step
 
-  \image html sensor_angle_image.jpg ã‚»ãƒ³ã‚µã® step ã¨è§’åº¦ã¨ã®é–¢ä¿‚
+  \image html sensor_angle_image.jpg ƒZƒ“ƒT‚Ì step ‚ÆŠp“x‚Æ‚ÌŠÖŒW
 
-  è§’åº¦ã‹ã‚‰ step ã¸å¤‰æ›ã—ãŸçµæœãŒæ•´æ•°ã§ãªã„å ´åˆã€çµæœã¯ 0 ã®æ–¹å‘ã«åˆ‡ã‚Šæ¨ã¦ã‚‰ã‚ŒãŸå€¤ã¨ãªã‚‹ã€‚
+  Šp“x‚©‚ç step ‚Ö•ÏŠ·‚µ‚½Œ‹‰Ê‚ª®”‚Å‚È‚¢ê‡AŒ‹‰Ê‚Í 0 ‚Ì•ûŒü‚ÉØ‚èÌ‚Ä‚ç‚ê‚½’l‚Æ‚È‚éB
 
   \~
   \see urg_step_min_max(), urg_deg2step(), urg_step2rad(), urg_step2deg()
@@ -169,18 +169,18 @@ extern int urg_deg2index(const urg_t *urg, double degree);
 extern int urg_rad2step(const urg_t *urg, double radian);
 
 
-/*! \~japanese è§’åº¦(degree)ã¨ step ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese Šp“x(degree)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤ */
 extern int urg_deg2step(const urg_t *urg, double degree);
 
 
-/*! \~japanese step ã¨ è§’åº¦(radian)ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese step ‚Æ Šp“x(radian)‚Ì•ÏŠ·‚ğs‚¤ */
 extern double urg_step2rad(const urg_t *urg, int step);
 
 
-/*! \~japanese step ã¨ è§’åº¦(degree)ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese step ‚Æ Šp“x(degree)‚Ì•ÏŠ·‚ğs‚¤ */
 extern double urg_step2deg(const urg_t *urg, int step);
 
-/*! \~japanese step ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã† */
+/*! \~japanese step ‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤ */
 extern int urg_step2index(const urg_t *urg, int step);
 
 // !!!

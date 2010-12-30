@@ -1,13 +1,13 @@
 /*!
   \file
-  \brief シリアル用の補助関数
+  \brief �V���A���p�̕⏕�֐�
 
   \author Satofumi KAMIMURA
 
   $Id$
 
-  \todo 変数名を '_' 区切りの形式に変更する
-  \todo C90 相当で動作するように調整する。ただし、"//" コメントは使う
+  \todo �ϐ����� '_' ��؂�̌`���ɕύX����
+  \todo C90 �����œ��삷��悤�ɒ�������B�������A"//" �R�����g�͎g��
 */
 
 #include "urg_serial_utils.h"
@@ -68,7 +68,7 @@ static void sort_ports(void)
 
 int urg_serial_find_port(void)
 {
-    // デバイスマネージャの一覧から COM デバイスを探す
+    // �f�o�C�X�}�l�[�W���̈ꗗ���� COM �f�o�C�X��T��
 
     //4D36E978-E325-11CE-BFC1-08002BE10318
     GUID GUID_DEVINTERFACE_COM_DEVICE = {
@@ -102,31 +102,31 @@ int urg_serial_find_port(void)
         int n;
         int j;
 
-        // フレンドリーネームを取得して COM 番号を取り出す
+        // �t�����h���[�l�[�����擾���� COM �ԍ������o��
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_FRIENDLYNAME,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
         n = strlen(buffer);
         if (n < ComNameLengthMax) {
-            // COM 名が短過ぎた場合、処理しない
-            // 問題がある場合は、修正する
+            // COM �����Z�߂����ꍇ�A�������Ȃ�
+            // ��肪����ꍇ�́A�C������
             continue;
         }
 
-        // (COMx) の最後の括弧の位置に '\0' を代入する
+        // (COMx) �̍Ō�̊��ʂ̈ʒu�� '\0' ��������
         p = strrchr(buffer, ')');
         if (p) {
             *p = '\0';
         }
 
-        // COM と番号までの文字列を抜き出す
+        // COM �Ɣԍ��܂ł̕�����𔲂��o��
         p = strstr(&buffer[n - ComNameLengthMax], "COM");
         if (! p) {
             continue;
         }
         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
 
-        // デバイス名を取得し、URG ポートかの判定に用いる
+        // �f�o�C�X�����擾���AURG �|�[�g���̔���ɗp����
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
@@ -143,7 +143,7 @@ int urg_serial_find_port(void)
     }
     SetupDiDestroyDeviceInfoList(hdi);
 
-    // is_urg_port の要素が先頭に来るようにソートする
+    // is_urg_port �̗v�f���擪�ɗ���悤�Ƀ\�[�g����
     sort_ports();
 
     return found_ports_size;

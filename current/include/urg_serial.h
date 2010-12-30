@@ -3,7 +3,7 @@
 
 /*!
   \file
-  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+  \brief ƒVƒŠƒAƒ‹’ÊM
 
   \author Satofumi KAMIMURA
 
@@ -31,17 +31,17 @@ enum {
 typedef struct
 {
 #if defined(URG_WINDOWS_OS)
-    HANDLE hCom;                /*!< æ¥ç¶šãƒªã‚½ãƒ¼ã‚¹ */
-    int current_timeout;        /*!< ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®šæ™‚é–“ [msec] */
+    HANDLE hCom;                /*!< Ú‘±ƒŠƒ\[ƒX */
+    int current_timeout;        /*!< ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’èŠÔ [msec] */
 #else
     int fd;
     struct termios sio;
 #endif
 
-    ring_buffer_t ring;         /*!< ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ */
+    ring_buffer_t ring;         /*!< ƒŠƒ“ƒOƒoƒbƒtƒ@ */
     char buffer[RING_BUFFER_SIZE];
-    char has_last_ch;          /*!< æ›¸ãæˆ»ã—ãŸæ–‡å­—ãŒã‚ã‚‹ã‹ã®ãƒ•ãƒ©ã‚° */
-    char last_ch;              /*!< æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­— */
+    char has_last_ch;          /*!< ‘‚«–ß‚µ‚½•¶š‚ª‚ ‚é‚©‚Ìƒtƒ‰ƒO */
+    char last_ch;              /*!< ‘‚«–ß‚µ‚½‚P•¶š */
 } urg_serial_t;
 
 

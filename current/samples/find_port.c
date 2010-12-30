@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example find_port.c ãƒãƒ¼ãƒˆã®æ¢ç´¢
+  \example find_port.c ƒ|[ƒg‚Ì’Tõ
 
   \author Satofumi KAMIMURA
 

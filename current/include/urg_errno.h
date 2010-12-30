@@ -3,13 +3,13 @@
 
 /*!
   \file
-  \brief URG 繝ｩ繧､繝悶Λ繝ｪ縺ｮ繧ｨ繝ｩ繝ｼ螳夂ｾｩ
+  \brief URG ライブラリのエラー定義
 
   \author Satofumi KAMIMURA
 
   $Id$
 
-  \todo URG 縺ｮ謨�髫懊お繝ｩ繝ｼ繧帝←蛻�縺ｫ謇ｱ縺医ｋ繧医≧縺ｫ縺吶ｋ
+  \todo URG の故障エラーを適切に扱えるようにする
 */
 
 enum {

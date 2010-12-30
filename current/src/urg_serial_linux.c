@@ -1,6 +1,6 @@
 /*!
   \file
-  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+  \brief ƒVƒŠƒAƒ‹’ÊM
 
   \author Satofumi KAMIMURA
 
@@ -44,11 +44,11 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     serial_initialize(serial);
 
 #ifndef MAC_OS
-    enum { O_EXLOCK = 0x0 }; /* Linux ã§ã¯ä½¿ãˆãªã„ã®ã§ãƒ€ãƒŸãƒ¼ã‚’ä½œæˆã—ã¦ãŠã */
+    enum { O_EXLOCK = 0x0 }; /* Linux ‚Å‚Íg‚¦‚È‚¢‚Ì‚Åƒ_ƒ~[‚ğì¬‚µ‚Ä‚¨‚­ */
 #endif
     serial->fd = open(device, O_RDWR | O_EXLOCK | O_NONBLOCK | O_NOCTTY);
     if (serial->fd < 0) {
-        /* æ¥ç¶šã«å¤±æ•— */
+        /* Ú‘±‚É¸”s */
         //strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
         return -1;
     }
@@ -56,7 +56,7 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     flags = fcntl(serial->fd, F_GETFL, 0);
     fcntl(serial->fd, F_SETFL, flags & ~O_NONBLOCK);
 
-    /* ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ã®åˆæœŸåŒ– */
+    /* ƒVƒŠƒAƒ‹’ÊM‚Ì‰Šú‰» */
     tcgetattr(serial->fd, &serial->sio);
     serial->sio.c_iflag = 0;
     serial->sio.c_oflag = 0;
@@ -67,13 +67,13 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     serial->sio.c_cc[VMIN] = 0;
     serial->sio.c_cc[VTIME] = 0;
 
-    /* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã®å¤‰æ›´ */
+    /* ƒ{[ƒŒ[ƒg‚Ì•ÏX */
     ret = serial_set_baudrate(serial, baudrate);
     if (ret < 0) {
         return ret;
     }
 
-    /* ã‚·ãƒªã‚¢ãƒ«åˆ¶å¾¡æ§‹é€ ä½“ã®åˆæœŸåŒ– */
+    /* ƒVƒŠƒAƒ‹§Œä\‘¢‘Ì‚Ì‰Šú‰» */
     serial->has_last_ch = False;
 
     return 0;
@@ -122,7 +122,7 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
         return -1;
     }
 
-    /* ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆå¤‰æ›´ */
+    /* ƒ{[ƒŒ[ƒg•ÏX */
     cfsetospeed(&serial->sio, baudrate_value);
     cfsetispeed(&serial->sio, baudrate_value);
     tcsetattr(serial->fd, TCSADRAIN, &serial->sio);
@@ -147,7 +147,7 @@ static int wait_receive(urg_serial_t* serial, int timeout)
     fd_set rfds;
     struct timeval tv;
 
-    // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆè¨­å®š
+    // ƒ^ƒCƒ€ƒAƒEƒgİ’è
     FD_ZERO(&rfds);
     FD_SET(serial->fd, &rfds);
 
@@ -156,7 +156,7 @@ static int wait_receive(urg_serial_t* serial, int timeout)
 
     if (select(serial->fd + 1, &rfds, NULL, NULL,
                (timeout < 0) ? NULL : &tv) <= 0) {
-        /* ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç™ºç”Ÿ */
+        /* ƒ^ƒCƒ€ƒAƒEƒg”­¶ */
         return 0;
     }
     return 1;
@@ -183,7 +183,7 @@ static int internal_receive(char data[], int data_size_max,
         require_n = data_size_max - filled;
         read_n = read(serial->fd, &data[filled], require_n);
         if (read_n <= 0) {
-            /* èª­ã¿å‡ºã—ã‚¨ãƒ©ãƒ¼ã€‚ç¾åœ¨ã¾ã§ã®å—ä¿¡å†…å®¹ã§æˆ»ã‚‹ */
+            /* “Ç‚İo‚µƒGƒ‰[BŒ»İ‚Ü‚Å‚ÌóM“à—e‚Å–ß‚é */
             break;
         }
         filled += read_n;
@@ -202,7 +202,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         return 0;
     }
 
-    /* æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—ãŒã‚ã‚Œã°ã€æ›¸ãå‡ºã™ */
+    /* ‘‚«–ß‚µ‚½‚P•¶š‚ª‚ ‚ê‚ÎA‘‚«o‚· */
     if (serial->has_last_ch != False) {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
@@ -219,7 +219,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
     if (buffer_size < read_n) {
-        // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã§è¶³ã‚Šãªã‘ã‚Œã°ã€ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¶³ã™
+        // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚Å‘«‚è‚È‚¯‚ê‚ÎAƒf[ƒ^‚ğ“Ç‚İ‘«‚·
         char buffer[RING_BUFFER_SIZE];
         int n = internal_receive(buffer,
                                  ring_capacity(&serial->ring) - buffer_size,
@@ -230,7 +230,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         }
     }
 
-    // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
+    // ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚ğ•Ô‚·
     if (read_n > buffer_size) {
         read_n = buffer_size;
     }
@@ -239,7 +239,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         filled += read_n;
     }
 
-    // ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãã§èª­ã¿å‡ºã™
+    // ƒf[ƒ^‚ğƒ^ƒCƒ€ƒAƒEƒg•t‚«‚Å“Ç‚İo‚·
     filled += internal_receive(&data[filled], max_size - filled,
                                serial, timeout);
     return filled;
