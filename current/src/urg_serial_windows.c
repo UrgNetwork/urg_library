@@ -7,7 +7,12 @@
   $Id$
 */
 
+#include "urg_serial.h"
 #include <stdio.h>
+
+#if defined(URG_MSC)
+#define False 0
+#endif
 
 
 static void serial_initialize(urg_serial_t *serial)

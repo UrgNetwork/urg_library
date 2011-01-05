@@ -215,21 +215,23 @@ static int connect_serial_device(urg_t *urg, long baudrate)
     }
 
     for (i = 0; i < try_times; ++i) {
-        connection_set_baudrate(&urg->connection, try_baudrate[i]);
-
         enum { RECEIVE_BUFFER_SIZE = 4 };
         int qt_expected[] = { 0, EXPECTED_END };
         char receive_buffer[RECEIVE_BUFFER_SIZE];
+	int ret;
+
+        connection_set_baudrate(&urg->connection, try_baudrate[i]);
 
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
-        int ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
+        ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                                 receive_buffer, RECEIVE_BUFFER_SIZE);
         if (!strcmp(receive_buffer, "E")) {
+            int scip20_expected[] = { 0, EXPECTED_END };
+
             // QT 応答の最後の改行を読み飛ばす
             ignore_receive_data(urg, MAX_TIMEOUT);
 
             // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
-            int scip20_expected[] = { 0, EXPECTED_END };
             ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                 MAX_TIMEOUT, NULL, 0);
 
@@ -240,8 +242,9 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
         } else if (!strcmp(receive_buffer, "0Ee")) {
-            // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
             int tm2_expected[] = { 0, EXPECTED_END };
+
+            // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
             scip_response(urg, "TM2\n", tm2_expected,
                                 MAX_TIMEOUT, NULL, 0);
             //ignore_receive_data_with_qt(urg, MAX_TIMEOUT);

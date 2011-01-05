@@ -1,13 +1,13 @@
 // http://www.ne.jp/asahi/hishidama/home/tech/lang/socket.html
 
 #include "urg_detect_os.h"
-#include <unistd.h>
 #include <string.h>
 #if defined(URG_WINDOWS_OS)
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
 #else
+#include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 #endif
