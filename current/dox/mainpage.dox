@@ -2,44 +2,44 @@
   \mainpage
   \~japanese
 
-  \section mainpage_what ã“ã‚Œã¯ä½•ã‹
+  \section mainpage_what ‚±‚ê‚Í‰½‚©
 
   !!!
 
-  - å‹•ä½œç¢ºèªã‚’ã—ã¦ã„ã‚‹ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ 
+  - “®ìŠm”F‚ð‚µ‚Ä‚¢‚éƒvƒ‰ƒbƒgƒtƒH[ƒ€
     - Visual Studio 2005
     - gcc 4.3.4
 
-  \section mainpage_license ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
+  \section mainpage_license ƒ‰ƒCƒZƒ“ƒX
 
-  ä¿®æ­£ BSD ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã«åŸºã¥ã„ã¦é…å¸ƒã—ã¾ã™ã€‚\n
-  ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã®è©³ç´°ã¯ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä»˜å±žã® COPYRIGHT ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã”è¦§ä¸‹ã•ã„ã€‚
+  C³ BSD ƒ‰ƒCƒZƒ“ƒX‚ÉŠî‚Ã‚¢‚Ä”z•z‚µ‚Ü‚·B\n
+  ƒ‰ƒCƒZƒ“ƒX‚ÌÚ×‚Íƒ‰ƒCƒuƒ‰ƒŠ•t‘®‚Ì COPYRIGHT ƒtƒ@ƒCƒ‹‚ð‚²——‰º‚³‚¢B
 
-  \section mainpage_install ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+  \section mainpage_install ƒCƒ“ƒXƒg[ƒ‹
 
-  !!! ã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã§ãã¾ã™ã€‚
+  !!! ‚©‚çƒ_ƒEƒ“ƒ[ƒh‚Å‚«‚Ü‚·B
 
   \section mainpage_install_vc Visual Studio 2005, 2010
 
-  !!! vcproj ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ Visual Studio ã‚’èµ·å‹•ã—ã¦ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ãƒ“ãƒ«ãƒ‰ã—ã¾ã™ã€‚
+  !!! vcproj ƒtƒ@ƒCƒ‹‚©‚ç Visual Studio ‚ð‹N“®‚µ‚ÄAƒ‰ƒCƒuƒ‰ƒŠ‚ðƒrƒ‹ƒh‚µ‚Ü‚·B
 
-  !!! ä½¿ã†ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã§ã€!!! æŒ‡å®šã—ã¦ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ã¦ä¸‹ã•ã„ã€‚
+  !!! Žg‚¤ƒvƒƒWƒFƒNƒg‚ÅA!!! Žw’è‚µ‚ÄƒRƒ“ƒpƒCƒ‹‚µ‚Ä‰º‚³‚¢B
 
-  !!! ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«ã€include/ ä»¥ä¸‹ã® .h ãƒ•ã‚¡ã‚¤ãƒ«ã¨ src/ ä»¥ä¸‹ã® .c ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«è¿½åŠ ã—ã¦ã‚‚åˆ©ç”¨ã§ãã¾ã™ã€‚
+  !!! ƒvƒƒWƒFƒNƒg‚ÉAinclude/ ˆÈ‰º‚Ì .h ƒtƒ@ƒCƒ‹‚Æ src/ ˆÈ‰º‚Ì .c ƒtƒ@ƒCƒ‹‚ðƒvƒƒWƒFƒNƒg‚É’Ç‰Á‚µ‚Ä‚à—˜—p‚Å‚«‚Ü‚·B
 
 
   \section mainpage_install_gcc gcc (Linux, Mac, Windows(MinGW))
 
-  !!! make ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ã¦ä¸‹ã•ã„ã€‚
+  !!! make ‚ÅƒRƒ“ƒpƒCƒ‹‚µ‚Ä‰º‚³‚¢B
 
-  !!! Makefile ã‚’èª¿æ•´ã—ã¦ã€make install ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã§ãã¾ã™ã€‚
+  !!! Makefile ‚ð’²®‚µ‚ÄAmake install ‚ÅƒCƒ“ƒXƒg[ƒ‹‚Å‚«‚Ü‚·B
 
-  - !!! urg_c-config ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚‚ä½¿ãˆã¾ã™
-    - !!! æœ¬å½“ã«ä½¿ãˆã‚‹ã‚ˆã†ã«ã§ãã‚‹ã‹ã¯ä¸æ˜Ž
+  - !!! urg_c-config ƒXƒNƒŠƒvƒg‚àŽg‚¦‚Ü‚·
+    - !!! –{“–‚ÉŽg‚¦‚é‚æ‚¤‚É‚Å‚«‚é‚©‚Í•s–¾
 
   !!!
 
-  \section mainpage_usage ä½¿ã„æ–¹
+  \section mainpage_usage Žg‚¢•û
 
   !!!
 

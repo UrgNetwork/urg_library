@@ -263,5 +263,6 @@ int tcpclient_readline(urg_tcpclient_t* cli,
         return -1;
     }
 
+    //fprintf(stderr, "%s\n", userbuf);
     return i; // the number of characters filled into user buffer.
 }
