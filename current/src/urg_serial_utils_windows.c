@@ -124,7 +124,12 @@ int urg_serial_find_port(void)
         if (! p) {
             continue;
         }
+
+#if defined(URG_WINDOWS_OS)
+        sprintf_s(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
+#else
         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
+#endif
 
         // デバイス名を取得し、URG ポートかの判定に用いる
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,

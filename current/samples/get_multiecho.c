@@ -28,10 +28,12 @@ static void print_echo_data(long data[], int index)
 static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 {
 #if 1
+    int front_index;
+
     (void)data_n;
 
     // \~japanese 前方のデータのみを表示
-    int front_index = urg_step2index(urg, 0);
+    front_index = urg_step2index(urg, 0);
     print_echo_data(data, front_index);
     printf("%ld\n", time_stamp);
 

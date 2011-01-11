@@ -2,7 +2,7 @@
 #include "urg_detect_os.h"
 #include <sys/types.h>
 #if defined(URG_WINDOWS_OS)
-#include <winsock2.h>
+//#include <winsock2.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>

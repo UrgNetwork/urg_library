@@ -182,7 +182,11 @@ static int change_sensor_baudrate(urg_t *urg,
     }
 
     // "SS" コマンドでボーレートを変更する
+#if defined(URG_WINDOWS_OS)
+    sprintf_s(buffer, SS_COMMAND_SIZE, "SS%06ld\n", next_baudrate);
+#else
     snprintf(buffer, SS_COMMAND_SIZE, "SS%06ld\n", next_baudrate);
+#endif
     ret = scip_response(urg, buffer, ss_expected, urg->timeout, NULL, 0);
     if (ret <= 0) {
         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
@@ -799,18 +803,35 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
         // レーザ発光を指示
         urg_laser_on(urg);
 
+#if defined(URG_WINDOWS_OS)
+        write_size = sprintf_s(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d\n",
+                              single_scan_ch, scan_type_ch,
+                              urg->scanning_first_step + front_index,
+                              urg->scanning_last_step + front_index,
+                              urg->scanning_skip_step);
+#else
         write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d\n",
                               single_scan_ch, scan_type_ch,
                               urg->scanning_first_step + front_index,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step);
+#endif
     } else {
+#if defined(URG_WINDOWS_OS)
+        write_size = sprintf_s(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d%01d%02d\n",
+                              continuous_scan_ch, scan_type_ch,
+                              urg->scanning_first_step + front_index,
+                              urg->scanning_last_step + front_index,
+                              urg->scanning_skip_step,
+                              skip_scan, urg->specified_scan_times);
+#else
         write_size = snprintf(buffer, BUFFER_SIZE, "%c%c%04d%04d%02d%01d%02d\n",
                               continuous_scan_ch, scan_type_ch,
                               urg->scanning_first_step + front_index,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
                               skip_scan, urg->specified_scan_times);
+#endif
     }
 
     n = connection_write(&urg->connection, buffer, write_size);
