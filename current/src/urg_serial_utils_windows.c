@@ -17,6 +17,11 @@
 #include <stdio.h>
 
 
+#if defined(URG_MSC)
+#define snprintf _snprintf_s
+#endif
+
+
 enum {
     MAX_PORTS = 16,
     DEVICE_NAME_SIZE = 7,
@@ -125,11 +130,7 @@ int urg_serial_find_port(void)
             continue;
         }
 
-#if defined(URG_WINDOWS_OS)
-        sprintf_s(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
-#else
         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
-#endif
 
         // デバイス名を取得し、URG ポートかの判定に用いる
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,
