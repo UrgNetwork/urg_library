@@ -12,12 +12,11 @@
 #include "open_urg_sensor.h"
 #include <stdio.h>
 #include <time.h>
-#include <stdbool.h>
 
 
 static int pc_msec_time(void)
 {
-    static bool is_initialized = false;
+    static int is_initialized = 0;
 #if defined(URG_WINDOWS_OS)
     static clock_t first_clock;
     clock_t current_clock;
@@ -30,14 +29,14 @@ static int pc_msec_time(void)
 #if defined(URG_WINDOWS_OS)
     if (!is_initialized) {
         first_clock = clock();
-        is_initialized = true;
+        is_initialized = 1;
     }
     current_clock = clock();
     msec_time = current_clock / (CLOCKS_PER_SEC / 1000);
 #else
     if (!is_initialized) {
         clock_gettime(CLOCK_REALTIME, &first_spec);
-        is_initialized = true;
+        is_initialized = 1;
     }
     clock_gettime(CLOCK_REALTIME, &current_spec);
     msec_time =
