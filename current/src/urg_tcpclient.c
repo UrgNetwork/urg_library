@@ -3,8 +3,6 @@
 #include "urg_detect_os.h"
 #include <string.h>
 #if defined(URG_WINDOWS_OS)
-//#include <winsock2.h>
-//#include <ws2tcpip.h>
 #include <windows.h>
 #else
 #include <unistd.h>
@@ -72,7 +70,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
     cli->sock_addr_size = sizeof (struct sockaddr_in);
 
-    if ((cli->sock_desc = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    if ((cli->sock_desc = (int)socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         return -1;
     }
 

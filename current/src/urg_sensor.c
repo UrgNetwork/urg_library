@@ -12,9 +12,8 @@
 #include "urg_errno.h"
 #include <stddef.h>
 #include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 
 #if defined(URG_MSC)
 #define snprintf _snprintf
@@ -77,8 +76,9 @@ static int scip_response(urg_t *urg, const char* command,
     int line_number = 0;
     int ret = URG_UNKNOWN_ERROR;
 
-    int write_size = strlen(command);
+    int write_size = (int)strlen(command);
     int n = connection_write(&urg->connection, command, write_size);
+
     urg->is_sending = URG_TRUE;
     if (n != write_size) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
@@ -417,7 +417,7 @@ static urg_measurement_type_t parse_distance_parameter(urg_t *urg,
 static urg_measurement_type_t parse_distance_echoback(urg_t *urg,
                                                       const char echoback[])
 {
-    int line_length;
+    size_t line_length;
     urg_measurement_type_t ret_type = URG_UNKNOWN;
 
     if (!strcmp("QT", echoback)) {
@@ -538,7 +538,7 @@ static int receive_length_data(urg_t *urg, long length[],
             // ã≠ìxÉfÅ[É^ÇÃäiî[
             if (is_intensity) {
                 if (intensity) {
-                    intensity[index] = scip_decode(p, 3);
+                    intensity[index] = (unsigned short)scip_decode(p, 3);
                 }
                 p += 3;
             }
@@ -1053,10 +1053,10 @@ int urg_reboot(urg_t *urg)
 static char *copy_token(char *dest, char *receive_buffer,
                         const char *start_str, const char *end_ch, int lines)
 {
-    int start_str_len = strlen(start_str);
-    int end_ch_len = strlen(end_ch);
+    size_t start_str_len = strlen(start_str);
+    size_t end_ch_len = strlen(end_ch);
     int i;
-    int j;
+    size_t j;
 
     for (j = 0; j < end_ch_len; ++j) {
         const char *p = receive_buffer;

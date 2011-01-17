@@ -11,6 +11,7 @@
 */
 
 #include "urg_serial_utils.h"
+#include "urg_detect_os.h"
 #include <windows.h>
 #include <setupapi.h>
 #include <string.h>
@@ -111,7 +112,7 @@ int urg_serial_find_port(void)
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_FRIENDLYNAME,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
-        n = strlen(buffer);
+        n = (int)strlen(buffer);
         if (n < ComNameLengthMax) {
             // COM –¼‚ª’Z‰ß‚¬‚½ê‡Aˆ—‚µ‚È‚¢
             // –â‘è‚ª‚ ‚éê‡‚ÍAC³‚·‚é
