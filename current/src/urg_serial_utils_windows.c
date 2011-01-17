@@ -18,7 +18,7 @@
 
 
 #if defined(URG_MSC)
-#define snprintf _snprintf_s
+#define snprintf _snprintf
 #endif
 
 
