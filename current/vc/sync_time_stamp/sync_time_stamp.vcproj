@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="sensor_parameter"
-	ProjectGUID="{3347DEB1-A1EC-4242-8079-233B9E5EB0C3}"
-	RootNamespace="sensor_parameter"
+	Name="sync_time_stamp"
+	ProjectGUID="{EF96A9B9-81AE-4B35-81EC-68DB295963DB}"
+	RootNamespace="sync_time_stamp"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\include&quot;"
+				AdditionalIncludeDirectories="$(SolutionDir)..\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="urg.lib ws2_32.lib setupapi.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)\$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="$(SolutionDir)$(ConfigurationName)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\include&quot;"
+				AdditionalIncludeDirectories="$(SolutionDir)..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -139,7 +139,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="urg.lib ws2_32.lib setupapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)\$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="$(SolutionDir)$(ConfigurationName)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -185,7 +185,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\samples\sensor_parameter.c"
+				RelativePath="..\..\samples\sync_time_stamp.c"
 				>
 			</File>
 		</Filter>

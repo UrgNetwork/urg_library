@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="sensor_parameter"
-	ProjectGUID="{3347DEB1-A1EC-4242-8079-233B9E5EB0C3}"
-	RootNamespace="sensor_parameter"
+	Name="get_distance"
+	ProjectGUID="{8F73522C-18D0-4436-B444-3E17A2A84788}"
+	RootNamespace="get_distance"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="urg.lib ws2_32.lib setupapi.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)\$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -139,7 +139,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="urg.lib ws2_32.lib setupapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)\$(ConfigurationName)&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -181,11 +181,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\samples\open_urg_sensor.c"
+				RelativePath="..\..\samples\get_distance.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\samples\sensor_parameter.c"
+				RelativePath="..\..\samples\open_urg_sensor.c"
 				>
 			</File>
 		</Filter>
