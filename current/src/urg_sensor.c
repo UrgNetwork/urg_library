@@ -330,9 +330,9 @@ static int receive_parameter(urg_t *urg)
 
         } else if (!strncmp(p, "SCAN:", 5)) {
             int rpm = strtol(p + 5, NULL, 10);
-            // タイムアウト時間は、計測周期の 4 倍程度の値にする
+            // タイムアウト時間は、計測周期の 16 倍程度の値にする
             urg->scan_usec = 1000 * 1000 * 60 / rpm;
-            urg->timeout = urg->scan_usec >> (10 - 2);
+            urg->timeout = urg->scan_usec >> (10 - 4);
             received_bits |= 0x0040;
         }
         p += strlen(p) + 1;
