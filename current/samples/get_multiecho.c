@@ -55,7 +55,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 int main(int argc, char *argv[])
 {
     enum {
-        CAPTURE_TIMES = 1,
+        CAPTURE_TIMES = 10,
     };
     urg_t urg;
     long *data = NULL;
