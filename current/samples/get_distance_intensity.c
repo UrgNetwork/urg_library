@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
         if (n <= 0) {
-            printf("urg_distance: %s\n", urg_error(&urg));
+            printf("urg_get_distance_intensity: %s\n", urg_error(&urg));
             free(data);
             urg_close(&urg);
             return 1;

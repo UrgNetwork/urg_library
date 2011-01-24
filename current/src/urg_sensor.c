@@ -712,6 +712,12 @@ void urg_close(urg_t *urg)
 }
 
 
+void urg_set_timeout_msec(urg_t *urg, int msec)
+{
+    urg->timeout = msec;
+}
+
+
 int urg_start_time_stamp_mode(urg_t *urg)
 {
     const int expected[] = { 0, EXPECTED_END };

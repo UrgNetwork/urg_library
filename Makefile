@@ -1,3 +1,4 @@
+# urgwidget
 
 VERSION = 1.0.0
 RELEASE_DIR = release
@@ -15,7 +16,7 @@ clean : release_clean
 install : dist
 	cd $(RELEASE_DIR)/$(PACKAGE_JP_DIR) && $(MAKE) install
 
-# !!! use for
+
 TARGET_DIR = $(PACKAGE_EN_DIR) $(PACKAGE_JP_DIR)
 dist : release_clean
 	mkdir -p $(RELEASE_DIR)
@@ -24,6 +25,16 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i; \
 		mkdir -p $(RELEASE_DIR)/$$i/include; \
 		mkdir -p $(RELEASE_DIR)/$$i/src; \
+		mkdir -p $(RELEASE_DIR)/$$i/windowsexe; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/calculate_xy; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/find_port; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/get_distance; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/get_multiecho; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/get_multiecho_intensity; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/sensor_parameter; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/sync_time_stamp; \
+		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/urg; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
 		cp current/COPYRIGHT current/Install.txt Readme.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
 		cp current/Makefile.release $(RELEASE_DIR)/$$i/Makefile; \
@@ -32,6 +43,8 @@ dist : release_clean
 		cp current/include/*.h $(RELEASE_DIR)/$$i/include/; \
 		cp current/src/*.c $(RELEASE_DIR)/$$i/src/; \
 		cp current/samples/*.sh $(RELEASE_DIR)/$$i/samples/; \
+		cp current/windowsexe/*.bat $(RELEASE_DIR)/$$i/windowsexe/; \
+		cp -r current/visual_cpp/ $(RELEASE_DIR)/$$i/; \
 		cat current/urg_c-config.in | sed -e "s/VERSION/$(VERSION)/g" > $(RELEASE_DIR)/$$i/urg_c-config.in ; \
 	done
 	ruby split_comment.rb -e current/include/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/include/

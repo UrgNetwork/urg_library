@@ -138,6 +138,10 @@ extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 extern void urg_close(urg_t *urg);
 
 
+// !!! urg_open() を呼び出すと timeout の設定値はデフォルト値に初期化される
+extern void urg_set_timeout_msec(urg_t * urg, int msec);
+
+
 /*! \~japanese タイムスタンプモードの開始 */
 extern int urg_start_time_stamp_mode(urg_t *urg);
 
