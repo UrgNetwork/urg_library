@@ -169,6 +169,7 @@ static void ignore_receive_data_with_qt(urg_t *urg, int timeout)
     }
 
     connection_write(&urg->connection, "QT\n", 3);
+    urg->is_laser_on = URG_FALSE;
     ignore_receive_data(urg, timeout);
 }
 
@@ -589,15 +590,27 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
     }
 
+    if (type == URG_STOP) {
+        // QT 応答の場合には、最後の改行を読み捨て、正常応答として処理する
+        n = connection_readline(&urg->connection,
+                                buffer, BUFFER_SIZE, urg->timeout);
+        if (n == 0) {
+            return 0;
+        } else {
+            return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+        }
+    }
+
     if (urg->specified_scan_times != 1) {
         if (!strncmp(buffer, "00", 2)) {
+            // "00" 応答の場合は、エコーバック応答とみなし、
             // 最後の空行を読み捨て、次からのデータを返す
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
+
             if (n != 0) {
                 ignore_receive_data_with_qt(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
-
             } else {
                 return receive_data(urg, data, intensity, time_stamp);
             }
@@ -643,6 +656,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         if (--urg->scanning_remain_times < 0) {
             // データの停止のみを行う
             connection_write(&urg->connection, "QT\n", 3);
+            urg->is_laser_on = URG_FALSE;
         }
     }
     return ret;
@@ -658,6 +672,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     urg->is_sending = URG_TRUE;
     urg->last_errno = URG_NOT_CONNECTED;
     urg->timeout = MAX_TIMEOUT;
+    urg->scanning_skip_scan = 0;
 
     // デバイスへの接続
     if (connection_open(&urg->connection, connection_type,
@@ -951,11 +966,12 @@ int urg_stop_measurement(urg_t *urg)
     if (n != 3) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
+    urg->is_laser_on = URG_FALSE;
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
         // QT の応答が返されるまで、距離データを読み捨てる
         ret = receive_data(urg, NULL, NULL, NULL);
-        if (ret == URG_STOP) {
+        if (ret == 0) {
             // 正常応答
             urg->is_sending = URG_FALSE;
             return set_errno_and_return(urg, URG_NO_ERROR);
