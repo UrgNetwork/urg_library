@@ -29,30 +29,27 @@ Visual Studio Solution (Windows)
 
 Visual Studio bat compile (Windows)
 
-＊以下の作業はコマンドプロンプト上で行ってください＊
+*以下の作業は全てコマンドプロンプト上で行ってください*
 
-  1. 環境変数を設定するために Visual Studio が提供している bat ファイルを
-     コピーします。
+  1. Visual Studio が提供している設定用bat ファイルをコピーします。
 
   Microsoft Visual Studio 8\Common7\Tools\vsvars32.bat を
   urgwidget\current\windowsexeにコピーする。
 
+  2. 環境変数を設定します。
 
-  2. 環境変数を設定後、コンパイル用のbatファイルを実行する。
+  urgwidget\current\windowsexe\vsvars32.batを実行する。
 
-  urgwidget\current\windowsexe\vsvars32.batを実行し
+　3. サンプルソースコンパイル用batファイルを実行する。
+
   urgwidget\current\windowsexe\compile.batを実行する。
 
+>以上の3ステップでurgwidget\current\windowsexeに実行ファイルが生成されます。
 
-  3. 生成されたサンプルの実行ファイルを動かす。
+*生成される実行ファイルを削除するには…
 
-  urgwidget\current\windowsexeに生成されるexeを実行する。
-
-
-  4. 生成されたサンプルの実行ファイルを削除する。
-
-  urgwidget\current\windowsexe\cleanobj.batを実行し
-  生成された実行ファイルを削除する。
+　urgwidget\current\windowsexe\cleanobj.batを実行すると 
+　生成された実行ファイルが削除されます。
 
 
 gcc (Linux, MinGW)
