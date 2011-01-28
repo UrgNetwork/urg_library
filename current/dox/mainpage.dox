@@ -4,28 +4,39 @@
 
   \section mainpage_what これは何か
 
-  !!!
+  レーザ距離センサである URG シリーズ用のオープンソースライブラリです。
 
-  - 動作確認をしているプラットフォーム
-    - Visual Studio 2005
-    - gcc 4.3.4
+  C 言語で実装されており、以下のプラットフォームでの動作を確認しています。
+
+  - Visual C++ 2005, 2010
+  - gcc 4.3.4 (Linux)
+  - gcc 4.5.0 (MinGW)
+
 
   \section mainpage_license ライセンス
 
   修正 BSD ライセンスに基づいて配布します。\n
   ライセンスの詳細はライブラリ付属の COPYRIGHT ファイルをご覧下さい。
 
-  \section mainpage_install インストール
 
-  !!! からダウンロードできます。
+  \section mainpage_install ライブラリのコンパイル
 
-  \section mainpage_install_vc Visual Studio 2005, 2010
+  !!! からダウンロードできます。\n
+  以下で、具体的なコンパイル方法をコンパイラ別に説明します。
+
+
+  \section mainpage_install_vc Visual C++ 2005, 2010 (Solution file)
 
   !!! vcproj ファイルから Visual Studio を起動して、ライブラリをビルドします。
 
   !!! 使うプロジェクトで、!!! 指定してコンパイルして下さい。
 
   !!! プロジェクトに、include/ 以下の .h ファイルと src/ 以下の .c ファイルをプロジェクトに追加しても利用できます。
+
+
+  \section mainpage_install_vc_bat Visual C++ 2005, 2010 (bat file)
+
+  !!!
 
 
   \section mainpage_install_gcc gcc (Linux, Mac, Windows(MinGW))
@@ -43,7 +54,12 @@
 
   !!!
 
-  \section mainpage_usage_vc Visual Studio 2005, 2010
+  \section mainpage_usage_vc Visual C++ 2005, 2010 (Solution file)
+
+  !!!
+
+
+  \section mainpage_usage_vc_bat Visual C++ 2005, 2010 (bat file)
 
   !!!
 
