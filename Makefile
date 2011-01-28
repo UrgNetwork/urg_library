@@ -3,7 +3,7 @@
 VERSION = 1.0.0
 RELEASE_DIR = release
 PACKAGE_EN_DIR = urg_library-$(VERSION)
-PACKAGE_JP_DIR = urg_library_jp-$(VERSION)
+PACKAGE_JA_DIR = urg_library_ja-$(VERSION)
 
 
 all :
@@ -14,10 +14,10 @@ clean : release_clean
 	$(RM) -rf $(RELEASE_DIR)
 
 install : dist
-	cd $(RELEASE_DIR)/$(PACKAGE_JP_DIR) && $(MAKE) install
+	cd $(RELEASE_DIR)/$(PACKAGE_JA_DIR) && $(MAKE) install
 
 
-TARGET_DIR = $(PACKAGE_EN_DIR) $(PACKAGE_JP_DIR)
+TARGET_DIR = $(PACKAGE_EN_DIR) $(PACKAGE_JA_DIR)
 dist : release_clean
 	mkdir -p $(RELEASE_DIR)
 	for i in $(TARGET_DIR) ; \
@@ -51,10 +51,10 @@ dist : release_clean
 	ruby split_comment.rb -e current/src/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/src/
 	ruby split_comment.rb -e current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/
 	ruby split_comment.rb -e current/samples/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/
-	ruby split_comment.rb -j current/include/*.h $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/include/
-	ruby split_comment.rb -j current/src/*.c $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/src/
-	ruby split_comment.rb -j current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/samples/
-	ruby split_comment.rb -j current/samples/*.h $(RELEASE_DIR)/$(PACKAGE_JP_DIR)/samples/
+	ruby split_comment.rb -j current/include/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/include/
+	ruby split_comment.rb -j current/src/*.c $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/src/
+	ruby split_comment.rb -j current/samples/*.c $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/samples/
+	ruby split_comment.rb -j current/samples/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/samples/
 	for i in $(TARGET_DIR) ; \
 	do \
 		cd $(PWD); \
@@ -67,5 +67,5 @@ dist : release_clean
 	done
 
 release_clean :
-	$(RM) -rf $(RELEASE_DIR)/$(PACKAGE_EN_DIR) $(RELEASE_DIR)/$(PACKAGE_JP_DIR)
-	$(RM) $(PACKAGE_EN_DIR).zip $(PACKAGE_JP_DIR).zip
+	$(RM) -rf $(RELEASE_DIR)/$(PACKAGE_EN_DIR) $(RELEASE_DIR)/$(PACKAGE_JA_DIR)
+	$(RM) $(PACKAGE_EN_DIR).zip $(PACKAGE_JA_DIR).zip
