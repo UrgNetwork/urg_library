@@ -1,0 +1,32 @@
+/*!
+  \page usage_linux_page Linux, Mac の場合
+
+  !!!
+
+  - \ref usage_linux_install_gcc
+
+
+  \subsection usage_linux_install_gcc gcc (Linux)
+
+  パッケージを展開後 make コマンドでコンパイルとインストールが行えます。\n
+
+\verbatim
+% make
+% sudo make install \endverbatim
+
+  デフォルトでは /usr/local ディレクトリ以下の include/, lib/, bin/ ディレクトリ以下にファイルがインストールされます。\n
+  これらのディレクトリのインストール場所を変更する場合は urg_library-X.X.X/Makefile 中の PREFIX の記述を変更して下さい。
+
+urg_library-X.X.X/Makefile の変更する箇所
+\verbatim
+PREFIX = /usr/local \endverbatim
+
+  !!!
+
+
+  \subsection usage_linux_usage_gcc gcc (Linux)
+
+  !!!
+
+  !!! urg_c-config スクリプトが使えます
+*/

@@ -5,14 +5,14 @@ all :
 	cd samples/ && $(MAKE)
 
 clean :
-	$(RM) -rf html html_jp
+	$(RM) -rf html html_ja
 	cd src/ && $(MAKE) clean
 	cd samples/ && $(MAKE) clean
 	-cd viewers/ && $(MAKE) clean
 
 html :
 	doxygen Doxyfile
-	doxygen Doxyfile_jp
+	doxygen Doxyfile_ja
 
 .PHONY : all clean html
 ######################################################################

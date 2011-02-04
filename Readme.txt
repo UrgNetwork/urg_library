@@ -1,3 +1,5 @@
+URG C Library
+
 About this software:
   This software have been developed to provide a library to use
   scanning range sensors of Hokuyo Automatic Corporation.  Samples
@@ -60,9 +62,15 @@ gcc (Linux, MinGW)
   必要ならば urg_library-X.X.X/Makefile の PREFIX を編集して
   インストール先を変更します。
 
+  !!! 現状こうなっているので、他の場所にしたければ、変更して下さい。
+PREFIX = /usr/local
+#PREFIX = /mingw
+
   コンパイルとインストールを行います。
 
   % make
   # make install
 
   ライブラリの使い方は、urg-library-X.X.X/samples/ 中の Makefile をご覧下さい。
+
+  !!! ライブラリの使い方は、もう少しちゃんと書きたい。

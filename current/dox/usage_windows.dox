@@ -1,0 +1,32 @@
+/*!
+  \page usage_windows_page Windows の場合
+
+  !!!
+
+  - \ref usage_windows_install_vc
+  - \ref usage_windows_install_vc_bat
+
+
+  \subsection usage_windows_install_vc Visual C++ 2005 (Solution file)
+
+  !!! vcproj ファイルから Visual Studio を起動して、ライブラリをビルドします。
+
+  !!! 使うプロジェクトで、!!! 指定してコンパイルして下さい。
+
+  !!! プロジェクトに、include/ 以下の .h ファイルと src/ 以下の .c ファイルをプロジェクトに追加しても利用できます。
+
+
+  \subsection usage_windows_install_vc_bat Visual C++ 2005 (bat file)
+
+  !!!
+
+
+  \subsection usage_windows_usage_vc Visual C++ 2005 (Solution file)
+
+  !!!
+
+
+  \subsection usage_windows_usage_vc_bat Visual C++ 2005 (bat file)
+
+  !!!
+*/

@@ -4,7 +4,7 @@ syntax: glob
 *.a
 *.exe
 current/html
-current/html_jp
+current/html_ja
 release
 generated_html
 get_distance
