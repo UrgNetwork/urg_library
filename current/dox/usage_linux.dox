@@ -1,32 +1,32 @@
 /*!
   \page usage_linux_page Linux, Mac の場合
 
-  !!!
+  ライブラリのコンパイル方法を説明しています。
 
-  - \ref usage_linux_install_gcc
-
-
-  \subsection usage_linux_install_gcc gcc (Linux)
+  \section usage_linux_install_gcc gcc でのライブラリのインストール方法
 
   パッケージを展開後 make コマンドでコンパイルとインストールが行えます。\n
 
 \verbatim
+% unzip urg_library-X.X.X.zip
+% cd urg_library-X.X.X/
 % make
 % sudo make install \endverbatim
 
   デフォルトでは /usr/local ディレクトリ以下の include/, lib/, bin/ ディレクトリ以下にファイルがインストールされます。\n
   これらのディレクトリのインストール場所を変更する場合は urg_library-X.X.X/Makefile 中の PREFIX の記述を変更して下さい。
 
-urg_library-X.X.X/Makefile の変更する箇所
+インストール先を /usr/ に変更する場合の変更例 (urg-libaray-X.X.X/Makefile を編集)
 \verbatim
-PREFIX = /usr/local \endverbatim
-
-  !!!
+PREFIX = /usr \endverbatim
 
 
-  \subsection usage_linux_usage_gcc gcc (Linux)
+  \section usage_linux_usage_gcc gcc でのライブラリの使い方
 
-  !!!
+  ライブラリの利用には urg_c-config スクリプトが利用できます。
 
-  !!! urg_c-config スクリプトが使えます
+  test.c をコンパイルするときのコマンド例
+  \verbatim
+% gcc -g -O0 -Wall -Werror -W `urg_c-config --cflags` test.c -o test `urg_c-config --libs` -lm
+\endverbatim
 */
