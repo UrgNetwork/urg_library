@@ -36,7 +36,7 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/sync_time_stamp; \
 		mkdir -p $(RELEASE_DIR)/$$i/visual_cpp/urg; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
-		cp current/COPYRIGHT current/Install.txt Readme.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
+		cp current/COPYRIGHT.txt current/Install.txt Readme.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
 		cp current/Makefile.release $(RELEASE_DIR)/$$i/Makefile; \
 		cp current/src/Makefile.release $(RELEASE_DIR)/$$i/src/Makefile; \
 		cp current/samples/Makefile.release $(RELEASE_DIR)/$$i/samples/Makefile ; \
