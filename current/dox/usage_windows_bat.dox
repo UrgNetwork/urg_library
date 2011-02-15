@@ -1,5 +1,5 @@
 /*!
-  \page usage_windows_page Windows の場合
+  \page usage_windows_bat_page Visual C++ (bat ファイルを使ったコンパイル) (記述中)
 
   ライブラリのコンパイル方法を説明しています。\n
   Visual C++ のプロジェクトファイルを使う方法と、Visual C++ をコマンドラインを使う方法の２通りを説明しています。

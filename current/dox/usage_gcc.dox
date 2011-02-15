@@ -1,9 +1,9 @@
 /*!
-  \page usage_linux_page Linux, Mac の場合
+  \page usage_gcc_page gcc (Makefile を使ったコンパイル) (記述中)
 
   ライブラリのコンパイル方法を説明しています。
 
-  \section usage_linux_install_gcc gcc でのライブラリのインストール方法
+  \section usage_gcc_install_gcc gcc でのライブラリのインストール方法
 
   パッケージを展開後 make コマンドでコンパイルとインストールが行えます。\n
 
@@ -21,7 +21,7 @@
 PREFIX = /usr \endverbatim
 
 
-  \section usage_linux_usage_gcc gcc でのライブラリの使い方
+  \section usage_gcc_usage_gcc gcc でのライブラリの使い方
 
   ライブラリの利用には urg_c-config スクリプトが利用できます。
 
