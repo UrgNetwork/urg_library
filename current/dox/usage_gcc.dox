@@ -1,9 +1,10 @@
 /*!
-  \page usage_gcc_page gcc (Makefile を使ったコンパイル) (記述中)
+  \page usage_gcc_page gcc (Makefile を使ったコンパイル)
 
-  ライブラリのコンパイル方法を説明しています。
+  ライブラリのコンパイル方法と、ライブラリを使った実行ファイルの作り方を説明しています。
 
-  \section usage_gcc_install_gcc gcc でのライブラリのインストール方法
+
+  \section usage_gcc_install_gcc ライブラリのインストール方法
 
   パッケージを展開後 make コマンドでコンパイルとインストールが行えます。\n
 
@@ -21,12 +22,15 @@
 PREFIX = /usr \endverbatim
 
 
-  \section usage_gcc_usage_gcc gcc でのライブラリの使い方
-
-  ライブラリの利用には urg_c-config スクリプトが利用できます。
+  \section usage_gcc_usage_gcc ライブラリを使った実行ファイルの作り方
 
   test.c をコンパイルするときのコマンド例
   \verbatim
-% gcc -g -O0 -Wall -Werror -W `urg_c-config --cflags` test.c -o test `urg_c-config --libs` -lm
+% gcc -I/usr/local/include/urg_c test.c -o test -lurg_c -lrt -lm
+\endverbatim
+
+  ライブラリと一緒にインストールされる urg_c-config スクリプトを使うと、コンパイルするコマンドを以下のように記述することもできます。
+  \verbatim
+% gcc `urg_c-config --cflags` test.c -o test `urg_c-config --libs` -lm
 \endverbatim
 */

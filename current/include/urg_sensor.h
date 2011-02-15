@@ -54,6 +54,9 @@ enum {
 /*!
   \~japanese
   \brief URG ƒZƒ“ƒTŠÇ—
+
+  \~english
+  \brief URG sensor
 */
 typedef struct
 {

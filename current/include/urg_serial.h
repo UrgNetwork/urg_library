@@ -28,6 +28,7 @@ enum {
 };
 
 
+//! シリアル通信用
 typedef struct
 {
 #if defined(URG_WINDOWS_OS)
