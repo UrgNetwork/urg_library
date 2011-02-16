@@ -34,7 +34,7 @@
   - http://sourceforge.net/projects/urgwidget/
 
 
-  \section mainpage_compile_and_usage ライブラリのコンパイルと、プログラム実行の方法
+  \section mainpage_compile_and_usage ライブラリのコンパイルと、プログラムの実行方法
 
   - Windows
     - \subpage usage_windows_vcproj_page

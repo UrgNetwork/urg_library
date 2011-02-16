@@ -1,29 +1,77 @@
 /*!
   \page library_tutorial_page チュートリアル (記述中)
 
-  !!!
 
-  - ライブラリのコンパイルは、各リンクの説明を見て下さい。
-  - 何ができるかを説明する
-  - ライブラリのエラー処理を省いた使い方を説明する。
-  - 場合毎に、関数の使用例を説明する。
-  - ライブラリ API リンクを紹介する。
+  ここでは、ライブラリの使い方をサンプルを用いて説明します。
 
-  !!!
+  - \ref library_tutorial_connect_and_get
+  - \ref library_tutorial_get_scans
+  - \ref library_tutorial_xy
 
 
-  \subsection mainpage_samples サンプル
+  \section library_tutorial_connect_and_get センサとの接続と距離データの取得
 
-  !!! サンプルは、チュートリアルの中に含めてしまう。
+  センサから距離データを取得する基本的な手順は
 
-  いくつかのサンプルを用意しています。\n
-  各サンプルの接続設定は open_urg_sensor.c 中の下記の設定を変更して下さい。\n
-  各サンプルは "-e" を付加するとイーサーネットで接続するようになっています。
+  - センサに対して接続を行う。
+    - COM ポート名を指定して接続する。(シリアル、USB 接続のとき)
+    - IP アドレスを指定して接続する。(Ethernet 接続のとき)
+
+  - データ受信のための領域を確保する
+    - malloc などで領域を確保する。
+
+  - センサから距離データを取得する。
+    - 計測を開始する。
+    - 計測された距離データを受信する。
+
+  - センサとの接続を閉じる。
+    - 計測を中断し、センサとの接続を切断する。
+
+  となります。
+
+  上記の処理をプログラムで記述したものを、以下に示します。
+  \include connect_and_get.c
+
+  このプログラムを実行すると length_data 領域に length_data_size 個のデータが格納されます。\n
+  取得した距離データを順に表示する例は、以下のようになります。
+  \code
+for (i = 0; i < length_data; ++i) {
+    printf("%ld, ", length_data[i]);
+}
+printf("\n"); \endcode
+
+
+  \n
+  また、センサとの接続をイーサーネットで行う場合 urg_open() の記述を以下のように変更します。
+  \include connect_ethernet.c
+
+
+  \section library_tutorial_get_scans 連続して距離データを取得する
+
+  scan_times 回の距離データを取得するプログラムは、以下のように記述できます。
+  \include get_scans.c
+
+
+  \section library_tutorial_xy 距離データを X-Y 座標系に変換する
+
+  計測した距離データを X-Y 座標に変換するには urg_index2rad() を用いてその距離がどの方向にあるかを計算します。
+
+  \include convert_xy.c
+
+  urg_index2rad() は、センサ正面が 0 [deg] としたときのステップの向きをラジアン単位で返します。
+
+
+  \section library_tutorial_samples サンプル
+
+  urg_c_library は、いくつかのサンプルを用意しています。\n
+  サンプルプログラムの接続設定を変更するには open_urg_sensor.c の下記の設定を変更して下さい。\n
 
   - 接続設定を変更する箇所 (open_urg_sensor.c より抜粋)
     \dontinclude open_urg_sensor.c
     \skip int open_urg_sensor
     \until const char *ip_address
+
+  また、各サンプルは "-e" を付加するとイーサーネットで接続するようになっています。
 
   - サンプル一覧
     - センサ情報を表示するサンプル ... \ref sensor_parameter.c
@@ -34,5 +82,4 @@
     - 計測したデータを X-Y 座標に変換するサンプル ... \ref calculate_xy.c
     - センサのタイムスタンプを PC と同期させるサンプル ... \ref sync_time_stamp.c
     - シリアルポート一覧の取得サンプル ... \ref find_port.c
-
 */

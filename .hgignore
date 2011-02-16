@@ -20,3 +20,5 @@ test/serial_test
 test/urg04lx_parameter_test
 viewer_sdl/viewer_sdl
 urg_library*.zip
+
+connect_and_get

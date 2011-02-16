@@ -248,7 +248,7 @@ extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
 
   Example
   \code
-  long *data = malloc(urg_max_data_size() * sizeof(data[0]));
+  long *data = (long*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
 
   ...
 
@@ -292,7 +292,7 @@ extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
   \~
   Example
   \code
-  int data_size = urg_max_data_size();
+  int data_size = urg_max_data_size(&urg);
   long *data = malloc(data_size * sizeof(long));
   long *intensity = malloc(data_size * sizeof(unsigned short));
 
@@ -345,7 +345,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
   \~
   Example
   \code
-  long *data_multi = malloc(3 * urg_max_data_size() * sizeof(long));
+  long *data_multi = malloc(3 * urg_max_data_size(&urg) * sizeof(long));
 
   ...
 
@@ -379,7 +379,7 @@ extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
   \~
   Example
   \code
-  int data_size = urg_max_data_size();
+  int data_size = urg_max_data_size(&urg);
   long *data_multi = malloc(3 * data_size * sizeof(long));
   long *intensity_multi = malloc(3 * data_size * sizeof(unsigned short));
 
