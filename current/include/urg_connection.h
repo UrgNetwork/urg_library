@@ -18,20 +18,26 @@ extern "C" {
 #include "urg_tcpclient.h"
 
 
-/*! 定数定義 */
+/*!
+  \brief 定数定義
+*/
 enum {
-    URG_CONNECTION_TIMEOUT = -1,
+    URG_CONNECTION_TIMEOUT = -1, //!< タイムアウトが発生したときの戻り値
 };
 
 
-/*! 通信タイプ */
+/*!
+  \brief 通信タイプ
+*/
 typedef enum {
     URG_SERIAL,
     URG_ETHERNET,
 } urg_connection_type_t;
 
 
-/*! 通信リソースの管理 */
+/*!
+  \brief 通信リソースの管理
+*/
 typedef struct
 {
     urg_connection_type_t type;
@@ -142,7 +148,7 @@ extern int connection_write(urg_connection_t *connection,
 
   timeout に負の値を指定した場合、タイムアウトは発生しない。
 
-  1 文字も受信しなかったときは #CONNECTION_TIMEOUT を返す。
+  1 文字も受信しなかったときは #URG_CONNECTION_TIMEOUT を返す。
 
   Example
   \code
@@ -176,7 +182,7 @@ extern int connection_read(urg_connection_t *connection,
 
   改行文字は '\\r' または '\\n' とする。
 
-  受信した最初の文字が改行の場合は、0 を返し、1 文字も受信しなかったときは #CONNECTION_TIMEOUT を返す。
+  受信した最初の文字が改行の場合は、0 を返し、1 文字も受信しなかったときは #URG_CONNECTION_TIMEOUT を返す。
 
   \see connection_write(), connection_read()
 */

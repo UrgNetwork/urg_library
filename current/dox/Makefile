@@ -11,3 +11,4 @@ all : $(TARGET)
 	cd ../ && $(MAKE) html
 
 clean :
+	$(RM) $(TARGET)

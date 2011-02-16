@@ -35,6 +35,7 @@ enum { RB_SIZE     = 1<<RB_BITSHIFT };
 enum { BUFSIZE     = RB_SIZE-1 };
 
 
+//! TCP/IP connection
 typedef struct {
     // socket
     struct sockaddr_in server_addr;

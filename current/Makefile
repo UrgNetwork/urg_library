@@ -12,12 +12,13 @@ clean :
 	cd src/ && $(MAKE) clean
 	cd samples/ && $(MAKE) clean
 	-cd viewers/ && $(MAKE) clean
+	cd dox/ && $(MAKE) clean
 
 html :
-	doxygen Doxyfile
-	cp COPYRIGHT.txt $(OUTPUT_HTML_DIR)
 	doxygen Doxyfile_ja
 	cp COPYRIGHT.txt $(OUTPUT_HTML_JA_DIR)
+	doxygen Doxyfile
+	cp COPYRIGHT.txt $(OUTPUT_HTML_DIR)
 
 .PHONY : all clean html
 ######################################################################

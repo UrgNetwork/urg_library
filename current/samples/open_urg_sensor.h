@@ -2,7 +2,6 @@
 #define OPEN_URG_SENSOR_H
 
 /*!
-  \file
   \~japanese
   \brief URG ‚Æ‚ÌÚ‘±
 

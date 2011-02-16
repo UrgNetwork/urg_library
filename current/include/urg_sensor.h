@@ -141,8 +141,15 @@ extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 extern void urg_close(urg_t *urg);
 
 
-// !!! urg_open() を呼び出すと timeout の設定値はデフォルト値に初期化される
-extern void urg_set_timeout_msec(urg_t * urg, int msec);
+/*!
+  \brief タイムアウト時間の設定
+
+  \param[in,out] urg URG センサ管理
+  \param[in] msec タイムアウトする時間 [msec]
+
+  \attention urg_open() を呼び出すと timeout の設定値はデフォルト値に初期化されるため、この関数は urg_open() 後に呼び出すこと。
+*/
+extern void urg_set_timeout_msec(urg_t *urg, int msec);
 
 
 /*! \~japanese タイムスタンプモードの開始 */
@@ -199,9 +206,9 @@ extern int urg_stop_time_stamp_mode(urg_t *urg);
   - #URG_DISTANCE ... 距離データ
   - #URG_DISTANCE_INTENSITY ... 距離データと強度データ
   - #URG_MULTIECHO ... マルチエコー版の距離データ
-  - #URG_MULTIECHO_iNTENSITY ... マルチエコー版の(距離データと強度データ)
+  - #URG_MULTIECHO_INTENSITY ... マルチエコー版の(距離データと強度データ)
 
-  scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INTENSITY を指定した場合は、無限回のデータを取得します。\n
+  scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INFINITY を指定した場合は、無限回のデータを取得します。\n
   開始した計測を中断するには urg_stop_measurement() を使います。
 
   skip_scan はミラーの回転数のうち、１回のスキャン後に何回スキャンしないかを指定します。skip_scan に指定できる範囲は [0, 9] です。
@@ -324,7 +331,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   マルチエコーとは複数の距離データです。 マルチエコーは、１つのレーザ発光において複数の距離データが得られたときに得られます。
 
-  \imgage html multi_echo_image.jpg マルチエコー例
+  \image html multi_echo_image.jpg マルチエコー例
 
   time_stamp については urg_get_distance() と同じです。
 
@@ -484,12 +491,12 @@ extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
   距離データをセンサから受信の際のデータサイズを変更します。
 
   \param[in,out] urg URG センサ管理
-  \param[in] range_data_byte 距離値を表現するデータのバイト数
+  \param[in] data_byte 距離値を表現するデータのバイト数
 
   \retval 0 成功
   \retval <0 エラー
 
-  range_data_byte には
+  data_byte には
 
   - URG_COMMUNICATION_3_BYTE ... 距離を 3 byte で表現する
   - URG_COMMUNICATION_2_BYTE ... 距離を 2 byte で表現する

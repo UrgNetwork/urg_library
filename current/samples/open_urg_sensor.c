@@ -1,5 +1,4 @@
 /*!
-  \file
   \~japanese
   \brief URG ‚Æ‚ÌÚ‘±
 

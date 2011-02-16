@@ -8,8 +8,6 @@
   \author Satofumi KAMIMURA
 
   $Id$
-
-  \todo URG ‚ÌŒÌáƒGƒ‰[‚ð“KØ‚Éˆµ‚¦‚é‚æ‚¤‚É‚·‚é
 */
 
 enum {
