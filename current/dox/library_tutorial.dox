@@ -1,5 +1,5 @@
 /*!
-  \page library_tutorial_page チュートリアル (記述中)
+  \page library_tutorial_page チュートリアル
 
 
   ここでは、ライブラリの使い方をサンプルを用いて説明します。
@@ -63,7 +63,7 @@ printf("\n"); \endcode
 
   \section library_tutorial_samples サンプル
 
-  urg_c_library は、いくつかのサンプルを用意しています。\n
+  urg_library は、いくつかのサンプルを用意しています。\n
   サンプルプログラムの接続設定を変更するには open_urg_sensor.c の下記の設定を変更して下さい。\n
 
   - 接続設定を変更する箇所 (open_urg_sensor.c より抜粋)

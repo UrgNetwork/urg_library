@@ -1,44 +1,31 @@
 /*!
-  \page usage_windows_vcproj_page Visual C++ (プロジェクトファイルを使ったコンパイル) (記述中)
+  \page usage_windows_vcproj_page Visual C++ (プロジェクトファイルを使ったコンパイル)
 
-  ライブラリのコンパイル方法を説明しています。\n
-  Visual C++ のプロジェクトファイルを使う方法と、Visual C++ をコマンドラインを使う方法の２通りを説明しています。
+  Visual C++ のプロジェクトファイルを使ったライブラリのコンパイル方法と、そのライブラリの使い方を説明しています。
 
-  - \ref usage_windows_install_vc
-  - \ref usage_windows_usage_vc_bat
+  - \ref usage_windows_vcproj_compile
+  - \ref usage_windows_vcproj_link
 
 
-  \section usage_windows_install_vc ライブラリのコンパイル方法 (Visual C++ プロジェクトファイル)
+  \section usage_windows_vcproj_compile ライブラリのコンパイル
 
   urg_library-X.X.X/visual_cpp/urg.sln から Visual C++ を起動し、ソリューションのビルドを行います。
 
-  ビルド後は、urg.lib のスタティックライブラリと各サンプルの
-  実行ファイルが生成されています。
+  ビルド後は、スタティックライブラリ urg.lib と各サンプルの実行ファイルが生成されています。\n
+  ライブラリを使ったプログラムのコンパイルは、この urg.lib と urg_library-X.X.X/include フォルダを利用します。
 
 
-  \subsection usage_windows_usage_vc ライブラリの使い方 (Visual C++ プロジェクトファイル)
+  \section usage_windows_vcproj_link ライブラリの使い方
 
-  urg_libaray-X.X.X/include/ と urg.lib の２つをコピーして利用して下さい。\n
-  利用サンプルは urg_library-X.X.X/visual_cpp/samples 以下にあります。
+  生成された urg.lib と urg_libaray-X.X.X/include/ の２つをコピーして利用して下さい。\n
+  プロジェクトに以下の３つの設定をすることで、ライブラリが利用されるようになります。
 
-
-  \section usage_windows_usage_vc_bat ライブラリの使い方 (Visual C++ コマンドライン)
-
-  以下の作業はコマンドプロンプト上で行います。
-
-  -# 環境変数を設定するために Visual Studio が提供している bat ファイルをコピーします。
+  -# プロジェクトのプロパティ "構成プロパティ" -> "C/C++" -> "全般" のフォームにある "追加のインクルードディレクトリ" に urg_library-X.X.X/include のパスを記述します。
   \n \n
-  Microsoft Visual Studio 8\Common7\Tools\vsvars32.bat を urgwidget\current\windowsexeにコピーする。
+  -# プロジェクトのプロパティ "リンカ" -> "全般" のフォームにある "追加のライブラリディレクトリ" に urg.lib をコピーしたディレクトリを記述します。
   \n \n
-  -# 環境変数を設定後、コンパイル用のbatファイルを実行する。
-  \n \n
-  urgwidget\current\windowsexe\vsvars32.bat を実行し urgwidget\current\windowsexe\compile.bat を実行する。
-  \n \n
-  -# 生成されたサンプルの実行ファイルを動かす。
-  \n \n
-  urgwidget\current\windowsexe に生成されるexeを実行する。
-  \n \n
-  -# 生成されたサンプルの実行ファイルを削除する。
-  \n\n
-  urgwidget\current\windowsexe\cleanobj.bat を実行し生成された実行ファイルを削除する。
+  -# プロジェクトのプロパティ "リンカ" -> "入力" のフォームにある "追加の依存ファイル" に urg.lib と記述します。
+
+
+  これらの設定を行ったサンプルは urg_library-X.X.X/visual_cpp/samples 以下にあります。
 */
