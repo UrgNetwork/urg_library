@@ -213,7 +213,7 @@ extern int urg_stop_time_stamp_mode(urg_t *urg);
 
   skip_scan はミラーの回転数のうち、１回のスキャン後に何回スキャンしないかを指定します。skip_scan に指定できる範囲は [0, 9] です。
 
-  \image html scip_scan_image.jpg 何回に１回だけ計測するか
+  \image html skip_scan_image.png 何回に１回だけ計測するか
 
   たとえば、ミラーの１回転が 100 [msec] のセンサで skip_scan に 1 を指定した場合、データの取得間隔は 200 [msec] になります。
 
@@ -331,7 +331,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   マルチエコーとは複数の距離データです。 マルチエコーは、１つのレーザ発光において複数の距離データが得られたときに得られます。
 
-  \image html multi_echo_image.jpg マルチエコー例
+  \image html multiecho_image.png マルチエコーのイメージ図
 
   time_stamp については urg_get_distance() と同じです。
 
@@ -446,7 +446,7 @@ extern int urg_stop_measurement(urg_t *urg);
 
   センサの step は、センサ正面を 0 とし、センサ上部から見て反時計まわりの向きが正の値となる順に割り振られます。
 
-  \image html sensor_step_image.jpg センサと step の関係
+  \image html sensor_angle_image.png センサと step の関係
 
   step の間隔と、最大値、最小値はセンサ依存です。step 値の最大値、最小値は urg_step_min_max() で取得できます。\n
 

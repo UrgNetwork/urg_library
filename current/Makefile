@@ -15,6 +15,7 @@ clean :
 	cd dox/ && $(MAKE) clean
 
 html :
+	cd dox/ && $(MAKE) img
 	doxygen Doxyfile_ja
 	cp COPYRIGHT.txt $(OUTPUT_HTML_JA_DIR)
 	doxygen Doxyfile

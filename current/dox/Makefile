@@ -5,10 +5,24 @@ LDFLAGS =
 LDLIBS = `urg_c-config --libs` -lm
 
 
-TARGET = connect_and_get
+TARGET = \
+	connect_and_get \
 
-all : $(TARGET)
+IMAGE_TARGET = \
+	multiecho_image.png \
+	sensor_angle_image.png \
+	skip_scan_image.png \
+
+all : $(TARGET) img
 	cd ../ && $(MAKE) html
 
+img : $(IMAGE_TARGET)
+
 clean :
-	$(RM) $(TARGET)
+	$(RM) $(TARGET) $(IMAGE_TARGET)
+
+.PHONY : all clean
+######################################################################
+.SUFFIXES: .png .svg
+.svg.png:
+	convert $< $@
