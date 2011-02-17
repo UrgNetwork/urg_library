@@ -6,6 +6,7 @@
 
   - \ref library_tutorial_connect_and_get
   - \ref library_tutorial_get_scans
+  - \ref library_tutorial_timestamp
   - \ref library_tutorial_xy
 
 
@@ -50,6 +51,14 @@ printf("\n"); \endcode
 
   scan_times 回の距離データを取得するプログラムは、以下のように記述できます。
   \include get_scans.c
+
+
+  \section library_tutorial_timestamp 距離データを取得したときのタイムスタンプを取得する
+
+  計測がいつのタイミングで行われたかは urg_get_distance() 関数で取得できます。
+
+  urg_get_distance() を用いて取得したタイムスタンプを表示するプログラムは、以下のように記述できます。
+  \include get_timestamp.c
 
 
   \section library_tutorial_xy 距離データを X-Y 座標系に変換する

@@ -50,6 +50,9 @@ urg_serial_utils.o: ../include/urg_serial_utils.h ../include/urg_detect_os.h
 urg_serial_utils.o: urg_serial_utils_linux.c
 urg_serial_utils_linux.o: ../include/urg_serial_utils.h
 urg_serial_utils_windows.o: ../include/urg_serial_utils.h
+urg_serial_utils_windows.o: ../include/urg_detect_os.h
+urg_serial_windows.o: ../include/urg_serial.h ../include/urg_detect_os.h
+urg_serial_windows.o: ../include/urg_ring_buffer.h
 urg_tcpclient.o: ../include/urg_detect_os.h ../include/urg_tcpclient.h
 urg_tcpclient.o: ../include/urg_ring_buffer.h
 urg_utils.o: ../include/urg_utils.h ../include/urg_sensor.h
