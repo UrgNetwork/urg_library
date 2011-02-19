@@ -4,7 +4,7 @@
   ライブラリの使い方をサンプルを用いて説明します。
 
   \~english
-  \page library_tutorial_page Tutorial
+  \page library_tutorial_page Tutorial (under construction)
 
   ライブラリの使い方をサンプルを用いて説明します。
 
@@ -64,13 +64,18 @@ printf("\n"); \endcode
 
   \n
   また、センサとの接続をイーサーネットで行う場合 urg_open() の記述を以下のように変更します。
-  \include connect_ethernet.c
+  \dontinclude connect_ethernet.c
+  \skip //
+  \until todo check error
 
 
   \section library_tutorial_get_scans 連続して距離データを取得する
 
   scan_times 回の距離データを取得するプログラムは、以下のように記述できます。
-  \include get_scans.c
+  \dontinclude get_scans.c
+  \skip //
+  \until }
+
 
   大抵の場合 urg_start_measurement() と urg_get_distance() のペアを繰り返して呼び出すよりも、取得回数を指定して１度 urg_start_measurement() を呼び出しておき urg_get_distance() で繰り返しデータを取得する方が効率よくデータを取得できます。
 
@@ -79,7 +84,10 @@ printf("\n"); \endcode
 
   計測の範囲、ステップ数の間引き設定、スキャンの間引き設定を行うことができます。計測の範囲を狭くしたり、間引きを行うことで受信データ量を減らすことができ、ライブラリ動作の負荷が減少します。
 
-  \include set_parameter.c
+  \dontinclude set_parameter.c
+  \skip //
+  \until urg_start
+  \line check error code
 
 
   \section library_tutorial_timestamp 距離データを取得したときのタイムスタンプを取得する
@@ -87,7 +95,10 @@ printf("\n"); \endcode
   計測がいつのタイミングで行われたかは urg_get_distance() 関数で取得できます。
 
   urg_get_distance() を用いて取得したタイムスタンプを表示するプログラムは、以下のように記述できます。
-  \include get_timestamp.c
+  \dontinclude get_timestamp.c
+  \skip //
+  \until }
+
 
   通常はセンサの計測周期で計測が行われますが、ライブラリを処理する PC の負荷が高い場合は計測データのタイムスタンプ間隔が、センサの計測周期よりも長くなる場合があります。この場合、計測するステップ数を間引くなどの変更で対処できることがあります。
 
@@ -96,7 +107,10 @@ printf("\n"); \endcode
 
   計測した距離データを X-Y 座標に変換するには urg_index2rad() を用いてその距離がどの方向にあるかを計算します。
 
-  \include convert_xy.c
+  \dontinclude convert_xy.c
+  \skip //
+  \until printf("\n");
+
 
   urg_index2rad() は、センサ正面が 0 [deg] としたときのステップの向きをラジアン単位で返します。
 

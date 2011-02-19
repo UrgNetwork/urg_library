@@ -22,3 +22,8 @@ viewer_sdl/viewer_sdl
 urg_library*.zip
 
 connect_and_get
+connect_ethernet
+convert_xy
+get_scans
+get_timestamp
+set_parameter

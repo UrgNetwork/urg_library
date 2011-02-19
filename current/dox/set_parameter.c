@@ -1,3 +1,17 @@
+#include "urg_sensor.h"
+#include "urg_utils.h"
+
+int main(void)
+{
+const char connect_device[] = "/dev/ttyACM0";
+const long connect_baudrate = 115200;
+urg_t urg;
+int first_step;
+int last_step;
+int skip_step;
+int scan_times;
+int skip_scan;
+int ret;
 // 計測パラメータの設定
 
 // センサに対して接続を行う。
@@ -17,5 +31,7 @@ ret = urg_set_scanning_parameter(&urg, first_step, last_step, skip_step);
 // 123 回の計測を指示し、スキャンの間引きを行わない例
 scan_times = 123;
 skip_scan = 0;
-extern int urg_start_measurement(&urg, URG_DISTANCE, scan_times, skip_scan);
+ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, skip_scan);
 // \todo check error code
+return 0;
+}

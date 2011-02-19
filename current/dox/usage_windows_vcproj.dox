@@ -1,8 +1,17 @@
 /*!
+  \~japanese
   \page usage_windows_vcproj_page Visual C++ (プロジェクトファイルを使ったコンパイル)
 
   Visual C++ のプロジェクトファイルを使ったライブラリのコンパイル方法と、そのライブラリの使い方を説明しています。
 
+
+  \~english
+  \page usage_windows_vcproj_page Visual C++ (using vcproj) (under construction)
+
+  Visual C++ のプロジェクトファイルを使ったライブラリのコンパイル方法と、そのライブラリの使い方を説明しています。
+
+
+  \~
   - \ref usage_windows_vcproj_compile
   - \ref usage_windows_vcproj_link
   - \ref usage_windows_vcproj_sample

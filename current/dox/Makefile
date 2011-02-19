@@ -7,6 +7,11 @@ LDLIBS = `urg_c-config --libs` -lm
 
 TARGET = \
 	connect_and_get \
+	connect_ethernet \
+	get_scans \
+	get_timestamp \
+	set_parameter \
+	convert_xy \
 
 IMAGE_TARGET = \
 	multiecho_image.png \

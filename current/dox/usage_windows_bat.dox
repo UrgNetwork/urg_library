@@ -1,10 +1,19 @@
 /*!
+  \~japanese
   \page usage_windows_bat_page Visual C++ (バッチファイルを使ったコンパイル)
 
   アプリケーションのソースコードとライブラリのソースコードを一緒にコンパイルする方法を紹介します。\n
   以下の作業はコマンドプロンプト上で行います。
 
 
+  \~english
+  \page usage_windows_bat_page Visual C++ (using batch file) (under construction)
+
+  アプリケーションのソースコードとライブラリのソースコードを一緒にコンパイルする方法を紹介します。\n
+  以下の作業はコマンドプロンプト上で行います。
+
+
+  \~japanese
   \section usage_windows_bat_link_make コンパイル
 
   -# コンパイルに必要な環境変数を設定するための Visual Studio が提供している bat ファイルをコピー
