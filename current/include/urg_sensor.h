@@ -8,6 +8,12 @@
 
   URG 用の基本的な関数を提供します。
 
+
+  \~english
+  \brief URG sensor
+
+  URG 用の基本的な関数を提供します。
+
   \~
   \author Satofumi KAMIMURA
 

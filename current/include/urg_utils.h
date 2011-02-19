@@ -6,6 +6,9 @@
   \~japanese
   \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
 
+  \~english
+  \brief URG sensor utility
+
   \~
   \author Satofumi KAMIMURA
 

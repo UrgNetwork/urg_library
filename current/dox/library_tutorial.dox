@@ -1,9 +1,15 @@
 /*!
+  \~japanese
   \page library_tutorial_page チュートリアル
+  ライブラリの使い方をサンプルを用いて説明します。
 
+  \~english
+  \page library_tutorial_page Tutorial
 
   ライブラリの使い方をサンプルを用いて説明します。
 
+
+  \~jepanese
   - <b>チュートリアル</b>
     - \ref library_tutorial_connect_and_get
     - \ref library_tutorial_get_scans
@@ -11,6 +17,15 @@
     - \ref library_tutorial_timestamp
     - \ref library_tutorial_xy
 
+  \~english
+  - <b>Tutorial</b>
+    - \ref library_tutorial_connect_and_get
+    - \ref library_tutorial_get_scans
+    - \ref library_tutorial_settings
+    - \ref library_tutorial_timestamp
+    - \ref library_tutorial_xy
+
+  \~
   - \ref library_tutorial_samples
 
 
