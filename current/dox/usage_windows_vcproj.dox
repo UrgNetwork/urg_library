@@ -5,20 +5,21 @@
 
   - \ref usage_windows_vcproj_compile
   - \ref usage_windows_vcproj_link
+  - \ref usage_windows_vcproj_sample
 
 
   \section usage_windows_vcproj_compile ライブラリのコンパイル
 
   urg_library-X.X.X/visual_cpp/urg.sln から Visual C++ を起動し、ソリューションのビルドを行います。
 
-  ビルド後は、スタティックライブラリ urg.lib と各サンプルの実行ファイルが生成されています。\n
+  ビルド後は、スタティックライブラリ urg.lib が生成されます。\n
   ライブラリを使ったプログラムのコンパイルは、この urg.lib と urg_library-X.X.X/include フォルダを利用します。
 
 
-  \section usage_windows_vcproj_link ライブラリの使い方
+  \section usage_windows_vcproj_link ライブラリを利用するための Visual C++ 設定
 
-  生成された urg.lib と urg_libaray-X.X.X/include/ の２つをコピーして利用して下さい。\n
-  プロジェクトに以下の３つの設定をすることで、ライブラリが利用されるようになります。
+  生成された urg.lib と urg_libaray-X.X.X/include/ の２つをコピーして利用します。 \n
+  プロジェクトに以下の３つの設定をすることで、ライブラリが利用できます。
 
   -# プロジェクトのプロパティ "構成プロパティ" -> "C/C++" -> "全般" のフォームにある "追加のインクルードディレクトリ" に urg_library-X.X.X/include のパスを記述します。
   \n \n
@@ -27,5 +28,8 @@
   -# プロジェクトのプロパティ "リンカ" -> "入力" のフォームにある "追加の依存ファイル" に urg.lib と記述します。
 
 
-  これらの設定を行ったサンプルは urg_library-X.X.X/visual_cpp/samples 以下にあります。
+  \section usage_windows_vcproj_sample サンプルのコンパイル
+
+  このライブラリを利用する設定をした Visual C++ のプロジェクトが urg_library-X.X.X/visual_cpp/samples 以下にあります。\n
+  自分のプロジェクトでライブラリを使うときの参考にご利用下さい。
 */

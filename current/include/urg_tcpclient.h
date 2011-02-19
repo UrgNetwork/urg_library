@@ -58,7 +58,7 @@ typedef struct {
 /*!
   \brief constructor of tcp client module
 
-  \param[out] cli tcp client type variable which must be allocated by a caller.
+  \param[in,out] cli tcp client type variable which must be allocated by a caller.
   \param[in] server_ip_str IP address expressed in string, i.e. "192.168.0.1"
   \param[in] port_num port number expressed in integer, i.e. port_num = 10200
 
@@ -69,41 +69,54 @@ int tcpclient_open(urg_tcpclient_t* cli,
                    const char* server_ip_str, int port_num);
 
 
-/* destructor of tcp client module
- * cli : tcp client type variable which must be deallocated by a caller
- *       after closing.
- */
-void tcpclient_close(urg_tcpclient_t* tcpc);
+/*!
+  \brief destructor of tcp client module
+
+  \param[in,out] cli : tcp client type variable which must be deallocated by a caller after closing.
+*/
+void tcpclient_close(urg_tcpclient_t* cli);
 
 
-/* read from socket.
- * userbuf : buffer to store read data which must be allocated by a caller.
- * req_size: data size requested to read in byte.
- * timeout : time out specification which unit is microsecond.
- * returns the number of data read, -1 when error.
- */
+/*!
+  \brief read from socket.
+
+  \param[in,out] cli : tcp client type variable which must be deallocated by a caller after closing.
+  \param[out] userbuf : buffer to store read data which must be allocated by a caller.
+  \param[in] req_size: data size requested to read in byte.
+  \param[in] timeout : time out specification which unit is microsecond.
+
+  \return the number of data read, -1 when error.
+*/
 int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size,
                    int timeout);
 
 
-/* write to socket.
- * userbuf : data to write.
- * req_size: data size requested to write in byte.
- * returns the number of data wrote, -1 when error.
- */
+/*!
+  \brief write to socket.
+
+  \param[in,out] cli : tcp client type variable which must be deallocated by a caller after closing.
+  \param[in] userbuf : data to write.
+  \param[in] req_size: data size requested to write in byte.
+
+  \return returns the number of data wrote, -1 when error.
+*/
 int tcpclient_write(urg_tcpclient_t* cli, const char* userbuf, int req_size);
 
 
-// not implemented yet.
-int tcpclient_error( urg_tcpclient_t* cli, char* errror_message, int max);
+//! \attention not implemented yet.
+int tcpclient_error(urg_tcpclient_t* cli, char* error_message, int max_size);
 
 
-/* read one line from socket.
- * userbuf : buffer to store read data which must be allocated by a caller.
- * req_size: data size requested to read in byte.
- * timeout : time out specification which unit is microsecond.
- * returns the number of data read, -1 when error.
- */
+/*!
+  \brief read one line from socket.
+
+  \param[in,out] cli : tcp client type variable which must be deallocated by a caller after closing.
+  \param[out] userbuf : buffer to store read data which must be allocated by a caller.
+  \param[in] buf_size: data size requested to read in byte.
+  \param[in] timeout : time out specification which unit is microsecond.
+
+  \return the number of data read, -1 when error.
+*/
 int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size,
                        int timeout);
 

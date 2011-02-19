@@ -4,7 +4,7 @@ PREFIX = /usr/local
 CC = gcc
 CONFIG_FILE = urg_c-config
 S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
-S_LIBS = $(shell if test x$(MSYSTEM) == x"MINGW32"; then echo "-lwsock32 -lsetupapi"; else echo "-lrt"; fi)
+S_LIBS = $(shell if test x$(MSYSTEM) == x"MINGW32"; then echo "-lwsock32 -lsetupapi"; fi)
 all : $(CONFIG_FILE)
 	cd src/ && $(MAKE)
 	cd samples/ && $(MAKE)

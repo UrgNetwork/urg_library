@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="sensor_angle_image.svg">
+   sodipodi:docname="sensor_step_image.svg">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -31,6 +31,20 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4167"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4192"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -40,7 +54,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="231.68522"
+     inkscape:cx="190.96025"
      inkscape:cy="100.14311"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -48,8 +62,8 @@
      inkscape:snap-grids="true"
      inkscape:window-width="1201"
      inkscape:window-height="769"
-     inkscape:window-x="-1"
-     inkscape:window-y="-34"
+     inkscape:window-x="0"
+     inkscape:window-y="79"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -81,9 +95,8 @@
        id="rect5345"
        width="340"
        height="280"
-       x="-20"
-       y="-20.355453"
-       transform="translate(185.88809,181.60813)" />
+       x="165.38809"
+       y="161.75269" />
     <path
        sodipodi:type="arc"
        style="fill:#2f47e4;fill-opacity:0.72934475;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:0;stroke-dasharray:none;stroke-dashoffset:0"
@@ -93,7 +106,7 @@
        sodipodi:rx="57.5"
        sodipodi:ry="57.5"
        d="m 181.84136,97.841361 c 22.45515,-22.455147 58.86213,-22.455148 81.31728,-2e-6 22.45515,22.455151 22.45515,58.862131 0,81.317281 -22.45515,22.45515 -58.86213,22.45515 -81.31728,0 0,0 0,0 0,0 L 222.5,138.5 z"
-       transform="translate(109.75611,160.22222)"
+       transform="translate(109.75611,160.7273)"
        sodipodi:start="3.9269908"
        sodipodi:end="8.6393798" />
     <path
@@ -173,33 +186,13 @@
     <text
        xml:space="preserve"
        style="font-size:16.38571548px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="398.01431"
-       y="290.85504"
+       x="395.38809"
+       y="291.75269"
        id="text2848"><tspan
          sodipodi:role="line"
          id="tspan2850"
-         x="398.01431"
-         y="290.85504">0</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:16.38571548px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="335.10846"
-       y="236.53549"
-       id="text2852"><tspan
-         sodipodi:role="line"
-         id="tspan2854"
-         x="335.10846"
-         y="236.53549">+PI/2</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:16.38571548px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="340.66431"
-       y="372.7836"
-       id="text2860"><tspan
-         sodipodi:role="line"
-         id="tspan2862"
-         x="340.66431"
-         y="372.7836">-PI/2</tspan></text>
+         x="395.38809"
+         y="291.75269">0</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1.63857162px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 327.55572,225.31217 4.91572,-8.19287 4.91572,8.19287"
@@ -208,5 +201,25 @@
        style="fill:none;stroke:#000000;stroke-width:1.63857162px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 406.20716,294.13217 8.19286,4.91572 -8.19286,4.91571"
        id="path2872" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.38571548px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       x="240.38809"
+       y="361.75269"
+       id="text2848-8"><tspan
+         sodipodi:role="line"
+         id="tspan2850-9"
+         x="240.38809"
+         y="361.75269">min step</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.38571548px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       x="240.38809"
+       y="241.75269"
+       id="text2848-8-1"><tspan
+         sodipodi:role="line"
+         id="tspan2850-9-0"
+         x="240.38809"
+         y="241.75269">max step</tspan></text>
   </g>
 </svg>

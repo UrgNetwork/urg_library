@@ -1,12 +1,12 @@
-// ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å–å¾—
+// ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
 
-// urg_get_distance() é–¢æ•°ã«å¤‰æ•°ã‚’ä¸ãˆã€ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—ã™ã‚‹ã€‚
+// urg_get_distance() ŠÖ”‚É•Ï”‚ğ—^‚¦Aƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚·‚éB
 
 const int scan_times = 123;
 long timestamp;
 int i;
 
-// ã‚»ãƒ³ã‚µã‹ã‚‰è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã€‚
+// ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
 ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
 // \todo check error code
 
@@ -14,6 +14,6 @@ for (i = 0; i < scan_times; ++i) {
     length_data_size = urg_get_distance(&urg, length_data, &timestamp);
     // \todo process length_data array
 
-    // å–å¾—ã—ãŸã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å‡ºåŠ›ã™ã‚‹
+    // æ“¾‚µ‚½ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğo—Í‚·‚é
     printf("%ld\n", timestamp);
 }

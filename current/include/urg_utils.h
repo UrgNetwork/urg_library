@@ -79,7 +79,7 @@ extern void urg_distance_min_max(const urg_t *urg,
 
   step はセンサ正面が 0 であり、センサ上部から見た場合の反時計まわりの方向が正、時計まわりの方向が負の step 値となる。
 
-  \image html sensor_step_image.jpg センサと step の関係
+  \image html sensor_step_image.png センサと step の関係
 
   min_step, max_step の値はセンサによって異なる。
 
@@ -117,7 +117,7 @@ extern int urg_max_data_size(const urg_t *urg);
 
   index は、取得した計測データについての値であり step や角度との関係は取得設定により異なる。
 
-  \image html sensor_index_image.jpg センサの計測範囲とインデックスの関係
+  \image html sensor_index_image.png センサの計測範囲とインデックスの関係
 
   \~
   Example
@@ -159,7 +159,7 @@ extern int urg_deg2index(const urg_t *urg, double degree);
 
   \return step
 
-  \image html sensor_angle_image.jpg センサの step と角度との関係
+  \image html sensor_angle_image.png センサの step と角度との関係
 
   角度から step へ変換した結果が整数でない場合、結果は 0 の方向に切り捨てられた値となる。
 
@@ -183,13 +183,16 @@ extern double urg_step2deg(const urg_t *urg, int step);
 /*! \~japanese step とインデックスの変換を行う */
 extern int urg_step2index(const urg_t *urg, int step);
 
-// !!!
-extern int urg_find_port(char *port_name, int index);
 
-
+/*! \~japanese センサにデータを直接送信する */
 extern int urg_raw_write(urg_t *urg, const char *data, int data_size);
+
+
+/*! \~japanese センサからデータを直接受信する */
 extern int urg_raw_read(urg_t *urg, char *data, int max_data_size,
                         int timeout);
+
+/*! \~japanese センサから改行までのデータを直接受信する */
 extern int urg_raw_readline(urg_t *urg,char *data, int max_data_size,
                             int timeout);
 

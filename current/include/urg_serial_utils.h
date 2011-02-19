@@ -11,7 +11,11 @@
 */
 
 
+//! シリアルポートを検索する
 extern int urg_serial_find_port(void);
+
+
+//! 検索したシリアルポート名を返す
 extern const char *urg_serial_port_name(int index);
 
 

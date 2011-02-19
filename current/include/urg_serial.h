@@ -35,25 +35,45 @@ typedef struct
     HANDLE hCom;                /*!< 接続リソース */
     int current_timeout;        /*!< タイムアウトの設定時間 [msec] */
 #else
-    int fd;
-    struct termios sio;
+    int fd;                     /*!< ファイルディスクリプタ*/
+    struct termios sio;         /*!< 通信設定 */
 #endif
 
     ring_buffer_t ring;         /*!< リングバッファ */
-    char buffer[RING_BUFFER_SIZE];
+    char buffer[RING_BUFFER_SIZE]; /*!< バッファ領域 */
     char has_last_ch;          /*!< 書き戻した文字があるかのフラグ */
     char last_ch;              /*!< 書き戻した１文字 */
 } urg_serial_t;
 
 
+//! 接続を開く
 extern int serial_open(urg_serial_t *serial, const char *device, long baudrate);
+
+
+//! 接続を閉じる
 extern void serial_close(urg_serial_t *serial);
+
+
+//! ボーレートを設定する
 extern int serial_set_baudrate(urg_serial_t *serial, long baudrate);
+
+
+//! データを送信する
 extern int serial_write(urg_serial_t *serial, const char *data, int size);
+
+
+//! データを受信する
 extern int serial_read(urg_serial_t *serial,
                        char *data, int max_size, int timeout);
+
+
+//! 改行までのデータを受信する
 extern int serial_readline(urg_serial_t *serial,
                            char *data, int max_size, int timeout);
-extern int serial_error(urg_serial_t *serial, char *error_message, int max_size);
+
+
+//! エラー文字列を格納して返す
+extern int serial_error(urg_serial_t *serial,
+                        char *error_message, int max_size);
 
 #endif /* !URG_SERIAL_H */

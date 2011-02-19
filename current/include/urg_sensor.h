@@ -47,7 +47,7 @@ typedef enum {
 
 enum {
     URG_SCAN_INFINITY = 0,      /*!< \~japanese 無限回のデータ取得 */
-    URG_MAX_ECHO = 3,
+    URG_MAX_ECHO = 3,           /*!< \~japanese マルチエコーの最大エコー数 */
 };
 
 
@@ -99,12 +99,20 @@ typedef struct
   指定したデバイスに接続し、距離を計測できるようにする。
 
   \param[in,out] urg URG センサ管理
+  \param[in] connection_type 通信タイプ
   \param[in] device 接続デバイス名
   \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
-  \param[in] connection_type 通信タイプ
 
   \retval 0 正常
   \retval <0 エラー
+
+  connection_type には、以下の項目が指定できます。
+
+  - #URG_SERIAL
+    - シリアル、USB 接続
+
+  - #URG_ETHERNET
+    - イーサーネット接続
 
   Example
   \code
@@ -335,7 +343,7 @@ extern int urg_get_distance_intensity(urg_t *urg, long data[],
 
   time_stamp については urg_get_distance() と同じです。
 
-  data_multi には、センサから取得した距離データが１つの step あたり最大で 3 つ格納されます。マルチエコーが存在しない場合のデータ値は -1 になります。
+  data_multi には、センサから取得した距離データが１つの step あたり最大で #URG_MAX_ECHO (3 つ)格納されます。マルチエコーが存在しない項目のデータ値は -1 が格納されています。
 
   \verbatim
   data_multi[0] ... step n の距離データ (1 つめ)

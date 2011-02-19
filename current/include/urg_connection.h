@@ -30,8 +30,8 @@ enum {
   \brief 通信タイプ
 */
 typedef enum {
-    URG_SERIAL,
-    URG_ETHERNET,
+    URG_SERIAL,                 //!< シリアル, USB 接続
+    URG_ETHERNET,               //!< イーサーネット接続
 } urg_connection_type_t;
 
 
@@ -40,9 +40,9 @@ typedef enum {
 */
 typedef struct
 {
-    urg_connection_type_t type;
-    urg_serial_t serial;
-    urg_tcpclient_t tcpclient;
+    urg_connection_type_t type; //!< 接続タイプ
+    urg_serial_t serial;        //!< シリアル接続
+    urg_tcpclient_t tcpclient;  //!< イーサーネット接続
 } urg_connection_t;
 
 

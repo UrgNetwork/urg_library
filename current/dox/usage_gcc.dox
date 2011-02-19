@@ -1,12 +1,12 @@
 /*!
   \page usage_gcc_page gcc (Makefile を使ったコンパイル)
 
-  ライブラリのコンパイル方法と、ライブラリを使った実行ファイルの作り方を説明しています。
+  ライブラリのコンパイル方法と、ライブラリを使った実行ファイルの作り方を説明します。
 
 
   \section usage_gcc_install_gcc ライブラリのインストール方法
 
-  パッケージを展開後 make コマンドでコンパイルとインストールが行えます。\n
+  パッケージを展開後 make コマンドでコンパイルとインストールを行います。\n
 
 \verbatim
 % unzip urg_library-X.X.X.zip
@@ -26,7 +26,7 @@ PREFIX = /usr \endverbatim
 
   test.c をコンパイルするときのコマンド例
   \verbatim
-% gcc -I/usr/local/include/urg_c test.c -o test -lurg_c -lrt -lm
+% gcc -I/usr/local/include/urg_c test.c -o test -lurg_c -lm
 \endverbatim
 
   ライブラリと一緒にインストールされる urg_c-config スクリプトを使うと、コンパイルするコマンドを以下のように記述することもできます。

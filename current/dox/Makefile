@@ -11,6 +11,8 @@ TARGET = \
 IMAGE_TARGET = \
 	multiecho_image.png \
 	sensor_angle_image.png \
+	sensor_index_image.png \
+	sensor_step_image.png \
 	skip_scan_image.png \
 
 all : $(TARGET) img

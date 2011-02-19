@@ -227,6 +227,18 @@ int tcpclient_write(urg_tcpclient_t* cli, const char* buf, int size)
 }
 
 
+int tcpclient_error(urg_tcpclient_t* cli, char* error_message, int max_size)
+{
+    (void)cli;
+    (void)error_message;
+    (void)max_size;
+
+    // not implemented yet.
+
+    return -1;
+}
+
+
 int tcpclient_readline(urg_tcpclient_t* cli,
                        char* userbuf, int buf_size, int timeout)
 {

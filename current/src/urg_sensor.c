@@ -1200,16 +1200,3 @@ const char *urg_sensor_status(urg_t *urg)
     p = copy_token(urg->return_buffer, receive_buffer, "STAT:", ";", ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
-
-
-int urg_find_port(char *port_name, int index)
-{
-    (void)port_name;
-    (void)index;
-
-    // !!!
-
-    // !!! ETHERNET のときは、エラーメッセージを表示する
-
-    return 0;
-}

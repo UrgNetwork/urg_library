@@ -28,13 +28,21 @@
   ライセンスの詳細はライブラリ付属の <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> ファイルをご覧下さい。
 
 
+  \~english
+  \section mainpage_license License
+
+  修正 BSD ライセンスに基づいて配布します。\n
+  ライセンスの詳細はライブラリ付属の <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> ファイルをご覧下さい。
+
+
+  \~japanese
   \section mainpage_download ダウンロード
 
   このライブラリの zip ファイルは、以下のアドレスからダウンロードできます。
   - http://sourceforge.net/projects/urgwidget/
 
 
-  \section mainpage_compile_and_usage ライブラリのコンパイルと、プログラムの実行方法
+  \section mainpage_compile_and_usage ライブラリと、サンプルプログラムのコンパイル
 
   - Windows
     - \subpage usage_windows_vcproj_page
@@ -51,9 +59,6 @@
   - センサ操作の API
     - \ref urg_sensor.h
     - \ref urg_utils.h
-
-  - シリアルポート一覧の取得の API
-    - \ref urg_serial_utils.h
 
 
   \section mainpage_support 問い合わせ先

@@ -2,12 +2,16 @@
   \page library_tutorial_page チュートリアル
 
 
-  ここでは、ライブラリの使い方をサンプルを用いて説明します。
+  ライブラリの使い方をサンプルを用いて説明します。
 
-  - \ref library_tutorial_connect_and_get
-  - \ref library_tutorial_get_scans
-  - \ref library_tutorial_timestamp
-  - \ref library_tutorial_xy
+  - <b>チュートリアル</b>
+    - \ref library_tutorial_connect_and_get
+    - \ref library_tutorial_get_scans
+    - \ref library_tutorial_settings
+    - \ref library_tutorial_timestamp
+    - \ref library_tutorial_xy
+
+  - \ref library_tutorial_samples
 
 
   \section library_tutorial_connect_and_get センサとの接続と距離データの取得
@@ -15,7 +19,7 @@
   センサから距離データを取得する基本的な手順は
 
   - センサに対して接続を行う。
-    - COM ポート名を指定して接続する。(シリアル、USB 接続のとき)
+    - シリアルポート名を指定して接続する。(シリアル、USB 接続のとき)
     - IP アドレスを指定して接続する。(Ethernet 接続のとき)
 
   - データ受信のための領域を確保する
@@ -33,14 +37,15 @@
   上記の処理をプログラムで記述したものを、以下に示します。
   \include connect_and_get.c
 
+  プログラム中に出てくる urg_t 構造体は urg_open() 関数を呼び出したときに初期化され、センサパラメータの取得や以降のデータ送受信を管理しています。
+
   このプログラムを実行すると length_data 領域に length_data_size 個のデータが格納されます。\n
-  取得した距離データを順に表示する例は、以下のようになります。
+  取得した距離データを順に表示するには、以下のように記述します。
   \code
 for (i = 0; i < length_data; ++i) {
     printf("%ld, ", length_data[i]);
 }
 printf("\n"); \endcode
-
 
   \n
   また、センサとの接続をイーサーネットで行う場合 urg_open() の記述を以下のように変更します。
@@ -52,6 +57,15 @@ printf("\n"); \endcode
   scan_times 回の距離データを取得するプログラムは、以下のように記述できます。
   \include get_scans.c
 
+  大抵の場合 urg_start_measurement() と urg_get_distance() のペアを繰り返して呼び出すよりも、取得回数を指定して１度 urg_start_measurement() を呼び出しておき urg_get_distance() で繰り返しデータを取得する方が効率よくデータを取得できます。
+
+
+  \section library_tutorial_settings 計測のパラメータ設定
+
+  計測の範囲、ステップ数の間引き設定、スキャンの間引き設定を行うことができます。計測の範囲を狭くしたり、間引きを行うことで受信データ量を減らすことができ、ライブラリ動作の負荷が減少します。
+
+  \include set_parameter.c
+
 
   \section library_tutorial_timestamp 距離データを取得したときのタイムスタンプを取得する
 
@@ -59,6 +73,8 @@ printf("\n"); \endcode
 
   urg_get_distance() を用いて取得したタイムスタンプを表示するプログラムは、以下のように記述できます。
   \include get_timestamp.c
+
+  通常はセンサの計測周期で計測が行われますが、ライブラリを処理する PC の負荷が高い場合は計測データのタイムスタンプ間隔が、センサの計測周期よりも長くなる場合があります。この場合、計測するステップ数を間引くなどの変更で対処できることがあります。
 
 
   \section library_tutorial_xy 距離データを X-Y 座標系に変換する
@@ -69,11 +85,13 @@ printf("\n"); \endcode
 
   urg_index2rad() は、センサ正面が 0 [deg] としたときのステップの向きをラジアン単位で返します。
 
+  \image html sensor_index_image.png センサと urg_index2rad() の関係
 
-  \section library_tutorial_samples サンプル
+
+  \section library_tutorial_samples ライブラリ付属のサンプル
 
   urg_library は、いくつかのサンプルを用意しています。\n
-  サンプルプログラムの接続設定を変更するには open_urg_sensor.c の下記の設定を変更して下さい。\n
+  サンプルの接続するデバイスを変更するには open_urg_sensor.c の下記の設定を変更して下さい。
 
   - 接続設定を変更する箇所 (open_urg_sensor.c より抜粋)
     \dontinclude open_urg_sensor.c
