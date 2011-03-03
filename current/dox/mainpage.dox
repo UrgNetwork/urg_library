@@ -39,15 +39,9 @@
   このライブラリの zip ファイルは、以下のアドレスからダウンロードできます。
   - http://sourceforge.net/projects/urgwidget/
 
-
-  \section mainpage_compile_and_usage ライブラリと、サンプルプログラムのコンパイル
-
-  - Windows
-    - \subpage usage_windows_vcproj_page
-    - \subpage usage_windows_bat_page
-
-  - Linux, Mac
-    - \subpage usage_gcc_page
+  Mercurial リポジトリ
+  \verbatim
+hg clone http://urgwidget.hg.sourceforge.net:8000/hgroot/urgwidget/urgwidget \endverbatim
 
 
   \~english
@@ -55,6 +49,10 @@
 
   Use the below link to download the urg_library zip file.
   - http://sourceforge.net/projects/urgwidget/
+
+  Mercurial repository
+  \verbatim
+hg clone http://urgwidget.hg.sourceforge.net:8000/hgroot/urgwidget/urgwidget \endverbatim
 
 
   \~japanese
@@ -95,8 +93,8 @@
   - \subpage library_tutorial_page
 
   - Library API
-    - \ref urg_sensor.h
-    - \ref urg_utils.h
+    - \ref urg_sensor.h (under construction)
+    - \ref urg_utils.h (under construction)
 
 
   \~japanese
