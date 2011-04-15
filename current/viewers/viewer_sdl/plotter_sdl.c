@@ -10,8 +10,12 @@
   \todo MAX_POINTS の 1081 の数をセンサからの情報で初期化する
 */
 
+//#define USE_GL_2 1
+
+#if defined(USE_GL_2)
 #define GL_GLEXT_PROTOTYPES 1
 #define GL3_PROTOTYPES 1
+#endif
 #include "plotter_sdl.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
@@ -35,7 +39,7 @@ typedef struct
 static SDL_Surface *screen = NULL;
 static vector_t points[MAX_POINTS];
 static size_t points_size = 0;
-static GLuint buffer_id = 0;
+//static GLuint buffer_id = 0;
 static double draw_magnify = 0.1;
 
 
@@ -100,13 +104,20 @@ static void opengl_setup(void)
 
 static void draw_points(void)
 {
-    int memory_size;
 
-    if (points_size <= 0) {
-        return;
+#if !defined(USE_GL_2)
+    size_t i;
+
+    glBegin(GL_POINTS);
+    for (i = 0; i < points_size; ++i) {
+        glVertex2i(points[i].x, points[i].y);
     }
+    glEnd();
 
-    memory_size = points_size * sizeof(points[0]);
+    points_size = 0;
+
+#else
+    int memory_size = points_size * sizeof(points[0]);
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
@@ -122,6 +133,7 @@ static void draw_points(void)
     glDisableClientState(GL_VERTEX_ARRAY);
 
     points_size = 0;
+#endif
 }
 
 
@@ -162,7 +174,9 @@ bool plotter_initialize(void)
 
     // 描画設定
     glPointSize(2.0);
+#if defined(USE_GL_2)
     glGenBuffers(1, &buffer_id);
+#endif
     enter2D();
 
     return true;
