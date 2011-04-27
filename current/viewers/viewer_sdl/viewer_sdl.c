@@ -191,11 +191,10 @@ int main(int argc, char *argv[])
     }
 
     // データの取得と描画
-    urg_start_measurement(&urg, mode.measurement_type,
-                          URG_SCAN_INFINITY, 0);
-
+    urg_start_measurement(&urg, mode.measurement_type, URG_SCAN_INFINITY, 0);
     while (1) {
         int n;
+        //urg_start_measurement(&urg, mode.measurement_type, 1, 0);
         switch (mode.measurement_type) {
         case URG_DISTANCE:
             n = urg_get_distance(&urg, data, &timestamp);

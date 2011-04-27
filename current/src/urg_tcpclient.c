@@ -1,3 +1,12 @@
+/*!
+  \file
+  \brief TCP/IP read/write functions
+
+  \author Katsumi Kimoto
+
+  $Id$
+*/
+
 // http://www.ne.jp/asahi/hishidama/home/tech/lang/socket.html
 
 #include "urg_detect_os.h"
