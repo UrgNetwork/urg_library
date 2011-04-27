@@ -619,10 +619,17 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 
     if (((urg->specified_scan_times == 1) && (strncmp(buffer, "00", 2))) ||
         ((urg->specified_scan_times != 1) && (strncmp(buffer, "99", 2)))) {
-        // Gx, Hx のときは 00P が返されたときがデータ
-        // Mx, Nx のときは 99b が返されたときがデータ
-        ignore_receive_data_with_qt(urg, urg->timeout);
-        return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+        int ret = 0;
+        if (urg->error_handler != NULL) {
+            ret = urg->error_handler(buffer, urg);
+        }
+
+        if (ret == 0) {
+            // Gx, Hx のときは 00P が返されたときがデータ
+            // Mx, Nx のときは 99b が返されたときがデータ
+            ignore_receive_data_with_qt(urg, urg->timeout);
+            return set_errno_and_return(urg, URG_INVALID_RESPONSE);
+        }
     }
 
     // タイムスタンプの取得
@@ -673,6 +680,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     urg->last_errno = URG_NOT_CONNECTED;
     urg->timeout = MAX_TIMEOUT;
     urg->scanning_skip_scan = 0;
+    urg->error_handler = NULL;
 
     // デバイスへの接続
     if (connection_open(&urg->connection, connection_type,
@@ -1199,4 +1207,10 @@ const char *urg_sensor_status(urg_t *urg)
 
     p = copy_token(urg->return_buffer, receive_buffer, "STAT:", ";", ret - 1);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
+}
+
+
+void urg_set_error_handler(urg_t *urg, urg_error_handler handler)
+{
+    urg->error_handler = handler;
 }

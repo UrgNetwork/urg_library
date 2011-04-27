@@ -5,6 +5,13 @@ syntax: glob
 *.exe
 current/html
 current/html_ja
+
+current/dox/multiecho_image.png
+current/dox/sensor_angle_image.png
+current/dox/sensor_index_image.png
+current/dox/sensor_step_image.png
+current/dox/skip_scan_image.png
+
 release
 generated_html
 get_distance

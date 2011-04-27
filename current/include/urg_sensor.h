@@ -57,6 +57,9 @@ enum {
 };
 
 
+typedef int (*urg_error_handler)(const char *status, void *urg);
+
+
 /*!
   \~japanese
   \brief URG センサ管理
@@ -93,6 +96,8 @@ typedef struct
     int received_skip_step;
     urg_range_data_byte_t received_range_data_byte;
     int is_sending;
+
+    urg_error_handler error_handler;
 
     char return_buffer[80];
 } urg_t;
@@ -584,6 +589,10 @@ extern const char *urg_sensor_firmware_version(urg_t *urg);
   \return ステータス文字列
 */
 extern const char *urg_sensor_status(urg_t *urg);
+
+
+//! 計測用のエラーハンドラを登録する
+extern void urg_set_error_handler(urg_t *urg, urg_error_handler handler);
 
 
 #ifdef __cplusplus
