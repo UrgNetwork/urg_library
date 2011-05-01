@@ -354,7 +354,7 @@ static int receive_parameter(urg_t *urg)
 
 
 //! SCIP 文字列のデコード
-static long scip_decode(const char data[], int size)
+long urg_scip_decode(const char data[], int size)
 {
     const char* p = data;
     const char* last_p = p + size;
@@ -532,14 +532,14 @@ static int receive_length_data(urg_t *urg, long length[],
 
             // 距離データの格納
             if (is_length) {
-                length[index] = scip_decode(p, 3);
+                length[index] = urg_scip_decode(p, 3);
             }
             p += 3;
 
             // 強度データの格納
             if (is_intensity) {
                 if (intensity) {
-                    intensity[index] = (unsigned short)scip_decode(p, 3);
+                    intensity[index] = (unsigned short)urg_scip_decode(p, 3);
                 }
                 p += 3;
             }
@@ -637,7 +637,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                             buffer, BUFFER_SIZE, urg->timeout);
     if (n > 0) {
         if (time_stamp) {
-            *time_stamp = scip_decode(buffer, 4);
+            *time_stamp = urg_scip_decode(buffer, 4);
         }
     }
 
@@ -789,7 +789,7 @@ long urg_time_stamp(urg_t *urg)
     if (p[5] == scip_checksum(p, 4)) {
         return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
     }
-    return scip_decode(p, 4);
+    return urg_scip_decode(p, 4);
 }
 
 
@@ -1077,6 +1077,28 @@ int urg_reboot(urg_t *urg)
 
     urg->last_errno = 0;
     return urg->last_errno;
+}
+
+
+void urg_sleep(urg_t *urg)
+{
+    (void)urg;
+    // !!!
+}
+
+
+void urg_wakeup(urg_t *urg)
+{
+    (void)urg;
+    // !!!
+}
+
+
+int urg_is_stable(urg_t *urg)
+{
+    (void)urg;
+    // !!!
+    return 1;
 }
 
 

@@ -539,6 +539,11 @@ extern int urg_laser_off(urg_t *urg);
 extern int urg_reboot(urg_t *urg);
 
 
+extern void urg_sleep(urg_t *urg);
+extern void urg_wakeup(urg_t *urg);
+extern int urg_is_stable(urg_t *urg);
+
+
 /*!
   \~japanese
   \brief センサ型式を文字列で返す
@@ -593,6 +598,8 @@ extern const char *urg_sensor_status(urg_t *urg);
 
 //! 計測用のエラーハンドラを登録する
 extern void urg_set_error_handler(urg_t *urg, urg_error_handler handler);
+
+extern long urg_scip_decode(const char data[], int size);
 
 
 #ifdef __cplusplus
