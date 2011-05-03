@@ -619,12 +619,11 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 
     if (((urg->specified_scan_times == 1) && (strncmp(buffer, "00", 2))) ||
         ((urg->specified_scan_times != 1) && (strncmp(buffer, "99", 2)))) {
-        int ret = 0;
-        if (urg->error_handler != NULL) {
-            ret = urg->error_handler(buffer, urg);
+        if (urg->error_handler) {
+            type = urg->error_handler(buffer, urg);
         }
 
-        if (ret == 0) {
+        if (type == URG_UNKNOWN) {
             // Gx, Hx のときは 00P が返されたときがデータ
             // Mx, Nx のときは 99b が返されたときがデータ
             ignore_receive_data_with_qt(urg, urg->timeout);
