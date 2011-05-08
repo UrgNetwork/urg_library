@@ -88,7 +88,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     cli->server_addr.sin_port = htons(port_num);
 
     if (strcmp(ip_str, "localhost")) {
-        ip_str = "128.0.0.1";
+        ip_str = "127.0.0.1";
     }
 
     /* bind is not required, and port number is dynamic */
