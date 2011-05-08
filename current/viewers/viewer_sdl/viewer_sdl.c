@@ -14,8 +14,6 @@
 #include <SDL.h>
 #include <math.h>
 
-#include <stdio.h>
-
 
 #if defined(URG_WINDOWS_OS)
 static const char *serial_device = "COM4";
@@ -23,6 +21,7 @@ static const char *serial_device = "COM4";
 static const char *serial_device = "/dev/ttyACM0";
 #endif
 static const char *ethernet_address = "192.168.0.10";
+//static const char *ethernet_address = "127.0.0.1";
 
 
 typedef struct

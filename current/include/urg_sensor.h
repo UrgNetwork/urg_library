@@ -32,12 +32,12 @@ extern "C" {
       \brief 計測タイプ
     */
     typedef enum {
-        URG_DISTANCE,               /*!< \~japanese 距離 */
-        URG_DISTANCE_INTENSITY,     /*!< \~japanese 距離 + 強度 */
-        URG_MULTIECHO,              /*!< \~japanese マルチエコーの距離 */
+        URG_DISTANCE,           /*!< \~japanese 距離 */
+        URG_DISTANCE_INTENSITY, /*!< \~japanese 距離 + 強度 */
+        URG_MULTIECHO,          /*!< \~japanese マルチエコーの距離 */
         URG_MULTIECHO_INTENSITY, /*!< \~japanese マルチエコーの(距離 + 強度) */
-        URG_STOP,                   /*!< \~japanese 計測の停止 */
-        URG_UNKNOWN,                /*!< \~japanese 不明 */
+        URG_STOP,                /*!< \~japanese 計測の停止 */
+        URG_UNKNOWN,             /*!< \~japanese 不明 */
     } urg_measurement_type_t;
 
     /*!
@@ -45,14 +45,14 @@ extern "C" {
       \brief 距離を何 byte で表現するかの指定
     */
     typedef enum {
-        URG_COMMUNICATION_3_BYTE,   /*!< \~japanese 距離を 3 byte で表現する */
-        URG_COMMUNICATION_2_BYTE,   /*!< \~japanese 距離を 2 byte で表現する */
+        URG_COMMUNICATION_3_BYTE, /*!< \~japanese 距離を 3 byte で表現する */
+        URG_COMMUNICATION_2_BYTE, /*!< \~japanese 距離を 2 byte で表現する */
     } urg_range_data_byte_t;
 
 
     enum {
-        URG_SCAN_INFINITY = 0,      /*!< \~japanese 無限回のデータ取得 */
-        URG_MAX_ECHO = 3,           /*!< \~japanese マルチエコーの最大エコー数 */
+        URG_SCAN_INFINITY = 0,  /*!< \~japanese 無限回のデータ取得 */
+        URG_MAX_ECHO = 3, /*!< \~japanese マルチエコーの最大エコー数 */
     };
 
 

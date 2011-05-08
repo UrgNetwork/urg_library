@@ -87,6 +87,10 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     cli->server_addr.sin_family = AF_INET;
     cli->server_addr.sin_port = htons(port_num);
 
+    if (strcmp(ip_str, "localhost")) {
+        ip_str = "128.0.0.1";
+    }
+
     /* bind is not required, and port number is dynamic */
     if ((cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) == INADDR_NONE) {
         return -1;
@@ -111,7 +115,6 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
             // タイムアウト
-            // !!!
             return -2;
         }
     }
