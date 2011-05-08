@@ -87,7 +87,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     cli->server_addr.sin_family = AF_INET;
     cli->server_addr.sin_port = htons(port_num);
 
-    if (strcmp(ip_str, "localhost")) {
+    if (!strcmp(ip_str, "localhost")) {
         ip_str = "127.0.0.1";
     }
 

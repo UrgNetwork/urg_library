@@ -22,6 +22,7 @@ static const char *serial_device = "/dev/ttyACM0";
 #endif
 static const char *ethernet_address = "192.168.0.10";
 //static const char *ethernet_address = "127.0.0.1";
+//static const char *ethernet_address = "localhost";
 
 
 typedef struct
