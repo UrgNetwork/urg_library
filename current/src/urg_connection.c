@@ -4,12 +4,10 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_connection.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
 */
 
 #include "urg_connection.h"
-
-//#include <stdio.h>
 
 
 int connection_open(urg_connection_t *connection,

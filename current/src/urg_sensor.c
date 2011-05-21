@@ -3,7 +3,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_sensor.c,v 66816edea765 2011/05/03 06:53:52 satofumi $
 
   \todo Mx 計測中に他の Mx コマンドを送信したときに、適切に動作するようにする
 */
@@ -1130,25 +1130,42 @@ static char *copy_token(char *dest, char *receive_buffer,
 }
 
 
-const char *urg_sensor_product_type(urg_t *urg)
+static const char *receive_vv_buffer(urg_t *urg, char *buffer, int buffer_size)
 {
-    enum { RECEIVE_BUFFER_SIZE = BUFFER_SIZE * 4, };
-    char receive_buffer[RECEIVE_BUFFER_SIZE];
-    int vv_expected[] = { 0, EXPECTED_END };
+    const int vv_expected[] = { 0, EXPECTED_END };
     int ret;
-    char *p;
 
     if (!urg->is_active) {
         return NOT_CONNECTED_MESSAGE;
     }
 
     ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
-                        receive_buffer, RECEIVE_BUFFER_SIZE);
+                        buffer, buffer_size);
     if (ret < VV_RESPONSE_LINES) {
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "PROD:", ";", ret - 1);
+    return NULL;
+}
+
+
+const char *urg_sensor_product_type(urg_t *urg)
+{
+    enum {
+        VV_DATA_LINES = 5 + 1,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+    };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    const char *ret;
+    char *p;
+
+    ret = receive_vv_buffer(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret) {
+        return ret;
+    }
+
+    p = copy_token(urg->return_buffer,
+                   receive_buffer, "PROD:", ";", VV_DATA_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1156,25 +1173,20 @@ const char *urg_sensor_product_type(urg_t *urg)
 const char *urg_sensor_serial_id(urg_t *urg)
 {
     enum {
-        VV_DATA_LINES = 5,
+        VV_DATA_LINES = 5 + 1,
         RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
-    int vv_expected[] = { 0, EXPECTED_END };
-    int ret;
+    const char *ret;
     char *p;
 
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
+    ret = receive_vv_buffer(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret) {
+        return ret;
     }
 
-    ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
-                        receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret < VV_RESPONSE_LINES) {
-        return RECEIVE_ERROR_MESSAGE;
-    }
-
-    p = copy_token(urg->return_buffer, receive_buffer, "SERI:", ";", ret - 1);
+    p = copy_token(urg->return_buffer,
+                   receive_buffer, "SERI:", ";", VV_DATA_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1186,21 +1198,16 @@ const char *urg_sensor_firmware_version(urg_t *urg)
         RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
-    int vv_expected[] = { 0, EXPECTED_END };
-    int ret;
+    const char *ret;
     char *p;
 
-    if (!urg->is_active) {
-        return NOT_CONNECTED_MESSAGE;
+    ret = receive_vv_buffer(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret) {
+        return ret;
     }
 
-    ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
-                        receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret < VV_RESPONSE_LINES) {
-        return RECEIVE_ERROR_MESSAGE;
-    }
-
-    p = copy_token(urg->return_buffer, receive_buffer, "FIRM:", " (", ret - 1);
+    p = copy_token(urg->return_buffer,
+                   receive_buffer, "FIRM:", " (", VV_DATA_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1208,8 +1215,8 @@ const char *urg_sensor_firmware_version(urg_t *urg)
 const char *urg_sensor_status(urg_t *urg)
 {
     enum {
-        VV_DATA_LINES = 5,
-        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+        II_DATA_LINES = 7 + 1,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_DATA_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int ii_expected[] = { 0, EXPECTED_END };

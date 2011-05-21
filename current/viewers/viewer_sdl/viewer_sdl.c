@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: viewer_sdl.c,v d746d6f9127d 2011/05/08 23:10:44 satofumi $
 */
 
 #include "urg_sensor.h"
@@ -21,7 +21,6 @@ static const char *serial_device = "COM4";
 static const char *serial_device = "/dev/ttyACM0";
 #endif
 static const char *ethernet_address = "192.168.0.10";
-//static const char *ethernet_address = "127.0.0.1";
 //static const char *ethernet_address = "localhost";
 
 
