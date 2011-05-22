@@ -1081,23 +1081,25 @@ int urg_reboot(urg_t *urg)
 
 void urg_sleep(urg_t *urg)
 {
-    (void)urg;
-    // !!!
+    enum { RECEIVE_BUFFER_SIZE = 4 };
+    int sl_expected[] = { 0, EXPECTED_END };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+
+    scip_response(urg, "%SL\n", sl_expected, MAX_TIMEOUT,
+                  receive_buffer, RECEIVE_BUFFER_SIZE);
 }
 
 
 void urg_wakeup(urg_t *urg)
 {
-    (void)urg;
-    // !!!
+    urg_stop_measurement(urg);
 }
 
 
 int urg_is_stable(urg_t *urg)
 {
-    (void)urg;
-    // !!!
-    return 1;
+    const char *stat = urg_sensor_status(urg);
+    return strncmp("Stable", stat, 6) ? 0 : 1;
 }
 
 
@@ -1152,8 +1154,7 @@ static const char *receive_vv_buffer(urg_t *urg, char *buffer, int buffer_size)
 const char *urg_sensor_product_type(urg_t *urg)
 {
     enum {
-        VV_DATA_LINES = 5 + 1,
-        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     const char *ret;
@@ -1165,7 +1166,7 @@ const char *urg_sensor_product_type(urg_t *urg)
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "PROD:", ";", VV_DATA_LINES);
+                   receive_buffer, "PROD:", ";", VV_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1173,8 +1174,7 @@ const char *urg_sensor_product_type(urg_t *urg)
 const char *urg_sensor_serial_id(urg_t *urg)
 {
     enum {
-        VV_DATA_LINES = 5 + 1,
-        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     const char *ret;
@@ -1186,7 +1186,7 @@ const char *urg_sensor_serial_id(urg_t *urg)
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "SERI:", ";", VV_DATA_LINES);
+                   receive_buffer, "SERI:", ";", VV_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1194,8 +1194,7 @@ const char *urg_sensor_serial_id(urg_t *urg)
 const char *urg_sensor_firmware_version(urg_t *urg)
 {
     enum {
-        VV_DATA_LINES = 5,
-        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_DATA_LINES,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * VV_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     const char *ret;
@@ -1207,7 +1206,7 @@ const char *urg_sensor_firmware_version(urg_t *urg)
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "FIRM:", " (", VV_DATA_LINES);
+                   receive_buffer, "FIRM:", " (", VV_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1215,8 +1214,7 @@ const char *urg_sensor_firmware_version(urg_t *urg)
 const char *urg_sensor_status(urg_t *urg)
 {
     enum {
-        II_DATA_LINES = 7 + 1,
-        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_DATA_LINES,
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
     int ii_expected[] = { 0, EXPECTED_END };
@@ -1227,13 +1225,42 @@ const char *urg_sensor_status(urg_t *urg)
         return NOT_CONNECTED_MESSAGE;
     }
 
+    //!< \todo receive_vv_response() ‚ð—˜—p‚·‚é‚æ‚¤‚É‚·‚é
     ret = scip_response(urg, "II\n", ii_expected, urg->timeout,
                         receive_buffer, RECEIVE_BUFFER_SIZE);
     if (ret < II_RESPONSE_LINES) {
         return RECEIVE_ERROR_MESSAGE;
     }
 
-    p = copy_token(urg->return_buffer, receive_buffer, "STAT:", ";", ret - 1);
+    p = copy_token(urg->return_buffer,
+                   receive_buffer, "STAT:", ";", II_RESPONSE_LINES);
+    return (p) ? p : RECEIVE_ERROR_MESSAGE;
+}
+
+
+const char *urg_sensor_state(urg_t *urg)
+{
+    enum {
+        RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_RESPONSE_LINES,
+    };
+    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    int vv_expected[] = { 0, EXPECTED_END };
+    int ret;
+    char *p;
+
+    if (!urg->is_active) {
+        return NOT_CONNECTED_MESSAGE;
+    }
+
+    //!< \todo receive_vv_response() ‚ð—˜—p‚·‚é‚æ‚¤‚É‚·‚é
+    ret = scip_response(urg, "II\n", vv_expected, urg->timeout,
+                        receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret < II_RESPONSE_LINES) {
+        return RECEIVE_ERROR_MESSAGE;
+    }
+
+    p = copy_token(urg->return_buffer,
+                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 

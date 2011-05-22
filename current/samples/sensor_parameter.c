@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: sensor_parameter.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
 */
 
 #include "urg_sensor.h"
@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
     printf("Sensor firmware version: %s\n", urg_sensor_firmware_version(&urg));
     printf("Sensor serial ID: %s\n", urg_sensor_serial_id(&urg));
     printf("Sensor status: %s\n", urg_sensor_status(&urg));
+    printf("Sensor state: %s\n", urg_sensor_state(&urg));
 
     urg_step_min_max(&urg, &min_step, &max_step);
     printf("step: [%d, %d]\n", min_step, max_step);

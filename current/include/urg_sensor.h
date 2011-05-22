@@ -17,7 +17,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_sensor.h,v 540bc11f70c8 2011/05/08 23:04:49 satofumi $
 */
 
 #ifdef __cplusplus
@@ -594,6 +594,9 @@ extern "C" {
       \return ステータス文字列
     */
     extern const char *urg_sensor_status(urg_t *urg);
+
+
+    extern const char *urg_sensor_state(urg_t *urg);
 
 
     //! 計測用のエラーハンドラを登録する
