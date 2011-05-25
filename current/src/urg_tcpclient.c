@@ -262,26 +262,26 @@ int tcpclient_readline(urg_tcpclient_t* cli,
         i++;
         cli->pushed_back = -1;
     }
-    for (; i<buf_size; i++) {
+    for (; i < buf_size; ++i) {
         char ch;
         n = tcpclient_read(cli, &ch, 1, timeout);
         if (n <= 0) {
             break; // error
         }
-        if (ch=='\n' || ch=='\r') {
+        if (ch == '\n' || ch == '\r') {
             break; // success
         }
         userbuf[i] = ch;
     }
 
-    if (buf_size <= i) { // No CR or LF found.
+    if (i >= buf_size) { // No CR or LF found.
         --i;
-        cli->pushed_back = userbuf[buf_size-1] & 0xff;
-        userbuf[buf_size-1] = '\0';
+        cli->pushed_back = userbuf[buf_size - 1] & 0xff;
+        userbuf[buf_size - 1] = '\0';
     }
     userbuf[i] = '\0';
 
-    if (i==0 && n <= 0) { // error
+    if (i == 0 && n <= 0) { // error
         return -1;
     }
 

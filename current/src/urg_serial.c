@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_serial.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
 */
 
 #include "urg_serial.h"
@@ -54,7 +54,7 @@ int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
         }
         data[filled++] = recv_ch;
     }
-    if (filled == max_size) {
+    if (filled >= max_size) {
         --filled;
         serial_ungetc(serial, data[filled]);
     }
