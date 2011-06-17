@@ -26,8 +26,8 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
 #endif
     urg_connection_type_t connection_type = URG_SERIAL;
     long baudrate_or_port = 115200;
-    //const char *ip_address = "localhost";
-    const char *ip_address = "192.168.0.10";
+    const char *ip_address = "localhost";
+    //const char *ip_address = "192.168.0.10";
     int i;
 
     // \~japanese Ú‘±ƒ^ƒCƒv‚ÌØ‘Ö‚¦

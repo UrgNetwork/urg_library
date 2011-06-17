@@ -34,3 +34,5 @@ convert_xy
 get_scans
 get_timestamp
 set_parameter
+reboot_test
+timeout_test

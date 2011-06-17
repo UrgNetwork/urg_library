@@ -1068,7 +1068,7 @@ int urg_reboot(urg_t *urg)
     // ‚Q‰ñ–Ú‚Ì RB ‘—MŒãAÚ‘±‚ğØ’f‚·‚é
     for (i = 0; i < 2; ++i) {
         ret = scip_response(urg, "RB\n", expected, urg->timeout, NULL, 0);
-        if (ret <= 0) {
+        if (ret < 0) {
             return set_errno_and_return(urg, URG_INVALID_RESPONSE);
         }
     }

@@ -177,7 +177,7 @@ int tcpclient_read(urg_tcpclient_t* cli,
 
     // copy data in buffer to user buffer and return with requested size.
     //fprintf(stderr, "num_in_buf: %d\n", num_in_buf);
-    if (0 < num_in_buf) {
+    if (num_in_buf > 0) {
         n = tcpclient_buffer_read(cli, userbuf, req_size);
         rem_size = req_size - n;  // lacking size.
         if (rem_size <= 0) {
@@ -190,7 +190,7 @@ int tcpclient_read(urg_tcpclient_t* cli,
     // data in buffer was not enough, read from socket to fill buffer,
     // without blocking, i.e. read from system's buffer.
     {
-        char tmpbuf[ BUFSIZE ];
+        char tmpbuf[BUFSIZE];
         // receive with non-blocking mode.
 #if defined(URG_WINDOWS_OS)
         int no_timeout = 1;
@@ -199,11 +199,11 @@ int tcpclient_read(urg_tcpclient_t* cli,
 #else
         n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, MSG_DONTWAIT);
 #endif
-        if (0 < n) {
+        if (n > 0) {
             tcpclient_buffer_write(cli, tmpbuf, n); // copy socket to my buffer
         }
 
-        n = tcpclient_buffer_read(cli, & userbuf[req_size-rem_size], rem_size);
+        n = tcpclient_buffer_read(cli, &userbuf[req_size-rem_size], rem_size);
         // n never be greater than rem_size
         rem_size -= n;
         if (rem_size <= 0) {
@@ -218,14 +218,16 @@ int tcpclient_read(urg_tcpclient_t* cli,
                    (const char *)&timeout, sizeof(struct timeval));
 #else
         struct timeval tv;
-        tv.tv_sec = timeout/1000; // millisecond to seccond
+        tv.tv_sec = timeout / 1000; // millisecond to seccond
         tv.tv_usec = (timeout % 1000) * 1000; // millisecond to microsecond
         setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval));
 #endif
         //4th arg 0:no flag
-        n = recv(sock, & userbuf[req_size-rem_size], rem_size, 0);
+        n = recv(sock, &userbuf[req_size-rem_size], rem_size, 0);
         // n never be greater than rem_size
-        if (0 < n) rem_size -= n;
+        if (n > 0) {
+            rem_size -= n;
+        }
     }
 
     return (req_size - rem_size); // last return may be less than req_size;
@@ -257,7 +259,7 @@ int tcpclient_readline(urg_tcpclient_t* cli,
     int n = 0;
     int i = 0;
 
-    if (0 < cli->pushed_back) {
+    if (cli->pushed_back > 0) {
         userbuf[i] = cli->pushed_back;
         i++;
         cli->pushed_back = -1;

@@ -1,5 +1,5 @@
 # Makefile for c/urg/samples
-# $Id$
+# $Id: Makefile,v ef6863dc48c6 2010/12/02 06:08:48 Satofumi $
 
 # Compile options
 SRCDIR = ../src
@@ -20,6 +20,8 @@ TARGET = \
 	sync_time_stamp \
 	sensor_parameter \
 	find_port \
+	timeout_test \
+	reboot_test \
 
 all : $(TARGET)
 
@@ -35,7 +37,7 @@ REQUIRE_LIB = $(SRCDIR)/liburg_c.a
 $(REQUIRE_LIB) : $(wildcard $(SRCDIR)/*.[ch])
 	cd $(@D)/ && $(MAKE) $(@F)
 
-get_distance get_distance_intensity get_multiecho get_multiecho_intensity calculate_xy sync_time_stamp sensor_parameter : open_urg_sensor.o $(REQUIRE_LIB)
+get_distance get_distance_intensity get_multiecho get_multiecho_intensity calculate_xy sync_time_stamp sensor_parameter timeout_test reboot_test : open_urg_sensor.o $(REQUIRE_LIB)
 find_port : $(REQUIRE_LIB)
 
 # DO NOT DELETE
