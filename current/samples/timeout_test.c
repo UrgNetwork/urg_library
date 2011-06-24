@@ -8,6 +8,7 @@
 
 #include "urg_sensor.h"
 #include "urg_utils.h"
+#include "urg_debug.h"
 #include "open_urg_sensor.h"
 #include <stdio.h>
 

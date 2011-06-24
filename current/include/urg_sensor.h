@@ -111,7 +111,7 @@ extern "C" {
 
       \param[in,out] urg URG センサ管理
       \param[in] connection_type 通信タイプ
-      \param[in] device 接続デバイス名
+      \param[in] device_or_address 接続デバイス名
       \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
 
       \retval 0 正常
@@ -143,7 +143,8 @@ extern "C" {
       \see urg_close()
     */
     extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
-                        const char *device, long baudrate_or_port);
+                        const char *device_or_address,
+                        long baudrate_or_port);
 
 
     /*!

@@ -11,6 +11,7 @@ clean :
 $(LIB_URG) : \
 	$(LIB_URG)(urg_sensor.o) \
 	$(LIB_URG)(urg_utils.o) \
+	$(LIB_URG)(urg_debug.o) \
 	$(LIB_URG)(urg_connection.o) \
 	$(LIB_URG)(urg_ring_buffer.o) \
 	$(LIB_URG)(urg_serial.o) \

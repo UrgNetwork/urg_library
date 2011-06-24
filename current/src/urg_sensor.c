@@ -670,7 +670,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
 
 
 int urg_open(urg_t *urg, urg_connection_type_t connection_type,
-             const char *device, long baudrate)
+             const char *device_or_address, long baudrate_or_port)
 {
     int ret;
 
@@ -683,7 +683,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 
     // デバイスへの接続
     if (connection_open(&urg->connection, connection_type,
-                        device, baudrate) < 0) {
+                        device_or_address, baudrate_or_port) < 0) {
         switch (connection_type) {
         case URG_SERIAL:
             urg->last_errno = URG_SERIAL_OPEN_ERROR;
@@ -702,7 +702,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 
     // 指定したボーレートで URG と通信できるように調整
     if (connection_type == URG_SERIAL) {
-        ret = connect_serial_device(urg, baudrate);
+        ret = connect_serial_device(urg, baudrate_or_port);
         if (ret != URG_NO_ERROR) {
             return set_errno_and_return(urg, ret);
         }

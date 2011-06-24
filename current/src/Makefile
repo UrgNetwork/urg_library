@@ -1,5 +1,5 @@
 # Makefile for libs/c
-# $Id$
+# $Id: Makefile,v 4537e5141a86 2011/02/17 07:10:04 Satofumi $
 
 # Compile options
 CC = gcc
@@ -26,6 +26,7 @@ depend :
 $(URG_C_LIB) : \
 	$(URG_C_LIB)(urg_sensor.o) \
 	$(URG_C_LIB)(urg_utils.o) \
+	$(URG_C_LIB)(urg_debug.o) \
 	$(URG_C_LIB)(urg_connection.o) \
 	$(URG_C_LIB)(urg_serial.o) \
 	$(URG_C_LIB)(urg_serial_utils.o) \
