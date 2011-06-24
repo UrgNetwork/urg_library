@@ -1085,6 +1085,10 @@ void urg_sleep(urg_t *urg)
     int sl_expected[] = { 0, EXPECTED_END };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
 
+    if (urg_stop_measurement(urg) != URG_NO_ERROR) {
+        return;
+    }
+
     scip_response(urg, "%SL\n", sl_expected, MAX_TIMEOUT,
                   receive_buffer, RECEIVE_BUFFER_SIZE);
 }
@@ -1225,7 +1229,7 @@ const char *urg_sensor_status(urg_t *urg)
         return NOT_CONNECTED_MESSAGE;
     }
 
-    //!< \todo receive_vv_response() を利用するようにする
+    //!< \todo receive_vv_buffer() を利用するようにする
     ret = scip_response(urg, "II\n", ii_expected, urg->timeout,
                         receive_buffer, RECEIVE_BUFFER_SIZE);
     if (ret < II_RESPONSE_LINES) {
@@ -1252,7 +1256,7 @@ const char *urg_sensor_state(urg_t *urg)
         return NOT_CONNECTED_MESSAGE;
     }
 
-    //!< \todo receive_vv_response() を利用するようにする
+    //!< \todo receive_vv_buffer() を利用するようにする
     ret = scip_response(urg, "II\n", vv_expected, urg->timeout,
                         receive_buffer, RECEIVE_BUFFER_SIZE);
     if (ret < II_RESPONSE_LINES) {

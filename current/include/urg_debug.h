@@ -8,7 +8,10 @@
   \author Satofumi KAMIMURA
 
   \~japanese
-  \attention 普通は使う必要はありません。
+  \attention 使う必要はありません。
+
+  \~english
+  \attention Don't need to use these functions.
 
   $Id$
 */

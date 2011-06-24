@@ -56,6 +56,7 @@ extern "C" {
     };
 
 
+    /*! \~japanese エラーハンドラ \~english error handler */
     typedef urg_measurement_type_t
     (*urg_error_handler)(const char *status, void *urg);
 
@@ -540,8 +541,40 @@ extern "C" {
     extern int urg_reboot(urg_t *urg);
 
 
+    /*!
+      \~japanese
+      \brief センサを低消費電力の状態に遷移させる
+
+      低消費電力のモードでは、スキャナの回転が停止し計測も中断されます。
+
+      - 低消費電力のモード
+        - レーザが消灯して計測が中断される。
+        - スキャナの回転が停止する。
+
+      低消費電力のモードから抜けるためには \ref urg_wakeup() 関数を呼び出して下さい。
+
+      \see urg_wakeup()
+    */
     extern void urg_sleep(urg_t *urg);
+
+
+    /*!
+      \~japanese
+      \brief センサを低消費電力のモードから通常の状態に遷移させる
+
+      \see urg_sleep()
+    */
     extern void urg_wakeup(urg_t *urg);
+
+    /*!
+      \~japanese
+      \brief センサが計測できる状態かを返す
+
+      \retval 1 センサが計測できる状態にある
+      \retval 0 センサが計測できる状態にない
+
+      起動直後でスキャナの回転が安定していない場合や、何らかのエラーで計測できない場合、この関数は 0 を返します。
+    */
     extern int urg_is_stable(urg_t *urg);
 
 
@@ -591,18 +624,43 @@ extern "C" {
       センサのステータス文字列を返す。返される文字列はセンサ依存となる。
 
       \param[in] urg URG センサ管理
-
       \return ステータス文字列
     */
     extern const char *urg_sensor_status(urg_t *urg);
 
 
+    /*!
+      \~japanese
+      \brief センサの状態を返す
+
+      センサのステータス文字列を返す。返される文字列はセンサ依存となる。
+
+      \param[in] urg URG センサ管理
+      \return 状態を示す文字列
+
+      \attention 状態については SCIP の通信仕様書を参照のこと。
+    */
     extern const char *urg_sensor_state(urg_t *urg);
 
 
-    //! 計測用のエラーハンドラを登録する
+    /*!
+      \~japanese
+      \brief 計測用のエラーハンドラを登録する
+
+      エラーハンドラは Gx, Mx 系のコマンドの応答が "00" か "99" 以外のときに呼び出される。
+    */
     extern void urg_set_error_handler(urg_t *urg, urg_error_handler handler);
 
+
+    /*!
+      \~japanese
+      \brief SCIP 文字列のデコードを行う
+
+      \param[in] data SCIP 文字列
+      \param[in] data の byte サイズ
+
+      \retval デコード後の数値
+    */
     extern long urg_scip_decode(const char data[], int size);
 
 
