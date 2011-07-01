@@ -224,13 +224,13 @@ static int connect_serial_device(urg_t *urg, long baudrate)
         enum { RECEIVE_BUFFER_SIZE = 4 };
         int qt_expected[] = { 0, EXPECTED_END };
         char receive_buffer[RECEIVE_BUFFER_SIZE];
-	int ret;
+        int ret;
 
         connection_set_baudrate(&urg->connection, try_baudrate[i]);
 
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
-                                receive_buffer, RECEIVE_BUFFER_SIZE);
+                            receive_buffer, RECEIVE_BUFFER_SIZE);
         if (!strcmp(receive_buffer, "E")) {
             int scip20_expected[] = { 0, EXPECTED_END };
 
@@ -252,7 +252,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
 
             // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
             scip_response(urg, "TM2\n", tm2_expected,
-                                MAX_TIMEOUT, NULL, 0);
+                          MAX_TIMEOUT, NULL, 0);
             //ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
@@ -1136,7 +1136,10 @@ static char *copy_token(char *dest, char *receive_buffer,
 }
 
 
-static const char *receive_vv_buffer(urg_t *urg, char *buffer, int buffer_size)
+static const char *receive_command_response(urg_t *urg,
+                                            char *buffer, int buffer_size,
+                                            const char* command,
+                                            int response_lines)
 {
     const int vv_expected[] = { 0, EXPECTED_END };
     int ret;
@@ -1145,9 +1148,9 @@ static const char *receive_vv_buffer(urg_t *urg, char *buffer, int buffer_size)
         return NOT_CONNECTED_MESSAGE;
     }
 
-    ret = scip_response(urg, "VV\n", vv_expected, urg->timeout,
+    ret = scip_response(urg, command, vv_expected, urg->timeout,
                         buffer, buffer_size);
-    if (ret < VV_RESPONSE_LINES) {
+    if (ret < response_lines) {
         return RECEIVE_ERROR_MESSAGE;
     }
 
@@ -1164,7 +1167,8 @@ const char *urg_sensor_product_type(urg_t *urg)
     const char *ret;
     char *p;
 
-    ret = receive_vv_buffer(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+                                   "VV\n", VV_RESPONSE_LINES);
     if (ret) {
         return ret;
     }
@@ -1184,7 +1188,8 @@ const char *urg_sensor_serial_id(urg_t *urg)
     const char *ret;
     char *p;
 
-    ret = receive_vv_buffer(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+                                   "VV\n", VV_RESPONSE_LINES);
     if (ret) {
         return ret;
     }
@@ -1204,7 +1209,12 @@ const char *urg_sensor_firmware_version(urg_t *urg)
     const char *ret;
     char *p;
 
-    ret = receive_vv_buffer(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (!urg->is_active) {
+        return NOT_CONNECTED_MESSAGE;
+    }
+
+    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+                                   "VV\n", VV_RESPONSE_LINES);
     if (ret) {
         return ret;
     }
@@ -1221,23 +1231,21 @@ const char *urg_sensor_status(urg_t *urg)
         RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
-    int ii_expected[] = { 0, EXPECTED_END };
-    int ret;
+    const char *ret;
     char *p;
 
     if (!urg->is_active) {
         return NOT_CONNECTED_MESSAGE;
     }
 
-    //!< \todo receive_vv_buffer() を利用するようにする
-    ret = scip_response(urg, "II\n", ii_expected, urg->timeout,
-                        receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret < II_RESPONSE_LINES) {
-        return RECEIVE_ERROR_MESSAGE;
+    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+                                   "II\n", II_RESPONSE_LINES);
+    if (ret) {
+        return ret;
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "STAT:", ";", II_RESPONSE_LINES);
+                   receive_buffer, "FIRM:", " (", II_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1248,23 +1256,21 @@ const char *urg_sensor_state(urg_t *urg)
         RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
-    int vv_expected[] = { 0, EXPECTED_END };
-    int ret;
+    const char *ret;
     char *p;
 
     if (!urg->is_active) {
         return NOT_CONNECTED_MESSAGE;
     }
 
-    //!< \todo receive_vv_buffer() を利用するようにする
-    ret = scip_response(urg, "II\n", vv_expected, urg->timeout,
-                        receive_buffer, RECEIVE_BUFFER_SIZE);
-    if (ret < II_RESPONSE_LINES) {
-        return RECEIVE_ERROR_MESSAGE;
+    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
+                                   "II\n", II_RESPONSE_LINES);
+    if (ret) {
+        return ret;
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);
+                   receive_buffer, "MESM:", " (", II_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 

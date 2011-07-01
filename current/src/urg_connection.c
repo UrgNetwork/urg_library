@@ -23,7 +23,7 @@ int connection_open(urg_connection_t *connection,
 
     case URG_ETHERNET:
         return tcpclient_open(&connection->tcpclient,
-                             device, baudrate_or_port);
+                              device, baudrate_or_port);
         break;
     }
     return -1;
@@ -110,7 +110,7 @@ int connection_readline(urg_connection_t *connection,
         break;
     case URG_ETHERNET:
         return tcpclient_readline(&connection->tcpclient,
-                                 data, max_size, timeout);
+                                  data, max_size, timeout);
         break;
     }
     return -1;

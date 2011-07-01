@@ -162,7 +162,7 @@ void tcpclient_close(urg_tcpclient_t* cli)
     WSACleanup();
 #else
     close(cli->sock_desc);
-    #endif
+#endif
 }
 
 

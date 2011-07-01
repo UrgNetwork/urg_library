@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_serial_utils_windows.c,v faa71b0113fd 2011/01/17 12:00:22 Satofumi $
 
   \todo 変数名を '_' 区切りの形式に変更する
   \todo C90 相当で動作するように調整する。ただし、"//" コメントは使う
@@ -88,7 +88,7 @@ int urg_serial_find_port(void)
 
     found_ports_size = 0;
     hdi = SetupDiGetClassDevs(&GUID_DEVINTERFACE_COM_DEVICE, 0, 0,
-                                       DIGCF_PRESENT | DIGCF_INTERFACEDEVICE);
+                              DIGCF_PRESENT | DIGCF_INTERFACEDEVICE);
     if (hdi == INVALID_HANDLE_VALUE) {
         return 0;
     }
