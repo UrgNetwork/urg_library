@@ -40,6 +40,10 @@ urg_serial_utils.o : urg_serial_utils_windows.c urg_serial_utils_linux.c
 urg_connection.o: ../include/urg_connection.h ../include/urg_serial.h
 urg_connection.o: ../include/urg_detect_os.h ../include/urg_ring_buffer.h
 urg_connection.o: ../include/urg_tcpclient.h
+urg_debug.o: ../include/urg_debug.h ../include/urg_sensor.h
+urg_debug.o: ../include/urg_connection.h ../include/urg_serial.h
+urg_debug.o: ../include/urg_detect_os.h ../include/urg_ring_buffer.h
+urg_debug.o: ../include/urg_tcpclient.h
 urg_ring_buffer.o: ../include/urg_ring_buffer.h
 urg_sensor.o: ../include/urg_sensor.h ../include/urg_connection.h
 urg_sensor.o: ../include/urg_serial.h ../include/urg_detect_os.h

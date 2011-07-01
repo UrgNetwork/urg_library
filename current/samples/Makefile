@@ -73,6 +73,10 @@ open_urg_sensor.o: open_urg_sensor.h ../include/urg_sensor.h
 open_urg_sensor.o: ../include/urg_connection.h ../include/urg_serial.h
 open_urg_sensor.o: ../include/urg_detect_os.h ../include/urg_ring_buffer.h
 open_urg_sensor.o: ../include/urg_tcpclient.h ../include/urg_utils.h
+reboot_test.o: ../include/urg_sensor.h ../include/urg_connection.h
+reboot_test.o: ../include/urg_serial.h ../include/urg_detect_os.h
+reboot_test.o: ../include/urg_ring_buffer.h ../include/urg_tcpclient.h
+reboot_test.o: ../include/urg_utils.h open_urg_sensor.h
 sensor_parameter.o: ../include/urg_sensor.h ../include/urg_connection.h
 sensor_parameter.o: ../include/urg_serial.h ../include/urg_detect_os.h
 sensor_parameter.o: ../include/urg_ring_buffer.h ../include/urg_tcpclient.h
@@ -81,3 +85,8 @@ sync_time_stamp.o: ../include/urg_sensor.h ../include/urg_connection.h
 sync_time_stamp.o: ../include/urg_serial.h ../include/urg_detect_os.h
 sync_time_stamp.o: ../include/urg_ring_buffer.h ../include/urg_tcpclient.h
 sync_time_stamp.o: ../include/urg_utils.h open_urg_sensor.h
+timeout_test.o: ../include/urg_sensor.h ../include/urg_connection.h
+timeout_test.o: ../include/urg_serial.h ../include/urg_detect_os.h
+timeout_test.o: ../include/urg_ring_buffer.h ../include/urg_tcpclient.h
+timeout_test.o: ../include/urg_utils.h ../include/urg_debug.h
+timeout_test.o: open_urg_sensor.h
