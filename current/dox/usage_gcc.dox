@@ -24,22 +24,23 @@
 
   \~
 \verbatim
-% unzip urg_library-X.X.X.zip
-% cd urg_library-X.X.X/
+% unzip urg_library-1.0.2.zip
+% cd urg_library-1.0.2/
 % make
 % sudo make install \endverbatim
 
   \~japanese
   デフォルトでは /usr/local ディレクトリ以下の include/, lib/, bin/ ディレクトリ以下にファイルがインストールされます。\n
-  これらのディレクトリのインストール場所を変更する場合は urg_library-X.X.X/Makefile 中の PREFIX の記述を変更して下さい。
+  これらのディレクトリのインストール場所を変更する場合は urg_library-1.0.2/Makefile 中の PREFIX を変更して下さい。 \n
+  (ライブラリのバージョン番号は、利用するものに読み替えて下さい。)
 
-インストール先を /usr/ に変更する場合の変更例 (urg-libaray-X.X.X/Makefile を編集)
+インストール先を /usr/ に変更する場合の変更例 (urg-libaray-1.0.2/Makefile を編集)
 
 
   \~english
-  The default installation directory on linux was lib/, bin/ and bin/ under /usr/local directory.  Please edit the description of PREFIX in urg_library-X.X.X/Makefile if you change the installation location for these directories.
+  The default installation directory on linux was lib/, bin/ and bin/ under /usr/local directory.  Please edit the description of PREFIX in urg_library-1.0.2/Makefile if you change the installation location for these directories.
 
-  This is an example of text to change installation directory to /usr/. (edit urg_library-X.X.X/Makefile)
+  This is an example of text to change installation directory to /usr/. (edit urg_library-1.0.2/Makefile)
 
   \~
 \verbatim

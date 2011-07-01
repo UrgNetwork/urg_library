@@ -16,22 +16,20 @@
   \~japanese
   \section usage_windows_bat_link_make コンパイル
 
-  -# コンパイルに必要な環境変数を設定するための Visual Studio が提供している bat ファイルをコピー
+  -# コンパイルに必要な環境変数を設定するための Visual Studio が提供している bat ファイルをコピーします。 \n
+  Microsoft Visual Studio 8\\Common7\\Tools\\vsvars32.bat を urg_library-1.0.2\\windowsexe にコピーします。 \n
+  (ライブラリのバージョン番号は、利用するものに読み替えて下さい。)
   \n \n
-  Microsoft Visual Studio 8\\Common7\\Tools\\vsvars32.bat を urg_library-X.X.X\\windowsexe にコピーします。
+  -# 環境変数を設定と、コンパイル用の bat ファイルの実行 \n
+  urg_library-1.0.2\\windowsexe\\vsvars32.bat を実行して環境変数を設定後 urg_library-1.0.2\\windowsexe\\compile.bat を実行してコンパイルを行います。
   \n \n
-  -# 環境変数を設定と、コンパイル用の bat ファイルの実行
-  \n \n
-  urg_library-X.X.X\\windowsexe\\vsvars32.bat を実行して環境変数を設定後 urg_library-X.X.X\\windowsexe\\compile.bat を実行してコンパイルを行います。
-  \n \n
-  -# 生成されたサンプルの実行
-  \n \n
-  urg_library-X.X.X\\windowsexe に生成される exe を実行します。
+  -# 生成されたサンプルの実行 \n
+  urg_library-1.0.2\\windowsexe に生成される exe を実行します。
 
   詳細は compile.bat をご覧下さい。
 
 
   \section usage_windows_bat_link_clean クリーンアップ
 
-  生成されたサンプルの実行ファイルを削除するには urg_library-X.X.X\\windowsexe\\cleanobj.bat を実行して下さい。
+  生成されたサンプルの実行ファイルを削除するには urg_library-1.0.2\\windowsexe\\cleanobj.bat を実行して下さい。
 */

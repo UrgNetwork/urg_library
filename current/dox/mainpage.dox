@@ -81,6 +81,7 @@ hg clone http://urgwidget.hg.sourceforge.net:8000/hgroot/urgwidget/urgwidget \en
   \section mainpage_library ライブラリの使い方
 
   - \subpage library_tutorial_page
+  - \subpage library_sample_page
 
   - ライブラリ API
     - \ref urg_sensor.h
@@ -91,6 +92,7 @@ hg clone http://urgwidget.hg.sourceforge.net:8000/hgroot/urgwidget/urgwidget \en
   \section mainpage_library Library tutorial
 
   - \subpage library_tutorial_page
+  - \subpage library_sample_page
 
   - Library API
     - \ref urg_sensor.h (under construction)
