@@ -79,7 +79,6 @@ static int scip_response(urg_t *urg, const char* command,
     int write_size = (int)strlen(command);
     int n = connection_write(&urg->connection, command, write_size);
 
-    urg->is_sending = URG_TRUE;
     if (n != write_size) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
@@ -253,7 +252,6 @@ static int connect_serial_device(urg_t *urg, long baudrate)
             // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
             scip_response(urg, "TM2\n", tm2_expected,
                           MAX_TIMEOUT, NULL, 0);
-            //ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
 
             // ボーレートを変更して戻る
             return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
@@ -274,6 +272,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
                 continue;
             }
         } else if (!strcmp("00P", receive_buffer)) {
+
             // センサとホストのボーレートを変更して戻る
             return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
         }
@@ -659,10 +658,9 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     }
 
     if ((urg->specified_scan_times > 0) && (urg->scanning_remain_times > 0)) {
-        if (--urg->scanning_remain_times < 0) {
+        if (--urg->scanning_remain_times <= 0) {
             // データの停止のみを行う
-            connection_write(&urg->connection, "QT\n", 3);
-            urg->is_laser_on = URG_FALSE;
+            urg_stop_measurement(urg);
         }
     }
     return ret;
@@ -706,6 +704,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
         if (ret != URG_NO_ERROR) {
             return set_errno_and_return(urg, ret);
         }
+        urg->is_sending = URG_FALSE;
     }
 
     // 変数の初期化
@@ -844,13 +843,13 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
                               skip_scan, urg->specified_scan_times);
+        urg->is_sending = URG_TRUE;
     }
 
     n = connection_write(&urg->connection, buffer, write_size);
     if (n != write_size) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
-    urg->is_sending = URG_TRUE;
 
     return 0;
 }
@@ -973,13 +972,13 @@ int urg_stop_measurement(urg_t *urg)
     if (n != 3) {
         return set_errno_and_return(urg, URG_SEND_ERROR);
     }
-    urg->is_laser_on = URG_FALSE;
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
         // QT の応答が返されるまで、距離データを読み捨てる
         ret = receive_data(urg, NULL, NULL, NULL);
-        if (ret == 0) {
+        if (ret == URG_NO_ERROR) {
             // 正常応答
+            urg->is_laser_on = URG_FALSE;
             urg->is_sending = URG_FALSE;
             return set_errno_and_return(urg, URG_NO_ERROR);
         }
