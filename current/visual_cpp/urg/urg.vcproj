@@ -171,10 +171,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\urg_serial_utils_windows.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\urg_tcpclient.c"
 				>
 			</File>
