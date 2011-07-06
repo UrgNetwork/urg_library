@@ -222,7 +222,7 @@ static int connect_serial_device(urg_t *urg, long baudrate)
     for (i = 0; i < try_times; ++i) {
         enum { RECEIVE_BUFFER_SIZE = 4 };
         int qt_expected[] = { 0, EXPECTED_END };
-        char receive_buffer[RECEIVE_BUFFER_SIZE];
+        char receive_buffer[RECEIVE_BUFFER_SIZE + 1];
         int ret;
 
         connection_set_baudrate(&urg->connection, try_baudrate[i]);
