@@ -8,7 +8,7 @@
   このライブラリは、以下の環境にて動作を確認しています。
 
   - Visual C++ 2005
-  - gcc 4.3.4 (Linux)
+  - gcc 4.6.0 (Linux)
 
 
   \~english
@@ -17,7 +17,7 @@
   This is open source C library for Hokuyo URG laser range scanners.  This library is confirmed to work in these environment below.
 
   - Visual C++ 2005
-  - gcc 4.3.4 (Linux)
+  - gcc 4.6.0 (Linux)
 
 
   \~japanese

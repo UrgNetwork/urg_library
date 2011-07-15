@@ -39,6 +39,4 @@ extern "C" {
 }
 #endif
 
-
-
 #endif /* !URG_DEBUG_H */
