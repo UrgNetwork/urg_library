@@ -7,7 +7,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_connection.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
 */
 
 #ifdef __cplusplus
@@ -36,7 +36,7 @@ typedef enum {
 
 
 /*!
-  \brief 通信リソースの管理
+  \brief 通信リソース
 */
 typedef struct
 {
@@ -51,7 +51,7 @@ typedef struct
 
   指定されたデバイスに接続する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] connection 通信リソース
   \param[in] connection_type 接続タイプ
   \param[in] device 接続名
   \param[in] baudrate_or_port ボーレート / ポート番号
@@ -97,7 +97,7 @@ extern int connection_open(urg_connection_t *connection,
 
   デバイスとの接続を切断する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] connection 通信リソース
 
   \code
   connection_close(&connection); \endcode
@@ -116,7 +116,7 @@ extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
 
   データを送信する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] connection 通信リソース
   \param[in] data 送信データ
   \param[in] size 送信バイト数
 
@@ -138,7 +138,7 @@ extern int connection_write(urg_connection_t *connection,
 
   データを受信する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] connection 通信リソース
   \param[in] data 受信データを格納するバッファ
   \param[in] max_size 受信データを格納できるバイト数
   \param[in] timeout タイムアウト時間 [msec]
@@ -170,7 +170,7 @@ extern int connection_read(urg_connection_t *connection,
 
   改行文字までのデータを受信する。
 
-  \param[in,out] connection 通信リソースの管理
+  \param[in,out] connection 通信リソース
   \param[in] data 受信データを格納するバッファ
   \param[in] max_size 受信データを格納できるバイト数
   \param[in] timeout タイムアウト時間 [msec]

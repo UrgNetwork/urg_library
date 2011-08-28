@@ -657,7 +657,9 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         break;
     }
 
-    if ((urg->specified_scan_times > 0) && (urg->scanning_remain_times > 0)) {
+    // specified_scan_times == 1 のときは Gx 系コマンドが使われるため
+    // データを明示的に停止しなくてよい
+    if ((urg->specified_scan_times > 1) && (urg->scanning_remain_times > 0)) {
         if (--urg->scanning_remain_times <= 0) {
             // データの停止のみを行う
             urg_stop_measurement(urg);
