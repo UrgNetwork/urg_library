@@ -1073,6 +1073,7 @@ int urg_reboot(urg_t *urg)
             return set_errno_and_return(urg, URG_INVALID_RESPONSE);
         }
     }
+    urg->is_active = URG_FALSE;
     urg_close(urg);
 
     urg->last_errno = 0;
