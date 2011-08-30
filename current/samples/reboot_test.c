@@ -14,6 +14,7 @@
 
 int main(int argc, char *argv[])
 {
+    enum { DATA_SIZE = 1081 };
     urg_t urg;
 
     if (open_urg_sensor(&urg, argc, argv) < 0) {

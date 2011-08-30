@@ -516,7 +516,7 @@ static int receive_length_data(urg_t *urg, long length[],
             }
 
 
-            if (is_multiecho && (multiecho_index == 0)) {
+            if (is_length && is_multiecho && (multiecho_index == 0)) {
                 // マルチエコーのデータ格納先をダミーデータで埋める
                 int i;
                 for (i = 1; i < multiecho_max_size; ++i) {
