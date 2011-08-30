@@ -449,14 +449,10 @@ static int receive_length_data(urg_t *urg, long length[],
     int each_size =
         (urg->received_range_data_byte == URG_COMMUNICATION_2_BYTE) ? 2 : 3;
     int data_size = each_size;
-    int is_length = URG_FALSE;
     int is_intensity = URG_FALSE;
     int is_multiecho = URG_FALSE;
     int multiecho_max_size = 1;
 
-    if (length) {
-        is_length = URG_TRUE;
-    }
     if ((type == URG_DISTANCE_INTENSITY) || (type == URG_MULTIECHO_INTENSITY)) {
         data_size *= 2;
         is_intensity = URG_TRUE;
@@ -516,13 +512,15 @@ static int receive_length_data(urg_t *urg, long length[],
             }
 
 
-            if (is_length && is_multiecho && (multiecho_index == 0)) {
+            if (is_multiecho && (multiecho_index == 0)) {
                 // マルチエコーのデータ格納先をダミーデータで埋める
                 int i;
-                for (i = 1; i < multiecho_max_size; ++i) {
-                    length[index + i] = 0;
+                if (length) {
+                    for (i = 1; i < multiecho_max_size; ++i) {
+                        length[index + i] = 0;
+                    }
                 }
-                if (is_intensity) {
+                if (intensity) {
                     for (i = 1; i < multiecho_max_size; ++i) {
                         intensity[index + i] = 0;
                     }
@@ -530,14 +528,16 @@ static int receive_length_data(urg_t *urg, long length[],
             }
 
             // 距離データの格納
-            if (is_length) {
+            if (length) {
                 length[index] = urg_scip_decode(p, 3);
-                p += 3;
             }
+            p += 3;
 
             // 強度データの格納
-            if (is_intensity && intensity) {
-                intensity[index] = (unsigned short)urg_scip_decode(p, 3);
+            if (is_intensity) {
+                if (intensity) {
+                    intensity[index] = (unsigned short)urg_scip_decode(p, 3);
+                }
                 p += 3;
             }
 
