@@ -532,14 +532,12 @@ static int receive_length_data(urg_t *urg, long length[],
             // ‹——£ƒf[ƒ^‚ÌŠi”[
             if (is_length) {
                 length[index] = urg_scip_decode(p, 3);
+                p += 3;
             }
-            p += 3;
 
             // ‹­“xƒf[ƒ^‚ÌŠi”[
-            if (is_intensity) {
-                if (intensity) {
-                    intensity[index] = (unsigned short)urg_scip_decode(p, 3);
-                }
+            if (is_intensity && intensity) {
+                intensity[index] = (unsigned short)urg_scip_decode(p, 3);
                 p += 3;
             }
 
