@@ -49,6 +49,18 @@ static int tcpclient_buffer_read(urg_tcpclient_t* cli, char* data, int size)
 }
 
 
+static void set_block_mode(urg_tcpclient_t* cli)
+{
+#if defined(URG_WINDOWS_OS)
+    u_long flag = 0;
+    ioctlsocket(cli->sock_desc, FIONBIO, &flag);
+#else
+    int flag = 0;
+    fcntl(cli->sock_desc, F_SETFL, flag);
+#endif
+}
+
+
 int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 {
     enum { Connect_timeout_second = 2 };
@@ -65,12 +77,16 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
 #if defined(URG_WINDOWS_OS)
     {
+        static int is_initialized = 0;
         WORD wVersionRequested = 0x0202;
         WSADATA WSAData;
         int err;
-        err = WSAStartup(wVersionRequested, &WSAData);
-        if (err != 0) {
-            return -1;
+        if (!is_initialized) {
+            err = WSAStartup(wVersionRequested, &WSAData);
+            if (err != 0) {
+                return -1;
+            }
+            is_initialized = 1;
         }
     }
 #endif
@@ -105,6 +121,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
                 cli->sock_addr_size) == SOCKET_ERROR) {
         int error_number = WSAGetLastError();
         if (error_number != WSAEWOULDBLOCK) {
+            tcpclient_close(cli);
             return -1;
         }
 
@@ -115,12 +132,12 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
             // タイムアウト
+            tcpclient_close(cli);
             return -2;
         }
     }
     //ブロックモードにする
-    flag = 0;
-    ioctlsocket(cli->sock_desc, FIONBIO, &flag);
+    set_block_mode(cli);
 
 #else
     //ノンブロックに変更
@@ -142,12 +159,10 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
             // タイムアウト処理
-            // !!!
             tcpclient_close(cli);
             return -2;
         }
-        //フラグを元に戻す
-        fcntl(cli->sock_desc, F_SETFL, flag);
+        set_block_mode(cli);
     }
 #endif
 
@@ -159,7 +174,7 @@ void tcpclient_close(urg_tcpclient_t* cli)
 {
 #if defined(URG_WINDOWS_OS)
     closesocket(cli->sock_desc);
-    WSACleanup();
+    //WSACleanup();
 #else
     close(cli->sock_desc);
 #endif
