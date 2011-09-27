@@ -24,7 +24,7 @@ enum {
     URG_FALSE = 0,
     URG_TRUE = 1,
 
-    BUFFER_SIZE = 64 + 2 + 5,
+    BUFFER_SIZE = 64 + 2 + 6,
 
     EXPECTED_END = -1,
 
@@ -489,14 +489,17 @@ static int receive_length_data(urg_t *urg, long length[],
 
             if (*p == '&') {
                 // 先頭文字が '&' だったときは、マルチエコーのデータとみなす
+
+                if ((last_p - (p + 1)) < data_size) {
+                    // '&' を除いて、data_size 分データが無ければ抜ける
+                    break;
+                }
+
                 --step_filled;
                 ++multiecho_index;
                 ++p;
                 --line_filled;
 
-                if ((last_p - p) < data_size) {
-                    break;
-                }
             } else {
                 // 次のデータ
                 multiecho_index = 0;
