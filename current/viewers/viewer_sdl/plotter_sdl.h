@@ -7,13 +7,13 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: plotter_sdl.h,v 2a8d923c70f3 2010/08/08 12:22:29 Satofumi $
 */
 
 #include <stdbool.h>
 
 
-extern bool plotter_initialize(void);
+extern bool plotter_initialize(int data_size);
 extern void plotter_terminate(void);
 extern void plotter_clear(void);
 extern void plotter_swap(void);

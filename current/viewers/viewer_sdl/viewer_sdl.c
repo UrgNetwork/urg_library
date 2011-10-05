@@ -174,11 +174,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // 画面の作成
-    if (!plotter_initialize()) {
-        return 1;
-    }
-
     // データ取得の準備
     data_size = urg_max_data_size(&urg);
     if (mode.is_multiecho) {
@@ -187,6 +182,11 @@ int main(int argc, char *argv[])
     data = malloc(data_size * sizeof(data[0]));
     if (mode.is_intensity) {
         intensity = malloc(data_size * sizeof(intensity[0]));
+    }
+
+    // 画面の作成
+    if (!plotter_initialize(data_size * ((mode.is_intensity) ? 2 : 1))) {
+        return 1;
     }
 
     // データの取得と描画

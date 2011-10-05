@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: plotter_sdl.c,v 540bc11f70c8 2011/05/08 23:04:49 satofumi $
 
   \todo glDrawElements() を使うように修正する
   \todo MAX_POINTS の 1081 の数をセンサからの情報で初期化する
@@ -24,8 +24,6 @@
 enum {
     SCREEN_WIDTH = 640,
     SCREEN_HEIGHT = 480,
-
-    MAX_POINTS = 1081,
 };
 
 
@@ -36,11 +34,11 @@ typedef struct
 } vector_t;
 
 
-static SDL_Surface *screen = NULL;
-static vector_t points[MAX_POINTS];
-static size_t points_size = 0;
-//static GLuint buffer_id = 0;
-static double draw_magnify = 0.1;
+static SDL_Surface *screen_ = NULL;
+static vector_t *points_ = NULL;
+static size_t max_points_size_ = 0;
+static size_t points_size_ = 0;
+static double draw_magnify_ = 0.1;
 
 
 static void opengl_initialize(void)
@@ -109,12 +107,12 @@ static void draw_points(void)
     size_t i;
 
     glBegin(GL_POINTS);
-    for (i = 0; i < points_size; ++i) {
-        glVertex2i(points[i].x, points[i].y);
+    for (i = 0; i < points_size_; ++i) {
+        glVertex2i(points_[i].x, points_[i].y);
     }
     glEnd();
 
-    points_size = 0;
+    points_size_ = 0;
 
 #else
     int memory_size = points_size * sizeof(points[0]);
@@ -157,8 +155,14 @@ static void enter2D(void)
 }
 
 
-bool plotter_initialize(void)
+bool plotter_initialize(int data_size)
 {
+    points_ = malloc(data_size * sizeof(vector_t));
+    if (!points_) {
+        return false;
+    }
+    max_points_size_ = data_size;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL_Init: %s\n", SDL_GetError());
         return false;
@@ -166,8 +170,8 @@ bool plotter_initialize(void)
 
     // 画面の作成
     opengl_initialize();
-    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_OPENGL);
-    if (!screen) {
+    screen_ = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_OPENGL);
+    if (!screen_) {
         return false;
     }
     opengl_setup();
@@ -178,6 +182,9 @@ bool plotter_initialize(void)
     glGenBuffers(1, &buffer_id);
 #endif
     enter2D();
+
+    // データの確保
+    // !!!
 
     return true;
 }
@@ -216,13 +223,13 @@ void plotter_set_color(unsigned char r, unsigned g, unsigned b)
 
 void plotter_plot(float x, float y)
 {
-    if (points_size >= MAX_POINTS) {
+    if (points_size_ >= max_points_size_) {
         return;
     }
 
-    points[points_size].x = draw_magnify * x;
-    points[points_size].y = draw_magnify * y;
-    ++points_size;
+    points_[points_size_].x = draw_magnify_ * x;
+    points_[points_size_].y = draw_magnify_ * y;
+    ++points_size_;
 }
 
 
@@ -264,17 +271,17 @@ bool plotter_is_quit(void)
 
     // 描画の拡大率を変更する
     while (magnify < 0) {
-        draw_magnify *= 0.90;
+        draw_magnify_ *= 0.90;
         ++magnify;
     }
     while (magnify > 0) {
-        draw_magnify *= 1.10;
+        draw_magnify_ *= 1.10;
         --magnify;
     }
-    if (draw_magnify < 0.001) {
-        draw_magnify = 0.001;
-    } else if (draw_magnify > 10.0) {
-        draw_magnify = 10.0;
+    if (draw_magnify_ < 0.001) {
+        draw_magnify_ = 0.001;
+    } else if (draw_magnify_ > 10.0) {
+        draw_magnify_ = 10.0;
     }
 
     return is_quit;
