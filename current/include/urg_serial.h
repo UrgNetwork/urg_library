@@ -7,8 +7,12 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_serial.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
 */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "urg_detect_os.h"
 
@@ -75,5 +79,9 @@ extern int serial_readline(urg_serial_t *serial,
 //! ƒGƒ‰[•¶š—ñ‚ğŠi”[‚µ‚Ä•Ô‚·
 extern int serial_error(urg_serial_t *serial,
                         char *error_message, int max_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !URG_SERIAL_H */

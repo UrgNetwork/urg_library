@@ -22,6 +22,10 @@
 
 #include <stdio.h>
 
+enum {
+    Invalid_desc = -1,
+};
+
 
 static void tcpclient_buffer_init(urg_tcpclient_t* cli)
 {
@@ -73,6 +77,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 #endif
     int ret;
 
+    cli->sock_desc = Invalid_desc;
     cli->pushed_back = -1; // no pushed back char.
 
 #if defined(URG_WINDOWS_OS)
@@ -157,7 +162,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         wmask = rmask;
 
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
-        if (ret == 0) {
+        if (ret <= 0) {
             // タイムアウト処理
             tcpclient_close(cli);
             return -2;
@@ -172,12 +177,15 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
 void tcpclient_close(urg_tcpclient_t* cli)
 {
+    if (cli->sock_desc != Invalid_desc) {
 #if defined(URG_WINDOWS_OS)
-    closesocket(cli->sock_desc);
-    //WSACleanup();
+        closesocket(cli->sock_desc);
+        //WSACleanup();
 #else
-    close(cli->sock_desc);
+        close(cli->sock_desc);
 #endif
+        cli->sock_desc = Invalid_desc;
+    }
 }
 
 

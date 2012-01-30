@@ -3,7 +3,7 @@
 
 # Doxygen コメントに従って対象ファイルをコピーするときのコメント出力を調整する
 
-$KCODE = "SJIS"
+#$KCODE = "SJIS"
 
 
 if ARGV.empty?
@@ -68,8 +68,10 @@ def split_comment(file_name, output_mode)
   mode = "both"
   is_comment = false
 
+  p file_name
   File.open(file_name) { |fd|
     fd.each { |line|
+      line.force_encoding("cp932")
 
       if is_comment
         # コメント中

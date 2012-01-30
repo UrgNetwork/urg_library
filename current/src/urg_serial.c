@@ -24,7 +24,7 @@ enum {
 
 
 // ‰üs‚©‚Ç‚¤‚©‚Ì”»’è
-static int isLF(const char ch)
+static int is_linefeed(const char ch)
 {
     return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
 }
@@ -49,7 +49,7 @@ int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
         if (n <= 0) {
             is_timeout = 1;
             break;
-        } else if (isLF(recv_ch)) {
+        } else if (is_linefeed(recv_ch)) {
             break;
         }
         data[filled++] = recv_ch;

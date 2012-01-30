@@ -7,8 +7,12 @@
 
   \author Katsumi Kimoto
 
-  $Id$
+  $Id: urg_tcpclient.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
 */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "urg_ring_buffer.h"
 #include "urg_detect_os.h"
@@ -22,14 +26,13 @@
 
 
 // -- NOT INTERFACE, for internal use only --
-
 enum { SOCK_ADDR_SIZE = sizeof(struct sockaddr_in) };
 
 // For urg_ringbuffer.h
 // The size of buffer must be specified by the power of 2
 // i.e. ring buffer size = two to the RB_BITSHIFT-th power.
 enum { RB_BITSHIFT = 8 };
-enum { RB_SIZE     = 1<<RB_BITSHIFT };
+enum { RB_SIZE     = 1 << RB_BITSHIFT };
 // caution ! available buffer size is less than the
 //           size given to the ring buffer(RB_SIZE).
 enum { BUFSIZE     = RB_SIZE-1 };
@@ -54,7 +57,6 @@ typedef struct {
 
 
 // -- belows are MODULE INTERFACES --
-
 /*!
   \brief constructor of tcp client module
 
@@ -65,8 +67,8 @@ typedef struct {
   \retval 0 succeeded.
   \retval -1 error
 */
-int tcpclient_open(urg_tcpclient_t* cli,
-                   const char* server_ip_str, int port_num);
+extern int tcpclient_open(urg_tcpclient_t* cli,
+                          const char* server_ip_str, int port_num);
 
 
 /*!
@@ -74,7 +76,7 @@ int tcpclient_open(urg_tcpclient_t* cli,
 
   \param[in,out] cli : tcp client type variable which must be deallocated by a caller after closing.
 */
-void tcpclient_close(urg_tcpclient_t* cli);
+extern void tcpclient_close(urg_tcpclient_t* cli);
 
 
 /*!
@@ -87,8 +89,8 @@ void tcpclient_close(urg_tcpclient_t* cli);
 
   \return the number of data read, -1 when error.
 */
-int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size,
-                   int timeout);
+extern int tcpclient_read(urg_tcpclient_t* cli,
+                          char* userbuf, int req_size, int timeout);
 
 
 /*!
@@ -100,11 +102,13 @@ int tcpclient_read(urg_tcpclient_t* cli, char* userbuf, int req_size,
 
   \return returns the number of data wrote, -1 when error.
 */
-int tcpclient_write(urg_tcpclient_t* cli, const char* userbuf, int req_size);
+extern int tcpclient_write(urg_tcpclient_t* cli,
+                           const char* userbuf, int req_size);
 
 
 //! \attention not implemented yet.
-int tcpclient_error(urg_tcpclient_t* cli, char* error_message, int max_size);
+extern int tcpclient_error(urg_tcpclient_t* cli,
+                           char* error_message, int max_size);
 
 
 /*!
@@ -117,7 +121,11 @@ int tcpclient_error(urg_tcpclient_t* cli, char* error_message, int max_size);
 
   \return the number of data read, -1 when error.
 */
-int tcpclient_readline(urg_tcpclient_t* cli, char* userbuf, int buf_size,
-                       int timeout);
+extern int tcpclient_readline(urg_tcpclient_t* cli,
+                              char* userbuf, int buf_size, int timeout);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !URG_TCPCLIENT_H */

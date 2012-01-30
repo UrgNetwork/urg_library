@@ -160,6 +160,7 @@ int main(int argc, char *argv[])
     urg_t urg;
     long *data = NULL;
     unsigned short *intensity = NULL;
+    //long previous_timestamp = 0;
     long timestamp;
     int data_size;
 
@@ -221,7 +222,8 @@ int main(int argc, char *argv[])
             break;
         }
 
-        //fprintf(stderr, "%ld\n", timestamp);
+        //fprintf(stderr, "%ld, ", timestamp - previous_timestamp);
+        //previous_timestamp = timestamp;
 
         plot_data(&urg, data, intensity, n, mode.is_multiecho);
         if (plotter_is_quit()) {
