@@ -8,7 +8,7 @@ CC = gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES = -I$(INCLUDEDIR)
 LDFLAGS =
-LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_rt.sh` `/bin/sh ld_setupapi.sh`
+LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_setupapi.sh`
 
 # Target
 TARGET = \
