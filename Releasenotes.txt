@@ -1,3 +1,3 @@
 2012-01-31
 	* 1.0.3 released.
-	* Fixed Macintosh implementation to work.
+	* Fixed Macintosh implementation to work. (reported Adrian Boeing)
