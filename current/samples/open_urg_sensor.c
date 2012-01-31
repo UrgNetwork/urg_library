@@ -20,9 +20,10 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
 #if defined(URG_WINDOWS_OS)
     const char *device = "COM4";
 #elif defined(URG_LINUX_OS)
-    //const char *device = "/dev/ttyUSB0";
     const char *device = "/dev/ttyACM0";
+    //const char *device = "/dev/ttyUSB0";
 #else
+    const char *device = "/dev/tty.usbmodemfa131";
 #endif
     urg_connection_type_t connection_type = URG_SERIAL;
     long baudrate_or_port = 115200;
@@ -41,7 +42,8 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
 
     // \~japanese ê⁄ë±
     if (urg_open(urg, connection_type, device, baudrate_or_port) < 0) {
-        printf("urg_open: %s\n", urg_error(urg));
+        printf("urg_open: %s, %ld: %s\n",
+            device, baudrate_or_port, urg_error(urg));
         return -1;
     }
 

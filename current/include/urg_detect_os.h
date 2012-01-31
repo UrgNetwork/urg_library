@@ -7,7 +7,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_detect_os.h,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
 */
 
 #if defined(_MSC_VER) || defined(__CYGWIN__) || defined(__MINGW32__)
@@ -22,7 +22,7 @@
 
 #else
 // ŒŸo‚Å‚«‚È‚¢‚Æ‚«‚ğAMac ˆµ‚¢‚É‚µ‚Ä‚µ‚Ü‚¤
-#define MAC_OS
+#define URG_MAC_OS
 #endif
 
 #endif /* !URG_DETECT_OS_H */

@@ -11,8 +11,11 @@
 #include "urg_utils.h"
 #include "open_urg_sensor.h"
 #include <stdio.h>
+#if defined(URG_WINDOWS_OS)
 #include <time.h>
-
+#else
+#include <sys/time.h>
+#endif
 
 static int pc_msec_time(void)
 {
@@ -21,8 +24,8 @@ static int pc_msec_time(void)
     static clock_t first_clock;
     clock_t current_clock;
 #else
-    static struct timespec first_spec;
-    struct timespec current_spec;
+    static struct timeval first_time;
+    struct timeval current_time;
 #endif
     long msec_time;
 
@@ -32,16 +35,17 @@ static int pc_msec_time(void)
         is_initialized = 1;
     }
     current_clock = clock();
-    msec_time = current_clock / (CLOCKS_PER_SEC / 1000);
+    msec_time = (current_clock - first_clock) * 1000 / CLOCKS_PER_SEC;
 #else
     if (!is_initialized) {
-        clock_gettime(CLOCK_REALTIME, &first_spec);
-        is_initialized = 1;
+        gettimeofday(&first_time, NULL);
+	is_initialized = 1;
     }
-    clock_gettime(CLOCK_REALTIME, &current_spec);
+    gettimeofday(&current_time, NULL);
+
     msec_time =
-        (current_spec.tv_sec - first_spec.tv_sec) * 1000
-        + (current_spec.tv_nsec - first_spec.tv_nsec) / 1000000;
+        ((current_time.tv_sec - first_time.tv_sec) * 1000) +
+        ((current_time.tv_usec - first_time.tv_usec) / 1000);
 #endif
     return msec_time;
 }

@@ -43,7 +43,7 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 
     serial_initialize(serial);
 
-#ifndef MAC_OS
+#ifndef URG_MAC_OS
     enum { O_EXLOCK = 0x0 }; /* Linux では使えないのでダミーを作成しておく */
 #endif
     serial->fd = open(device, O_RDWR | O_EXLOCK | O_NONBLOCK | O_NOCTTY);
