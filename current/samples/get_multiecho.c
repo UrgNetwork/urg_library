@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    data = malloc(urg_max_data_size(&urg) * 3 * sizeof(data[0]));
+    data = (long *)malloc(urg_max_data_size(&urg) * 3 * sizeof(data[0]));
     if (!data) {
         perror("urg_max_index()");
         return 1;

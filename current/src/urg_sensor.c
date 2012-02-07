@@ -469,6 +469,7 @@ static int receive_length_data(urg_t *urg, long length[],
         n = connection_readline(&urg->connection,
                                 &buffer[line_filled], BUFFER_SIZE - line_filled,
                                 urg->timeout);
+        fprintf(stderr, "%02d >> %s\n", n, &buffer[line_filled]);
 
         if (n > 0) {
             // チェックサムの評価
@@ -570,7 +571,9 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // エコーバックの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, extended_timeout);
+    fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n <= 0) {
+        fprintf(stderr, "no echoback. (timeout: %d)\n", extended_timeout);
         return set_errno_and_return(urg, URG_NO_RESPONSE);
     }
     // エコーバックの解析
@@ -579,6 +582,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // 応答の取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
+    fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n != 3) {
         ignore_receive_data_with_qt(urg, urg->timeout);
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
@@ -634,6 +638,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // タイムスタンプの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
+    fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n > 0) {
         if (time_stamp) {
             *time_stamp = urg_scip_decode(buffer, 4);

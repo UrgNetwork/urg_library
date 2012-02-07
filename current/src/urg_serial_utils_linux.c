@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: urg_serial_utils_linux.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
 */
 
 #include "urg_serial_utils.h"
@@ -23,11 +23,11 @@ enum {
 static char found_ports[MAX_PORTS][DEVICE_NAME_SIZE];
 static int found_ports_size = 0;
 
-static char *search_dir_names[] = {
+static const char *search_dir_names[] = {
     "/dev",
     "/dev/usb",
 };
-static char *search_base_names[] = {
+static const char *search_base_names[] = {
     "ttyACM",
     "ttyUSB",
     "tty.usbmodem",

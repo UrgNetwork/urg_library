@@ -4,7 +4,7 @@ URG_LIB = ../src/liburg_c.a
 
 CC = gcc
 CFLAGS = -O2 $(INCLUDES) -I../include
-LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_rt.sh` `/bin/sh ld_setupapi.sh`
+LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_setupapi.sh`
 
 all : $(TARGET)
 

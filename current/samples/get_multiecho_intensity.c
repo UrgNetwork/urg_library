@@ -77,8 +77,9 @@ int main(int argc, char *argv[])
     }
 
     max_data_size = urg_max_data_size(&urg);
-    data = malloc(max_data_size * 3 * sizeof(data[0]));
-    intensity = malloc(max_data_size * 3 * sizeof(intensity[0]));
+    data = (long *)malloc(max_data_size * 3 * sizeof(data[0]));
+    intensity = (unsigned short *)malloc(max_data_size * 3 *
+                                         sizeof(intensity[0]));
 
     if (!data) {
         perror("urg_max_index()");

@@ -4,7 +4,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id$
+  $Id: get_distance_intensity.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
 */
 
 #include "urg_sensor.h"
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     }
 
     max_data_size = urg_max_data_size(&urg);
-    data = malloc(max_data_size * sizeof(data[0]));
+    data = (long *)malloc(max_data_size * sizeof(data[0]));
     if (!data) {
         perror("urg_max_index()");
         return 1;

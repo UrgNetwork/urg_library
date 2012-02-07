@@ -7,10 +7,11 @@
   $Id$
 */
 
+#include "urg_ring_buffer.h"
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <stdio.h>
+//#include <stdio.h>
 
 
 enum {
