@@ -1,6 +1,7 @@
 LIB_URG = liburg_c.a
 
-CC = gcc
+include ../build_rule.mk
+
 CFLAGS = -g -O2 $(INCLUDES) -I../include -fPIC
 
 all : $(LIB_URG)

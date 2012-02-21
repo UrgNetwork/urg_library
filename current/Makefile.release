@@ -1,7 +1,8 @@
 PREFIX = /usr/local
 #PREFIX = /mingw
 
-CC = gcc
+include build_rule.mk
+
 CONFIG_FILE = urg_c-config
 S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
 S_LIBS = $(shell if test x$(MSYSTEM) == x"MINGW32"; then echo "-lwsock32 -lsetupapi"; fi)
