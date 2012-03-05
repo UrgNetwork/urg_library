@@ -12,7 +12,6 @@
 #include "urg_detect_os.h"
 #include <string.h>
 #if defined(URG_WINDOWS_OS)
-#include <windows.h>
 #else
 #include <unistd.h>
 #include <fcntl.h>

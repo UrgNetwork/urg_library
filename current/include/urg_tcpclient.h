@@ -18,6 +18,7 @@ extern "C" {
 #include "urg_detect_os.h"
 #include <sys/types.h>
 #if defined(URG_WINDOWS_OS)
+#include <windows.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -26,16 +27,17 @@ extern "C" {
 
 
 // -- NOT INTERFACE, for internal use only --
-enum { SOCK_ADDR_SIZE = sizeof(struct sockaddr_in) };
-
 // For urg_ringbuffer.h
 // The size of buffer must be specified by the power of 2
 // i.e. ring buffer size = two to the RB_BITSHIFT-th power.
-enum { RB_BITSHIFT = 8 };
-enum { RB_SIZE     = 1 << RB_BITSHIFT };
-// caution ! available buffer size is less than the
-//           size given to the ring buffer(RB_SIZE).
-enum { BUFSIZE     = RB_SIZE-1 };
+enum {
+    RB_BITSHIFT = 8,
+    RB_SIZE = 1 << RB_BITSHIFT,
+
+    // caution ! available buffer size is less than the
+    // size given to the ring buffer(RB_SIZE).
+    BUFSIZE = RB_SIZE - 1,
+};
 
 
 //! TCP/IP connection

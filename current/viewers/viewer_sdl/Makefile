@@ -8,8 +8,11 @@ CC = gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
 INCLUDE = -I$(INCLUDEDIR)
 LDFLAGS = -L/usr/X11/lib
+ifeq ($(OS),Windows_NT)
+LDLIBS = `sdl-config --libs` -lopengl32 -lwsock32
+else
 LDLIBS = `sdl-config --libs` -lGL
-#LDLIBS = `sdl-config --libs` -lopengl32 -lwsock32
+endif
 
 
 TARGET = viewer_sdl
