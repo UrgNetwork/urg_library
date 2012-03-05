@@ -11,6 +11,7 @@ all : $(CONFIG_FILE)
 	cd samples/ && $(MAKE)
 
 clean :
+	$(RM) $(CONFIG_FILE)
 	cd src/ && $(MAKE) clean
 	cd samples/ && $(MAKE) clean
 
