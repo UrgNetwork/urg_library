@@ -189,6 +189,11 @@ static int change_sensor_baudrate(urg_t *urg,
     // "SS" コマンドでボーレートを変更する
     snprintf(buffer, SS_COMMAND_SIZE, "SS%06ld\n", next_baudrate);
     ret = scip_response(urg, buffer, ss_expected, urg->timeout, NULL, 0);
+
+    // 0F 応答のときは Ethernet 用のセンサとみなし、正常応答を返す
+    if (ret == -15) {
+        return set_errno_and_return(urg, URG_NO_ERROR);
+    }
     if (ret <= 0) {
         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
     }
@@ -679,6 +684,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
              const char *device_or_address, long baudrate_or_port)
 {
     int ret;
+    long baudrate = baudrate_or_port;
 
     urg->is_active = URG_FALSE;
     urg->is_sending = URG_TRUE;
@@ -707,7 +713,11 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     }
 
     // 指定したボーレートで URG と通信できるように調整
-    ret = connect_urg_device(urg, baudrate_or_port);
+    if (connection_type == URG_ETHERNET) {
+        // Ethernet のときは仮の通信速度を指定しておく
+        baudrate = 115200;
+    }
+    ret = connect_urg_device(urg, baudrate);
     if (ret != URG_NO_ERROR) {
         return set_errno_and_return(urg, ret);
     }
