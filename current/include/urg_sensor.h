@@ -501,8 +501,8 @@ extern "C" {
       \~
       \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
     */
-    extern int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
-                                          int skip_step);
+    extern int urg_set_scanning_parameter(urg_t *urg, int first_step,
+                                          int last_step, int skip_step);
 
 
     /*!

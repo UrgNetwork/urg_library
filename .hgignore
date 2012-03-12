@@ -36,3 +36,4 @@ get_timestamp
 set_parameter
 reboot_test
 timeout_test
+angle_convert_test

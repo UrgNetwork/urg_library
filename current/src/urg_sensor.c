@@ -578,7 +578,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
                             buffer, BUFFER_SIZE, extended_timeout);
     //fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n <= 0) {
-        fprintf(stderr, "no echoback. (timeout: %d)\n", extended_timeout);
+        //fprintf(stderr, "no echoback. (timeout: %d)\n", extended_timeout);
         return set_errno_and_return(urg, URG_NO_RESPONSE);
     }
     // エコーバックの解析
