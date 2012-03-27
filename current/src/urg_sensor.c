@@ -235,31 +235,33 @@ static int connect_urg_device(urg_t *urg, long baudrate)
         // QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
         ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
-        if (!strcmp(receive_buffer, "E")) {
-            int scip20_expected[] = { 0, EXPECTED_END };
+        if (ret > 0) {
+            if (!strcmp(receive_buffer, "E")) {
+                int scip20_expected[] = { 0, EXPECTED_END };
 
-            // QT 応答の最後の改行を読み飛ばす
-            ignore_receive_data(urg, MAX_TIMEOUT);
+                // QT 応答の最後の改行を読み飛ばす
+                ignore_receive_data(urg, MAX_TIMEOUT);
 
-            // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
-            ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
-                                MAX_TIMEOUT, NULL, 0);
+                // "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
+                ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
+                                    MAX_TIMEOUT, NULL, 0);
 
-            // SCIP2.0 応答の最後の改行を読み飛ばす
-            ignore_receive_data(urg, MAX_TIMEOUT);
+                // SCIP2.0 応答の最後の改行を読み飛ばす
+                ignore_receive_data(urg, MAX_TIMEOUT);
 
-            // ボーレートを変更して戻る
-            return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+                // ボーレートを変更して戻る
+                return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
-        } else if (!strcmp(receive_buffer, "0Ee")) {
-            int tm2_expected[] = { 0, EXPECTED_END };
+            } else if (!strcmp(receive_buffer, "0Ee")) {
+                int tm2_expected[] = { 0, EXPECTED_END };
 
-            // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
-            scip_response(urg, "TM2\n", tm2_expected,
-                          MAX_TIMEOUT, NULL, 0);
+                // "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
+                scip_response(urg, "TM2\n", tm2_expected,
+                              MAX_TIMEOUT, NULL, 0);
 
-            // ボーレートを変更して戻る
-            return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+                // ボーレートを変更して戻る
+                return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
+            }
         }
 
         if (ret <= 0) {
@@ -474,7 +476,6 @@ static int receive_length_data(urg_t *urg, long length[],
         n = connection_readline(&urg->connection,
                                 &buffer[line_filled], BUFFER_SIZE - line_filled,
                                 urg->timeout);
-        //fprintf(stderr, "%02d >> %s\n", n, &buffer[line_filled]);
 
         if (n > 0) {
             // チェックサムの評価
@@ -576,9 +577,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // エコーバックの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, extended_timeout);
-    //fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n <= 0) {
-        //fprintf(stderr, "no echoback. (timeout: %d)\n", extended_timeout);
         return set_errno_and_return(urg, URG_NO_RESPONSE);
     }
     // エコーバックの解析
@@ -587,7 +586,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // 応答の取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
-    //fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n != 3) {
         ignore_receive_data_with_qt(urg, urg->timeout);
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
@@ -643,7 +641,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     // タイムスタンプの取得
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
-    //fprintf(stderr, "%02d >> %s\n", n, buffer);
     if (n > 0) {
         if (time_stamp) {
             *time_stamp = urg_scip_decode(buffer, 4);
@@ -694,8 +691,10 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     urg->error_handler = NULL;
 
     // デバイスへの接続
-    if (connection_open(&urg->connection, connection_type,
-                        device_or_address, baudrate_or_port) < 0) {
+    ret = connection_open(&urg->connection, connection_type,
+                          device_or_address, baudrate_or_port);
+
+    if (ret < 0) {
         switch (connection_type) {
         case URG_SERIAL:
             urg->last_errno = URG_SERIAL_OPEN_ERROR;
@@ -717,8 +716,8 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
         // Ethernet のときは仮の通信速度を指定しておく
         baudrate = 115200;
     }
-    ret = connect_urg_device(urg, baudrate);
-    if (ret != URG_NO_ERROR) {
+
+    if (connect_urg_device(urg, baudrate) != URG_NO_ERROR) {
         return set_errno_and_return(urg, ret);
     }
     urg->is_sending = URG_FALSE;

@@ -11,8 +11,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-//#include <stdio.h>
-
 
 enum {
     INVALID_FD = -1,
@@ -138,7 +136,6 @@ int serial_write(urg_serial_t *serial, const char *data, int size)
     if (serial->fd == INVALID_FD) {
         return -1;
     }
-    //fprintf(stderr, "write: %s\n", data);
     return write(serial->fd, data, size);
 }
 

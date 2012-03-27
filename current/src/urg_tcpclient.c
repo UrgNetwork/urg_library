@@ -73,6 +73,8 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     u_long flag;
 #else
     int flag;
+    int sock_optval = -1;
+    int sock_optval_size = sizeof(sock_optval);
 #endif
     int ret;
 
@@ -98,7 +100,6 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     tcpclient_buffer_init(cli);
 
     cli->sock_addr_size = sizeof (struct sockaddr_in);
-
     if ((cli->sock_desc = (int)socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         return -1;
     }
@@ -166,6 +167,20 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
             tcpclient_close(cli);
             return -2;
         }
+
+        if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int*)&sock_optval,
+                       (socklen_t*)&sock_optval_size) != 0) {
+            // Ú‘±‚ÉŽ¸”s
+            tcpclient_close(cli);
+            return -3;
+        }
+
+        if (sock_optval != 0) {
+            // Ú‘±‚ÉŽ¸”s
+            tcpclient_close(cli);
+            return -4;
+        }
+
         set_block_mode(cli);
     }
 #endif
@@ -198,7 +213,6 @@ int tcpclient_read(urg_tcpclient_t* cli,
     int n;
 
     // copy data in buffer to user buffer and return with requested size.
-    //fprintf(stderr, "num_in_buf: %d\n", num_in_buf);
     if (num_in_buf > 0) {
         n = tcpclient_buffer_read(cli, userbuf, req_size);
         rem_size = req_size - n;  // lacking size.
@@ -309,6 +323,5 @@ int tcpclient_readline(urg_tcpclient_t* cli,
         return -1;
     }
 
-    //fprintf(stderr, "%s\n", userbuf);
     return i; // the number of characters filled into user buffer.
 }
