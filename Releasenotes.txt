@@ -1,5 +1,6 @@
 2012-02-21
 	* Fixed ethernet open problem.
+	* Fixed laser off fail when "urg_close()" function has called.
 
 2012-01-31
 	* 1.0.3 released.

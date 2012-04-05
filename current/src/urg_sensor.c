@@ -163,7 +163,7 @@ static void ignore_receive_data(urg_t *urg, int timeout)
 
 static void ignore_receive_data_with_qt(urg_t *urg, int timeout)
 {
-    if (urg->is_sending == URG_FALSE) {
+    if ((urg->is_sending == URG_FALSE) && (urg->is_laser_on == URG_FALSE)) {
         return;
     }
 
