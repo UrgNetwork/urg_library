@@ -37,7 +37,7 @@
   \section mainpage_download ダウンロード
 
   このライブラリの zip ファイルは、以下のアドレスからダウンロードできます。
-  - https://downloads.sourceforge.net/project/urgnetwork/urg_library/urg_library-1.0.4.zip
+  - http://sourceforge.net/projects/urgnetwork/files/urg_library/urg_library-1.0.4.zip/download
 
   開発版のソースコードは Mercurial リポジトリで管理されています。
   \verbatim
@@ -48,7 +48,7 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
   \section mainpage_download Download
 
   Use the below link to download the urg_library zip file.
-  - https://downloads.sourceforge.net/project/urgnetwork/urg_library/urg_library-1.0.4.zip
+  - http://sourceforge.net/projects/urgnetwork/files/urg_library/urg_library-1.0.4.zip/download
 
   In this Mercurial repository you can be find the lastest source code.
   \verbatim
