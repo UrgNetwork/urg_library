@@ -1,4 +1,10 @@
+2013-06-25
+	* 1.1.0 released.
+	* Add C++ Wrapper.
+	* Add Visual Studio 2010 project.
+
 2012-02-21
+	* 1.0.4 released.
 	* Fixed ethernet open problem.
 	* Fixed laser off fail when "urg_close()" function has called.
 

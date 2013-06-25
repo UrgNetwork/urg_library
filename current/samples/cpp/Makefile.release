@@ -1,0 +1,21 @@
+TARGET = sensor_parameter get_distance get_distance_intensity get_multiecho get_multiecho_intensity sync_time_stamp
+
+SRCDIR = ../../src
+URG_CPP_LIB = ../../src/liburg_cpp.a
+
+include ../../build_rule.mk
+
+CXXFLAGS = -O2 $(INCLUDES) -I../../include/cpp
+LDLIBS = -lm -lurg_c -lurg_cpp -lwsock32 -lsetupapi -L$(SRCDIR)
+
+#
+
+all : $(TARGET)
+
+clean :
+	$(RM) *.o $(TARGET) *.exe
+
+$(TARGET) : Connection_information.o $(URG_CPP_LIB)
+
+$(URG_CPP_LIB) :
+	cd $(@D)/ && $(MAKE) $(@F)

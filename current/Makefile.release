@@ -4,24 +4,44 @@ PREFIX = /usr/local
 include build_rule.mk
 
 CONFIG_FILE = urg_c-config
+CONFIG_FILE_CPP = urg_cpp-config
+INCLUDE_DIR_C = $(PREFIX)/include/urg_c/
+INCLUDE_DIR_CPP = $(PREFIX)/include/urg_cpp/
+URGLIB_C = liburg_c.a
+URGLIB_CPP = liburg_cpp.a
 S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
 S_LIBS = $(shell if test x$(MSYSTEM) == x"MINGW32"; then echo "-lwsock32 -lsetupapi"; fi)
-all : $(CONFIG_FILE)
+all : $(CONFIG_FILE) $(CONFIG_FILE_CPP)
 	cd src/ && $(MAKE)
 	cd samples/ && $(MAKE)
 
 clean :
 	$(RM) $(CONFIG_FILE)
+	$(RM) $(CONFIG_FILE_CPP)
 	cd src/ && $(MAKE) clean
 	cd samples/ && $(MAKE) clean
 
 install : all
-	install -d $(PREFIX)/include/urg_c/
-	install -m 644 include/*.h $(PREFIX)/include/urg_c/
+	install -d $(INCLUDE_DIR_C)
+	install -d $(INCLUDE_DIR_CPP)
+	install -m 644 include/c/*.h $(INCLUDE_DIR_C)
+	install -m 644 include/cpp/*.h $(INCLUDE_DIR_CPP)
 	install -d $(PREFIX)/lib/
-	install -m 644 src/liburg_c.a $(PREFIX)/lib/
+	install -m 644 src/$(URGLIB_C) $(PREFIX)/lib/
+	install -m 644 src/$(URGLIB_CPP) $(PREFIX)/lib/
 	install -d $(PREFIX)/bin/
 	install -m 755 $(CONFIG_FILE) $(PREFIX)/bin/
+	install -m 755 $(CONFIG_FILE_CPP) $(PREFIX)/bin/
 
-$(CONFIG_FILE) : urg_c-config.in Makefile
+uninstall :
+	$(RM) -r $(INCLUDE_DIR_C)
+	$(RM) -r $(INCLUDE_DIR_CPP)
+	$(RM) $(PREFIX)/lib/$(URGLIB_C)
+	$(RM) $(PREFIX)/lib/$(URGLIB_CPP)
+	$(RM) $(PREFIX)/bin/$(CONFIG_FILE)
+	$(RM) $(PREFIX)/bin/$(CONFIG_FILE_CPP)
+
+$(CONFIG_FILE) : $(CONFIG_FILE).in Makefile
 	cat $(CONFIG_FILE).in | sed "s/PREFIX/$(S_PREFIX)/g" | sed "s/LIBS/$(S_LIBS)/g" > $(CONFIG_FILE)
+$(CONFIG_FILE_CPP) : $(CONFIG_FILE_CPP).in Makefile
+	cat $(CONFIG_FILE_CPP).in | sed "s/PREFIX/$(S_PREFIX)/g" | sed "s/LIBS/$(S_LIBS)/g" > $(CONFIG_FILE_CPP)
