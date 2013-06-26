@@ -1,6 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "urg_cpp", "urg_cpp\urg_cpp.vcproj", "{7758B3FF-07FF-4F8D-A2DD-83B0BBBEF8E5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{269630A6-5F78-484F-A729-5CD301B5CABA} = {269630A6-5F78-484F-A729-5CD301B5CABA}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "get_distance", "get_distance\get_distance.vcproj", "{D0564F14-3BE0-4741-8BD0-BC20EF661423}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -31,6 +34,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sync_time_stamp", "sync_tim
 	ProjectSection(ProjectDependencies) = postProject
 		{7758B3FF-07FF-4F8D-A2DD-83B0BBBEF8E5} = {7758B3FF-07FF-4F8D-A2DD-83B0BBBEF8E5}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "urg", "..\c\urg\urg.vcproj", "{269630A6-5F78-484F-A729-5CD301B5CABA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +71,10 @@ Global
 		{F748FBF4-E153-43F3-A986-4690FF033DCC}.Debug|Win32.Build.0 = Debug|Win32
 		{F748FBF4-E153-43F3-A986-4690FF033DCC}.Release|Win32.ActiveCfg = Release|Win32
 		{F748FBF4-E153-43F3-A986-4690FF033DCC}.Release|Win32.Build.0 = Release|Win32
+		{269630A6-5F78-484F-A729-5CD301B5CABA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{269630A6-5F78-484F-A729-5CD301B5CABA}.Debug|Win32.Build.0 = Debug|Win32
+		{269630A6-5F78-484F-A729-5CD301B5CABA}.Release|Win32.ActiveCfg = Release|Win32
+		{269630A6-5F78-484F-A729-5CD301B5CABA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

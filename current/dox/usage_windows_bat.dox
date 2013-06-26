@@ -16,14 +16,18 @@
   \section usage_windows_bat_link_make コンパイル
 
   -# コンパイルに必要な環境変数を設定するために Visual Studio が提供している bat ファイルをコピーします。 \n
-  Microsoft Visual Studio 8\\Common7\\Tools\\vsvars32.bat を urg_library-1.0.2\\windowsexe にコピーします。 \n
-  (ライブラリのバージョン番号は、利用するものに読み替えて下さい。)
+  Program Files\\Microsoft Visual Studio *\\Common7\\Tools\\vsvars32.bat を urg_library-*.*.*\\windowsexe にコピーします。 \n
+  (ライブラリ、Visual Studioのバージョン番号は、利用するものに読み替えて下さい。)
   \n \n
   -# 環境変数を設定と、コンパイル用の bat ファイルの実行 \n
-  urg_library-1.0.2\\windowsexe\\vsvars32.bat を実行して環境変数を設定後 urg_library-1.0.2\\windowsexe\\compile.bat を実行してコンパイルを行います。
+  urg_library-*.*.*\\windowsexe\\vsvars32.bat を実行して環境変数を設定後 urg_library-*.*.*\\windowsexe\\compile.bat を実行してコンパイルを行います。
   \n \n
   -# 生成されたサンプルの実行 \n
-  urg_library-1.0.2\\windowsexe で生成される exe を実行します。
+  urg_library-*.*.*\\windowsexe で生成される exe を実行します。
+  \n \n
+  -# 生成されたライブラリの使用 \n
+  スタティックライブラリ urg.lib と urg_cpp.lib が生成されるので
+  \ref usage_windows_vcproj_link を参考にプロジェクトの設定をし、使用してください。\n\n
 
   詳細は compile.bat をご覧下さい。
 
@@ -32,14 +36,14 @@
   \section usage_windows_bat_link_make Compile
 
   -# Copy the batch file provided by Visual Studio to set the environment variables needs for compiling. \n
-  Copy Microsoft Visual Studio 8\\Common7\\Tools\\vsvars32.bat to urg_library-1.0.2\\windowsexe \n
+  Copy Program Files\\Microsoft Visual Studio *\\Common7\\Tools\\vsvars32.bat to urg_library-*.*.*\\windowsexe \n
   (Version of the library, please replace what you use.)
   \n \n
   -# Running the bat file for compilation, and set the environment variable. \n
-  After setting the environment variable, run urg_library-1.0.2\\windowsexe\\compile.bat file to compile.
+  After setting the environment variable, run urg_library-*.*.*\\windowsexe\\compile.bat file to compile.
   \n \n
   -# Running the generated samples.
-  Run generated execute files in urg_library-1.0.2\\windowsexe folder.
+  Run generated execute files in urg_library-*.*.*\\windowsexe folder.
 
   For more information, please see compile.bat file.
 
@@ -47,11 +51,11 @@
   \~japanese
   \section usage_windows_bat_link_clean クリーンアップ
 
-  生成されたサンプルの実行ファイルを削除するには urg_library-1.0.2\\windowsexe\\cleanobj.bat を実行して下さい。
+  生成されたサンプルの実行ファイルを削除するには urg_library-*.*.*\\windowsexe\\cleanobj.bat を実行して下さい。
 
 
   \~english
   \section usage_windows_bat_link_clean Clean up
 
-  Run urg_library-1.0.2\\windowsexe\\cleanobj.bat to delete a file that is generated.
+  Run urg_library-*.*.*\\windowsexe\\cleanobj.bat to delete a file that is generated.
 */

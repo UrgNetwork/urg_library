@@ -53,7 +53,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalDependencies="urg.lib"
-				AdditionalLibraryDirectories="..\..\c\Debug"
+				AdditionalLibraryDirectories="$(OutDir)"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -109,7 +109,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalDependencies="urg.lib"
-				AdditionalLibraryDirectories="..\..\c\Release"
+				AdditionalLibraryDirectories="$(OutDir)"
 			/>
 			<Tool
 				Name="VCALinkTool"
