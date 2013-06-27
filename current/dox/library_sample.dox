@@ -22,7 +22,12 @@
     \skip int open_urg_sensor
     \until const char *ip_address
 
-  また、各サンプルは "-e" を付加するとイーサーネットで接続するようになっています。
+  また、各サンプルは "-e" を付加するとイーサーネットで接続するようになっています。\n
+  イーサーネット接続での実行コマンド例
+
+  \verbatim
+  ./get_distance -e
+  \endverbatim
 
   - サンプル一覧
     - センサ情報を表示するサンプル ... \ref sensor_parameter.c
