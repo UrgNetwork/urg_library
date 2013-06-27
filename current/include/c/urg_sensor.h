@@ -26,7 +26,6 @@ extern "C" {
 
 #include "urg_connection.h"
 
-
     /*!
       \~japanese
       \brief 計測タイプ

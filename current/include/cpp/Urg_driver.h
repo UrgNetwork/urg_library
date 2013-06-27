@@ -14,7 +14,6 @@
 #include <string>
 #include "Lidar.h"
 
-
 namespace qrk
 {
     //! URG ƒhƒ‰ƒCƒo

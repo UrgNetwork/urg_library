@@ -14,7 +14,8 @@
   \section library_tutorial_samples ライブラリ付属のサンプル
 
   urg_library は、いくつかのサンプルを用意しています。\n
-  サンプルの接続するデバイスを変更するには open_urg_sensor.c の下記の設定を変更して下さい。
+  サンプルの接続するデバイスを変更するには open_urg_sensor.c の下記の設定を変更して下さい。\n
+  (シリアル接続の場合は、サンプルで"COM3"としている部分をデバイスマネージャー等で確認したCOM番号に変更してください)
 
   - 接続設定を変更する箇所 (open_urg_sensor.c より抜粋)
     \dontinclude open_urg_sensor.c

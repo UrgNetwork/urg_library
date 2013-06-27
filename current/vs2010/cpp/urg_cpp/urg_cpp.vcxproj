@@ -55,6 +55,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>urg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>urg.lib</AdditionalDependencies>

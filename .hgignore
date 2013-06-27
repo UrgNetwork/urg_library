@@ -37,3 +37,5 @@ set_parameter
 reboot_test
 timeout_test
 angle_convert_test
+current/clean_vs_file.sh
+current/windowsexe/vsvars32.bat

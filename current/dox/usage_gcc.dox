@@ -9,12 +9,14 @@
   \page usage_gcc_page gcc (using Makefile)
 
   This guide shows how to compile the library and the executable with the library.
+  (You don't need add "sudo" when install in MinGW. Please remove "sudo" in MinGW.)
 
 
   \~japanese
   \section usage_gcc_install_gcc ライブラリのインストール方法
 
   パッケージを展開後 make コマンドでコンパイルとインストールを行います。\n
+  (MinGW では install コマンドに sudo は必要ありませんので MinGW の場合は sudo を抜いてください。)
 
 
   \~english
