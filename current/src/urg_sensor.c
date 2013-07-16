@@ -106,8 +106,8 @@ static int scip_response(urg_t *urg, const char* command,
             if (strncmp(buffer, command, write_size - 1)) {
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
             }
-        } else if (n > 0) {
-            // エコーバック以外の行のチェックサムを評価する
+        } else if (n > 0 && !(line_number == 1 && n == 1)) {
+            // エコーバック以外の行のチェックサムを評価する(SCIP 1.1 応答の場合は無視する)
             char checksum = buffer[n - 1];
             if ((checksum != scip_checksum(buffer, n - 1)) &&
                 (checksum != scip_checksum(buffer, n - 2))) {
@@ -630,12 +630,12 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
             type = urg->error_handler(buffer, urg);
         }
 
-        if (type == URG_UNKNOWN) {
+        //if (type == URG_UNKNOWN) {
             // Gx, Hx のときは 00P が返されたときがデータ
             // Mx, Nx のときは 99b が返されたときがデータ
             ignore_receive_data_with_qt(urg, urg->timeout);
             return set_errno_and_return(urg, URG_INVALID_RESPONSE);
-        }
+        //}
     }
 
     // タイムスタンプの取得
