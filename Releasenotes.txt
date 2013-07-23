@@ -1,3 +1,7 @@
+2013-07-16
+	* 1.1.1 relesed.
+	* Fixed SCIP 1.1 sensor problem.
+
 2013-06-25
 	* 1.1.0 released.
 	* Add C++ Wrapper.
