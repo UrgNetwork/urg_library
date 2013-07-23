@@ -1,10 +1,10 @@
 /*!
-  \mainpage URG C Library document
+  \mainpage URG Library document
 
   \~japanese
   \section mainpage_what 概要
 
-  これは、レーザ距離センサ URG シリーズ用のオープンソース C ライブラリです。\n
+  これは、レーザ距離センサ URG シリーズ用のオープンソースライブラリです。\n
   このライブラリは、以下の環境にて動作を確認しています。
 
    - Visual C++ 2005
@@ -15,7 +15,7 @@
   \~english
   \section mainpage_what Abstract
 
-  This is open source C library for Hokuyo URG laser range scanners.  This library is confirmed to work in these environment below.
+  This is open source library for Hokuyo URG laser range scanners.  This library is confirmed to work in these environment below.
 
    - Visual C++ 2005
   - Visual C++ 2010
@@ -25,14 +25,17 @@
   \~japanese
   \section mainpage_license ライセンス
 
-  修正 BSD ライセンスに基づいて配布します。\n
+  (C言語)修正 BSD ライセンスに基づいて配布します。\n
+  (C++)LGPL ライセンスに基づいて配布します。\n
   ライセンスの詳細はライブラリ付属の <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> ファイルをご覧下さい。
 
 
   \~english
   \section mainpage_license License
 
-  This software is licensed using the New BSD license.  See the <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> for the actual license text.
+  (C language)This software is licensed using the New BSD license.\n
+  (C++)This software is licensed using the LGPL license.\n
+  See the <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> for the actual license text.\n
 
 
   \~japanese
@@ -103,13 +106,15 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
   \~japanese
   \section mainpage_support 問い合わせ先
 
-  質問や要望は、URG Networkのtwitterアカウント(\@UrgNetwork)までお願いします。\n
+  質問や要望は、URG Networkのメーリングリスト、もしくはtwitterアカウント(\@UrgNetwork)までお願いします。\n
+  urgnetwork-support@lists.sourceforge.net\n
   <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
 
   \~english
   \section mainpage_support Support
 
-  Send your question and request to the URG Network twitter account(\@UrgNetwork).\n
+  Send your question and request to the URG Network mailing list or twitter account(\@UrgNetwork).\n
+  urgnetwork-support@lists.sourceforge.net\n
   <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
 
 */
