@@ -4,7 +4,7 @@
 
   \author Katsumi Kimoto
 
-  $Id: urg_tcpclient.c,v d746d6f9127d 2011/05/08 23:10:44 satofumi $
+  $Id$
 */
 
 // http://www.ne.jp/asahi/hishidama/home/tech/lang/socket.html

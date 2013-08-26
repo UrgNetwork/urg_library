@@ -1,5 +1,5 @@
 # Makefile for c/urg/samples
-# $Id: Makefile,v ef6863dc48c6 2010/12/02 06:08:48 Satofumi $
+# $Id$
 
 # Compile options
 SRCDIR = ../../src

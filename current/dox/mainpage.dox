@@ -106,15 +106,15 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
   \~japanese
   \section mainpage_support 問い合わせ先
 
-  質問や要望は、URG Networkのメーリングリスト、もしくはtwitterアカウント(\@UrgNetwork)までお願いします。\n
-  urgnetwork-support@lists.sourceforge.net\n
-  <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
+  質問や要望は、URG Networkのフォーラム、もしくはtwitterアカウント(\@UrgNetwork)までお願いします。\n
+  - <a href="http://sourceforge.net/p/urgnetwork/discussion">UrgNetwork フォーラム</a>\n
+  - <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
 
   \~english
   \section mainpage_support Support
 
-  Send your question and request to the URG Network mailing list or twitter account(\@UrgNetwork).\n
-  urgnetwork-support@lists.sourceforge.net\n
-  <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
+  Send your question and request to the URG Network forum or twitter account(\@UrgNetwork).\n
+  - <a href="http://sourceforge.net/p/urgnetwork/discussion">UrgNetwork Forum</a>\n
+  - <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
 
 */

@@ -1,5 +1,5 @@
 # Makefile for c/urg/samples
-# $Id: Makefile,v ef6863dc48c6 2010/12/02 06:08:48 Satofumi $
+# $Id$
 
 # Compile options
 SRCDIR = ../../src
@@ -10,7 +10,7 @@ CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 CXXFLAGS = $(CFLAGS)
 INCLUDES = -I$(INCLUDEDIR)
 LDFLAGS =
-LDLIBS = -lm -lurg_c -lurg_cpp -lwsock32 -lsetupapi -L$(SRCDIR)
+LDLIBS = -lm $(shell if test x$(MSYSTEM) = x"MINGW32"; then echo "-lwsock32 -lsetupapi"; else echo "-lrt"; fi) -L$(SRCDIR)
 
 # Target
 TARGET = \
