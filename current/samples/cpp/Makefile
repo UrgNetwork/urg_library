@@ -10,7 +10,7 @@ CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 CXXFLAGS = $(CFLAGS)
 INCLUDES = -I$(INCLUDEDIR)
 LDFLAGS =
-LDLIBS = -lm $(shell if test x$(MSYSTEM) = x"MINGW32"; then echo "-lwsock32 -lsetupapi"; else echo "-lrt"; fi) -L$(SRCDIR)
+LDLIBS = -lm $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; else echo "-lrt"; fi) -L$(SRCDIR)
 
 # Target
 TARGET = \

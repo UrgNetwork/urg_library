@@ -22,7 +22,7 @@ while test $# -gt 0; do
       echo -I${includedir}
       ;;
     --libs)
-    if test x$MSYSTEM != x"MINGW32"; then
+    if test ! `echo $OS | grep Windows`; then
       echo -n "-lrt "
     fi
       echo -lurg_cpp `urg_c-config --libs`

@@ -13,9 +13,9 @@ LDLIBS =
 
 # Target
 URG_C_LIB_STATIC = liburg_c.a
-URG_C_LIB_SHARED = $(shell if test x$(MSYSTEM) = x"MINGW32"; then echo "urg_c.dll"; else echo "liburg_c.so"; fi)
+URG_C_LIB_SHARED = $(shell if test `echo $(OS) | grep Windows`; then echo "urg_c.dll"; else echo "liburg_c.so"; fi)
 URG_CPP_LIB_STATIC = liburg_cpp.a
-URG_CPP_LIB_SHARED = $(shell if test x$(MSYSTEM) = x"MINGW32"; then echo "urg_cpp.dll"; else echo "liburg_cpp.so"; fi)
+URG_CPP_LIB_SHARED = $(shell if test `echo $(OS) | grep Windows`; then echo "urg_cpp.dll"; else echo "liburg_cpp.so"; fi)
 
 TARGET = $(URG_C_LIB_STATIC) $(URG_CPP_LIB_STATIC) \
 		 $(URG_C_LIB_SHARED) $(URG_CPP_LIB_SHARED)
@@ -26,7 +26,7 @@ OBJ_CPP = ticks.o Urg_driver.o
 
 CFLAGS = -g -O2 $(INCLUDES) -I../include/c -fPIC
 CXXFLAGS = $(CFLAGS) -I../include/cpp
-LDLIBS = -lm $(shell if test x$(MSYSTEM) = x"MINGW32"; then echo "-lwsock32 -lsetupapi"; fi)
+LDLIBS = -lm $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; fi)
 
 all : $(TARGET)
 
