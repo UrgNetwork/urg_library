@@ -7,13 +7,13 @@
 
   \author Satofumi KAMIMURA
 
-  $Id: detect_os.h 1937 2010-10-25 01:12:49Z satofumi $
+  $Id$
 */
 
-#if defined _MSC_VER || defined __CYGWIN__ || defined __MINGW32__
+#if defined(_WIN32)
 #define QRK_WINDOWS_OS
 
-#if defined _MSC_VER
+#if defined(_MSC_VER) || defined(__BORLANDC__)
 #define QRK_MSC
 #elif defined __CYGWIN__
 #define QRK_CYGWIN

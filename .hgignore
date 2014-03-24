@@ -40,3 +40,4 @@ angle_convert_test
 current/clean_vs_file.sh
 current/windowsexe/vsvars32.bat
 current/src/tags
+*.dll

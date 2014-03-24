@@ -22,10 +22,7 @@ while test $# -gt 0; do
       echo -I${includedir}
       ;;
     --libs)
-    if test ! `echo $OS | grep Windows`; then
-      echo -n "-lrt "
-    fi
-      echo -lurg_cpp `urg_c-config --libs`
+      echo -lurg_cpp LIBS -L${installlib}
       ;;
     *)
       echo "${usage}" 1>&2

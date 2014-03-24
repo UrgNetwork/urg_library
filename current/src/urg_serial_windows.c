@@ -124,8 +124,23 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
     dcb.Parity = NOPARITY;
     dcb.fParity = FALSE;
     dcb.StopBits = ONESTOPBIT;
-    SetCommState(serial->hCom, &dcb);
 
+    dcb.fBinary = TRUE; //If this member is TRUE, binary mode is enabled. Windows does not support nonbinary mode transfers, so this member must be TRUE.
+    dcb.fInX = FALSE;
+    dcb.fOutX = FALSE;
+    dcb.fAbortOnError = FALSE;
+    dcb.fNull = FALSE;
+    dcb.fDtrControl = DTR_CONTROL_ENABLE;
+    dcb.fRtsControl = RTS_CONTROL_DISABLE;
+    /*
+    if (SetCommState(serial->hCom, &dcb) == 0) {
+        flush();
+        return -1;
+    } else {
+        return 0;
+    }
+    */
+    SetCommState(serial->hCom, &dcb);
     return 0;
 }
 

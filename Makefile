@@ -1,6 +1,6 @@
 # urgwidget
 
-VERSION = 1.1.2
+VERSION = 1.1.3
 RELEASE_DIR = release
 PACKAGE_EN_DIR = urg_library-$(VERSION)
 PACKAGE_JA_DIR = urg_library_ja-$(VERSION)

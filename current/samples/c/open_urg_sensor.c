@@ -5,7 +5,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: open_urg_sensor.c,v d00944669fc8 2011/02/16 13:41:09 Satofumi $
+  $Id$
 */
 
 #include "open_urg_sensor.h"
@@ -37,6 +37,12 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
             connection_type = URG_ETHERNET;
             baudrate_or_port = 10940;
             device = ip_address;
+        }
+        if (!strcmp(argv[i], "-e") || !strcmp(argv[i], "-s")) {
+            if (argc > i + 1) {
+                ++i;
+                device = argv[i];
+            }
         }
     }
 

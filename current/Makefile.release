@@ -12,7 +12,7 @@ URGLIB_C_SHARED = $(shell if test `echo $(OS) | grep Windows`; then echo "urg_c.
 URGLIB_CPP_STATIC = liburg_cpp.a
 URGLIB_CPP_SHARED = $(shell if test `echo $(OS) | grep Windows`; then echo "urg_cpp.dll"; else echo "liburg_cpp.so"; fi)
 S_PREFIX = $(shell echo "$(PREFIX)" | sed "s/\//\\\\\\\\\//g")
-S_LIBS = $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; fi)
+S_LIBS = $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; else if test `echo $(OS) | grep Mac`; then echo ""; else "-lrt"; fi)
 all : $(CONFIG_FILE) $(CONFIG_FILE_CPP)
 	cd src/ && $(MAKE)
 	cd samples/ && $(MAKE)
