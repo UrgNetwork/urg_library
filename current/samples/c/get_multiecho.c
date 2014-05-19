@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese ƒf[ƒ^æ“¾
-    urg_start_measurement(&urg, URG_MULTIECHO, CAPTURE_TIMES, 0);
+    urg_start_measurement(&urg, URG_MULTIECHO, 0, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_multiecho(&urg, data, &time_stamp);
         if (n <= 0) {

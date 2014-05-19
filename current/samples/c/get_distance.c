@@ -5,7 +5,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: get_distance.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
+  $Id$
 */
 
 #include "urg_sensor.h"
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
                                urg_deg2step(&urg, +90), 0);
 #endif
 
-    urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
+    urg_start_measurement(&urg, URG_DISTANCE, 0, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
         if (n <= 0) {

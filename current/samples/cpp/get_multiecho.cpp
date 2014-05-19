@@ -3,7 +3,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id: get_multiecho.cpp 1933 2010-10-05 14:09:41Z satofumi $
+  $Id$
 */
 
 #include "Urg_driver.h"
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
     // ƒf[ƒ^æ“¾
     enum { Capture_times = 1 };
-    urg.start_measurement(Urg_driver::Multiecho, Capture_times, 0);
+    urg.start_measurement(Urg_driver::Multiecho, 0, 0);
     for (int i = 0; i < Capture_times; ++i) {
         vector<long> data;
         long time_stamp = 0;
