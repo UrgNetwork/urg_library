@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     urg.set_scanning_parameter(urg.deg2step(-90), urg.deg2step(+90), 0);
 #endif
     enum { Capture_times = 10 };
-    urg.start_measurement(Urg_driver::Distance, 0, 0);
+    urg.start_measurement(Urg_driver::Distance, Urg_driver::Infinity_times, 0);
     for (int i = 0; i < Capture_times; ++i) {
         vector<long> data;
         long time_stamp = 0;

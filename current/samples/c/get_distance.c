@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
                                urg_deg2step(&urg, +90), 0);
 #endif
 
-    urg_start_measurement(&urg, URG_DISTANCE, 0, 0);
+    urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance(&urg, data, &time_stamp);
         if (n <= 0) {

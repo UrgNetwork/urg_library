@@ -68,8 +68,8 @@ int main(int argc, char *argv[])
     }
 
     // ƒf[ƒ^æ“¾
-    enum { Capture_times = 1 };
-    urg.start_measurement(Urg_driver::Multiecho, 0, 0);
+    enum { Capture_times = 10 };
+    urg.start_measurement(Urg_driver::Multiecho, Urg_driver::Infinity_times, 0);
     for (int i = 0; i < Capture_times; ++i) {
         vector<long> data;
         long time_stamp = 0;

@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
     // ƒf[ƒ^æ“¾
     enum { Capture_times = 10 };
-    urg.start_measurement(Urg_driver::Distance_intensity, 0, 0);
+    urg.start_measurement(Urg_driver::Distance_intensity, Urg_driver::Infinity_times, 0);
     for (int i = 0; i < Capture_times; ++i) {
         vector<long> data;
         vector<unsigned short> intensity;
