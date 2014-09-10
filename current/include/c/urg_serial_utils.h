@@ -10,6 +10,9 @@
   $Id$
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 //! シリアルポートを検索する
 extern int urg_serial_find_port(void);
@@ -27,5 +30,9 @@ extern const char *urg_serial_port_name(int index);
   \retval <0 エラー
 */
 extern int urg_serial_is_urg_port(int index);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !URG_SERIAL_UTILS_H */

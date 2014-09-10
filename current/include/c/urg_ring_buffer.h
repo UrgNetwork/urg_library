@@ -10,6 +10,9 @@
   $Id$
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 //! リングバッファの管理情報
 typedef struct
@@ -78,5 +81,9 @@ extern int ring_write(ring_buffer_t *ring, const char *data, int size);
   \return 取り出したデータ数
 */
 extern int ring_read(ring_buffer_t *ring, char *buffer, int size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ! RING_BUFFER_H */
