@@ -53,7 +53,6 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/c; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/cpp; \
-		mkdir -p $(RELEASE_DIR)/$$i/viewers/viewer_sdl; \
 		cp current/COPYRIGHT.txt current/Install.txt current/build_rule.mk Readme.txt AUTHORS.txt Releasenotes.txt $(RELEASE_DIR)/$$i/; \
 		cp current/Makefile.release $(RELEASE_DIR)/$$i/Makefile; \
 		cp current/src/Makefile.release $(RELEASE_DIR)/$$i/src/Makefile; \
@@ -79,8 +78,6 @@ dist : release_clean
 	ruby split_comment.rb -e current/samples/cpp/*.cpp $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/cpp/
 	ruby split_comment.rb -e current/samples/c/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/c/
 	ruby split_comment.rb -e current/samples/cpp/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/samples/cpp/
-	ruby split_comment.rb -e current/viewers/viewer_sdl/*.h $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/viewers/viewer_sdl/
-	ruby split_comment.rb -e current/viewers/viewer_sdl/*.c $(RELEASE_DIR)/$(PACKAGE_EN_DIR)/viewers/viewer_sdl/
 	ruby split_comment.rb -j current/include/c/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/include/c/
 	ruby split_comment.rb -j current/include/cpp/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/include/cpp/
 	ruby split_comment.rb -j current/src/*.c $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/src/
@@ -89,8 +86,6 @@ dist : release_clean
 	ruby split_comment.rb -j current/samples/cpp/*.cpp $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/samples/cpp/
 	ruby split_comment.rb -j current/samples/c/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/samples/c/
 	ruby split_comment.rb -j current/samples/cpp/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/samples/cpp/
-	ruby split_comment.rb -j current/viewers/viewer_sdl/*.h $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/viewers/viewer_sdl/
-	ruby split_comment.rb -j current/viewers/viewer_sdl/*.c $(RELEASE_DIR)/$(PACKAGE_JA_DIR)/viewers/viewer_sdl/
 
 	for i in $(TARGET_DIR) ; \
 	do \

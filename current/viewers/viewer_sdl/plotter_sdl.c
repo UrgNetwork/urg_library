@@ -2,10 +2,10 @@
   \file
   \brief Plotter (SDL)
 
-  \~japanese 
-  \todo glDrawElements() $B$r;H$&$h$&$K=$@5$9$k(B
-  \todo MAX_POINTS $B$N(B 1081 $B$N?t$r%;%s%5$+$i$N>pJs$G=i4|2=$9$k(B
-  \~english 
+  \~japanese
+  \todo glDrawElements() ‚ğg‚¤‚æ‚¤‚ÉC³‚·‚é
+  \todo MAX_POINTS ‚Ì 1081 ‚Ì”‚ğƒZƒ“ƒT‚©‚ç‚Ìî•ñ‚Å‰Šú‰»‚·‚é
+  \~english
   \todo Fix the code to use glDrawElements()
   \todo Use the sensor information instead of MAX_POINTS
   \~
@@ -173,7 +173,7 @@ bool plotter_initialize(int data_size)
         return false;
     }
 
-    // \~japanese $B2hLL$N:n@.(B
+    // \~japanese ‰æ–Ê‚Ìì¬
     // \~english Prepares the display screeen
     opengl_initialize();
     screen_ = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_OPENGL);
@@ -182,7 +182,7 @@ bool plotter_initialize(int data_size)
     }
     opengl_setup();
 
-    // \~japanese $BIA2h@_Dj(B
+    // \~japanese •`‰æİ’è
     // \~english Prepares for drawing
     glPointSize(2.0);
 #if defined(USE_GL_2)
@@ -190,7 +190,7 @@ bool plotter_initialize(int data_size)
 #endif
     enter2D();
 
-    // \~japanese $B%G!<%?$N3NJ](B
+    // \~japanese ƒf[ƒ^‚ÌŠm•Û
     // \~english Reserves data
 
     return true;
@@ -212,8 +212,8 @@ void plotter_clear(void)
 
 void plotter_swap(void)
 {
-    // \~japanese $BI=<($rF~$l49$($k$H$-$K!"$^$@IA2h$7$F$$$J$$FbMF$rIA2h$9$k(B
-    // \~english Before swapping buffers, finish any pending drawing 
+    // \~japanese •\¦‚ğ“ü‚êŠ·‚¦‚é‚Æ‚«‚ÉA‚Ü‚¾•`‰æ‚µ‚Ä‚¢‚È‚¢“à—e‚ğ•`‰æ‚·‚é
+    // \~english Before swapping buffers, finish any pending drawing
     draw_points();
 
     SDL_GL_SwapBuffers();
@@ -222,7 +222,7 @@ void plotter_swap(void)
 
 void plotter_set_color(unsigned char r, unsigned g, unsigned b)
 {
-    // \~japanese $B?'$rJQ99$9$k$H$-$K!"$^$H$a$FIA2h$r9T$&(B
+    // \~japanese F‚ğ•ÏX‚·‚é‚Æ‚«‚ÉA‚Ü‚Æ‚ß‚Ä•`‰æ‚ğs‚¤
     // \~english Before changing color, finish any pending drawing
     draw_points();
 
@@ -278,7 +278,7 @@ bool plotter_is_quit(void)
         }
     }
 
-    // \~japanese $BIA2h$N3HBgN($rJQ99$9$k(B
+    // \~japanese •`‰æ‚ÌŠg‘å—¦‚ğ•ÏX‚·‚é
     // \~english Changes the zooming rate
     while (magnify < 0) {
         draw_magnify_ *= 0.90;

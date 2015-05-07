@@ -137,7 +137,7 @@ static void plot_data(urg_t *urg,
 {
     plotter_clear();
 
-    // \~japanese $B5wN%(B
+    // \~japanese ‹——£
     plotter_set_color(0x00, 0xff, 0xff);
     plot_data_point(urg, data, NULL, data_n, is_multiecho, 0);
 
@@ -150,7 +150,7 @@ static void plot_data(urg_t *urg,
     }
 
     if (intensity) {
-        // \~japanese  $B6/EY(B
+        // \~japanese  ‹­“x
         plotter_set_color(0xff, 0xff, 0x00);
         plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 0);
 
@@ -178,11 +178,11 @@ int main(int argc, char *argv[])
     int data_size;
 
 
-    // \~japanese  $B0z?t$N2r@O(B
+    // \~japanese  ˆø”‚Ì‰ğÍ
     // \~english Analyzes the arguments
     parse_args(&mode, argc, argv);
 
-    // \~japanese  URG $B$K@\B3(B
+    // \~japanese  URG ‚ÉÚ‘±
     // \~english Connects to the URG
     if (urg_open(&urg, mode.connection_type,
                  mode.device, mode.baudrate_or_port)) {
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese  $B%G!<%?<hF@$N=`Hw(B
+    // \~japanese  ƒf[ƒ^æ“¾‚Ì€”õ
     // \~english Prepares for measuremment data reading
     data_size = urg_max_data_size(&urg);
     if (mode.is_multiecho) {
@@ -201,14 +201,14 @@ int main(int argc, char *argv[])
         intensity = malloc(data_size * sizeof(intensity[0]));
     }
 
-    // \~japanese  $B2hLL$N:n@.(B
+    // \~japanese  ‰æ–Ê‚Ìì¬
     // \~english Perpares the plot screen
     if (!plotter_initialize(data_size * ((mode.is_intensity) ? 2 : 1))) {
         return 1;
     }
 
-    // \~japanese  $B%G!<%?$N<hF@$HIA2h(B
-    // \~english Gets and displays measurement data 
+    // \~japanese  ƒf[ƒ^‚Ìæ“¾‚Æ•`‰æ
+    // \~english Gets and displays measurement data
     urg_start_measurement(&urg, mode.measurement_type, URG_SCAN_INFINITY, 0);
     while (1) {
         int n;
@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // \~japanese  $B%j%=!<%9$N2rJ|(B
+    // \~japanese  ƒŠƒ\[ƒX‚Ì‰ğ•ú
     // \~english Release resources
     plotter_terminate();
     free(intensity);
