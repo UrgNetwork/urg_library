@@ -1,7 +1,9 @@
 /*!
   \~japanese
   \example get_multiecho_intensity.c 距離・強度データ(マルチエコー)を取得する
-
+  \~english
+  \example get_multiecho_intensity.c Obtains multiecho distance and intensity data
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -32,6 +34,7 @@ static void print_echo_data(long data[], unsigned short intensity[],
 
 
 // \~japanese 距離、強度のデータを表示する
+// \~english Prints distance and intensity data
 static void print_data(urg_t *urg, long data[],
                        unsigned short intensity[], int data_n, long time_stamp)
 {
@@ -41,6 +44,7 @@ static void print_data(urg_t *urg, long data[],
     (void)data_n;
 
     // \~japanese 前方のデータのみを表示
+    // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
     print_echo_data(data, intensity, front_index);
     printf("%ld\n", time_stamp);
@@ -50,6 +54,7 @@ static void print_data(urg_t *urg, long data[],
     int i;
 
     // \~japanese 全てのデータを表示
+    // \~english Prints the multiecho range/intensity values for all the measurement points
     printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
         print_echo_data(data, intensity, i);
@@ -87,6 +92,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese データ取得
+    // \~english Gets measurement data
     urg_start_measurement(&urg, URG_MULTIECHO_INTENSITY, URG_SCAN_INFINITY, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_multiecho_intensity(&urg, data, intensity, &time_stamp);
@@ -101,6 +107,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese 切断
+    // \~english Disconnects
     free(data);
     free(intensity);
     urg_close(&urg);

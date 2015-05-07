@@ -3,8 +3,11 @@
 
 /*!
   \file
+  \~japanese
   \brief Ú‘±î•ñ‚ÌŠÇ—
-
+  \~english
+  \brief Maintains connection information
+  \~
   \author Satofumi KAMIMURA
 
   $Id: Connection_information.h 1930 2010-09-30 03:26:52Z satofumi $

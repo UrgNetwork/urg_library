@@ -4,7 +4,8 @@
 /*!
   \~japanese
   \brief URG ‚Æ‚ÌÚ‘±
-
+  \~english
+  \brief Connects to URG
   \~
   \author Satofumi KAMIMURA
 

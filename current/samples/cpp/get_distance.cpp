@@ -1,6 +1,9 @@
 /*!
-  \example get_distance.c 距離データを取得する
-
+  \~japanese
+  \example get_distance.cpp 距離データを取得する
+  \~english
+  \example get_distance.cpp Obtains distance data
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -21,13 +24,15 @@ namespace
                     const vector<long>& data, long time_stamp)
     {
 #if 1
-        // 前方のデータのみを表示
+    // \~japanese 前方のデータのみを表示
+    // \~english Shows only the front step
         int front_index = urg.step2index(0);
         cout << data[front_index] << " [mm], ("
              << time_stamp << " [msec])" << endl;
 
 #else
-        // 全てのデータの X-Y の位置を表示
+    // \~japanese 全てのデータの X-Y の位置を表示
+    // \~english Prints the X-Y coordinates for all the measurement points
         long min_distance = urg.min_distance();
         long max_distance = urg.max_distance();
         size_t data_n = data.size();
@@ -52,7 +57,8 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // 接続
+    // \~japanese 接続
+    // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
                   information.baudrate_or_port_number(),
@@ -62,9 +68,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // データ取得
+    // \~japanese データ取得
+    // \~english Gets measurement data
 #if 1
-    // データの取得範囲を変更する場合
+    // \~japanese データの取得範囲を変更する場合
+    // \~english Case where the measurement range (start/end steps) is defined
     urg.set_scanning_parameter(urg.deg2step(-90), urg.deg2step(+90), 0);
 #endif
     enum { Capture_times = 10 };

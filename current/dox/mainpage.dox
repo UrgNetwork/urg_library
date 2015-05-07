@@ -7,7 +7,7 @@
   これは、レーザ距離センサ URG シリーズ用のオープンソースライブラリです。\n
   このライブラリは、以下の環境にて動作を確認しています。
 
-   - Visual C++ 2005
+  - Visual C++ 2005
   - Visual C++ 2010
   - gcc 4.6.0 (Linux)
   - gcc 4.6.2 (MinGW)
@@ -15,9 +15,9 @@
   \~english
   \section mainpage_what Abstract
 
-  This is open source library for Hokuyo URG laser range scanners.  This library is confirmed to work in these environment below.
+  This is an open source library for Hokuyo URG laser range scanners.  This library has been tested for the following environments.
 
-   - Visual C++ 2005
+  - Visual C++ 2005
   - Visual C++ 2010
   - gcc 4.6.0 (Linux)
   - gcc 4.6.2 (MinGW)
@@ -33,8 +33,8 @@
   \~english
   \section mainpage_license License
 
-  (C language)This software is licensed using the New BSD license.\n
-  (C++)This software is licensed using the LGPL license.\n
+  (C language)This software is licensed under the New BSD license.\n
+  (C++)This software is licensed under the LGPL license.\n
   See the <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> for the actual license text.\n
 
 
@@ -55,7 +55,7 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
   Use the below link to download the urg_library zip file.
   - http://sourceforge.net/projects/urgnetwork/files/urg_library/
 
-  In this Mercurial repository you can be find the lastest source code.
+  The latest source code can be cloned from the Mercurial repository:
   \verbatim
 hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
 
@@ -71,7 +71,7 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
 
 
   \~english
-  \section mainpage_compile_and_usage Build library and sample programs.
+  \section mainpage_compile_and_usage Building the library and sample programs
 
   - Windows(Visual Studio)
     - \subpage usage_windows_vcproj_page
@@ -99,8 +99,8 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
   - \subpage library_sample_page
 
   - Library API
-    - \ref urg_sensor.h (under construction)
-    - \ref urg_utils.h (under construction)
+    - \ref urg_sensor.h
+    - \ref urg_utils.h
 
 
   \~japanese
@@ -113,7 +113,7 @@ hg clone http://hg.code.sf.net/p/urgnetwork/urg_library \endverbatim
   \~english
   \section mainpage_support Support
 
-  Send your question and request to the URG Network forum or twitter account(\@UrgNetwork).\n
+  Send your questions, requests and comments to the URG Network forum or twitter account(\@UrgNetwork).\n
   - <a href="http://sourceforge.net/p/urgnetwork/discussion">UrgNetwork Forum</a>\n
   - <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
 

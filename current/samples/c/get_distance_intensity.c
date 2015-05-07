@@ -1,7 +1,9 @@
 /*!
   \~japanese
   \example get_distance_intensity.c 距離・強度データを取得する
-
+  \~english
+  \example get_distance_intensity.c Obtains distance and intensity data
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -22,6 +24,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
     (void)data_n;
 
     // \~japanese 前方のデータのみを表示
+    // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
     printf("%ld [mm], %d [1], (%ld [msec])\n",
            data[front_index], intensity[front_index], time_stamp);
@@ -32,6 +35,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
     int i;
 
     // \~japanese 全てのデータを表示
+    // \~english Prints the range/intensity values for all the measurement points
     printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
         printf("%d, %ld, %d\n", i, data[i], intensity[i]);
@@ -70,6 +74,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese データ取得
+    // \~english Gets measurement data
     urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, URG_SCAN_INFINITY, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
@@ -83,6 +88,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese 切断
+    // \~english Disconnects
     free(intensity);
     free(data);
     urg_close(&urg);

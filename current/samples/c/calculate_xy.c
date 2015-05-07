@@ -4,6 +4,11 @@
 
   センサ前方が X 軸の方向とみなした直行座標上で、距離データを位置を出力する。
 
+  \~english
+  \example calculate_xy.c Calculates X-Y coordinates
+
+  Having the X axis aligned to the front step of the sensor, calculates the coordinates for measurement data
+  \~
   \author Satofumi KAMIMURA
 
   $Id: calculate_xy.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
@@ -38,6 +43,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese データ取得
+    // \~english Gets measurement data
     urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
     n = urg_get_distance(&urg, data, &time_stamp);
     if (n < 0) {
@@ -47,6 +53,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese X-Y 座標系の値を出力
+    // \~english Outputs X-Y coordinates
     urg_distance_min_max(&urg, &min_distance, &max_distance);
     for (i = 0; i < n; ++i) {
         long distance = data[i];
@@ -67,6 +74,7 @@ int main(int argc, char *argv[])
     printf("\n");
 
     // \~japanese 切断
+    // \~english Disconnects
     free(data);
     urg_close(&urg);
 

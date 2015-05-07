@@ -2,12 +2,17 @@
   \file
   \brief Plotter (SDL)
 
+  \~japanese 
+  \todo glDrawElements() $B$r;H$&$h$&$K=$@5$9$k(B
+  \todo MAX_POINTS $B$N(B 1081 $B$N?t$r%;%s%5$+$i$N>pJs$G=i4|2=$9$k(B
+  \~english 
+  \todo Fix the code to use glDrawElements()
+  \todo Use the sensor information instead of MAX_POINTS
+  \~
+
   \author Satofumi KAMIMURA
 
   $Id: plotter_sdl.c,v 540bc11f70c8 2011/05/08 23:04:49 satofumi $
-
-  \todo glDrawElements() を使うように修正する
-  \todo MAX_POINTS の 1081 の数をセンサからの情報で初期化する
 */
 
 //#define USE_GL_2 1
@@ -168,7 +173,8 @@ bool plotter_initialize(int data_size)
         return false;
     }
 
-    // 画面の作成
+    // \~japanese $B2hLL$N:n@.(B
+    // \~english Prepares the display screeen
     opengl_initialize();
     screen_ = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_OPENGL);
     if (!screen_) {
@@ -176,15 +182,16 @@ bool plotter_initialize(int data_size)
     }
     opengl_setup();
 
-    // 描画設定
+    // \~japanese $BIA2h@_Dj(B
+    // \~english Prepares for drawing
     glPointSize(2.0);
 #if defined(USE_GL_2)
     glGenBuffers(1, &buffer_id);
 #endif
     enter2D();
 
-    // データの確保
-    // !!!
+    // \~japanese $B%G!<%?$N3NJ](B
+    // \~english Reserves data
 
     return true;
 }
@@ -205,7 +212,8 @@ void plotter_clear(void)
 
 void plotter_swap(void)
 {
-    // 表示を入れ換えるときに、まだ描画していない内容を描画する
+    // \~japanese $BI=<($rF~$l49$($k$H$-$K!"$^$@IA2h$7$F$$$J$$FbMF$rIA2h$9$k(B
+    // \~english Before swapping buffers, finish any pending drawing 
     draw_points();
 
     SDL_GL_SwapBuffers();
@@ -214,7 +222,8 @@ void plotter_swap(void)
 
 void plotter_set_color(unsigned char r, unsigned g, unsigned b)
 {
-    // 色を変更するときに、まとめて描画を行う
+    // \~japanese $B?'$rJQ99$9$k$H$-$K!"$^$H$a$FIA2h$r9T$&(B
+    // \~english Before changing color, finish any pending drawing
     draw_points();
 
     glColor3f(r / 255.0, g / 255.0, b / 255.0);
@@ -269,7 +278,8 @@ bool plotter_is_quit(void)
         }
     }
 
-    // 描画の拡大率を変更する
+    // \~japanese $BIA2h$N3HBgN($rJQ99$9$k(B
+    // \~english Changes the zooming rate
     while (magnify < 0) {
         draw_magnify_ *= 0.90;
         ++magnify;

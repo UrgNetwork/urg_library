@@ -1,6 +1,10 @@
 /*!
+  \file
+  \~japanese 
   \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
-
+  \~english
+  \brief Auxiliary functions for the sensor
+  \~
   \author Satofumi KAMIMURA
 
   $Id: urg_utils.c,v da778fd816c2 2011/01/05 20:02:06 Satofumi $
@@ -81,7 +85,8 @@ void urg_distance_min_max(const urg_t *urg,
 
     *min_distance = urg->min_distance;
 
-    // urg_set_communication_data_size() ‚ð”½‰f‚µ‚½‹——£‚ð•Ô‚·
+    // \~japanese urg_set_communication_data_size() ‚ð”½‰f‚µ‚½‹——£‚ð•Ô‚·
+    // \~english returns the size configured with urg_set_communication_data_size()
     *max_distance =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
         max(urg->max_distance, 4095) : urg->max_distance;

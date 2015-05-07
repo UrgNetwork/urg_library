@@ -1,6 +1,9 @@
 /*!
-  \example sensor_parameter.c センサ情報の出力
-
+  \~japanese
+  \example sensor_parameter.cpp センサ情報の出力
+  \~english
+  \example sensor_parameter.cpp Outputs sensor information fields
+  \~
   \author Satofumi KAMIMURA
 
   $Id: sensor_parameter.cpp 1937 2010-10-25 01:12:49Z satofumi $
@@ -18,7 +21,8 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // 接続
+    // \~japanese 接続
+    // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
                   information.baudrate_or_port_number(),
@@ -28,7 +32,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // パラメータ情報の表示
+    // \~japanese パラメータ情報の表示
+    // \~english Displays sensor parameters
     cout << "Sensor product type: " << urg.product_type() << endl;
     cout << "Sensor firmware version: " << urg.firmware_version() << endl;
     cout << "Sensor serial ID: " << urg.serial_id() << endl;

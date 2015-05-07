@@ -3,8 +3,11 @@
 
 /*!
   \file
+  \~japanese
   \brief 数学関数の補助ファイル
-
+  \~english
+  \brief Auxiliary math functions
+  \~
   \author Satofumi KAMIMURA
 
   $Id: math_utilities.h 1907 2010-09-13 21:58:51Z satofumi $
@@ -18,7 +21,8 @@
 
 
 #ifndef M_PI
-//! 円周率 (Visual C++ 6.0 用)
+//! \~japanese 円周率 (Visual C++ 6.0 用)
+//! \~english PI approximation (for Visual C++ 6.0)
 #define M_PI 3.14159265358979323846
 #endif
 

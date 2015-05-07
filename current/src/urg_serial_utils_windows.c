@@ -1,13 +1,19 @@
 /*!
   \file
+  \~japanese 
   \brief シリアル用の補助関数
-
+  \~english
+  \brief Serial communication auxiliary functions for Windows
   \author Satofumi KAMIMURA
 
   $Id: urg_serial_utils_windows.c,v faa71b0113fd 2011/01/17 12:00:22 Satofumi $
 
+  \~japanese 
   \todo 変数名を '_' 区切りの形式に変更する
   \todo C90 相当で動作するように調整する。ただし、"//" コメントは使う
+  \~english
+  \todo Change variable names to use the "_" convention
+  \todo Fix the code to be C90 compliant, but keeping the "//" comments
 */
 
 #include "urg_serial_utils.h"
@@ -74,7 +80,8 @@ static void sort_ports(void)
 
 int urg_serial_find_port(void)
 {
-    // デバイスマネージャの一覧から COM デバイスを探す
+    // \~japanese デバイスマネージャの一覧から COM デバイスを探す
+    // \~english Searchs for COM devices from the list of device manager
 
     //4D36E978-E325-11CE-BFC1-08002BE10318
     GUID GUID_DEVINTERFACE_COM_DEVICE = {
@@ -108,24 +115,29 @@ int urg_serial_find_port(void)
         int n;
         int j;
 
-        // フレンドリーネームを取得して COM 番号を取り出す
+        // \~japanese フレンドリーネームを取得して COM 番号を取り出す
+	// \~english Gets the Friendly name property and gets the COM port number
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_FRIENDLYNAME,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
         n = (int)strlen(buffer);
         if (n < ComNameLengthMax) {
-            // COM 名が短過ぎた場合、処理しない
-            // 問題がある場合は、修正する
+            // \~japanese COM 名が短過ぎた場合、処理しない
+            // \~japanese 問題がある場合は、修正する
+	    // \~english If the COM name is too small, ignore it
+	    // \~english (fix this in case of problems)
             continue;
         }
 
-        // (COMx) の最後の括弧の位置に '\0' を代入する
+        // \~japanese (COMx) の最後の括弧の位置に '\0' を代入する
+        // \~english Adds '\0' at the end of the string
         p = strrchr(buffer, ')');
         if (p) {
             *p = '\0';
         }
 
-        // COM と番号までの文字列を抜き出す
+        // \~japanese COM と番号までの文字列を抜き出す
+        // \~english Split name into "COM" and the number
         p = strstr(&buffer[n - ComNameLengthMax], "COM");
         if (! p) {
             continue;
@@ -133,7 +145,8 @@ int urg_serial_find_port(void)
 
         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
 
-        // デバイス名を取得し、URG ポートかの判定に用いる
+        // \~japanese デバイス名を取得し、URG ポートかの判定に用いる
+	// \~english Get the device names and detect the URG port
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
@@ -150,7 +163,8 @@ int urg_serial_find_port(void)
     }
     SetupDiDestroyDeviceInfoList(hdi);
 
-    // is_urg_port の要素が先頭に来るようにソートする
+    // \~japanese is_urg_port の要素が先頭に来るようにソートする
+    // \~english sort the elements in is_urg_port array
     sort_ports();
 
     return found_ports_size;

@@ -32,8 +32,15 @@ def split_single_line(line, mode, output_mode)
 
   # 現在のモードに従ったコメントのみを出力する
   if output_mode == "-e" then
-    if line =~ /\\\~japanese .+ ([\*\\])/
+    #if line =~ /\\\~japanese .+ ([\*\\])/
+    if line =~ /\\\~japanese .+?( \\\~english )/
       line = $` + $1 + $'
+    elsif line =~ /\\\~english .+?( \\\~japanese )/
+      line = $` + $'
+    end	
+    if line =~ /\\\~japanese .+?([\r\n])/
+      #line = $` + $1 + $'
+      line = ""
     end
     if line =~ /\\\~english /
       line = $` + $'
@@ -41,8 +48,15 @@ def split_single_line(line, mode, output_mode)
   end
 
   if output_mode == "-j"
-    if line =~ /\\\~english .+ ([\*\\])/
+    #if line =~ /\\\~english .+ ([\*\\])/
+    if line =~ /\\\~english .+?( \\\~japanese )/
       line = $` + $1 + $'
+    elsif line =~ /\\\~japanese .+?( \\\~english )/
+      line = $` + $'
+    end
+    if line =~ /\\\~english .+?([\r\n])/
+      #line = $` + $1 + $'
+      line = ""
     end
     if line =~ /\\\~japanese /
       line = $` + $'
@@ -75,23 +89,41 @@ def split_comment(file_name, output_mode)
 
       if is_comment
         # コメント中
-        case line
-        when /\\\~japanese/
+#         case line
+#         when /\\\~japanese/
+#           mode = "japanese"
+#           line = $` + $'
+#           if line.strip == ""
+#             line = ""
+#           end
+#         when /\\\~english/
+#           mode = "japanese"
+#           line = $` + $'
+#           if line.strip == ""
+#             line = ""
+#           end
+#         when /\\\~/
+#           mode = "both"
+#           line = remove_matched_word($` + $')
+#         end
+        if line =~ /\\\~japanese/
           mode = "japanese"
           line = $` + $'
           if line.strip == ""
             line = ""
           end
-        when /\\\~english/
-          mode = "japanese"
+        elsif line =~ /\\\~english/
+          #mode = "japanese"
+          mode = "english"
           line = $` + $'
           if line.strip == ""
             line = ""
           end
-        when /\\\~/
+        elsif line =~ /\\\~/
           mode = "both"
           line = remove_matched_word($` + $')
         end
+
         if line =~ /\*\//
           is_comment = false
           lines += line
@@ -118,9 +150,9 @@ def split_comment(file_name, output_mode)
         else
           # // コメントの場合の処理
           case line
-          when /~japanese/
+          when /\\\~japanese/
             line = split_single_line(line, mode, output_mode)
-          when /~english/
+          when /\\\~english/
             line = split_single_line(line, mode, output_mode)
           end
         end

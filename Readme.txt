@@ -21,56 +21,49 @@ Mailing list:
 
 Library usage:
 
-Visual Studio Solution (Windows)
+Visual Studio Solution (Windows)	
 
-  urg_library-X.X.X/vs2010(or vs2005)/c(or cpp)/urg.sln をビルドします。
+  Use urg_library-X.X.X/vs2010(or vs2005)/c(or cpp)/urg.sln project file to build.
 
-  ビルド後は、urg.lib のスタティックライブラリと各サンプルの
-  実行ファイルが生成されています。
-
+  After building, the urg.lib static library file and the executable files for each
+  sample program will be generated.
 
 
 Visual Studio bat compile (Windows)
+*Perform the following steps using the command prompt*
 
-＊以下の作業はコマンドプロンプト上で行ってください＊
+  1. To configure the environment variables, copy the batch (.bat) file provided by Visual Studio.
+  Copy the following file:
+    Microsoft Visual Studio 8/Common7/Tools/vsvars32.bat
+  into the folder:
+    urg-library-X.X.X/windowsexe
 
-  1. 環境変数を設定するために Visual Studio が提供している bat ファイルを
-     コピーします。
+  2. After configuring the environment variables (the above .bat file), execute the following .bat
+  file to compile:
+    urg-library-X.X.X/windowsexe/compile.bat
 
-  Microsoft Visual Studio 8/Common7/Tools/vsvars32.bat を
-  urg-library-X.X.X/windowsexeにコピーする。
+  3. The executable file for the sample programs is generated.
+  The samples' executable files are found in the folder:
+    urg-library-X.X.X/windowsexe
 
-
-  2. 環境変数を設定後、コンパイル用のbatファイルを実行する。
-
-  urg-library-X.X.X/windowsexe/compile.batを実行する。
-
-
-  3. 生成されたサンプルの実行ファイルを動かす。
-
-  urg-library-X.X.X/windowsexeに生成されるexeを実行する。
-
-
-  4. 生成されたサンプルの実行ファイルを削除する。
-
-  urg-library-X.X.X/windowsexe/cleanobj.batを実行し
-  生成された実行ファイルを削除する。
+  4. To clean up generated executable files run the following .bat file:
+    urg-library-X.X.X/windowsexe/cleanobj.bat
 
 
 gcc (Linux, MinGW)
 
-  必要ならば urg_library-X.X.X/Makefile の PREFIX を編集して
-  インストール先を変更します。
+  If you need to change the default installation directory, change the PREFIX variable
+  in the following file:
+     urg_library-X.X.X/current/Makefile.release
 
-  !!! 現状こうなっているので、他の場所にしたければ、変更して下さい。
+  This is the default setting, change it to suit your needs:
 PREFIX = /usr/local
 #PREFIX = /mingw
 
-  コンパイルとインストールを行います。
-
-  % make
+  To compile and install, perform the following steps:
+  $ make
   # make install
 
-  ライブラリの使い方は、urg-library-X.X.X/samples/ 中の Makefile をご覧下さい。
+  To learn how to use the library, see the Makefile and source codes on the following folder:
+    urg-library-X.X.X/samples/ 
 
-  !!! ライブラリの使い方は、もう少しちゃんと書きたい。

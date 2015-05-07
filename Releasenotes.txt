@@ -1,5 +1,10 @@
+2014-xx-xx
+        * 1.1.8 released.
+        * what is the change ? 
+        * what happened to versions after 1.1.1?
+
 2013-07-16
-	* 1.1.1 relesed.
+	* 1.1.1 released.
 	* Fixed SCIP 1.1 sensor problem.
 
 2013-06-25

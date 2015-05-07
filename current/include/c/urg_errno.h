@@ -3,8 +3,11 @@
 
 /*!
   \file
+  \~japanese
   \brief URG ライブラリのエラー定義
-
+  \~english
+  \brief Definition of error codes of URG library
+  \~
   \author Satofumi KAMIMURA
 
   $Id$

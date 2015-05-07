@@ -6,16 +6,20 @@ int main(void)
     urg_t urg;
     int ret;
     long *length_data = NULL;
-// scan_times 回のスキャンデータを取得
+// \~japanese scan_times 回のスキャンデータを取得
+// \~english Obtains measurement data for scan_times scans
 
-// urg_start_measurement() 関数でスキャン回数を指定し
-// urg_get_distance() 関数で指定した回数だけデータを受信する。
+// \~japanese urg_start_measurement() 関数でスキャン回数を指定し
+// \~english Uses urg_start_measurement() function to define the number of scans
+// \~japanese urg_get_distance() 関数で指定した回数だけデータを受信する。
+// \~english Uses urg_get_distance() function to receive the measurement data
 
 const int scan_times = 123;
 int length_data_size;
 int i;
 
-// センサから距離データを取得する。
+// \~japanese センサから距離データを取得する。
+// \~english Starts range data measurement
 ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
 // \todo check error code
 

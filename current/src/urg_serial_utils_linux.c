@@ -1,6 +1,10 @@
 /*!
   \file
+  \~japanese 
   \brief シリアル用の補助関数
+  \~english
+  \brief Serial communication auxiliary functions for Linux
+  \~
 
   \author Satofumi KAMIMURA
 
@@ -84,8 +88,10 @@ const char *urg_serial_port_name(int index)
 
 int urg_serial_is_urg_port(int index)
 {
-    // Linux の場合、ポートが URG かどうかは断定できない
-    // !!! 余力があれば、dmesg などの出力から判定するようにしてもよい
+    // \~japanese Linux の場合、ポートが URG かどうかは断定できない
+    // \~japanese !!! 余力があれば、dmesg などの出力から判定するようにしてもよい
+    // \~english In Linux we cannot check if the port is an URG or not
+    // \~english With some spare time we may get this from dmesg or something
     (void)index;
     return 0;
 }

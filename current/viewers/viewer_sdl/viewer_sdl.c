@@ -124,7 +124,7 @@ static void plot_data(urg_t *urg,
 {
     plotter_clear();
 
-    // 距離
+    // \~japanese $B5wN%(B
     plotter_set_color(0x00, 0xff, 0xff);
     plot_data_point(urg, data, NULL, data_n, is_multiecho, 0);
 
@@ -137,7 +137,7 @@ static void plot_data(urg_t *urg,
     }
 
     if (intensity) {
-        // 強度
+        // \~japanese  $B6/EY(B
         plotter_set_color(0xff, 0xff, 0x00);
         plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 0);
 
@@ -165,17 +165,20 @@ int main(int argc, char *argv[])
     int data_size;
 
 
-    // 引数の解析
+    // \~japanese  $B0z?t$N2r@O(B
+    // \~english Analyzes the arguments
     parse_args(&mode, argc, argv);
 
-    // URG に接続
+    // \~japanese  URG $B$K@\B3(B
+    // \~english Connects to the URG
     if (urg_open(&urg, mode.connection_type,
                  mode.device, mode.baudrate_or_port)) {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
 
-    // データ取得の準備
+    // \~japanese  $B%G!<%?<hF@$N=`Hw(B
+    // \~english Prepares for measuremment data reading
     data_size = urg_max_data_size(&urg);
     if (mode.is_multiecho) {
         data_size *= 3;
@@ -185,12 +188,14 @@ int main(int argc, char *argv[])
         intensity = malloc(data_size * sizeof(intensity[0]));
     }
 
-    // 画面の作成
+    // \~japanese  $B2hLL$N:n@.(B
+    // \~english Perpares the plot screen
     if (!plotter_initialize(data_size * ((mode.is_intensity) ? 2 : 1))) {
         return 1;
     }
 
-    // データの取得と描画
+    // \~japanese  $B%G!<%?$N<hF@$HIA2h(B
+    // \~english Gets and displays measurement data 
     urg_start_measurement(&urg, mode.measurement_type, URG_SCAN_INFINITY, 0);
     while (1) {
         int n;
@@ -231,7 +236,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    // リソースの解放
+    // \~japanese  $B%j%=!<%9$N2rJ|(B
+    // \~english Release resources
     plotter_terminate();
     free(intensity);
     free(data);

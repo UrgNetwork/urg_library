@@ -3,8 +3,11 @@
 
 /*!
   \file
+  \~japanese
   \brief OS の検出
-
+  \~english
+  \brief Detects the current OS
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -21,7 +24,8 @@
 #define URG_LINUX_OS
 
 #else
-// 検出できないときを、Mac 扱いにしてしまう
+// \~japanese 検出できないときを、Mac 扱いにしてしまう
+// \~english If cannot detect the OS, assumes it is a Mac
 #define URG_MAC_OS
 #endif
 

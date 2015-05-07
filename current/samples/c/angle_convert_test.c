@@ -1,7 +1,9 @@
 /*!
   \~japanese
   \example angle_convert_test.c Šp“x•ÏŠ·‚ÌŒ‹‰Ê‚ð•\Ž¦‚·‚é
-
+  \~english
+  \example angle_convert_test.c Some cases of angle conversion
+  \~
   \author Satofumi KAMIMURA
 
   $Id: sync_time_stamp.c,v 799c195d046c 2011/01/14 05:10:38 hokuyo $

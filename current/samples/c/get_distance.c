@@ -1,7 +1,8 @@
 /*!
   \~japanese
   \example get_distance.c 距離データを取得する
-
+  \~english
+  \example get_distance.c Obtains distance data
   \~
   \author Satofumi KAMIMURA
 
@@ -23,6 +24,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     (void)data_n;
 
     // \~japanese 前方のデータのみを表示
+    // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
     printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
 
@@ -34,6 +36,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     long max_distance;
 
     // \~japanese 全てのデータの X-Y の位置を表示
+    // \~english Prints the X-Y coordinates for all the measurement points
     urg_distance_min_max(urg, &min_distance, &max_distance);
     for (i = 0; i < data_n; ++i) {
         long l = data[i];
@@ -76,8 +79,10 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese データ取得
+    // \~english Gets measurement data
 #if 0
     // \~japanese データの取得範囲を変更する場合
+    // \~english Case where the measurement range (start/end steps) is defined
     urg_set_scanning_parameter(&urg,
                                urg_deg2step(&urg, -90),
                                urg_deg2step(&urg, +90), 0);
@@ -96,6 +101,7 @@ int main(int argc, char *argv[])
     }
 
     // \~japanese 切断
+    // \~english Disconnects
     free(data);
     urg_close(&urg);
 

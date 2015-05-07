@@ -55,10 +55,12 @@ cl.exe /MD /EHsc /Fesensor_parameter_cpp.exe -I../include/cpp ../samples/cpp/sen
 cl.exe /MD /EHsc /Fesync_time_stamp_cpp.exe -I../include/cpp ../samples/cpp/sync_time_stamp.cpp Connection_information.obj urg_cpp.lib ws2_32.lib setupapi.lib
 
 echo ビルドが完了しました。終了します。
+echo Built completed successfully.
 set /p TMP=""
 exit /b
 
 :end
 echo vsvars32.bat が見つかりません。終了します。
+echo Error: vsvars32.bat could not be found
 set /p TMP=""
 exit /b

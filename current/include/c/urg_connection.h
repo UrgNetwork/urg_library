@@ -3,8 +3,11 @@
 
 /*!
   \file
+  \~japanese
   \brief 通信の処理
-
+  \~english
+  \brief Process communications
+  \~
   \author Satofumi KAMIMURA
 
   $Id: urg_connection.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
@@ -19,34 +22,44 @@ extern "C" {
 
 
 /*!
+  \~japanese
   \brief 定数定義
+  \~english
+  \brief Defines constants
 */
 enum {
-    URG_CONNECTION_TIMEOUT = -1, //!< タイムアウトが発生したときの戻り値
+    URG_CONNECTION_TIMEOUT = -1, //!< \~japanese タイムアウトが発生したときの戻り値  \~english Return value in case of timeout
 };
 
 
 /*!
+  \~japanese
   \brief 通信タイプ
+  \~english
+  \brief Connection type
 */
 typedef enum {
-    URG_SERIAL,                 //!< シリアル, USB 接続
-    URG_ETHERNET,               //!< イーサーネット接続
+    URG_SERIAL,                 //!< \~japanese シリアル, USB 接続  \~english Serial/USB connection
+    URG_ETHERNET,               //!< \~japanese イーサーネット接続  \~english Ethernet connection
 } urg_connection_type_t;
 
 
 /*!
+  \~japanese
   \brief 通信リソース
+  \~english
+  \brief Connection resources
 */
 typedef struct
 {
-    urg_connection_type_t type; //!< 接続タイプ
-    urg_serial_t serial;        //!< シリアル接続
-    urg_tcpclient_t tcpclient;  //!< イーサーネット接続
+    urg_connection_type_t type; //!< \~japanese 接続タイプ  \~english Type of connection
+    urg_serial_t serial;        //!< \~japanese シリアル接続 \~english Serial connection
+    urg_tcpclient_t tcpclient;  //!< \~japanese イーサーネット接続 \~english Ethernet connection
 } urg_connection_t;
 
 
 /*!
+  \~japanese
   \brief 接続
 
   指定されたデバイスに接続する。
@@ -69,6 +82,28 @@ typedef struct
   device, baudrate_or_port の指定は connection_type により指定できる値が異なる。
   例えば、シリアル通信の場合は以下のようになる。
 
+  \~english
+  \brief Connection
+
+  Connects to the specified device
+
+  \param[in,out] connection Connection resource
+  \param[in] connection_type Connection type
+  \param[in] device Device name
+  \param[in] baudrate_or_port Baudrate or port number
+
+  \retval 0 Success
+  \retval <0 Error
+
+  The connection_type is either of:
+
+  - URG_SERIAL ... Serial connection
+  - URG_ETHERNET .. Ethernet connection
+
+  device and baudrate_or_port arguments are defined according to connection_type
+  For example, in case of serial connection:
+
+  \~
   Example
   \code
   connection_t connection;
@@ -76,8 +111,9 @@ typedef struct
       return 1;
   } \endcode
 
-  また、イーサーネット通信の場合は以下のようになる。
+  And, in case of ethernet connection:
 
+  \~
   Example
   \code
   connection_t connection;
@@ -85,6 +121,7 @@ typedef struct
       return 1;
   } \endcode
 
+  \~
   \see connection_close()
 */
 extern int connection_open(urg_connection_t *connection,
@@ -93,25 +130,38 @@ extern int connection_open(urg_connection_t *connection,
 
 
 /*!
+  \~japanese
   \brief 切断
 
   デバイスとの接続を切断する。
 
   \param[in,out] connection 通信リソース
+  \~english
+  \brief Disconnection
 
+  Closes the connection with the device
+
+  \param[in,out] connection Connection resource
+  \~
   \code
   connection_close(&connection); \endcode
-
+  \~
   \see connection_open()
 */
 extern void connection_close(urg_connection_t *connection);
 
 
-/*! ボーレートを設定する */
+/*!
+  \~japanese
+  \brief ボーレートを設定する
+  \~english
+  \brief Configures the baudrate
+*/
 extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
 
 
 /*!
+  \~japanese
   \brief 送信
 
   データを送信する。
@@ -123,10 +173,23 @@ extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
   \retval >=0 送信データ数
   \retval <0 エラー
 
+  \~english
+  \brief Send
+
+  Writes data over the communication channel
+
+  \param[in,out] connection Connection resource
+  \param[in] data Data to send
+  \param[in] size Number of bytes to send
+
+  \retval >=0 Number of bytes sent
+  \retval <0 Error
+  \~
   Example
   \code
   n = connection_write(&connection, "QT\n", 3); \endcode
 
+  \~
   \see connection_read(), connection_readline()
 */
 extern int connection_write(urg_connection_t *connection,
@@ -134,6 +197,7 @@ extern int connection_write(urg_connection_t *connection,
 
 
 /*!
+  \~japanese
   \brief 受信
 
   データを受信する。
@@ -150,6 +214,23 @@ extern int connection_write(urg_connection_t *connection,
 
   1 文字も受信しなかったときは #URG_CONNECTION_TIMEOUT を返す。
 
+  \~english
+  \brief Receive
+
+  Reads data from the communication channel
+
+  \param[in,out] connection Connection resource
+  \param[in] data Buffer to store received data
+  \param[in] max_size Maximum size of the buffer
+  \param[in] timeout Timeout [msec]
+
+  \retval >=0 Number of bytes received
+  \retval <0 Error
+
+  If timeout argument is negative then the function waits until some data is received
+
+  In case no data is received #URG_CONNECTION_TIMEOUT is returned.
+  \~
   Example
   \code
 enum {
@@ -159,6 +240,7 @@ enum {
 char buffer[BUFFER_SIZE];
 n = connection_read(&connection, buffer, BUFFER_SIZE, TIMEOUT_MSEC); \endcode
 
+  \~
   \see connection_write(), connection_readline()
 */
 extern int connection_read(urg_connection_t *connection,
@@ -166,6 +248,7 @@ extern int connection_read(urg_connection_t *connection,
 
 
 /*!
+  \~japanese
   \brief 改行文字までの受信
 
   改行文字までのデータを受信する。
@@ -184,6 +267,28 @@ extern int connection_read(urg_connection_t *connection,
 
   受信した最初の文字が改行の場合は、0 を返し、1 文字も受信しなかったときは #URG_CONNECTION_TIMEOUT を返す。
 
+  \~english
+  \brief Receive until end-of-line
+
+  Reads data until the end-of-line character is detected.
+
+  \param[in,out] connection Connection resource
+  \param[in] data Buffer to store received data
+  \param[in] max_size Maximum size of the buffer
+  \param[in] timeout Timeout [msec]
+
+  \retval >=0 Number of bytes received
+  \retval <0 Error
+
+  If timeout argument is negative then the function waits until some data is received
+
+  The null terminator character '\\0' is used at the end of data so that the number of bytes does not exceed max_size.
+  This is, the maximum number of received characters is max_size - 1.
+
+  The end-of-line character is either '\\r' or '\\n'
+
+  In case no end-of-line is received then returns 0, if no data is received #URG_CONNECTION_TIMEOUT is returned.
+  \~
   \see connection_write(), connection_read()
 */
 extern int connection_readline(urg_connection_t *connection,

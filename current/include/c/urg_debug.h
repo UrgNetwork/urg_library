@@ -11,7 +11,7 @@
   \attention 使う必要はありません。
 
   \~english
-  \attention Don't need to use these functions.
+  \attention It is not necessary to use these functions.
 
   $Id$
 */
@@ -23,15 +23,30 @@ extern "C" {
 #include "urg_sensor.h"
 
 
-    /*! \~japanese センサにデータを直接送信する */
+    /*!
+     \~japanese
+     \brief センサにデータを直接送信する
+     \~english
+     \brief Directly send raw data to the sensor
+    */
     extern int urg_raw_write(urg_t *urg, const char *data, int data_size);
 
 
-    /*! \~japanese センサからデータを直接受信する */
+    /*!
+     \~japanese
+     \brief センサからデータを直接受信する
+     \~english
+     \brief Directly get raw data from the sensor
+    */
     extern int urg_raw_read(urg_t *urg, char *data, int max_data_size,
                             int timeout);
 
-    /*! \~japanese センサから改行までのデータを直接受信する */
+    /*!
+     \~japanese
+     \brief センサから改行までのデータを直接受信する
+     \~english
+     \brief Directly get raw data from the sensor until end-of-line
+     */
     extern int urg_raw_readline(urg_t *urg,char *data, int max_data_size,
                                 int timeout);
 

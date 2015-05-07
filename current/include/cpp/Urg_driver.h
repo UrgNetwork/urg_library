@@ -3,8 +3,11 @@
 
 /*!
   \file
+  \~japanese
   \brief URG ドライバ
-
+  \~english
+  \brief URG driver
+  \~
   \author Satofumi KAMIMURA
 
   $Id: Urg_driver.h 1937 2010-10-25 01:12:49Z satofumi $
@@ -16,7 +19,7 @@
 
 namespace qrk
 {
-    //! URG ドライバ
+    //! \~japanese URG ドライバ  \~english URG driver
     class Urg_driver : public Lidar
     {
     public:
@@ -50,12 +53,12 @@ namespace qrk
         void wakeup(void);
         bool is_stable(void);
 
-        // !!! データ取得の開始
+        //! \~japanese データ取得の開始  \~english Starts data measurement process
         bool start_measurement(measurement_type_t type = Distance,
                                int scan_times = Infinity_times,
                                int skip_scan = 0);
 
-        // !!! 受信データの受け取り
+        //! \~japanese 受信データの受け取り  \~english Receives measurement data
         bool get_distance(std::vector<long>& data, long *time_stamp = NULL);
         bool get_distance_intensity(std::vector<long>& data,
                                     std::vector<unsigned short>& intensity,
@@ -72,13 +75,13 @@ namespace qrk
         bool set_scanning_parameter(int first_step, int last_step,
                                     int skip_step = 1);
 
-        //! データ取得の中断
+        //! \~japanese データ取得の中断  \~english Stops data measurement process
         void stop_measurement(void);
 
-        //! タイムスタンプの同期
+        //! \~japanese タイムスタンプの同期  \~english Synchronization of timestamps
         bool set_sensor_time_stamp(long time_stamp);
 
-        //! 角度変換
+        //! \~japanese 角度変換  \~english Angle conversion functions
         double index2rad(int index) const;
         double index2deg(int index) const;
         int rad2index(double radian) const;

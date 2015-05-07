@@ -1,7 +1,10 @@
 /*!
   \file
+  \~japanese
   \brief ’ÊM‚Ìˆ—
-
+  \~english
+  \brief Communication related functions
+  \~
   \author Satofumi KAMIMURA
 
   $Id$

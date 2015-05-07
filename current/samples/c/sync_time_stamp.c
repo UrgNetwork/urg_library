@@ -1,7 +1,9 @@
 /*!
   \~japanese
   \example sync_time_stamp.c センサと PC のタイムスタンプを同期する
-
+  \~english
+  \example sync_time_stamp.c Timestamp synchronization between PC and sensor
+  \~
   \author Satofumi KAMIMURA
 
   $Id: sync_time_stamp.c,v 799c195d046c 2011/01/14 05:10:38 hokuyo $
@@ -54,6 +56,8 @@ static int pc_msec_time(void)
 /*!
   \~japanese
   \brief PC のタイムスタンプに補正するための値を返す
+  \~english
+  \brief Returns the timestamp (offset) necessary to correct the PC time
 */
 static long print_time_stamp(urg_t *urg, long time_stamp_offset)
 {
@@ -102,9 +106,11 @@ int main(int argc, char *argv[])
     printf("# pc,\tsensor\n");
 
     // \~japanese URG のタイムスタンプと PC のタイムスタンプを表示
+    // \~english Prints the URG timestamp and the PC timestamp
     time_stamp_offset = print_time_stamp(&urg, 0);
 
     // \~japanese URG の補正後のタイムスタンプと PC タイムスタンプを表示
+    // \~english Prints the URG timestamp and the PC timestamp after correction
     for (i = 0; i < TIME_STAMP_PRINT_TIMES; ++i) {
         print_time_stamp(&urg, time_stamp_offset);
     }

@@ -9,7 +9,7 @@
   \~english
   \page usage_windows_bat_page Visual C++ (using batch file)
 
-  This page shows how to compile using by the batch file provided by Visual Studio.  The following work is done at the command prompt.
+  This page shows how to compile the library and programs using by the batch file provided by Visual Studio. For the following tasks are executed using the Windows command prompt.
 
 
   \~japanese
@@ -39,17 +39,24 @@
   \~english
   \section usage_windows_bat_link_make Compile
 
-  -# Copy the batch file provided by Visual Studio to set the environment variables needs for compiling. \n
+  -# Copy the batch file provided by Visual Studio to set the necessary environment variables for compiling. \n
   Copy Program Files\\Microsoft Visual Studio *\\Common7\\Tools\\vsvars32.bat to urg_library-*.*.*\\windowsexe \n
-  (Version of the library, please replace what you use.)
+  (Replace the asterisks '*' above with the version of the library and Visual Studio you use.)
   \n \n
-  -# Running the bat file for compilation. \n
-  Run urg_library-*.*.*\\windowsexe\\compile.bat file to compile.
+  -# Execute the bat file to prepare environment for compilation. \n
+  Run the urg_library-*.*.*\\windowsexe\\compile.bat file.
+  (If the vsvars32.bat file is not present in the same folder, it will end with error.)
   \n \n
-  -# Running the generated samples.
-  Run generated execute files in urg_library-*.*.*\\windowsexe folder.
 
-  For more information, please see compile.bat file.
+  For details, please check the compile.bat file.
+
+  \section usage_windows_bat_run_sample Running generated sample programs
+  Run generated executable files in urg_library-*.*.*\\windowsexe folder. \n
+  Depending on the environment, it may be necessary to change the sample programs in order to connect with the URG sensor. Refer to \ref library_sample_page for details.
+  \n \n
+
+  \section usage_windows_bat_library Using the library
+  The static libraries urg.lib and urg_cpp.lib are generated, refer to \ref usage_windows_vcproj_link for details about how to use the library in your project. \n\n
 
 
   \~japanese
@@ -61,5 +68,5 @@
   \~english
   \section usage_windows_bat_link_clean Clean up
 
-  Run urg_library-*.*.*\\windowsexe\\cleanobj.bat to delete a file that is generated.
+  Run urg_library-*.*.*\\windowsexe\\cleanobj.bat to delete generated files.
 */

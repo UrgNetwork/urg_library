@@ -1,7 +1,10 @@
 /*!
   \file
+  \~japanese 
   \brief シリアル通信
-
+  \~english 
+  \brief Serial communications on Windows
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
@@ -39,13 +42,14 @@ static void set_timeout(urg_serial_t *serial, int timeout)
 
 int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 {
-    // COM10 以降への対応用
+    // \~japanese COM10 以降への対応用
+    // \~english To deal with port names over COM10
     enum { NameLength = 11 };
     char adjusted_device[NameLength];
 
     serial_initialize(serial);
 
-    /* COM ポートを開く */
+    /* \~japanese COM ポートを開く \~english Opens the COM port */
     _snprintf(adjusted_device, NameLength, "\\\\.\\%s", device);
     serial->hCom = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
                                0, NULL, OPEN_EXISTING,
@@ -57,16 +61,16 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
         return -1;
     }
 
-    /* 通信サイズの更新 */
+    /* \~japanese 通信サイズの更新  \~english Configures the transmission size */
     SetupComm(serial->hCom, 4096 * 8, 4096);
 
-    /* ボーレートの変更 */
+    /* \~japanese ボーレートの変更 ~\english Changes the baudrate */
     serial_set_baudrate(serial, baudrate);
 
-    /* シリアル制御構造体の初期化 */
+    /* \~japanese シリアル制御構造体の初期化 \~english Initializes serial control structures */
     serial->has_last_ch = False;
 
-    /* タイムアウトの設定 */
+    /* \~japanese タイムアウトの設定  \~english Configures the timeout */
     serial->current_timeout = 0;
     set_timeout(serial, serial->current_timeout);
 
@@ -189,7 +193,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         return 0;
     }
 
-    /* 書き戻した１文字があれば、書き出す */
+    /* \~japanese 書き戻した１文字があれば、書き出す  \~english If there is a single character return it */
     if (serial->has_last_ch) {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
@@ -206,7 +210,8 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
     if (buffer_size < read_n) {
-        // リングバッファ内のデータで足りなければ、データを読み足す
+        // \~japanese リングバッファ内のデータで足りなければ、データを読み足す
+        // \~english Reads data if there is space in the ring buffer
         char buffer[RING_BUFFER_SIZE];
         int n = internal_receive(buffer,
                                  ring_capacity(&serial->ring) - buffer_size,
@@ -215,7 +220,8 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     }
     buffer_size = ring_size(&serial->ring);
 
-    // リングバッファ内のデータを返す
+    // \~japanese リングバッファ内のデータを返す
+    // \~english Returns the data stored in the ring buffer
     if (read_n > buffer_size) {
         read_n = buffer_size;
     }
@@ -224,7 +230,8 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         filled += read_n;
     }
 
-    // データをタイムアウト付きで読み出す
+    // \~japanese データをタイムアウト付きで読み出す
+    // \~english Reads data within the given timeout
     filled += internal_receive(&data[filled],
                                max_size - filled, serial, timeout);
     return filled;

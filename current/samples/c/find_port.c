@@ -1,7 +1,9 @@
 /*!
   \~japanese
   \example find_port.c ƒ|[ƒg‚Ì’Tõ
-
+  \~english
+  \example find_port.c Finds out the port
+  \~
   \author Satofumi KAMIMURA
 
   $Id$

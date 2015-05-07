@@ -1,7 +1,8 @@
 /*!
   \~japanese
   \brief URG ‚Æ‚ÌÚ‘±
-
+  \~english
+  \brief Connects to URG
   \~
   \author Satofumi KAMIMURA
 
@@ -32,6 +33,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
     int i;
 
     // \~japanese Ú‘±ƒ^ƒCƒv‚ÌØ‘Ö‚¦
+    // \~english Changes connection type
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
             connection_type = URG_ETHERNET;
@@ -47,6 +49,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
     }
 
     // \~japanese Ú‘±
+    // \~english Connection
     if (urg_open(urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s, %ld: %s\n",
             device, baudrate_or_port, urg_error(urg));

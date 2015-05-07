@@ -1,7 +1,10 @@
 /*!
   \file
+  \~japanese
   \brief タイムスタンプの取得
-
+  \~english
+  \brief Gets computer timestamp
+  \~
   \author Satofumi KAMIMURA
 
   $Id$
