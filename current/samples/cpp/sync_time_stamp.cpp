@@ -6,7 +6,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: sync_time_stamp.cpp 1937 2010-10-25 01:12:49Z satofumi $
+  $Id$
 */
 
 #include "Urg_driver.h"

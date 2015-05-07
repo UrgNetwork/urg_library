@@ -10,7 +10,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: Urg_driver.h 1937 2010-10-25 01:12:49Z satofumi $
+  $Id$
 */
 
 #include <memory>
@@ -80,6 +80,7 @@ namespace qrk
 
         //! \~japanese タイムスタンプの同期  \~english Synchronization of timestamps
         bool set_sensor_time_stamp(long time_stamp);
+        long get_sensor_time_stamp(void);
 
         //! \~japanese 角度変換  \~english Angle conversion functions
         double index2rad(int index) const;

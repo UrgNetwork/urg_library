@@ -6,7 +6,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: sensor_parameter.c,v 0caa22c18f6b 2010/12/30 03:36:32 Satofumi $
+  $Id$
 */
 
 #include "urg_sensor.h"

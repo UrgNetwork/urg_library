@@ -16,7 +16,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: urg_sensor.h,v 540bc11f70c8 2011/05/08 23:04:49 satofumi $
+  $Id$
 */
 
 #ifdef __cplusplus

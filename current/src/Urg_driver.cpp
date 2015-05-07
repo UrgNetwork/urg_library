@@ -7,7 +7,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: Urg_driver.cpp 1937 2010-10-25 01:12:49Z satofumi $
+  $Id$
 */
 
 #include "Urg_driver.h"
@@ -312,6 +312,10 @@ void Urg_driver::stop_measurement(void)
     urg_stop_measurement(&pimpl->urg_);
 }
 
+long Urg_driver::get_sensor_time_stamp(void)
+{
+    return urg_time_stamp(&pimpl->urg_);
+}
 
 bool Urg_driver::set_sensor_time_stamp(long time_stamp)
 {

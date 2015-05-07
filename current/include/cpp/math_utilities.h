@@ -10,7 +10,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: math_utilities.h 1907 2010-09-13 21:58:51Z satofumi $
+  $Id$
 */
 
 #include "detect_os.h"

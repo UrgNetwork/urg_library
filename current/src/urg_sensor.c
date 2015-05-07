@@ -7,7 +7,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: urg_sensor.c,v 66816edea765 2011/05/03 06:53:52 satofumi $
+  $Id$
 
   \~japanese 
   \todo Mx 計測中に他の Mx コマンドを送信したときに、適切に動作するようにする
@@ -779,7 +779,8 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
         baudrate = 115200;
     }
 
-    if (connect_urg_device(urg, baudrate) != URG_NO_ERROR) {
+    ret = connect_urg_device(urg, baudrate);
+    if (ret != URG_NO_ERROR) {
         return set_errno_and_return(urg, ret);
     }
     urg->is_sending = URG_FALSE;

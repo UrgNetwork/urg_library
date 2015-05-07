@@ -12,7 +12,7 @@
 
   \author Satofumi KAMIMURA
 
-  $Id: plotter_sdl.c,v 540bc11f70c8 2011/05/08 23:04:49 satofumi $
+  $Id$
 */
 
 //#define USE_GL_2 1

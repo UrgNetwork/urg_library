@@ -12,7 +12,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: urg_utils.h,v 630ee326c5ce 2011/02/19 08:06:25 Satofumi $
+  $Id$
 */
 
 #ifdef __cplusplus

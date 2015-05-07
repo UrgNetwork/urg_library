@@ -10,7 +10,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: Connection_information.h 1930 2010-09-30 03:26:52Z satofumi $
+  $Id$
 */
 
 #include "Urg_driver.h"

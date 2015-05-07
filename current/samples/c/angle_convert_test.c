@@ -6,7 +6,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: sync_time_stamp.c,v 799c195d046c 2011/01/14 05:10:38 hokuyo $
+  $Id$
 */
 
 #include "urg_sensor.h"

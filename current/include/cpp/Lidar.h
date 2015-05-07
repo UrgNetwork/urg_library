@@ -10,7 +10,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: lidar.h 1937 2010-10-25 01:12:49Z satofumi $
+  $Id$
 */
 
 #include <vector>

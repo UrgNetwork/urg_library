@@ -10,7 +10,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: urg_serial.h,v 1d233c7a2240 2011/02/19 03:08:45 Satofumi $
+  $Id$
 */
 
 #ifdef __cplusplus

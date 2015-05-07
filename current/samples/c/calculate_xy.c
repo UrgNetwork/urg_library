@@ -11,7 +11,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: calculate_xy.c,v 586c4fa697ef 2011/01/24 08:50:01 Satofumi $
+  $Id$
 */
 
 #include "urg_sensor.h"

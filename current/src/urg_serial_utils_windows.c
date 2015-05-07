@@ -6,7 +6,7 @@
   \brief Serial communication auxiliary functions for Windows
   \author Satofumi KAMIMURA
 
-  $Id: urg_serial_utils_windows.c,v faa71b0113fd 2011/01/17 12:00:22 Satofumi $
+  $Id$
 
   \~japanese 
   \todo •Ï”–¼‚ğ '_' ‹æØ‚è‚ÌŒ`®‚É•ÏX‚·‚é

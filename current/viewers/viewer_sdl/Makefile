@@ -1,17 +1,13 @@
 # viewers/viewer_sdl/
 
 # Compile options
-SRCDIR = ../../src
-INCLUDEDIR = ../../include
 CC = gcc
-#CFLAGS = -O2 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
-CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDE) `sdl-config --cflags`
-INCLUDE = -I$(INCLUDEDIR)
+CFLAGS = -g -O0 -Wall -Werror -W `sdl-config --cflags` `urg_c-config --cflags`
 LDFLAGS = -L/usr/X11/lib
 ifeq ($(OS),Windows_NT)
-LDLIBS = `sdl-config --libs` -lopengl32 -lwsock32
+LDLIBS = `sdl-config --libs` -lopengl32 `urg_c-config --libs`
 else
-LDLIBS = `sdl-config --libs` -lGL
+LDLIBS = `sdl-config --libs` -lGL `urg_c-config --libs`
 endif
 
 
@@ -27,9 +23,6 @@ depend :
 
 .PHONY : all clean depend
 ######################################################################
-REQUIRE_LIB = $(SRCDIR)/liburg_c.a
-$(REQUIRE_LIB) : $(wildcard $(SRCDIR)/*.[ch])
-	cd $(@D)/ && $(MAKE) $(@F)
 
 viewer_sdl : plotter_sdl.o $(REQUIRE_LIB)
 

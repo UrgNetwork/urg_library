@@ -6,7 +6,7 @@
   \~
   \author Satofumi KAMIMURA
 
-  $Id: urg_utils.c,v da778fd816c2 2011/01/05 20:02:06 Satofumi $
+  $Id$
 */
 
 #include "urg_debug.h"
