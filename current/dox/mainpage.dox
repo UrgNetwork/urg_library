@@ -7,20 +7,20 @@
   これは、レーザ距離センサ URG シリーズ用のオープンソースライブラリです。\n
   このライブラリは、以下の環境にて動作を確認しています。
 
-  - Visual C++ 2005
-  - Visual C++ 2010
-  - gcc 4.6.0 (Linux)
-  - gcc 4.6.2 (MinGW)
+- Visual C++ 2005
+- Visual C++ 2010
+- gcc 4.6.0 (Linux)
+- gcc 4.6.2 (MinGW)
 
   \~english
   \section mainpage_what Abstract
 
   This is an open source library for Hokuyo URG laser range scanners.  This library has been tested for the following environments.
 
-  - Visual C++ 2005
-  - Visual C++ 2010
-  - gcc 4.6.0 (Linux)
-  - gcc 4.6.2 (MinGW)
+- Visual C++ 2005
+- Visual C++ 2010
+- gcc 4.6.0 (Linux)
+- gcc 4.6.2 (MinGW)
 
   \~japanese
   \section mainpage_license ライセンス

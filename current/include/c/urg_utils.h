@@ -288,6 +288,13 @@ extern "C" {
     */
     extern int urg_step2index(const urg_t *urg, int step);
 
+    /*!
+       \~japanese
+       \brief Žw’è‚µ‚½ŽžŠÔ‘Ò‚Â
+       \~english
+       \brief Wait at the specified time
+    */
+    extern void urg_delay(int delay_msec);
 #ifdef __cplusplus
 }
 #endif

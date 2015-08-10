@@ -1,6 +1,6 @@
 /*!
   \file
-  \~japanese 
+  \~japanese
   \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
   \~english
   \brief Auxiliary functions for the sensor
@@ -17,7 +17,6 @@
 
 #undef max
 #undef min
-
 
 static int max(int a, int b)
 {
@@ -211,4 +210,13 @@ int urg_step2index(const urg_t *urg, int step)
     measure_step = step - urg->received_first_index;
     return min(max(0, measure_step + urg->front_data_index),
                urg->last_data_index);
+}
+
+void urg_delay(int delay_msec)
+{
+#if defined(URG_WINDOWS_OS)
+    Sleep(delay_msec);
+#else
+    usleep(1000 * msec);
+#endif
 }

@@ -17,6 +17,7 @@
 
 #include "urg_sensor.h"
 #include "urg_errno.h"
+#include "urg_utils.h"
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
@@ -219,9 +220,11 @@ static int change_sensor_baudrate(urg_t *urg,
     // \~english If the result is correct, change the host's baudrate
     ret = connection_set_baudrate(&urg->connection, next_baudrate);
 
+    ignore_receive_data(urg, MAX_TIMEOUT);
+
     // \~japanese ƒZƒ“ƒT‘¤‚Ìİ’è”½‰f‚ğ‘Ò‚Â‚½‚ß‚É­‚µ‚¾‚¯‘Ò‹@‚·‚é
     // \~english Waits a bit for the sensor to change baudrate
-    ignore_receive_data(urg, MAX_TIMEOUT);
+    urg_delay(150);
 
     return set_errno_and_return(urg, ret);
 }
@@ -231,7 +234,7 @@ static int change_sensor_baudrate(urg_t *urg,
 // \~english Sets the baudrate and connects to the sensor
 static int connect_urg_device(urg_t *urg, long baudrate)
 {
-    long try_baudrate[] = { 19200, 38400, 115200 };
+    long try_baudrate[] = { 19200, 57600, 115200, 250000, 500000, 750000 };
     int try_times = sizeof(try_baudrate) / sizeof(try_baudrate[0]);
     int i;
 
