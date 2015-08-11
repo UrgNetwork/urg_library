@@ -217,6 +217,6 @@ void urg_delay(int delay_msec)
 #if defined(URG_WINDOWS_OS)
     Sleep(delay_msec);
 #else
-    usleep(1000 * msec);
+    usleep(1000 * delay_msec);
 #endif
 }
