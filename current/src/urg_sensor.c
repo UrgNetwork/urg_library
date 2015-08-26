@@ -1,6 +1,6 @@
 /*!
   \file
-  \~japanese 
+  \~japanese
   \brief URG センサ制御
   \~english
   \brief
@@ -9,7 +9,7 @@
 
   $Id$
 
-  \~japanese 
+  \~japanese
   \todo Mx 計測中に他の Mx コマンドを送信したときに、適切に動作するようにする
   \~english
   \todo Run correctly when a Mx measurement command is in operation and a second Mx command is received
@@ -114,7 +114,7 @@ static int scip_response(urg_t *urg, const char* command,
 
         if (line_number == 0) {
             // \~japanese エコーバック文字列が、一致するかを確認する
-	    // \~english Check if the echoback is complete 
+	    // \~english Check if the echoback is complete
             if (strncmp(buffer, command, write_size - 1)) {
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
             }
@@ -157,6 +157,18 @@ static int scip_response(urg_t *urg, const char* command,
     return (ret < 0) ? ret : (line_number - 1);
 }
 
+static void clear_urg_communication_buffer(urg_t *urg, int timeout)
+{
+    char buffer[BUFFER_SIZE];
+    int n;
+
+    connection_write(&urg->connection, "\n", 1);
+
+    do {
+        n = connection_readline(&urg->connection,
+                                buffer, BUFFER_SIZE, timeout);
+    } while (n >= 0);
+}
 
 static void ignore_receive_data(urg_t *urg, int timeout)
 {
@@ -256,10 +268,15 @@ static int connect_urg_device(urg_t *urg, long baudrate)
 
         connection_set_baudrate(&urg->connection, try_baudrate[i]);
 
+        // \~japanese URGが動いているボーレート以外でコマンドを送信した場合にゴミが残る場合があるのでクリア
+        // \~english Clear URG read buffer to avoid having garbage data resulting from the incorrect baudrate communication
+        clear_urg_communication_buffer(urg, MAX_TIMEOUT);
+
         // \~japanese QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
 	// \~english Sends the QT command and if the response is received then baudrate is correctly set
         ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
+
         if (ret > 0) {
             if (!strcmp(receive_buffer, "E")) {
                 int scip20_expected[] = { 0, EXPECTED_END };
@@ -630,7 +647,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         return set_errno_and_return(urg, URG_NO_RESPONSE);
     }
     // \~japanese エコーバックの解析
-    // \~english Checks the echoback 
+    // \~english Checks the echoback
     type = parse_distance_echoback(urg, buffer);
 
     // \~japanese 応答の取得
@@ -963,10 +980,10 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
     // \~japanese  !!! 計測開始コマンドを送信するようにする
     // \~japanese  !!! ただし、MD 計測中に MD を発行するように、同じコマンドの場合は
     // \~japanese  !!! Mx 系, Nx 系の計測は上書きすることができるようにする
-    // \~english   !!! If a Mx/Nx measurement command is already in operation, 
+    // \~english   !!! If a Mx/Nx measurement command is already in operation,
     // \~english   !!! measurement can be re-started after having send QT command.
-    // \~english   !!! However, if Mx/Nx is already running and the same command is issued again 
-    // \~english   !!! (ex., send MD command while another MD is running), the command is overwritten 
+    // \~english   !!! However, if Mx/Nx is already running and the same command is issued again
+    // \~english   !!! (ex., send MD command while another MD is running), the command is overwritten
 
     // \~japanese  指定されたタイプのパケットを生成し、送信する
     // \~english Prepares and sends the measurement command according to the given type
