@@ -28,6 +28,13 @@ enum {
     Invalid_desc = -1,
 };
 
+// \~japanese ‰üs‚©‚Ç‚¤‚©‚Ì”»’è
+// \~english Checks wheter is is a EOL character
+static int is_linefeed(const char ch)
+{
+    return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
+}
+
 
 static void tcpclient_buffer_init(urg_tcpclient_t* cli)
 {
@@ -318,7 +325,7 @@ int tcpclient_readline(urg_tcpclient_t* cli,
         if (n <= 0) {
             break; // error
         }
-        if (ch == '\n' || ch == '\r') {
+        if (is_linefeed(ch)) {
             break; // success
         }
         userbuf[i] = ch;
