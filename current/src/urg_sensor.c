@@ -1387,7 +1387,7 @@ const char *urg_sensor_state(urg_t *urg)
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "MESM:", " (", II_RESPONSE_LINES);
+                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
