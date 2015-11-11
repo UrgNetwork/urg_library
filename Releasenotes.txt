@@ -1,3 +1,8 @@
+2015-10-21
+	* 1.2.0 released.
+	* Fixed bugs on serial communication.
+	* Fixed bugs on urg_sensor_state in urg_sensor.c.
+
 2015-05-07
 	* 1.1.9 released.
 	* Added the files with translation macros.
