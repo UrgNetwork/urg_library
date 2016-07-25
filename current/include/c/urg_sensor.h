@@ -694,7 +694,7 @@ extern "C" {
 
       データは、まとめるデータのうち、一番小さな値のデータが用いられます。
 
-      \~japanese
+      \~english
       \brief Configure measurement parameters
 
       This function allows definining the scope (start and end steps) for measurement. The number of measurement data (steps) returned by urg_get_distance() and similar is defined here.
@@ -746,7 +746,6 @@ extern "C" {
     extern int urg_set_scanning_parameter(urg_t *urg, int first_step,
                                           int last_step, int skip_step);
 
-
     /*!
       \~japanese
       \brief 通信データのサイズ変更
@@ -787,7 +786,7 @@ extern "C" {
       The initial (default) data size is 3 bytes. If the number of bytes is changed to 2, the actual received message length becomes around 2/3 of the original length. However, using 2 bytes means the maximum measurement range is 4095, therefore use it only when measurement targets are 4 [m] from the sensor.
       \~
     */
-    extern int urg_set_communication_data_size(urg_t *urg,
+    extern int urg_set_measurement_data_size(urg_t *urg,
                                                urg_range_data_byte_t data_byte);
 
 

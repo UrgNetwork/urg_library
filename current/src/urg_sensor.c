@@ -602,17 +602,17 @@ static int receive_length_data(urg_t *urg, long length[],
             // \~japanese ‹——£ƒf[ƒ^‚ÌŠi”[
             // \~english Stores the distance data
             if (length) {
-                length[index] = urg_scip_decode(p, 3);
+                length[index] = urg_scip_decode(p, each_size);
             }
-            p += 3;
+            p += each_size;
 
             // \~japanese ‹­“xƒf[ƒ^‚ÌŠi”[
 	    // \~english Stores the intensity data
             if (is_intensity) {
                 if (intensity) {
-                    intensity[index] = (unsigned short)urg_scip_decode(p, 3);
+                    intensity[index] = (unsigned short)urg_scip_decode(p, each_size);
                 }
-                p += 3;
+                p += each_size;
             }
 
             ++step_filled;
@@ -1121,14 +1121,14 @@ int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
 }
 
 
-int urg_set_connection_data_size(urg_t *urg,
+int urg_set_measurement_data_size(urg_t *urg,
                                  urg_range_data_byte_t data_byte)
 {
     if (!urg->is_active) {
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    if ((data_byte != URG_COMMUNICATION_3_BYTE) ||
+    if ((data_byte != URG_COMMUNICATION_3_BYTE) &&
         (data_byte != URG_COMMUNICATION_2_BYTE)) {
         return set_errno_and_return(urg, URG_DATA_SIZE_PARAMETER_ERROR);
     }

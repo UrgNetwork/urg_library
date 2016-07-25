@@ -84,8 +84,8 @@ void urg_distance_min_max(const urg_t *urg,
 
     *min_distance = urg->min_distance;
 
-    // \~japanese urg_set_communication_data_size() ‚ð”½‰f‚µ‚½‹——£‚ð•Ô‚·
-    // \~english returns the size configured with urg_set_communication_data_size()
+    // \~japanese urg_set_measurement_data_size() ‚ð”½‰f‚µ‚½‹——£‚ð•Ô‚·
+    // \~english returns the size configured with urg_set_measurement_data_size()
     *max_distance =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
         max(urg->max_distance, 4095) : urg->max_distance;
