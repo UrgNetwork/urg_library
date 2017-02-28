@@ -1338,6 +1338,14 @@ const char *urg_sensor_firmware_version(urg_t *urg)
 
     p = copy_token(urg->return_buffer,
                    receive_buffer, "FIRM:", " (", VV_RESPONSE_LINES);
+
+    if (p) {
+        return p;
+    } else {
+        p = copy_token(urg->return_buffer,
+               receive_buffer, "FIRM:", ";", VV_RESPONSE_LINES);
+    }
+
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
