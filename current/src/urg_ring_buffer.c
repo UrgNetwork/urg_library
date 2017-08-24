@@ -73,7 +73,7 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
         left_size = push_size - move_size;
         if (left_size > 0) {
             // \~japanese 0 から first の前までを配置
-        // \~english Stores data before the first element
+            // \~english Stores data before the first element
             byte_move(ring->buffer, &data[move_size], left_size);
             ring->last = left_size;
         }
@@ -112,7 +112,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
         left_size = pop_size - move_size;
         if (left_size > 0) {
             // \~japanese 0 から last の前までを配置
-        // \~english Gets data before the last element
+            // \~english Gets data before the last element
             byte_move(&buffer[move_size], ring->buffer, left_size);
 
             ring->first = left_size;
