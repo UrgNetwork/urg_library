@@ -148,7 +148,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
             // \~japanese タイムアウト
-	    // \~english Operation timed out
+        // \~english Operation timed out
             tcpclient_close(cli);
             return -2;
         }
@@ -179,7 +179,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret <= 0) {
             // \~japanese タイムアウト処理
-	    // \~english Operation timed out
+        // \~english Operation timed out
             tcpclient_close(cli);
             return -2;
         }
@@ -187,14 +187,14 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int*)&sock_optval,
                        (socklen_t*)&sock_optval_size) != 0) {
             // \~japanese 接続に失敗
-	    // \~english Connection failed
+        // \~english Connection failed
             tcpclient_close(cli);
             return -3;
         }
 
         if (sock_optval != 0) {
             // \~japanese 接続に失敗
-	    // \~english Connection failed
+        // \~english Connection failed
             tcpclient_close(cli);
             return -4;
         }
