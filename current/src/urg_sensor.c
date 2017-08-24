@@ -292,11 +292,11 @@ static int connect_urg_device(urg_t *urg, long baudrate)
                                     MAX_TIMEOUT, NULL, 0);
 
                 // \~japanese SCIP2.0 応答の最後の改行を読み飛ばす
-        // \~english Skips the end-of-line after SCIP2.0
+                // \~english Skips the end-of-line after SCIP2.0
                 ignore_receive_data(urg, MAX_TIMEOUT);
 
                 // \~japanese ボーレートを変更して戻る
-        // \~english Changes the baudrate and returns
+                // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
             } else if (!strcmp(receive_buffer, "0Ee")) {
