@@ -42,6 +42,7 @@ enum {
     PP_RESPONSE_LINES = 10,
     VV_RESPONSE_LINES = 7,
     II_RESPONSE_LINES = 9,
+    II_ERROR_RESPONSE_LINES = 4, 
 
     MAX_TIMEOUT = 140,
 };
@@ -105,7 +106,7 @@ static int scip_response(urg_t *urg, const char* command,
         } else if (p && (line_number > 0)
                    && (n < (receive_buffer_max_size - filled_size))) {
             // \~japanese エコーバックは完全一致のチェックを行うため、格納しない
-	    // \~english Since echoback is verified upon completion, do not store it now
+            // \~english Since echoback is verified upon completion, do not store it now
             memcpy(p, buffer, n);
             p += n;
             *p++ = '\0';
@@ -114,13 +115,13 @@ static int scip_response(urg_t *urg, const char* command,
 
         if (line_number == 0) {
             // \~japanese エコーバック文字列が、一致するかを確認する
-	    // \~english Check if the echoback is complete
+            // \~english Check if the echoback is complete
             if (strncmp(buffer, command, write_size - 1)) {
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
             }
         } else if (n > 0 && !(line_number == 1 && n == 1)) {
             // \~japanese エコーバック以外の行のチェックサムを評価する(SCIP 1.1 応答の場合は無視する)
-	    // \~english Checks the checksum value for all lines except the echoback (in SCIP1.1 this is ignored)
+            // \~english Checks the checksum value for all lines except the echoback (in SCIP1.1 this is ignored)
             char checksum = buffer[n - 1];
             if ((checksum != scip_checksum(buffer, n - 1)) &&
                 (checksum != scip_checksum(buffer, n - 2))) {
@@ -133,7 +134,7 @@ static int scip_response(urg_t *urg, const char* command,
         if (line_number == 1) {
             if (n == 1) {
                 // \~japanese SCIP 1.1 応答の場合は、正常応答とみなす
-	        // \~english In case of SCIP1.1 it is always correct
+                // \~english In case of SCIP1.1 it is always correct
                 ret = 0;
 
             } else if (n != 3) {
@@ -273,7 +274,7 @@ static int connect_urg_device(urg_t *urg, long baudrate)
         clear_urg_communication_buffer(urg, MAX_TIMEOUT);
 
         // \~japanese QT を送信し、応答が返されるかでボーレートが一致しているかを確認する
-	// \~english Sends the QT command and if the response is received then baudrate is correctly set
+        // \~english Sends the QT command and if the response is received then baudrate is correctly set
         ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
 
@@ -282,32 +283,32 @@ static int connect_urg_device(urg_t *urg, long baudrate)
                 int scip20_expected[] = { 0, EXPECTED_END };
 
                 // \~japanese QT 応答の最後の改行を読み飛ばす
-		// \~english Skips the end-of-line after the QT response
+                // \~english Skips the end-of-line after the QT response
                 ignore_receive_data(urg, MAX_TIMEOUT);
 
                 // \~japanese "E" が返された場合は、SCIP 1.1 とみなし "SCIP2.0" を送信する
-		// \~english If "E" is received it is SCIP1.1, so change to SCIP2.0
+                // \~english If "E" is received it is SCIP1.1, so change to SCIP2.0
                 ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                     MAX_TIMEOUT, NULL, 0);
 
                 // \~japanese SCIP2.0 応答の最後の改行を読み飛ばす
-		// \~english Skips the end-of-line after SCIP2.0
+                // \~english Skips the end-of-line after SCIP2.0
                 ignore_receive_data(urg, MAX_TIMEOUT);
 
                 // \~japanese ボーレートを変更して戻る
-		// \~english Changes the baudrate and returns
+                // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
             } else if (!strcmp(receive_buffer, "0Ee")) {
                 int tm2_expected[] = { 0, EXPECTED_END };
 
                 // \~japanese "0Ee" が返された場合は、TM モードとみなし "TM2" を送信する
-		// \~english If "0Ee" is received it is in TM mode, send "TM2" to end it
+                // \~english If "0Ee" is received it is in TM mode, send "TM2" to end it
                 scip_response(urg, "TM2\n", tm2_expected,
                               MAX_TIMEOUT, NULL, 0);
 
                 // \~japanese ボーレートを変更して戻る
-		// \~english Changes the baudrate and returns
+                // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
             }
         }
@@ -316,24 +317,24 @@ static int connect_urg_device(urg_t *urg, long baudrate)
             if (ret == URG_INVALID_RESPONSE) {
                 // \~japanese 異常なエコーバックのときは、距離データ受信中とみなして
                 // \~japanese データを読み飛ばす
-	        // \~english If an invalid echoback is received, it is currently in measurement data transmission
-	        // \~english so skip the data
+                // \~english If an invalid echoback is received, it is currently in measurement data transmission
+                // \~english so skip the data
                 ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
 
                 // \~japanese ボーレートを変更して戻る
-		// \~english Changes the baudrate and returns
+                // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
             } else {
                 // \~japanese 応答がないときは、ボーレートを変更して、再度接続を行う
-	        // \~english If there is no response, changes the baudrate and re-connects
+                // \~english If there is no response, changes the baudrate and re-connects
                 ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
                 continue;
             }
         } else if (!strcmp("00P", receive_buffer)) {
 
             // \~japanese センサとホストのボーレートを変更して戻る
-	    // \~english Changes the baudrate and returns
+            // \~english Changes the baudrate and returns
             return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
         }
     }
@@ -392,7 +393,7 @@ static int receive_parameter(urg_t *urg)
         } else if (!strncmp(p, "SCAN:", 5)) {
             int rpm = strtol(p + 5, NULL, 10);
             // \~japanese タイムアウト時間は、計測周期の 16 倍程度の値にする
-	    // \~english Timeout is set about 16 times the sensor measurement period
+            // \~english Timeout is set about 16 times the sensor measurement period
             urg->scan_usec = 1000 * 1000 * 60 / rpm;
             urg->timeout = urg->scan_usec >> (10 - 4);
             received_bits |= 0x0040;
@@ -536,7 +537,7 @@ static int receive_length_data(urg_t *urg, long length[],
 
         if (n > 0) {
             // \~japanese チェックサムの評価
-	    // \~english Validates the checksum
+            // \~english Validates the checksum
             if (buffer[line_filled + n - 1] !=
                 scip_checksum(&buffer[line_filled], n - 1)) {
                 ignore_receive_data_with_qt(urg, urg->timeout);
@@ -557,7 +558,7 @@ static int receive_length_data(urg_t *urg, long length[],
                 // \~english If the start character is a '&' then assume data is multiecho
                 if ((last_p - (p + 1)) < data_size) {
                     // \~japanese '&' を除いて、data_size 分データが無ければ抜ける
-		    // \~english Skips the '&' and if the string size is less than data_size ignore it
+                // \~english Skips the '&' and if the string size is less than data_size ignore it
                     break;
                 }
 
@@ -568,7 +569,7 @@ static int receive_length_data(urg_t *urg, long length[],
 
             } else {
                 // \~japanese 次のデータ
-	        // \~english Next data
+                // \~english Next data
                 multiecho_index = 0;
             }
 
@@ -577,7 +578,7 @@ static int receive_length_data(urg_t *urg, long length[],
             if (step_filled >
                 (urg->received_last_index - urg->received_first_index)) {
                 // \~japanese データが多過ぎる場合は、残りのデータを無視して戻る
-	        // \~english If there is extra data, ignore it
+                // \~english If there is extra data, ignore it
                 ignore_receive_data_with_qt(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_RECEIVE_ERROR);
             }
@@ -585,7 +586,7 @@ static int receive_length_data(urg_t *urg, long length[],
 
             if (is_multiecho && (multiecho_index == 0)) {
                 // \~japanese マルチエコーのデータ格納先をダミーデータで埋める
-	        // \~english Stores dummy values in the multiecho data location
+                // \~english Stores dummy values in the multiecho data location
                 int i;
                 if (length) {
                     for (i = 1; i < multiecho_max_size; ++i) {
@@ -607,7 +608,7 @@ static int receive_length_data(urg_t *urg, long length[],
             p += each_size;
 
             // \~japanese 強度データの格納
-	    // \~english Stores the intensity data
+            // \~english Stores the intensity data
             if (is_intensity) {
                 if (intensity) {
                     intensity[index] = (unsigned short)urg_scip_decode(p, each_size);
@@ -682,8 +683,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
         if (!strncmp(buffer, "00", 2)) {
             // \~japanese "00" 応答の場合は、エコーバック応答とみなし、
             // \~japanese 最後の空行を読み捨て、次からのデータを返す
-	    // \~english If received "00" response, assumes it is the echoback
-	    // \~english Skips up to the next empty line and returns the next data
+            // \~english If received "00" response, assumes it is the echoback
+            // \~english Skips up to the next empty line and returns the next data
             n = connection_readline(&urg->connection,
                                     buffer, BUFFER_SIZE, urg->timeout);
 
@@ -748,7 +749,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     if ((urg->specified_scan_times > 1) && (urg->scanning_remain_times > 0)) {
         if (--urg->scanning_remain_times <= 0) {
             // \~japanese データの停止のみを行う
-	    // \~english Stops measurement
+        // \~english Stops measurement
             urg_stop_measurement(urg);
         }
     }
@@ -1091,7 +1092,7 @@ int urg_stop_measurement(urg_t *urg)
         ret = receive_data(urg, NULL, NULL, NULL);
         if (ret == URG_NO_ERROR) {
             // \~japanese 正常応答
-	    // \~english Correct response
+            // \~english Correct response
             urg->is_laser_on = URG_FALSE;
             urg->is_sending = URG_FALSE;
             return set_errno_and_return(urg, URG_NO_ERROR);
@@ -1220,7 +1221,9 @@ void urg_wakeup(urg_t *urg)
 int urg_is_stable(urg_t *urg)
 {
     const char *stat = urg_sensor_status(urg);
-    return strncmp("Stable", stat, 6) ? 0 : 1;
+ 
+    return (strncmp("Stable 000 no error", stat, 19) == 0 || strncmp("Sensor works well", stat, 17) == 0 
+                                          || strncmp("sensor is working normally", stat, 26) == 0) ? 1: 0;
 }
 
 
@@ -1272,6 +1275,20 @@ static const char *receive_command_response(urg_t *urg,
     }
 
     return NULL;
+}
+
+
+static const int receive_II_command_response(urg_t *urg,
+                                            char *buffer, int buffer_size)
+{
+    const int vv_expected[] = { 0, EXPECTED_END };
+    int ret; 
+    const char* command ="II\n";
+
+    ret = scip_response(urg, command, vv_expected, urg->timeout,
+                        buffer, buffer_size);
+
+    return ret;
 }
 
 
@@ -1356,21 +1373,23 @@ const char *urg_sensor_status(urg_t *urg)
         RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
-    const char *ret;
+    int ret = 0;
     char *p;
 
+    
     if (!urg->is_active) {
         return NOT_CONNECTED_MESSAGE;
     }
 
-    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
-                                   "II\n", II_RESPONSE_LINES);
-    if (ret) {
-        return ret;
+    ret = receive_II_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    
+    if (ret != II_RESPONSE_LINES && ret != II_ERROR_RESPONSE_LINES) {
+        return RECEIVE_ERROR_MESSAGE;
     }
 
     p = copy_token(urg->return_buffer,
                    receive_buffer, "STAT:", ";", II_RESPONSE_LINES);
+
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
@@ -1381,21 +1400,22 @@ const char *urg_sensor_state(urg_t *urg)
         RECEIVE_BUFFER_SIZE = BUFFER_SIZE * II_RESPONSE_LINES,
     };
     char receive_buffer[RECEIVE_BUFFER_SIZE];
-    const char *ret;
+    int ret;
     char *p;
 
     if (!urg->is_active) {
         return NOT_CONNECTED_MESSAGE;
     }
 
-    ret = receive_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE,
-                                   "II\n", II_RESPONSE_LINES);
-    if (ret) {
-        return ret;
+    ret = receive_II_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
+    
+    if (ret != II_RESPONSE_LINES && ret != II_ERROR_RESPONSE_LINES) {
+        return  RECEIVE_ERROR_MESSAGE;
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);
+                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);   
+  
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 

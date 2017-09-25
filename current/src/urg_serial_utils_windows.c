@@ -116,7 +116,7 @@ int urg_serial_find_port(void)
         int j;
 
         // \~japanese フレンドリーネームを取得して COM 番号を取り出す
-	// \~english Gets the Friendly name property and gets the COM port number
+        // \~english Gets the Friendly name property and gets the COM port number
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_FRIENDLYNAME,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
@@ -124,8 +124,8 @@ int urg_serial_find_port(void)
         if (n < ComNameLengthMax) {
             // \~japanese COM 名が短過ぎた場合、処理しない
             // \~japanese 問題がある場合は、修正する
-	    // \~english If the COM name is too small, ignore it
-	    // \~english (fix this in case of problems)
+            // \~english If the COM name is too small, ignore it
+            // \~english (fix this in case of problems)
             continue;
         }
 
@@ -146,7 +146,7 @@ int urg_serial_find_port(void)
         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
 
         // \~japanese デバイス名を取得し、URG ポートかの判定に用いる
-	// \~english Get the device names and detect the URG port
+        // \~english Get the device names and detect the URG port
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
