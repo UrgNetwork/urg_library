@@ -5,6 +5,7 @@ RELEASE_DIR = release
 PACKAGE_EN_DIR = urg_library-$(VERSION)
 PACKAGE_JA_DIR = urg_library_ja-$(VERSION)
 
+PWD = $(shell pwd)
 
 all :
 	cd current/ && $(MAKE)
