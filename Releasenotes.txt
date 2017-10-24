@@ -1,3 +1,8 @@
+2017-9-27
+	* 1.2.1 released.
+	* Fixed bugs on angle calculating function (calculating incorrectly when using grouping).
+	* Fixed bugs on function that informs you whether the sensor is stable or not in urg_sensor.c
+
 2015-10-21
 	* 1.2.0 released.
 	* Fixed bugs on serial communication.
