@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief URG �Z���T�p�̕⏕�֐�
+  \brief URG センサ用の補助関数
   \~english
   \brief Auxiliary functions for the sensor
   \~
@@ -84,7 +84,7 @@ void urg_distance_min_max(const urg_t *urg,
 
     *min_distance = urg->min_distance;
 
-    // \~japanese urg_set_measurement_data_size() �𔽉f����������Ԃ�
+    // \~japanese urg_set_measurement_data_size() を反映した距離を返す
     // \~english returns the size configured with urg_set_measurement_data_size()
     *max_distance =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
@@ -135,7 +135,10 @@ double urg_index2rad(const urg_t *urg, int index)
 
     actual_index = min(max(0, index), urg->last_data_index);
 
+
+
     // \~japanese scanning_skip_step = 0 �Ȃ� �X�e�b�v��C���N�������g���A����ȊO��scanning_skip_step�̒l�����X�e�b�v��炷
+
     step = actual_index * max(1, urg->scanning_skip_step) - urg->front_data_index + urg->received_first_index;
     
     return urg_step2rad(urg, step);
