@@ -1,0 +1,791 @@
+﻿2017/11/17 14:15:49 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" (Build ターゲット)。
+     1>ツール バージョン "15.0" でビルドしています。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_CheckForInvalidConfigurationAndPlatform" (ターゲット "_PrepareForBuild" は依存):
+       false 条件のため、タスク "Error" を省略しました。( '$(_InvalidConfigurationError)' == 'true' ) は ( '' == 'true' ) として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。( '$(_InvalidConfigurationWarning)' == 'true' ) は ( '' == 'true' ) として評価されました。
+       "Message" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "Message"
+         Configuration=Release
+       タスク "Message" の実行が終了しました。
+       タスク "Message"
+         Platform=Win32
+       タスク "Message" の実行が終了しました。
+       false 条件のため、タスク "Error" を省略しました。('$(OutDir)' != '' and !HasTrailingSlash('$(OutDir)')) は ('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\' != '' and !HasTrailingSlash('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\')) として評価されました。
+       false 条件のため、タスク "Error" を省略しました。('$(BaseIntermediateOutputPath)' != '' and !HasTrailingSlash('$(BaseIntermediateOutputPath)')) は ('obj\' != '' and !HasTrailingSlash('obj\')) として評価されました。
+       false 条件のため、タスク "Error" を省略しました。('$(IntermediateOutputPath)' != '' and !HasTrailingSlash('$(IntermediateOutputPath)')) は ('Release\' != '' and !HasTrailingSlash('Release\')) として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_CheckForInvalidConfigurationAndPlatform" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.BuildSteps.Targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_PrepareForBuild" (ターゲット "Build" は依存):
+       false 条件のため、タスク "CreateItem" を省略しました。('%(CustomBuild.IncludeFileToTool)'!='') は (''!='') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_PrepareForBuild" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_PrepareForReferenceResolution" (ターゲット "ResolveReferences" は依存):
+       false 条件のため、タスク "Message" を省略しました。('$(_REFERENCE_DEBUG)'=='true') は (''=='true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_PrepareForReferenceResolution" のビルドが終了しました。
+       false 条件により、ターゲット "ComputeCrtSDKReference" を省略しました。('@(ClCompile)'!='' and '$(WindowsAppContainer)'=='true' and '$(UseCrtSDKReference)' != 'false') は ('..\..\..\samples\c\get_distance.c;..\..\..\samples\c\open_urg_sensor.c'!='' and 'false'=='true' and '' != 'false') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BeforeResolveReferences" (ターゲット "ResolveReferences" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BeforeResolveReferences" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AssignProjectConfiguration" (ターゲット "ResolveReferences" は依存):
+       "AssignProjectConfiguration" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "AssignProjectConfiguration"
+         プロジェクト参照 "..\urg\urg.vcxproj" に "Release|Win32" 構成を割り当てました。
+       タスク "AssignProjectConfiguration" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AssignProjectConfiguration" のビルドが終了しました。
+       ターゲット "AssignProjectConfiguration" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_SplitProjectReferencesByFileExistence" (ターゲット "PrepareProjectReferences" は依存):
+       "ResolveNonMSBuildProjectOutput" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "ResolveNonMSBuildProjectOutput"
+         プロジェクト参照 "..\urg\urg.vcxproj" を解決しています。
+         プロジェクト参照 "..\urg\urg.vcxproj" は解決されませんでした。
+       タスク "ResolveNonMSBuildProjectOutput" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_SplitProjectReferencesByFileExistence" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_GetProjectReferenceTargetFrameworkProperties" (ターゲット "PrepareProjectReferences" は依存):
+       ターゲット "_GetProjectReferenceTargetFrameworkProperties" を完全にビルドしています。
+       入力ファイルが指定されていません。
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.SkipGetTargetFrameworkProperties)' != 'true') は ('true' != 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_GetProjectReferenceTargetFrameworkProperties" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PrepareProjectReferences" (ターゲット "ResolveProjectReferences" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PrepareProjectReferences" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_RemoveNameMetadataFromProjectReferenceItems" (ターゲット "ResolveProjectReferences" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_RemoveNameMetadataFromProjectReferenceItems" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ResolveProjectReferences" (ターゲット "ResolveReferences" は依存):
+       "MSBuild" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "MSBuild"
+         グローバル プロパティ:
+           Configuration=Release
+           Platform=Win32
+     1>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" (1) は、ノード 2 上に "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (2) をビルドしています (GetTargetPath ターゲット)。
+     2>ツール バージョン "15.0" でビルドしています。
+     2>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "_PrepareForReferenceResolution" (ターゲット "GetTargetPath" は依存):
+       false 条件のため、タスク "Message" を省略しました。('$(_REFERENCE_DEBUG)'=='true') は (''=='true') として評価されました。
+     2>プロジェクト "urg.vcxproj" 内のターゲット "_PrepareForReferenceResolution" のビルドが終了しました。
+     2>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetResolvedWinMD" (ターゲット "GetTargetPath" は依存):
+     2>プロジェクト "urg.vcxproj" 内のターゲット "GetResolvedWinMD" のビルドが終了しました。
+     2>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetTargetPath" (エントリ ポイント):
+     2>プロジェクト "urg.vcxproj" 内のターゲット "GetTargetPath" のビルドが終了しました。
+     2>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (GetTargetPath ターゲット) のビルドが完了しました。
+     1>タスク "MSBuild" の実行が終了しました。
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and ('$(BuildingInsideVisualStudio)' == 'true' or '$(BuildProjectReferences)' != 'true') and '$(VisualStudioVersion)' == '10.0' and '@(_MSBuildProjectReferenceExistent)' != '') は ('true' == 'true' and '..\urg\urg.vcxproj' != '' and ('true' == 'true' or 'true' != 'true') and '15.0' == '10.0' and '..\urg\urg.vcxproj' != '') として評価されました。
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '$(BuildingInsideVisualStudio)' != 'true' and '$(BuildProjectReferences)' == 'true' and '@(_MSBuildProjectReferenceExistent)' != '') は ('true' == 'true' and '..\urg\urg.vcxproj' != '' and 'true' != 'true' and 'true' == 'true' and '..\urg\urg.vcxproj' != '') として評価されました。
+       タスク "MSBuild"
+         グローバル プロパティ:
+           Configuration=Release
+           Platform=Win32
+     1>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" (1) は、ノード 2 上に "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (2:2) をビルドしています (GetNativeManifest ターゲット)。
+   2:2>ツール バージョン "15.0" でビルドしています。
+   2:2>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetNativeManifest" (エントリ ポイント):
+   2:2>プロジェクト "urg.vcxproj" 内のターゲット "GetNativeManifest" のビルドが終了しました。
+   2:2>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (GetNativeManifest ターゲット) のビルドが完了しました。
+     1>タスク "MSBuild" の実行が終了しました。
+       false 条件のため、タスク "Warning" を省略しました。('@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceNonexistent)' != '') は ('..\urg\urg.vcxproj' != '' and '' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ResolveProjectReferences" のビルドが終了しました。
+       false 条件により、ターゲット "FindInvalidProjectReferences" を省略しました。('$(FindInvalidProjectReferences)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "ResolveNativeReferences" を省略しました。('@(NativeReference)'!='') は (''!='') として評価されました。
+       ターゲット "_PrepareForReferenceResolution" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.NETFramework.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "GetFrameworkPaths" (ターゲット "ResolveAssemblyReferences" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "GetFrameworkPaths" のビルドが終了しました。
+       false 条件により、ターゲット "GetWinFXPath" を省略しました。(('@(Page)' != '' or '@(ApplicationDefinition)' != '' or '@(Resource)' != '') and ('$(GetWinFXNativePath)' != '' or '$(GetWinFXWoWPath)' != '' )) は (('' != '' or '' != '' or '' != '') and ('' != '' or '' != '' )) として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "GetReferenceAssemblyPaths" (ターゲット "ResolveAssemblyReferences" は依存):
+       false 条件のため、タスク "GetReferenceAssemblyPaths" を省略しました。('$(TargetFrameworkMoniker)' != '' and ('$(_TargetFrameworkDirectories)' == '' or '$(_FullFrameworkReferenceAssemblyPaths)' == '')) は ('' != '' and ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' == '' or 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' == '')) として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "GetReferenceAssemblyPaths" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Current.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "SetBuildDefaultEnvironmentVariables" (ターゲット "PrepareForBuild" は依存):
+       "SetEnv" タスクをアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Build.CppTasks.Common.dll" から使用しています。
+       タスク "SetEnv"
+         PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86;C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x86;;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\tools;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\ide;C:\Program Files (x86)\HTML Help Workshop;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin;C:\windows\Microsoft.NET\Framework\v4.0.30319\;C:\windows\SysWow64;;C:\app\Administrator\product\11.2.0\client_1\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\x64\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\TortoiseHg\;C:\Program Files\Git\cmd;C:\Program Files\EmEditor;;C:\Program Files\UrgBenriPlus;
+       タスク "SetEnv" の実行が終了しました。
+       タスク "SetEnv"
+         LIB=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\lib\x86;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\lib\x86;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\lib\x86;;C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0\ucrt\x86;;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\UnitTest\lib;C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0\um\x86;lib\um\x86;;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Lib\um\x86
+       タスク "SetEnv" の実行が終了しました。
+       タスク "SetEnv"
+         LIBPATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\lib\x86;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\lib\x86;
+       タスク "SetEnv" の実行が終了しました。
+       タスク "SetEnv"
+         INCLUDE=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\include;;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt;;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\UnitTest\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\winrt;Include\um;
+       タスク "SetEnv" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "SetBuildDefaultEnvironmentVariables" のビルドが終了しました。
+       false 条件により、ターゲット "SetUserMacroEnvironmentVariables" を省略しました。('@(BuildMacro)' != '' and '$(DesignTimeBuild)' != 'true') は ('' != '' and '' != 'true') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "GetResolvedWinMD" (ターゲット "PrepareForBuild" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "GetResolvedWinMD" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PlatformPrepareForBuild" (ターゲット "PrepareForBuild" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('$(_Error64bitToolsNotInstalled)' == 'true') は ('' == 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' == 'v110') は (''!='true' and 'true' != 'true' and 'v141' == 'v110') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' == 'v100') は (''!='true' and 'true' != 'true' and 'v141' == 'v100') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' == 'v90') は (''!='true' and 'true' != 'true' and 'v141' == 'v90') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' != 'v90' and '$(PlatformToolset)' != 'v100' and '$(PlatformToolset)' != 'v110') は (''!='true' and 'true' != 'true' and 'v141' != 'v90' and 'v141' != 'v100' and 'v141' != 'v110') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PlatformPrepareForBuild" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Platforms\Win32\PlatformToolsets\v141\Toolset.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "Desktop_PlatformPrepareForBuild" (ターゲット "PrepareForBuild" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。($(MissingSDKProps) == 'true') は ( == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "Desktop_PlatformPrepareForBuild" のビルドが終了しました。
+       ターゲット "GetFrameworkPaths" を省略しました。以前に正しくビルドされていました。
+       ターゲット "GetReferenceAssemblyPaths" を省略しました。以前に正しくビルドされていました。
+       false 条件により、ターゲット "AssignLinkMetadata" を省略しました。( '$(SynthesizeLinkMetadata)' == 'true' ) は ( '' == 'true' ) として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\VisualStudio\v15.0\CodeAnalysis\Microsoft.CodeAnalysis.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "SetCABuildNativeEnvironmentVariables" (ターゲット "PrepareForBuild" は依存):
+       タスク ファクトリ "CodeTaskFactory" をアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Build.Tasks.Core.dll" から初期化しています。
+       タスク ファクトリ "Code Task Factory" の "SetEnvironmentVariable" タスクを使用しています。
+       タスク "SetEnvironmentVariable"
+       タスク "SetEnvironmentVariable" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "SetCABuildNativeEnvironmentVariables" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PrepareForBuild" (ターゲット "ResolveAssemblyReferences" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)' != 'true' and '$(ConfigurationPlatformExists)' != 'true') は ('' != 'true' and 'true' != 'true') として評価されました。
+       "MakeDir" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(WindowsAppContainer)'=='true' and '$(ConfigurationType)'!='Application' and '$(ConfigurationType)'!='DynamicLibrary' and '$(ConfigurationType)'!='StaticLibrary') は (''!='true' and 'false'=='true' and 'Application'!='Application' and 'Application'!='DynamicLibrary' and 'Application'!='StaticLibrary') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(VCToolsInstallDir)'=='' and '$(UseEnv)' != 'true' and ('$(TargetFrameworkVersion)'=='v3.5' or '$(TargetFrameworkVersion)'=='v3.0' or '$(TargetFrameworkVersion)'=='v2.0' )) は (''!='true' and 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\'=='' and '' != 'true' and ('v4.0'=='v3.5' or 'v4.0'=='v3.0' or 'v4.0'=='v2.0' )) として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(VCToolsInstallDir)'=='' and '$(UseEnv)' != 'true' and '$(PlatformToolset)'=='v90') は (''!='true' and 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\'=='' and '' != 'true' and 'v141'=='v90') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(VCToolsInstallDir)'=='' and '$(UseEnv)' != 'true') は (''!='true' and 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\'=='' and '' != 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(WindowsSDKDir)'=='' and '$(UseEnv)' != 'true') は (''!='true' and 'C:\Program Files (x86)\Windows Kits\10\'=='' and '' != 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(IntDirTrailingSlashWarning)'=='true') は (''!='true' and ''=='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(OutDirTrailingSlashWarning)'=='true') は (''!='true' and ''=='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('%(CompatibilityIssues.Identity)' != '' and '$(DesignTimeBuild)'!='true') は ('' != '' and ''!='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(IgnoreWarnIntDirSharingDetected)' != 'true' and '$(IntDirSharingDetected)' == 'true') は ('' != 'true' and '' == 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(IgnoreWarnIntDirInTempDetected)' != 'true' and ('$(_IntDirFullpath.StartsWith($(Tmp), true, null))' == 'true' or '$(_IntDirFullpath.StartsWith($(Temp), true, null))' == 'true' or '$(_OutDirFullpath.StartsWith($(Tmp), true, null))' == 'true' or '$(_OutDirFullpath.StartsWith($(Temp), true, null))' == 'true')) は (''!='true' and '' != 'true' and ('False' == 'true' or 'False' == 'true' or 'False' == 'true' or 'False' == 'true')) として評価されました。
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PrepareForBuild" のビルドが終了しました。
+       ターゲット "_PrepareForReferenceResolution" を省略しました。以前に正しくビルドされていました。
+       false 条件により、ターゲット "ComputeCrtSDKReference" を省略しました。('@(ClCompile)'!='' and '$(WindowsAppContainer)'=='true' and '$(UseCrtSDKReference)' != 'false') は ('..\..\..\samples\c\get_distance.c;..\..\..\samples\c\open_urg_sensor.c'!='' and 'false'=='true' and '' != 'false') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "GetInstalledSDKLocations" (ターゲット "ResolveSDKReferences" は依存):
+       false 条件のため、タスク "GetInstalledSDKLocations" を省略しました。('@(SDKReference)' != '') は ('' != '') として評価されました。
+       false 条件のため、タスク "GetInstalledSDKLocations" を省略しました。('@(SDKReference)' != '' and '$(SupportWindows81SDKs)' == 'true' and '$(TargetPlatformIdentifierWindows81)' != '' and '$(TargetPlatformVersionWindows81)' != '') は ('' != '' and '' == 'true' and '' != '' and '' != '') として評価されました。
+       false 条件のため、タスク "GetInstalledSDKLocations" を省略しました。('@(SDKReference)' != '' and '$(SupportWindowsPhone81SDKs)' == 'true' and '$(TargetPlatformIdentifierWindowsPhone81)' != '' and '$(TargetPlatformVersionWindowsPhone81)' != '') は ('' != '' and '' == 'true' and '' != '' and '' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "GetInstalledSDKLocations" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ResolveSDKReferences" (ターゲット "ResolveAssemblyReferences" は依存):
+       false 条件のため、タスク "ResolveSDKReference" を省略しました。('@(SDKReference)'!='') は (''!='') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ResolveSDKReferences" のビルドが終了しました。
+       ターゲット "ResolveSDKReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ExpandSDKReferences" (ターゲット "ResolveAssemblyReferences" は依存):
+       false 条件のため、タスク "GetSDKReferenceFiles" を省略しました。('@(ResolvedSDKReference)'!='') は (''!='') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ExpandSDKReferences" のビルドが終了しました。
+       false 条件により、ターゲット "ResolveNuGetPackageAssets" を省略しました。('$(ResolveNuGetPackages)' == 'true' and exists('$(ProjectLockFile)')) は ('true' == 'true' and exists('obj\project.assets.json')) として評価されました。
+       false 条件により、ターゲット "ImplicitlyExpandNETStandardFacades" を省略しました。('$(ImplicitlyExpandNETStandardFacades)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "ImplicitlyExpandNETStandardFacades" を省略しました。('$(ImplicitlyExpandNETStandardFacades)' == 'true') は ('' == 'true') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\Microsoft.NET.Build.Extensions.ConflictResolution.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_HandlePackageFileConflicts" (ターゲット "ResolveAssemblyReferences" は依存):
+       "ResolvePackageFileConflicts" タスクをアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\\tools\net46\Microsoft.NET.Build.Extensions.Tasks.dll" から使用しています。
+       タスク "ResolvePackageFileConflicts"
+       タスク "ResolvePackageFileConflicts" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_HandlePackageFileConflicts" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ResolveAssemblyReferences" (ターゲット "ResolveReferences" は依存):
+       false 条件のため、タスク "ResolveAssemblyReference" を省略しました。('@(Reference)'!='' or '@(_ResolvedProjectReferencePaths)'!='' or '@(_ExplicitReference)' != '') は (''!='' or ''!='' or '' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ResolveAssemblyReferences" のビルドが終了しました。
+       false 条件により、ターゲット "GenerateBindingRedirects" を省略しました。('$(AutoGenerateBindingRedirects)' == 'true' and '$(GenerateBindingRedirectsOutputType)' == 'true') は ('' == 'true' and 'true' == 'true') として評価されました。
+       false 条件により、ターゲット "GenerateBindingRedirectsUpdateAppConfig" を省略しました。('$(AutoGenerateBindingRedirects)' == 'true' and '$(GenerateBindingRedirectsOutputType)' == 'true' and Exists('$(_GenerateBindingRedirectsIntermediateAppConfig)')) は ('' == 'true' and 'true' == 'true' and Exists('Release\get_distance.vcxproj.get_distance.exe.config')) として評価されました。
+       false 条件により、ターゲット "ResolveComReferences" を省略しました。('@(COMReference)'!='' or '@(COMFileReference)'!='') は (''!='' or ''!='') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterResolveReferences" (ターゲット "ResolveReferences" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterResolveReferences" のビルドが終了しました。
+       false 条件により、ターゲット "ImplicitlyExpandDesignTimeFacades" を省略しました。('$(ImplicitlyExpandDesignTimeFacades)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "ResolveTestReferences" を省略しました。('@(Shadow)'!='') は (''!='') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ResolveReferences" (ターゲット "Build" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ResolveReferences" のビルドが終了しました。
+       false 条件により、ターゲット "ResolveAdditionalReferenceCopyLocalPathsForIIS" を省略しました。('$(BuildForIIS)' == 'true') は ('' == 'true') として評価されました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "InitializeBuildStatus" (ターゲット "Build" は依存):
+       "ReadLinesFromFile" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "ReadLinesFromFile"
+       タスク "ReadLinesFromFile" の実行が終了しました。
+       "WriteLinesToFile" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "WriteLinesToFile"
+       タスク "WriteLinesToFile" の実行が終了しました。
+       "Touch" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "Touch"
+         "AlwaysCreate" が指定されたため "Release\get_distance.tlog\unsuccessfulbuild" を作成しています。
+       タスク "Touch" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "InitializeBuildStatus" のビルドが終了しました。
+       ターゲット "PrepareProjectReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BuildGenerateSourcesTraverse" (ターゲット "BuildGenerateSources" は依存):
+       false 条件のため、タスク "MSBuild" を省略しました。('$(BuildPassReferences)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceExistent)' != '' and '%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true') は ('' == 'true' and '..\urg\urg.vcxproj' != '' and '..\urg\urg.vcxproj' != '' and 'true' == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BuildGenerateSourcesTraverse" のビルドが終了しました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.BuildSteps.Targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BeforeBuildGenerateSources" (ターゲット "_BuildGenerateSourcesAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BeforeBuildGenerateSources" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PreBuildEvent" (ターゲット "_BuildGenerateSourcesAction" は依存):
+       false 条件のため、タスク "Message" を省略しました。('%(PreBuildEvent.Message)' != '' and '%(PreBuildEvent.Command)' != '') は ('' != '' and '' != '') として評価されました。
+       false 条件のため、タスク "Exec" を省略しました。('%(PreBuildEvent.Command)' != '') は ('' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PreBuildEvent" のビルドが終了しました。
+       false 条件により、ターゲット "CustomBuild" を省略しました。('@(CustomBuild)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "FxExport" を省略しました。('@(FxCompile)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "FxCompile" を省略しました。('@(FxCompile)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "Xsd" を省略しました。('@(Xsd)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_Xsd" (ターゲット "_BuildGenerateSourcesAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_Xsd" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "MakeDirsForMidl" (ターゲット "_Midl" は依存):
+       タスク "Makedir"
+       タスク "Makedir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "MakeDirsForMidl" のビルドが終了しました。
+       false 条件により、ターゲット "Midl" を省略しました。('@(Midl)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "CustomBuild" を省略しました。('@(CustomBuild)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "FxExport" を省略しました。('@(FxCompile)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "FxCompile" を省略しました。('@(FxCompile)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeMIDLGeneratedCompileInputs" (ターゲット "_Midl" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeMIDLGeneratedCompileInputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterMidl" (ターゲット "_Midl" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterMidl" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_Midl" (ターゲット "_BuildGenerateSourcesAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_Midl" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.BuildSteps.Targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterBuildGenerateSources" (ターゲット "_BuildGenerateSourcesAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterBuildGenerateSources" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterBuildGenerateSourcesEvent" (ターゲット "_BuildGenerateSourcesAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterBuildGenerateSourcesEvent" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_BuildGenerateSourcesAction" (ターゲット "BuildGenerateSources" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_BuildGenerateSourcesAction" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BuildGenerateSources" (ターゲット "Build" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BuildGenerateSources" のビルドが終了しました。
+       ターゲット "PrepareProjectReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BuildCompileTraverse" (ターゲット "BuildCompile" は依存):
+       false 条件のため、タスク "MSBuild" を省略しました。('$(BuildPassReferences)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceExistent)' != ''  and '%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true') は ('' == 'true' and '..\urg\urg.vcxproj' != '' and '..\urg\urg.vcxproj' != ''  and 'true' == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BuildCompileTraverse" のビルドが終了しました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BeforeClCompile" (ターゲット "_ClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BeforeClCompile" のビルドが終了しました。
+       ターゲット "ComputeMIDLGeneratedCompileInputs" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeCLInputPDBName" (ターゲット "_ClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeCLInputPDBName" のビルドが終了しました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeReferenceCLInput" (ターゲット "_ClCompile" は依存):
+       false 条件のため、タスク "WriteLinesToFile" を省略しました。(('@(_ReferenceCopyLocalPaths)'!='') and '$(DesignTimeBuild)' != 'true') は ((''!='') and '' != 'true') として評価されました。
+       false 条件のため、タスク "Message" を省略しました。('$(_REFERENCE_DEBUG)'=='true') は (''=='true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeReferenceCLInput" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "WarnCompileDuplicatedFilename" (ターゲット "_ClCompile" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') は ('' != 'true' and 'get_distance.c' != 'get_distance.c' and 'Release\' == 'Release\') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(Filename)%(Extension)' != '@(ClCompile->'%(Filename)%(Extension)')' and '%(ObjectFileName)' == '@(ClCompile->Metadata(ObjectFileName)->Distinct())') は ('' != 'true' and 'open_urg_sensor.c' != 'open_urg_sensor.c' and 'Release\' == 'Release\') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "WarnCompileDuplicatedFilename" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "FixupCLCompileOptions" (ターゲット "_ClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "FixupCLCompileOptions" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "MakeDirsForCl" (ターゲット "_ClCompile" は依存):
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "MakeDirsForCl" のビルドが終了しました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "SetBuildDefaultEnvironmentVariables" を省略しました。以前に正しくビルドされていました。
+       false 条件により、ターゲット "SetUserMacroEnvironmentVariables" を省略しました。('@(BuildMacro)' != '' and '$(DesignTimeBuild)' != 'true') は ('' != '' and '' != 'true') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_SelectedFiles" (ターゲット "SelectClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_SelectedFiles" のビルドが終了しました。
+       ターゲット "ComputeMIDLGeneratedCompileInputs" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ComputeCLInputPDBName" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ComputeReferenceCLInput" を省略しました。以前に正しくビルドされていました。
+       ターゲット "WarnCompileDuplicatedFilename" を省略しました。以前に正しくビルドされていました。
+       ターゲット "FixupCLCompileOptions" を省略しました。以前に正しくビルドされていました。
+       ターゲット "_SelectedFiles" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "SelectCustomBuild" (ターゲット "SelectClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "SelectCustomBuild" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "SelectClCompile" (ターゲット "ClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "SelectClCompile" のビルドが終了しました。
+       false 条件により、ターゲット "GenerateTargetFrameworkMonikerAttribute" を省略しました。('$(GenerateTargetFrameworkAttribute)' == 'true') は ('false' == 'true') として評価されました。
+       false 条件により、ターゲット "ManagedIncrementalBuildPreProcessDependencyGraph" を省略しました。('@(ClCompile)' != '' and '$(EnableManagedIncrementalBuild)' == 'True') は ('..\..\..\samples\c\get_distance.c;..\..\..\samples\c\open_urg_sensor.c' != '' and 'false' == 'True') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ClCompile" (ターゲット "_ClCompile" は依存):
+       false 条件のため、タスク "Delete" を省略しました。('%(ClCompile.DebugInformationFormat)' != '' and '%(ClCompile.DebugInformationFormat)' != 'None' and '%(ClCompile.DebugInformationFormat)' != 'OldStyle' and '%(ClCompile.ProgramDataBaseFileName)' != '' and !Exists(%(ClCompile.ProgramDataBaseFileName))) は ('ProgramDatabase' != '' and 'ProgramDatabase' != 'None' and 'ProgramDatabase' != 'OldStyle' and 'Release\vc141.pdb' != '' and !Exists(Release\vc141.pdb)) として評価されました。
+       false 条件のため、タスク "CL" を省略しました。('%(ClCompile.PrecompiledHeader)' == 'Create' and '%(ClCompile.ExcludedFromBuild)'!='true' and '%(ClCompile.CompilerIteration)' == '') は ('' == 'Create' and ''!='true' and '' == '') として評価されました。
+       "CL" タスクをアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Build.CppTasks.Common.dll" から使用しています。
+       タスク "CL"
+         読み取り追跡ログ:
+         	Release\get_distance.tlog\CL.read.1.tlog
+         C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\SAMPLES\C\GET_DISTANCE.C|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\SAMPLES\C\OPEN_URG_SENSOR.C に対する出力:
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\OPEN_URG_SENSOR.OBJ
+         C:\Users\Administrator\Documents\GitHub\urg_library\current\samples\c\get_distance.c が 2017/11/17 14:15:49 で変更されたため、..\..\..\samples\c\get_distance.c はコンパイルされます。
+         C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\SAMPLES\C\GET_DISTANCE.C に対する出力:
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ
+         書き込み追跡ログ:
+         	Release\get_distance.tlog\CL.write.1.tlog
+         ツールに渡された環境変数:
+           VS_UNICODE_OUTPUT=548
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe /c /I..\..\..\include\c /Zi /nologo /W3 /WX- /diagnostics:classic /O2 /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc141.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\..\samples\c\get_distance.c
+         トラッキング コマンド:
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\Release\get_distance.tlog /r C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\SAMPLES\C\GET_DISTANCE.C /b MSBuildConsole_CancelEventa1b6a993767c47b1b4944df687510b36  /c "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\CL.exe"  /c /I..\..\..\include\c /Zi /nologo /W3 /WX- /diagnostics:classic /O2 /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc141.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\..\samples\c\get_distance.c
+         get_distance.c
+       タスク "CL" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ClCompile" のビルドが終了しました。
+       false 条件により、ターゲット "ManagedIncrementalBuildPostProcessDependencyGraph" を省略しました。('@(ClCompile)' != '' and '$(EnableManagedIncrementalBuild)' == 'True') は ('..\..\..\samples\c\get_distance.c;..\..\..\samples\c\open_urg_sensor.c' != '' and 'false' == 'True') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterClCompile" (ターゲット "_ClCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterClCompile" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_ClCompile" (ターゲット "_BuildCompileAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_ClCompile" のビルドが終了しました。
+       false 条件により、ターゲット "_ResGen" を省略しました。('@(EmbeddedResource)'!='') は (''!='') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BeforeResourceCompile" (ターゲット "_ResourceCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BeforeResourceCompile" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "MakeDirsForResourceCompile" (ターゲット "_ResourceCompile" は依存):
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "MakeDirsForResourceCompile" のビルドが終了しました。
+       false 条件により、ターゲット "ResourceCompile" を省略しました。('@(ResourceCompile)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterResourceCompile" (ターゲット "_ResourceCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterResourceCompile" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_ResourceCompile" (ターゲット "_BuildCompileAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_ResourceCompile" のビルドが終了しました。
+       false 条件により、ターゲット "_ImpLib" を省略しました。('$(ImpLibCompiled)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "_Lib" を省略しました。('$(LibCompiled)' == 'true') は ('' == 'true') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterBuildCompileEvent" (ターゲット "_BuildCompileAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterBuildCompileEvent" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_BuildCompileAction" (ターゲット "BuildCompile" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_BuildCompileAction" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BuildCompile" (ターゲット "Build" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BuildCompile" のビルドが終了しました。
+       ターゲット "PrepareProjectReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BuildLinkTraverse" (ターゲット "BuildLink" は依存):
+       false 条件のため、タスク "MSBuild" を省略しました。('$(BuildPassReferences)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceExistent)' != ''  and '%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true') は ('' == 'true' and '..\urg\urg.vcxproj' != '' and '..\urg\urg.vcxproj' != ''  and 'true' == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BuildLinkTraverse" のビルドが終了しました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeLegacyManifestEmbedding" (ターゲット "_BuildLinkAction" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('$(RevertManifestEmbedding)' == 'true' and '$(_LegacyManifestEmbeddingDebug)' == 'true') は ('' == 'true' and '' == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeLegacyManifestEmbedding" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BeforeLink" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BeforeLink" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeRCOutputs" (ターゲット "ComputeRCGeneratedLinkInputs" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeRCOutputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeRCGeneratedLinkInputs" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeRCGeneratedLinkInputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeManifestGeneratedLinkerInputs" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeManifestGeneratedLinkerInputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeCustomBuildOutput" (ターゲット "_Link" は依存):
+       false 条件のため、タスク "CreateItem" を省略しました。('%(CustomBuildDirsToMake.OutputFileToTool)'!='') は (''!='') として評価されました。
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeCustomBuildOutput" のビルドが終了しました。
+       ターゲット "ComputeMIDLGeneratedCompileInputs" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ComputeCLInputPDBName" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ComputeReferenceCLInput" を省略しました。以前に正しくビルドされていました。
+       ターゲット "WarnCompileDuplicatedFilename" を省略しました。以前に正しくビルドされていました。
+       ターゲット "FixupCLCompileOptions" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeCLOutputs" (ターゲット "ComputeCLGeneratedLinkInputs" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeCLOutputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeCLGeneratedLinkInputs" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeCLGeneratedLinkInputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeLinkInputsFromProject" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeLinkInputsFromProject" のビルドが終了しました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ResolvedLinkLib" (ターゲット "ComputeReferenceLinkInputs" は依存):
+       タスク "MSBuild"
+         グローバル プロパティ:
+           Configuration=Release
+           Platform=Win32
+     1>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" (1) は、ノード 2 上に "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (2:3) をビルドしています (GetResolvedLinkLibs ターゲット)。
+   2:3>ツール バージョン "15.0" でビルドしています。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Current.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "SetBuildDefaultEnvironmentVariables" (ターゲット "PrepareForBuild" は依存):
+       "SetEnv" タスクをアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Build.CppTasks.Common.dll" から使用しています。
+       タスク "SetEnv"
+         PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86;C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x86;;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\tools;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\ide;C:\Program Files (x86)\HTML Help Workshop;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin;C:\windows\Microsoft.NET\Framework\v4.0.30319\;C:\windows\SysWow64;;C:\app\Administrator\product\11.2.0\client_1\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\x64\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\TortoiseHg\;C:\Program Files\Git\cmd;C:\Program Files\EmEditor;;C:\Program Files\UrgBenriPlus;
+       タスク "SetEnv" の実行が終了しました。
+       タスク "SetEnv"
+         LIB=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\lib\x86;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\lib\x86;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\lib\x86;;C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0\ucrt\x86;;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\UnitTest\lib;C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0\um\x86;lib\um\x86;;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Lib\um\x86
+       タスク "SetEnv" の実行が終了しました。
+       タスク "SetEnv"
+         LIBPATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\lib\x86;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\lib\x86;
+       タスク "SetEnv" の実行が終了しました。
+       タスク "SetEnv"
+         INCLUDE=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\atlmfc\include;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\include;;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt;;;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\VS\UnitTest\include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\winrt;Include\um;
+       タスク "SetEnv" の実行が終了しました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "SetBuildDefaultEnvironmentVariables" のビルドが終了しました。
+       false 条件により、ターゲット "SetUserMacroEnvironmentVariables" を省略しました。('@(BuildMacro)' != '' and '$(DesignTimeBuild)' != 'true') は ('' != '' and '' != 'true') として評価されました。
+       ターゲット "GetResolvedWinMD" を省略しました。以前に正しくビルドされていました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "PlatformPrepareForBuild" (ターゲット "PrepareForBuild" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('$(_Error64bitToolsNotInstalled)' == 'true') は ('' == 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' == 'v110') は (''!='true' and 'true' != 'true' and 'v141' == 'v110') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' == 'v100') は (''!='true' and 'true' != 'true' and 'v141' == 'v100') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' == 'v90') は (''!='true' and 'true' != 'true' and 'v141' == 'v90') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(_ToolsetFound)' != 'true' and '$(PlatformToolset)' != 'v90' and '$(PlatformToolset)' != 'v100' and '$(PlatformToolset)' != 'v110') は (''!='true' and 'true' != 'true' and 'v141' != 'v90' and 'v141' != 'v100' and 'v141' != 'v110') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "PlatformPrepareForBuild" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Platforms\Win32\PlatformToolsets\v141\Toolset.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "Desktop_PlatformPrepareForBuild" (ターゲット "PrepareForBuild" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。($(MissingSDKProps) == 'true') は ( == 'true') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "Desktop_PlatformPrepareForBuild" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.NETFramework.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetFrameworkPaths" (ターゲット "PrepareForBuild" は依存):
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "GetFrameworkPaths" のビルドが終了しました。
+       false 条件により、ターゲット "GetWinFXPath" を省略しました。(('@(Page)' != '' or '@(ApplicationDefinition)' != '' or '@(Resource)' != '') and ('$(GetWinFXNativePath)' != '' or '$(GetWinFXWoWPath)' != '' )) は (('' != '' or '' != '' or '' != '') and ('' != '' or '' != '' )) として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetReferenceAssemblyPaths" (ターゲット "PrepareForBuild" は依存):
+       false 条件のため、タスク "GetReferenceAssemblyPaths" を省略しました。('$(TargetFrameworkMoniker)' != '' and ('$(_TargetFrameworkDirectories)' == '' or '$(_FullFrameworkReferenceAssemblyPaths)' == '')) は ('' != '' and ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' == '' or 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' == '')) として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "GetReferenceAssemblyPaths" のビルドが終了しました。
+       false 条件により、ターゲット "AssignLinkMetadata" を省略しました。( '$(SynthesizeLinkMetadata)' == 'true' ) は ( '' == 'true' ) として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\VisualStudio\v15.0\CodeAnalysis\Microsoft.CodeAnalysis.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "SetCABuildNativeEnvironmentVariables" (ターゲット "PrepareForBuild" は依存):
+       タスク ファクトリ "CodeTaskFactory" をアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Build.Tasks.Core.dll" から初期化しています。
+       タスク ファクトリ "Code Task Factory" の "SetEnvironmentVariable" タスクを使用しています。
+       タスク "SetEnvironmentVariable"
+       タスク "SetEnvironmentVariable" の実行が終了しました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "SetCABuildNativeEnvironmentVariables" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "_CheckForInvalidConfigurationAndPlatform" (ターゲット "PrepareForBuild" は依存):
+       false 条件のため、タスク "Error" を省略しました。( '$(_InvalidConfigurationError)' == 'true' ) は ( '' == 'true' ) として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。( '$(_InvalidConfigurationWarning)' == 'true' ) は ( '' == 'true' ) として評価されました。
+       タスク "Message"
+         Configuration=Release
+       タスク "Message" の実行が終了しました。
+       タスク "Message"
+         Platform=Win32
+       タスク "Message" の実行が終了しました。
+       false 条件のため、タスク "Error" を省略しました。('$(OutDir)' != '' and !HasTrailingSlash('$(OutDir)')) は ('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\' != '' and !HasTrailingSlash('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\')) として評価されました。
+       false 条件のため、タスク "Error" を省略しました。('$(BaseIntermediateOutputPath)' != '' and !HasTrailingSlash('$(BaseIntermediateOutputPath)')) は ('obj\' != '' and !HasTrailingSlash('obj\')) として評価されました。
+       false 条件のため、タスク "Error" を省略しました。('$(IntermediateOutputPath)' != '' and !HasTrailingSlash('$(IntermediateOutputPath)')) は ('Release\' != '' and !HasTrailingSlash('Release\')) として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "_CheckForInvalidConfigurationAndPlatform" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "PrepareForBuild" (ターゲット "GetResolvedLinkLibs" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)' != 'true' and '$(ConfigurationPlatformExists)' != 'true') は ('' != 'true' and 'true' != 'true') として評価されました。
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(WindowsAppContainer)'=='true' and '$(ConfigurationType)'!='Application' and '$(ConfigurationType)'!='DynamicLibrary' and '$(ConfigurationType)'!='StaticLibrary') は (''!='true' and 'false'=='true' and 'StaticLibrary'!='Application' and 'StaticLibrary'!='DynamicLibrary' and 'StaticLibrary'!='StaticLibrary') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(VCToolsInstallDir)'=='' and '$(UseEnv)' != 'true' and ('$(TargetFrameworkVersion)'=='v3.5' or '$(TargetFrameworkVersion)'=='v3.0' or '$(TargetFrameworkVersion)'=='v2.0' )) は (''!='true' and 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\'=='' and '' != 'true' and ('v4.0'=='v3.5' or 'v4.0'=='v3.0' or 'v4.0'=='v2.0' )) として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(VCToolsInstallDir)'=='' and '$(UseEnv)' != 'true' and '$(PlatformToolset)'=='v90') は (''!='true' and 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\'=='' and '' != 'true' and 'v141'=='v90') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(VCToolsInstallDir)'=='' and '$(UseEnv)' != 'true') は (''!='true' and 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\'=='' and '' != 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(WindowsSDKDir)'=='' and '$(UseEnv)' != 'true') は (''!='true' and 'C:\Program Files (x86)\Windows Kits\10\'=='' and '' != 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(IntDirTrailingSlashWarning)'=='true') は (''!='true' and ''=='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(OutDirTrailingSlashWarning)'=='true') は (''!='true' and ''=='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('%(CompatibilityIssues.Identity)' != '' and '$(DesignTimeBuild)'!='true') は ('' != '' and ''!='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(IgnoreWarnIntDirSharingDetected)' != 'true' and '$(IntDirSharingDetected)' == 'true') は ('' != 'true' and '' == 'true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(DesignTimeBuild)'!='true' and '$(IgnoreWarnIntDirInTempDetected)' != 'true' and ('$(_IntDirFullpath.StartsWith($(Tmp), true, null))' == 'true' or '$(_IntDirFullpath.StartsWith($(Temp), true, null))' == 'true' or '$(_OutDirFullpath.StartsWith($(Tmp), true, null))' == 'true' or '$(_OutDirFullpath.StartsWith($(Temp), true, null))' == 'true')) は (''!='true' and '' != 'true' and ('False' == 'true' or 'False' == 'true' or 'False' == 'true' or 'False' == 'true')) として評価されました。
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "PrepareForBuild" のビルドが終了しました。
+       ターゲット "_PrepareForReferenceResolution" を省略しました。以前に正しくビルドされていました。
+       false 条件により、ターゲット "ComputeCrtSDKReference" を省略しました。('@(ClCompile)'!='' and '$(WindowsAppContainer)'=='true' and '$(UseCrtSDKReference)' != 'false') は ('..\..\..\src\urg_connection.c;..\..\..\src\urg_debug.c;..\..\..\src\urg_ring_buffer.c;..\..\..\src\urg_sensor.c;..\..\..\src\urg_serial.c;..\..\..\src\urg_serial_utils.c;..\..\..\src\urg_tcpclient.c;..\..\..\src\urg_utils.c'!='' and 'false'=='true' and '' != 'false') として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "BeforeResolveReferences" (ターゲット "ResolveReferences" は依存):
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "BeforeResolveReferences" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "AssignProjectConfiguration" (ターゲット "ResolveReferences" は依存):
+       タスク "AssignProjectConfiguration"
+       タスク "AssignProjectConfiguration" の実行が終了しました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "AssignProjectConfiguration" のビルドが終了しました。
+       ターゲット "AssignProjectConfiguration" を省略しました。以前に正しくビルドされていました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "_SplitProjectReferencesByFileExistence" (ターゲット "PrepareProjectReferences" は依存):
+       false 条件のため、タスク "ResolveNonMSBuildProjectOutput" を省略しました。('$(BuildingInsideVisualStudio)'=='true' and '@(ProjectReferenceWithConfiguration)'!='') は ('true'=='true' and ''!='') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "_SplitProjectReferencesByFileExistence" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "_GetProjectReferenceTargetFrameworkProperties" (ターゲット "PrepareProjectReferences" は依存):
+       タスク "MSBuild"
+       タスク "MSBuild" の実行が終了しました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "_GetProjectReferenceTargetFrameworkProperties" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "PrepareProjectReferences" (ターゲット "ResolveProjectReferences" は依存):
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "PrepareProjectReferences" のビルドが終了しました。
+       false 条件により、ターゲット "_RemoveNameMetadataFromProjectReferenceItems" を省略しました。('@(ProjectReference)'!='') は (''!='') として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "ResolveProjectReferences" (ターゲット "ResolveReferences" は依存):
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and ('$(BuildingInsideVisualStudio)' == 'true' or '$(BuildProjectReferences)' != 'true') and '$(VisualStudioVersion)' != '10.0' and '@(_MSBuildProjectReferenceExistent)' != '') は ('' == 'true' and '' != '' and ('true' == 'true' or 'false' != 'true') and '15.0' != '10.0' and '' != '') として評価されました。
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and ('$(BuildingInsideVisualStudio)' == 'true' or '$(BuildProjectReferences)' != 'true') and '$(VisualStudioVersion)' == '10.0' and '@(_MSBuildProjectReferenceExistent)' != '') は ('' == 'true' and '' != '' and ('true' == 'true' or 'false' != 'true') and '15.0' == '10.0' and '' != '') として評価されました。
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '$(BuildingInsideVisualStudio)' != 'true' and '$(BuildProjectReferences)' == 'true' and '@(_MSBuildProjectReferenceExistent)' != '') は ('' == 'true' and '' != '' and 'true' != 'true' and 'false' == 'true' and '' != '') として評価されました。
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.BuildReference)' == 'true' and '@(ProjectReferenceWithConfiguration)' != '' and '$(BuildingProject)' == 'true' and '@(_MSBuildProjectReferenceExistent)' != '') は ('' == 'true' and '' != '' and 'true' == 'true' and '' != '') として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。('@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceNonexistent)' != '') は ('' != '' and '' != '') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "ResolveProjectReferences" のビルドが終了しました。
+       false 条件により、ターゲット "FindInvalidProjectReferences" を省略しました。('$(FindInvalidProjectReferences)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "ResolveNativeReferences" を省略しました。('@(NativeReference)'!='') は (''!='') として評価されました。
+       ターゲット "_PrepareForReferenceResolution" を省略しました。以前に正しくビルドされていました。
+       ターゲット "GetFrameworkPaths" を省略しました。以前に正しくビルドされていました。
+       ターゲット "GetReferenceAssemblyPaths" を省略しました。以前に正しくビルドされていました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "_PrepareForReferenceResolution" を省略しました。以前に正しくビルドされていました。
+       false 条件により、ターゲット "ComputeCrtSDKReference" を省略しました。('@(ClCompile)'!='' and '$(WindowsAppContainer)'=='true' and '$(UseCrtSDKReference)' != 'false') は ('..\..\..\src\urg_connection.c;..\..\..\src\urg_debug.c;..\..\..\src\urg_ring_buffer.c;..\..\..\src\urg_sensor.c;..\..\..\src\urg_serial.c;..\..\..\src\urg_serial_utils.c;..\..\..\src\urg_tcpclient.c;..\..\..\src\urg_utils.c'!='' and 'false'=='true' and '' != 'false') として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetInstalledSDKLocations" (ターゲット "ResolveSDKReferences" は依存):
+       false 条件のため、タスク "GetInstalledSDKLocations" を省略しました。('@(SDKReference)' != '') は ('' != '') として評価されました。
+       false 条件のため、タスク "GetInstalledSDKLocations" を省略しました。('@(SDKReference)' != '' and '$(SupportWindows81SDKs)' == 'true' and '$(TargetPlatformIdentifierWindows81)' != '' and '$(TargetPlatformVersionWindows81)' != '') は ('' != '' and '' == 'true' and '' != '' and '' != '') として評価されました。
+       false 条件のため、タスク "GetInstalledSDKLocations" を省略しました。('@(SDKReference)' != '' and '$(SupportWindowsPhone81SDKs)' == 'true' and '$(TargetPlatformIdentifierWindowsPhone81)' != '' and '$(TargetPlatformVersionWindowsPhone81)' != '') は ('' != '' and '' == 'true' and '' != '' and '' != '') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "GetInstalledSDKLocations" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "ResolveSDKReferences" (ターゲット "ResolveAssemblyReferences" は依存):
+       false 条件のため、タスク "ResolveSDKReference" を省略しました。('@(SDKReference)'!='') は (''!='') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "ResolveSDKReferences" のビルドが終了しました。
+       ターゲット "ResolveSDKReferences" を省略しました。以前に正しくビルドされていました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "ExpandSDKReferences" (ターゲット "ResolveAssemblyReferences" は依存):
+       false 条件のため、タスク "GetSDKReferenceFiles" を省略しました。('@(ResolvedSDKReference)'!='') は (''!='') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "ExpandSDKReferences" のビルドが終了しました。
+       false 条件により、ターゲット "ResolveNuGetPackageAssets" を省略しました。('$(ResolveNuGetPackages)' == 'true' and exists('$(ProjectLockFile)')) は ('true' == 'true' and exists('obj\project.assets.json')) として評価されました。
+       false 条件により、ターゲット "ImplicitlyExpandNETStandardFacades" を省略しました。('$(ImplicitlyExpandNETStandardFacades)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "ImplicitlyExpandNETStandardFacades" を省略しました。('$(ImplicitlyExpandNETStandardFacades)' == 'true') は ('' == 'true') として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\Microsoft.NET.Build.Extensions.ConflictResolution.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "_HandlePackageFileConflicts" (ターゲット "ResolveAssemblyReferences" は依存):
+       "ResolvePackageFileConflicts" タスクをアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\\tools\net46\Microsoft.NET.Build.Extensions.Tasks.dll" から使用しています。
+       タスク "ResolvePackageFileConflicts"
+       タスク "ResolvePackageFileConflicts" の実行が終了しました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "_HandlePackageFileConflicts" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "ResolveAssemblyReferences" (ターゲット "ResolveReferences" は依存):
+       false 条件のため、タスク "ResolveAssemblyReference" を省略しました。('@(Reference)'!='' or '@(_ResolvedProjectReferencePaths)'!='' or '@(_ExplicitReference)' != '') は (''!='' or ''!='' or '' != '') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "ResolveAssemblyReferences" のビルドが終了しました。
+       false 条件により、ターゲット "GenerateBindingRedirects" を省略しました。('$(AutoGenerateBindingRedirects)' == 'true' and '$(GenerateBindingRedirectsOutputType)' == 'true') は ('' == 'true' and '' == 'true') として評価されました。
+       false 条件により、ターゲット "GenerateBindingRedirectsUpdateAppConfig" を省略しました。('$(AutoGenerateBindingRedirects)' == 'true' and '$(GenerateBindingRedirectsOutputType)' == 'true' and Exists('$(_GenerateBindingRedirectsIntermediateAppConfig)')) は ('' == 'true' and '' == 'true' and Exists('Release\urg.vcxproj.urg.lib.config')) として評価されました。
+       false 条件により、ターゲット "ResolveComReferences" を省略しました。('@(COMReference)'!='' or '@(COMFileReference)'!='') は (''!='' or ''!='') として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "AfterResolveReferences" (ターゲット "ResolveReferences" は依存):
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "AfterResolveReferences" のビルドが終了しました。
+       false 条件により、ターゲット "ImplicitlyExpandDesignTimeFacades" を省略しました。('$(ImplicitlyExpandDesignTimeFacades)' == 'true') は ('' == 'true') として評価されました。
+       false 条件により、ターゲット "ResolveTestReferences" を省略しました。('@(Shadow)'!='') は (''!='') として評価されました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "ResolveReferences" (ターゲット "GetResolvedLinkLibs" は依存):
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "ResolveReferences" のビルドが終了しました。
+       false 条件により、ターゲット "ResolveAdditionalReferenceCopyLocalPathsForIIS" を省略しました。('$(BuildForIIS)' == 'true') は ('' == 'true') として評価されました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "ResolvedLinkLib" (ターゲット "GetResolvedLinkLibs" は依存):
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.Extension)' == '.vcxproj' and '@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceExistent)' != '') は ('' == '.vcxproj' and '' != '' and '' != '') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "ResolvedLinkLib" のビルドが終了しました。
+   2:3>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetResolvedLinkLibs" (エントリ ポイント):
+       false 条件のため、タスク "Message" を省略しました。('$(_REFERENCE_DEBUG)'=='true') は (''=='true') として評価されました。
+   2:3>プロジェクト "urg.vcxproj" 内のターゲット "GetResolvedLinkLibs" のビルドが終了しました。
+   2:3>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (GetResolvedLinkLibs ターゲット) のビルドが完了しました。
+     1>タスク "MSBuild" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ResolvedLinkLib" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeResolveLinkObj" (ターゲット "ComputeReferenceLinkInputs" は依存):
+       false 条件のため、タスク "CallTarget" を省略しました。('%(_MSBuildProjectReferenceExistent.UseLibraryDependencyInputs)'=='true') は ('false'=='true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeResolveLinkObj" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeReferenceLinkInputs" (ターゲット "_Link" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('%(ProjectReferenceToLink.ProjectType)' == 'DynamicLibrary' and '$(WindowsAppContainer)' == 'true' and '%(ProjectReferenceToLink.WindowsAppContainer)' != 'true') は ('StaticLibrary' == 'DynamicLibrary' and 'false' == 'true' and '' != 'true') として評価されました。
+       false 条件のため、タスク "Message" を省略しました。('$(_REFERENCE_DEBUG)'=='true') は (''=='true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeReferenceLinkInputs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeManifestInputsTargets" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeManifestInputsTargets" のビルドが終了しました。
+       false 条件により、ターゲット "ManifestResourceCompile" を省略しました。('$(EmbedManifestBy)' == 'LINK' and '@(Manifest)' != '') は ('MT' == 'LINK' and '' != '') として評価されました。
+       false 条件により、ターゲット "AssignWinFXEmbeddedResource" を省略しました。('@(WinFXEmbeddedResource)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AssignTargetPaths" (ターゲット "PrepareResourceNames" は依存):
+       "AssignTargetPath" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       false 条件のため、タスク "AssignTargetPath" を省略しました。('@(_DeploymentBaseManifestWithTargetPath)'=='' and '%(None.Extension)'=='.manifest') は (''=='' and ''=='.manifest') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AssignTargetPaths" のビルドが終了しました。
+       ターゲット "AssignTargetPaths" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "SplitResourcesByCulture" (ターゲット "PrepareResourceNames" は依存):
+       false 条件のため、タスク "Warning" を省略しました。('@(ResxWithNoCulture)'!='') は (''!='') として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。('@(ResxWithCulture)'!='') は (''!='') として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。('@(NonResxWithCulture)'!='') は (''!='') として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。('@(NonResxWithNoCulture)'!='') は (''!='') として評価されました。
+       "AssignCulture" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "AssignCulture"
+       タスク "AssignCulture" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "SplitResourcesByCulture" のビルドが終了しました。
+       false 条件により、ターゲット "CreateManifestResourceNames" を省略しました。('@(EmbeddedResource)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "CreateCustomManifestResourceNames" (ターゲット "PrepareResourceNames" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "CreateCustomManifestResourceNames" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PrepareResourceNames" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PrepareResourceNames" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "MakeDirsForLink" (ターゲット "_Link" は依存):
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "MakeDirsForLink" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "DoLinkOutputFilesMatch" (ターゲット "_Link" は依存):
+       false 条件のため、タスク "VCMessage" を省略しました。('@(_OutputFileFromLink)' == '') は ('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe' == '') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('@(_OutputFileFromLink)' != '' and '%(_OutputFileFromLink.FullPath)' != '$([System.IO.Path]::GetFullPath($(TargetPath)))') は ('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe' != '' and 'C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe' != 'C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('@(_OutputFileFromLink)' != '' and '%(_OutputFileFromLink.Extension)' != '' and '%(_OutputFileFromLink.Extension)' != '$(TargetExt)') は ('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe' != '' and '.exe' != '' and '.exe' != '.exe') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('@(_OutputFileFromLink)' != '' and '%(_OutputFileFromLink.Filename)' != '' and '%(_OutputFileFromLink.Filename)' != '$(TargetName)') は ('C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe' != '' and 'get_distance' != '' and 'get_distance' != 'get_distance') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('%(Link.MinimumRequiredVersion)' != '' and ('%(Link.Subsystem)' == '' or '%(Link.Subsystem)' == 'NotSet')) は ('' != '' and ('Console' == '' or 'Console' == 'NotSet')) として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "DoLinkOutputFilesMatch" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PreLinkEvent" (ターゲット "_Link" は依存):
+       false 条件のため、タスク "Message" を省略しました。('%(PreLinkEvent.Message)' != '' and '%(PreLinkEvent.Command)' != '') は ('' != '' and '' != '') として評価されました。
+       false 条件のため、タスク "Exec" を省略しました。('%(PreLinkEvent.Command)' != '') は ('' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PreLinkEvent" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeLinkSwitches" (ターゲット "Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeLinkSwitches" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "Link" (ターゲット "_Link" は依存):
+       "Link" タスクをアセンブリ "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Build.CppTasks.Common.dll" から使用しています。
+       タスク "Link"
+         書き込み追跡ログ:
+         	Release\get_distance.tlog\link.write.1.tlog
+         読み取り追跡ログ:
+         	Release\get_distance.tlog\link.read.1.tlog
+         C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\OPEN_URG_SENSOR.OBJ|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\URG.LIB に対する出力:
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\GET_DISTANCE.EXE
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\GET_DISTANCE.PDB
+         C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\OPEN_URG_SENSOR.OBJ|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\URG.LIB に対する入力:
+         	C:\WINDOWS\GLOBALIZATION\SORTING\SORTDEFAULT.NLS
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\URG.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\WS2_32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\SETUPAPI.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\KERNEL32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\USER32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\GDI32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\WINSPOOL.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\COMDLG32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\ADVAPI32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\SHELL32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\OLE32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\OLEAUT32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\UUID.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\ODBC32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UM\X86\ODBCCP32.LIB
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ
+         	C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\OPEN_URG_SENSOR.OBJ
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\VC\TOOLS\MSVC\14.11.25503\BIN\HOSTX86\X86\C2.DLL
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\VC\TOOLS\MSVC\14.11.25503\LIB\X86\MSVCRT.LIB
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\VC\TOOLS\MSVC\14.11.25503\LIB\X86\OLDNAMES.LIB
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\VC\TOOLS\MSVC\14.11.25503\LIB\X86\VCRUNTIME.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.16299.0\UCRT\X86\UCRT.LIB
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\VC\TOOLS\MSVC\14.11.25503\BIN\HOSTX86\X86\1041\LINKUI.DLL
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\BIN\10.0.16299.0\X86\RC.EXE
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\VC\TOOLS\MSVC\14.11.25503\BIN\HOSTX86\X86\CVTRES.EXE
+         	C:\WINDOWS\SYSTEM32\TZRES.DLL
+         	C:\WINDOWS\SYSTEM32\RSAENH.DLL
+         ソースのコンパイルが必要です。入力 C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ は出力 C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\GET_DISTANCE.EXE よりも新しいです。
+         ツールに渡された環境変数:
+           VS_UNICODE_OUTPUT=1504
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release urg.lib ws2_32.lib setupapi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.lib" /MACHINE:X86 /PROFILE /SAFESEH Release\get_distance.obj
+         Release\open_urg_sensor.obj
+         C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\urg.lib
+         トラッキング コマンド:
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\Release\get_distance.tlog /r "C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\GET_DISTANCE.OBJ|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\GET_DISTANCE\RELEASE\OPEN_URG_SENSOR.OBJ|C:\USERS\ADMINISTRATOR\DOCUMENTS\GITHUB\URG_LIBRARY\CURRENT\VS2010\C\RELEASE\URG.LIB" /b MSBuildConsole_CancelEvent1d7f38888d2d414298c3b7bd83352397  /c "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\bin\HostX86\x86\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release urg.lib ws2_32.lib setupapi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.lib" /MACHINE:X86 /PROFILE /SAFESEH Release\get_distance.obj
+         Release\open_urg_sensor.obj
+         C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\urg.lib
+         コード生成しています。
+         2 of 74 functions ( 2.7%) were compiled, the rest were copied from previous compilation.
+           0 functions were new in current compilation
+           0 functions had inline decision re-evaluated but remain unchanged
+         コード生成が終了しました。
+       タスク "Link" の実行が終了しました。
+       タスク "Message"
+         get_distance.vcxproj -> C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\Release\get_distance.exe
+       タスク "Message" の実行が終了しました。
+       false 条件のため、タスク "VCMessage" を省略しました。(('$(EmbedManifestBy)' != 'LINK' or '$(LegacyManifestEmbedding)' != 'true' or '$(LinkSkippedExecution)' == 'true') and
+                    %(Link.GenerateDebugInformation) == 'DebugFastLink' and %(Link.ProgramDataBaseFileName) != '') は (('MT' != 'LINK' or '' != 'true' or 'False' == 'true') and
+                    true == 'DebugFastLink' and  != '') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。(('$(EmbedManifestBy)' != 'LINK' or '$(LegacyManifestEmbedding)' != 'true' or '$(LinkSkippedExecution)' == 'true') and
+                    %(Link.GenerateDebugInformation) == 'true' and %(Link.ProgramDataBaseFileName) != '') は (('MT' != 'LINK' or '' != 'true' or 'False' == 'true') and
+                    true == 'true' and  != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "Link" のビルドが終了しました。
+       false 条件により、ターゲット "MetaGenInputsOutputs" を省略しました。('$(EnableManagedIncrementalBuild)' == 'True') は ('false' == 'True') として評価されました。
+       false 条件により、ターゲット "ComputeMetaGenInputs" を省略しました。('$(CLRSupport)'!='' and '$(CLRSupport)'!='false') は ('false'!='' and 'false'!='false') として評価されました。
+       false 条件により、ターゲット "MetaGen" を省略しました。('@(MetaGen)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeLinkImportLibraryOutputsForClean" (ターゲット "_Link" は依存):
+       タスク "WriteLinesToFile"
+       タスク "WriteLinesToFile" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeLinkImportLibraryOutputsForClean" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterLink" (ターゲット "_Link" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterLink" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_Link" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_Link" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_ALink" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_ALink" のビルドが終了しました。
+       ターゲット "ComputeLegacyManifestEmbedding" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_Manifest" (ターゲット "_BuildLinkAction" は依存):
+       false 条件のため、タスク "CallTarget" を省略しました。('$(LegacyManifestEmbedding)' == 'true') は ('' == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_Manifest" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "RegisterOutput" (ターゲット "_BuildLinkAction" は依存):
+       false 条件のため、タスク "Exec" を省略しました。('$(ConfigurationType)'=='DynamicLibrary' and '%(Link.RegisterOutput)'=='true' and '%(Link.PerUserRedirection)'!='true') は ('Application'=='DynamicLibrary' and 'false'=='true' and 'false'!='true') として評価されました。
+       false 条件のため、タスク "Exec" を省略しました。('$(ConfigurationType)'=='DynamicLibrary' and '%(Link.RegisterOutput)'=='true' and '%(Link.PerUserRedirection)'=='true') は ('Application'=='DynamicLibrary' and 'false'=='true' and 'false'=='true') として評価されました。
+       false 条件のため、タスク "Exec" を省略しました。('$(ConfigurationType)'=='Application' and '%(Link.RegisterOutput)'=='true' and '%(Link.PerUserRedirection)'!='true') は ('Application'=='Application' and 'false'=='true' and 'false'!='true') として評価されました。
+       false 条件のため、タスク "Exec" を省略しました。('$(ConfigurationType)'=='Application' and '%(Link.RegisterOutput)'=='true' and '%(Link.PerUserRedirection)'=='true') は ('Application'=='Application' and 'false'=='true' and 'false'=='true') として評価されました。
+       false 条件のため、タスク "VCMessage" を省略しました。('$(_RegisterOutputExitCode)' != '' and '$(_RegisterOutputExitCode)' != '0') は ('' != '' and '' != '0') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "RegisterOutput" のビルドが終了しました。
+       ターゲット "PrepareForBuild" を省略しました。以前に正しくビルドされていました。
+       ターゲット "ResolveReferences" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ResolvedXDCMake" (ターゲット "_XdcMake" は依存):
+       false 条件のため、タスク "MSBuild" を省略しました。('%(_MSBuildProjectReferenceExistent.Extension)' == '.vcxproj' and '@(ProjectReferenceWithConfiguration)' != '' and '@(_MSBuildProjectReferenceExistent)' != '' and '$(_ClCompileGenerateXMLDocumentationFiles)' == 'true') は ('.vcxproj' == '.vcxproj' and '..\urg\urg.vcxproj' != '' and '..\urg\urg.vcxproj' != '' and '' == 'true') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ResolvedXDCMake" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeCLCompileGeneratedXDCFiles" (ターゲット "_XdcMake" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeCLCompileGeneratedXDCFiles" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "MakeDirsForXdcMake" (ターゲット "_XdcMake" は依存):
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "MakeDirsForXdcMake" のビルドが終了しました。
+       false 条件により、ターゲット "XdcMake" を省略しました。('@(XdcMake)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_XdcMake" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_XdcMake" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "ComputeCLCompileGeneratedSbrFiles" (ターゲット "_BscMake" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "ComputeCLCompileGeneratedSbrFiles" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "MakeDirsForBscMake" (ターゲット "_BscMake" は依存):
+       タスク "MakeDir"
+       タスク "MakeDir" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "MakeDirsForBscMake" のビルドが終了しました。
+       false 条件により、ターゲット "BscMake" を省略しました。('@(BscMake)' != '') は ('' != '') として評価されました。
+       false 条件により、ターゲット "CustomBuildStep" を省略しました。('@(CustomBuildStep)' != '' and '$(SelectedFiles)'=='') は ('' != '' and ''=='') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_BscMake" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_BscMake" のビルドが終了しました。
+       false 条件により、ターゲット "RunMergeNativeCodeAnalysis" を省略しました。('$(Language)'=='C++' and '$(RunCodeAnalysisOnThisProject)'=='true') は ('C++'=='C++' and ''=='true') として評価されました。
+       false 条件により、ターゲット "RunNativeCodeAnalysis" を省略しました。('$(Language)'=='C++' and '$(RunCodeAnalysisOnThisProject)'=='true') は ('C++'=='C++' and ''=='true') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_GenerateSatelliteAssemblyInputs" (ターゲット "CreateSatelliteAssemblies" は依存):
+       false 条件のため、タスク "Warning" を省略しました。('@(ManifestResourceWithCulture)'!='' and '%(ManifestResourceWithCulture.EmittedForCompatibilityOnly)'=='') は (''!='' and ''=='') として評価されました。
+       false 条件のため、タスク "Warning" を省略しました。('@(ManifestNonResxWithCultureOnDisk)'!='' and '%(ManifestNonResxWithCultureOnDisk.EmittedForCompatibilityOnly)'=='') は (''!='' and ''=='') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_GenerateSatelliteAssemblyInputs" のビルドが終了しました。
+       false 条件により、ターゲット "ComputeIntermediateSatelliteAssemblies" を省略しました。(@(ReferenceSatellitePaths->'%(DestinationSubDirectory)') != '') は ( != '') として評価されました。
+       false 条件により、ターゲット "GenerateSatelliteAssemblies" を省略しました。('@(_SatelliteAssemblyResourceInputs)' != '') は ('' != '') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "CreateSatelliteAssemblies" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "CreateSatelliteAssemblies" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_Appverifier" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_Appverifier" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_Deploy" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_Deploy" のビルドが終了しました。
+       false 条件により、ターゲット "ComputeIntermediateSatelliteAssemblies" を省略しました。(@(ReferenceSatellitePaths->'%(DestinationSubDirectory)') != '') は ( != '') として評価されました。
+       false 条件により、ターゲット "_CopyFilesMarkedCopyLocal" を省略しました。('@(ReferenceCopyLocalPaths)' != '') は ('' != '') として評価されました。
+       ターゲット "AssignTargetPaths" を省略しました。以前に正しくビルドされていました。
+       ターゲット "_SplitProjectReferencesByFileExistence" を省略しました。以前に正しくビルドされていました。
+       ターゲット "_GetProjectReferenceTargetFrameworkProperties" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Xaml.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "GetCopyToOutputDirectoryXamlAppDefs" (ターゲット "GetCopyToOutputDirectoryItems" は依存):
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "GetCopyToOutputDirectoryXamlAppDefs" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "GetCopyToOutputDirectoryItems" (ターゲット "_CopySourceItemsToOutputDirectory" は依存):
+       タスク "MSBuild"
+         グローバル プロパティ:
+           Configuration=Release
+           Platform=Win32
+     1>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" (1) は、ノード 2 上に "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (2:4) をビルドしています (GetCopyToOutputDirectoryItems ターゲット)。
+   2:4>ツール バージョン "15.0" でビルドしています。
+   2:4>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "AssignTargetPaths" (ターゲット "GetCopyToOutputDirectoryItems" は依存):
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+       false 条件のため、タスク "AssignTargetPath" を省略しました。('@(_DeploymentBaseManifestWithTargetPath)'=='' and '%(None.Extension)'=='.manifest') は (''=='' and ''=='.manifest') として評価されました。
+   2:4>プロジェクト "urg.vcxproj" 内のターゲット "AssignTargetPaths" のビルドが終了しました。
+       ターゲット "_SplitProjectReferencesByFileExistence" を省略しました。以前に正しくビルドされていました。
+       ターゲット "_GetProjectReferenceTargetFrameworkProperties" を省略しました。以前に正しくビルドされていました。
+   2:4>ファイル "C:\windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Xaml.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetCopyToOutputDirectoryXamlAppDefs" (ターゲット "GetCopyToOutputDirectoryItems" は依存):
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+   2:4>プロジェクト "urg.vcxproj" 内のターゲット "GetCopyToOutputDirectoryXamlAppDefs" のビルドが終了しました。
+   2:4>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" からのターゲット "GetCopyToOutputDirectoryItems" (エントリ ポイント):
+       false 条件のため、タスク "MSBuild" を省略しました。('@(_MSBuildProjectReferenceExistent)' != '' and '$(_GetChildProjectCopyToOutputDirectoryItems)' == 'true' and '%(_MSBuildProjectReferenceExistent.Private)' != 'false' and '$(UseCommonOutputDirectory)' != 'true') は ('' != '' and 'true' == 'true' and '' != 'false' and 'false' != 'true') として評価されました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+   2:4>プロジェクト "urg.vcxproj" 内のターゲット "GetCopyToOutputDirectoryItems" のビルドが終了しました。
+   2:4>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\urg\urg.vcxproj" (GetCopyToOutputDirectoryItems ターゲット) のビルドが完了しました。
+     1>タスク "MSBuild" の実行が終了しました。
+       タスク "AssignTargetPath"
+       タスク "AssignTargetPath" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "GetCopyToOutputDirectoryItems" のビルドが終了しました。
+       false 条件により、ターゲット "_CopyOutOfDateSourceItemsToOutputDirectory" を省略しました。( '@(_SourceItemsToCopyToOutputDirectory)' != '' ) は ( '' != '' ) として評価されました。
+       false 条件により、ターゲット "_CopyOutOfDateSourceItemsToOutputDirectoryAlways" を省略しました。( '@(_SourceItemsToCopyToOutputDirectoryAlways)' != '' ) は ( '' != '' ) として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_CopySourceItemsToOutputDirectory" (ターゲット "CopyFilesToOutputDirectory" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_CopySourceItemsToOutputDirectory" のビルドが終了しました。
+       false 条件により、ターゲット "_CopyAppConfigFile" を省略しました。( '@(AppConfigWithTargetPath)' != '' ) は ( '' != '' ) として評価されました。
+       false 条件により、ターゲット "_CopyManifestFiles" を省略しました。( '$(_DeploymentCopyApplicationManifest)'=='true' or '$(GenerateClickOnceManifests)'=='true' ) は ( ''=='true' or ''=='true' ) として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_CheckForCompileOutputs" (ターゲット "CopyFilesToOutputDirectory" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_CheckForCompileOutputs" のビルドが終了しました。
+       false 条件により、ターゲット "_SGenCheckForOutputs" を省略しました。('$(_SGenGenerateSerializationAssembliesConfig)' == 'On' or ('@(WebReferenceUrl)'!='' and '$(_SGenGenerateSerializationAssembliesConfig)' == 'Auto')) は ('Auto' == 'On' or (''!='' and 'Auto' == 'Auto')) として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "CopyFilesToOutputDirectory" (ターゲット "PrepareForRun" は依存):
+       false 条件のため、タスク "Copy" を省略しました。('$(CopyBuildOutputToOutputDirectory)' == 'true' and '$(SkipCopyBuildProduct)' != 'true') は ('true' == 'true' and 'true' != 'true') として評価されました。
+       false 条件のため、タスク "CopyRefAssembly" を省略しました。('$(ProduceReferenceAssembly)' == 'true' and '$(CopyBuildOutputToOutputDirectory)' == 'true' and '$(SkipCopyBuildProduct)' != 'true') は ('false' == 'true' and 'true' == 'true' and 'true' != 'true') として評価されました。
+       false 条件のため、タスク "Message" を省略しました。('$(CopyBuildOutputToOutputDirectory)' == 'true' and '$(SkipCopyBuildProduct)'!='true') は ('true' == 'true' and 'true'!='true') として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('@(AddModules)' != '') は ('' != '') として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('$(_SGenDllCreated)'=='true') は ('false'=='true') として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('$(_DebugSymbolsProduced)'=='true' and '$(SkipCopyingSymbolsToOutputDirectory)' != 'true' and '$(CopyOutputSymbolsToOutputDirectory)'=='true') は ('false'=='true' and '' != 'true' and 'true'=='true') として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('$(_DocumentationFileProduced)'=='true') は ('false'=='true') として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('@(IntermediateSatelliteAssembliesWithTargetPath)' != '') は ('' != '') として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('@(ReferenceComWrappersToCopyLocal)' != '' or '@(ResolvedIsolatedComModules)' != '' or '@(_DeploymentLooseManifestFile)' != '' or '@(NativeReferenceFile)' != '' ) は ('' != '' or '' != '' or '' != '' or '' != '' ) として評価されました。
+       false 条件のため、タスク "Copy" を省略しました。('$(SkipCopyWinMDArtifact)' != 'true' and '@(WinMDExpArtifacts)' != '') は ('' != 'true' and '' != '') として評価されました。
+       false 条件のため、タスク "Message" を省略しました。('$(SkipCopyWinMDArtifact)' != 'true' and '$(_WindowsMetadataOutputPath)' != '') は ('' != 'true' and '' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "CopyFilesToOutputDirectory" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PrepareForRun" (ターゲット "_BuildLinkAction" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PrepareForRun" のビルドが終了しました。
+       false 条件により、ターゲット "CustomBuildStep" を省略しました。('@(CustomBuildStep)' != '' and '$(SelectedFiles)'=='') は ('' != '' and ''=='') として評価されました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "PostBuildEvent" (ターゲット "_BuildLinkAction" は依存):
+       false 条件のため、タスク "Message" を省略しました。('%(PostBuildEvent.Message)' != '' and '%(PostBuildEvent.Command)' != '') は ('' != '' and '' != '') として評価されました。
+       false 条件のため、タスク "Exec" を省略しました。('%(PostBuildEvent.Command)' != '') は ('' != '') として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "PostBuildEvent" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "_BuildLinkAction" (ターゲット "BuildLink" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "_BuildLinkAction" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Common.CurrentVersion.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "BuildLink" (ターゲット "Build" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "BuildLink" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.BuildSteps.Targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "AfterBuild" (ターゲット "Build" は依存):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "AfterBuild" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "FinalizeBuildStatus" (ターゲット "Build" は依存):
+       "Delete" タスクをアセンブリ "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" から使用しています。
+       タスク "Delete"
+         ファイル "Release\get_distance.tlog\unsuccessfulbuild" を削除しています。
+       タスク "Delete" の実行が終了しました。
+       タスク "Touch"
+         "Release\get_distance.tlog\get_distance.lastbuildstate" のタッチ タスクを実行しています。
+       タスク "Touch" の実行が終了しました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "FinalizeBuildStatus" のビルドが終了しました。
+       ターゲット "_CheckForInvalidConfigurationAndPlatform" を省略しました。以前に正しくビルドされていました。
+       ターゲット "_CheckForInvalidConfigurationAndPlatform" を省略しました。以前に正しくビルドされていました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.BuildSteps.Targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "Build" (エントリ ポイント):
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "Build" のビルドが終了しました。
+     1>ファイル "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Microsoft\VisualStudio\Managed.Web\Microsoft.Web.IISSupport.targets" 内にある、プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" からのターゲット "CleanupEmptyRefsFolder" (エントリ ポイント):
+       false 条件のため、タスク "RemoveDir" を省略しました。(@(_FilesInRefsFolder ->Count()) == 0) は (33 == 0) として評価されました。
+     1>プロジェクト "get_distance.vcxproj" 内のターゲット "CleanupEmptyRefsFolder" のビルドが終了しました。
+     1>プロジェクト "C:\Users\Administrator\Documents\GitHub\urg_library\current\vs2010\c\get_distance\get_distance.vcxproj" (Build ターゲット) のビルドが完了しました。
