@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
+  \brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
   \~english
   \brief Auxiliary functions for the sensor
   \~
@@ -84,7 +84,7 @@ void urg_distance_min_max(const urg_t *urg,
 
     *min_distance = urg->min_distance;
 
-    // \~japanese urg_set_measurement_data_size() ‚ğ”½‰f‚µ‚½‹——£‚ğ•Ô‚·
+    // \~japanese urg_set_measurement_data_size() ã‚’åæ˜ ã—ãŸè·é›¢ã‚’è¿”ã™
     // \~english returns the size configured with urg_set_measurement_data_size()
     *max_distance =
         (urg->range_data_byte == URG_COMMUNICATION_2_BYTE) ?
@@ -135,7 +135,8 @@ double urg_index2rad(const urg_t *urg, int index)
 
     actual_index = min(max(0, index), urg->last_data_index);
 
-    //scanning_skip_step = 0 ‚È‚ç 1‚É•ÏXA‚»‚êˆÈŠO‚Íscanning_skip_step‚Ì’l‚ğ‚»‚Ì‚Ü‚Ü“K—p
+
+    // \~japanese scanning_skip_step = 0 ãªã‚‰ ã‚¹ãƒ†ãƒƒãƒ—ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã—ã€ãã‚Œä»¥å¤–ã¯scanning_skip_stepã®å€¤ã ã‘ã‚¹ãƒ†ãƒƒãƒ—ã‚’ãšã‚‰ã™
     step = actual_index * max(1, urg->scanning_skip_step) - urg->front_data_index + urg->received_first_index;
     
     return urg_step2rad(urg, step);
