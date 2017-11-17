@@ -1,6 +1,6 @@
 /*!
   \file
-  \~japanese 
+  \~japanese
   \brief ƒVƒŠƒAƒ‹’ÊM
   \~english Serial communications in Linux
   \~
@@ -118,6 +118,24 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
 
     case 115200:
         baudrate_value = B115200;
+        break;
+
+//added
+
+    case 230400:
+        baudrate_value = B230400;
+        break;
+
+    case 460800:
+        baudrate_value = B460800;
+        break;
+
+    case 500000:
+        baudrate_value = B500000;
+        break;
+
+    case 921600:
+        baudrate_value = B921600;
         break;
 
     default:

@@ -134,7 +134,10 @@ double urg_index2rad(const urg_t *urg, int index)
     }
 
     actual_index = min(max(0, index), urg->last_data_index);
-    step = actual_index * urg->scanning_skip_step - urg->front_data_index + urg->received_first_index;
+
+    //scanning_skip_step = 0 なら 1に変更、それ以外はscanning_skip_stepの値をそのまま適用
+    step = actual_index * max(1, urg->scanning_skip_step) - urg->front_data_index + urg->received_first_index;
+    
     return urg_step2rad(urg, step);
 }
 
