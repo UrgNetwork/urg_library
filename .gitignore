@@ -1,0 +1,12 @@
+
+*.vcxproj
+*.pdb
+*.log
+*.tlog
+*.vcxproj
+*.idb
+*.lib
+*.ilk
+*.exe
+*.obj
+*.ipch
