@@ -134,6 +134,7 @@ double urg_index2rad(const urg_t *urg, int index)
     }
 
     actual_index = min(max(0, index), urg->last_data_index);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     // \~japanese scanning_skip_step = 0 ‚È‚ç‚Î 1‚Ì‚Æ“¯‚¶
@@ -143,6 +144,9 @@ double urg_index2rad(const urg_t *urg, int index)
 >>>>>>> parent of 795e58d... 201711 forvs2017 (#4)
     step = actual_index * max(1, urg->scanning_skip_step) - urg->front_data_index + urg->received_first_index;
     
+=======
+    step = actual_index * urg->scanning_skip_step - urg->front_data_index + urg->received_first_index;
+>>>>>>> parent of 1cc30b4...  bug fixed (#3)
     return urg_step2rad(urg, step);
 }
 
