@@ -135,8 +135,12 @@ double urg_index2rad(const urg_t *urg, int index)
 
     actual_index = min(max(0, index), urg->last_data_index);
 
+<<<<<<< HEAD
     // \~japanese scanning_skip_step = 0 ならば 1の時と同じ
     // \~english  "scanning_skip_step = 0" is equal to "scanning_skip_step = 1"
+=======
+    //scanning_skip_step = 0 なら 1に変更、それ以外はscanning_skip_stepの値をそのまま適用
+>>>>>>> parent of 795e58d... 201711 forvs2017 (#4)
     step = actual_index * max(1, urg->scanning_skip_step) - urg->front_data_index + urg->received_first_index;
     
     return urg_step2rad(urg, step);
