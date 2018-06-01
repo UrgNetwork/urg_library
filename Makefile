@@ -1,6 +1,6 @@
 # urgwidget
 
-VERSION = 1.2.2
+VERSION = 1.2.3
 RELEASE_DIR = release
 PACKAGE_EN_DIR = urg_library-$(VERSION)
 PACKAGE_JA_DIR = urg_library_ja-$(VERSION)
@@ -51,6 +51,28 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/sync_time_stamp; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/urg; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2010/cpp; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/calculate_xy; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/find_port; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/get_distance; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/get_multiecho; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/get_multiecho_intensity; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/sensor_parameter; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/sync_time_stamp; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/urg; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2015/cpp; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/calculate_xy; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/find_port; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/get_distance; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/get_multiecho; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/get_multiecho_intensity; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/sensor_parameter; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/sync_time_stamp; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/urg; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2017/cpp; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/c; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/cpp; \

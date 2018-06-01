@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "urg", "urg\urg.vcproj", "{269630A6-5F78-484F-A729-5CD301B5CABA}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensor_parameter", "sensor_parameter\sensor_parameter.vcproj", "{3347DEB1-A1EC-4242-8079-233B9E5EB0C3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "get_distance", "get_distance\get_distance.vcproj", "{8F73522C-18D0-4436-B444-3E17A2A84788}"
 	ProjectSection(ProjectDependencies) = postProject
 		{269630A6-5F78-484F-A729-5CD301B5CABA} = {269630A6-5F78-484F-A729-5CD301B5CABA}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "get_distance", "get_distance\get_distance.vcproj", "{8F73522C-18D0-4436-B444-3E17A2A84788}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "urg", "urg\urg.vcproj", "{269630A6-5F78-484F-A729-5CD301B5CABA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensor_parameter", "sensor_parameter\sensor_parameter.vcproj", "{3347DEB1-A1EC-4242-8079-233B9E5EB0C3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{269630A6-5F78-484F-A729-5CD301B5CABA} = {269630A6-5F78-484F-A729-5CD301B5CABA}
 	EndProjectSection

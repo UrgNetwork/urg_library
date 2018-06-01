@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "get_distance", "get_distance\get_distance.vcxproj", "{8F73522C-18D0-4436-B444-3E17A2A84788}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "urg", "urg\urg.vcxproj", "{269630A6-5F78-484F-A729-5CD301B5CABA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensor_parameter", "sensor_parameter\sensor_parameter.vcxproj", "{3347DEB1-A1EC-4242-8079-233B9E5EB0C3}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "get_distance", "get_distance\get_distance.vcxproj", "{8F73522C-18D0-4436-B444-3E17A2A84788}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "get_distance_intensity", "get_distance_intensity\get_distance_intensity.vcxproj", "{17A43425-7F91-4D65-A28A-C90B3E22863F}"
 EndProject
