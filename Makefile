@@ -30,49 +30,9 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i/src; \
 		mkdir -p $(RELEASE_DIR)/$$i/windowsexe; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2005; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/calculate_xy; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/find_port; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/get_distance; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/get_multiecho; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/get_multiecho_intensity; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/sensor_parameter; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/sync_time_stamp; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/c/urg; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2005/cpp; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2010; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/calculate_xy; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/find_port; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/get_distance; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/get_multiecho; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/get_multiecho_intensity; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/sensor_parameter; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/sync_time_stamp; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/c/urg; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2010/cpp; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2015; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/calculate_xy; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/find_port; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/get_distance; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/get_multiecho; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/get_multiecho_intensity; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/sensor_parameter; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/sync_time_stamp; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/c/urg; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2015/cpp; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2017; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/calculate_xy; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/find_port; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/get_distance; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/get_multiecho; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/get_multiecho_intensity; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/sensor_parameter; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/sync_time_stamp; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/c/urg; \
-		mkdir -p $(RELEASE_DIR)/$$i/vs2017/cpp; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/c; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/cpp; \
@@ -90,6 +50,8 @@ dist : release_clean
 		cp current/windowsexe/*.bat $(RELEASE_DIR)/$$i/windowsexe/; \
 		cp -r current/vs2005/ $(RELEASE_DIR)/$$i/; \
 		cp -r current/vs2010/ $(RELEASE_DIR)/$$i/; \
+		cp -r current/vs2015/ $(RELEASE_DIR)/$$i/; \
+		cp -r current/vs2017/ $(RELEASE_DIR)/$$i/; \
 		cat current/urg_c-config.in | sed -e "s/VERSION/$(VERSION)/g" > $(RELEASE_DIR)/$$i/urg_c-config.in ; \
 		cat current/urg_cpp-config.in | sed -e "s/VERSION/$(VERSION)/g" > $(RELEASE_DIR)/$$i/urg_cpp-config.in ; \
 	done
