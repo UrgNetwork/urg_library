@@ -1,3 +1,9 @@
+2018-06-01
+	* 1.2.3 released.
+	* Added x64 setting on VS2010.
+	* Added VS2015, VS2017 solution.
+	* Changed startup project of VS solution from urg to get_distance.
+
 2017-11-27
 	* 1.2.2 released.
 	* Fixed bugs on angle calculating function.
