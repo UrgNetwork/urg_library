@@ -314,7 +314,13 @@ void Urg_driver::stop_measurement(void)
 
 long Urg_driver::get_sensor_time_stamp(void)
 {
-    return urg_time_stamp(&pimpl->urg_);
+    long time_stamp = urg_time_stamp(&pimpl->urg_);
+    if (time_stamp < 0) {
+        return time_stamp; // error code
+    }
+
+    pimpl->adjust_time_stamp(&time_stamp);
+    return time_stamp;
 }
 
 bool Urg_driver::set_sensor_time_stamp(long time_stamp)
