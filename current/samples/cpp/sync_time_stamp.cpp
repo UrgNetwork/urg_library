@@ -24,13 +24,8 @@ namespace
     {
         enum { Print_times = 3 };
 
-        urg.start_measurement(Urg_driver::Distance, Print_times);
         for (int i = 0; i < Print_times; ++i) {
-            long time_stamp;
-            vector<long> data;
-            urg.get_distance(data, &time_stamp);
-
-            cout << ticks() << ", " << time_stamp << endl;
+            cout << ticks() << ", " << urg.get_sensor_time_stamp() << endl;
         }
     }
 }
