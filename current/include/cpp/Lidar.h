@@ -51,7 +51,7 @@ namespace qrk
         virtual bool laser_on(void) = 0;
         virtual bool laser_off(void) = 0;
 
-        virtual void reboot(void) = 0;
+        virtual bool reboot(void) = 0;
 
         virtual void sleep(void) = 0;
         virtual void wakeup(void) = 0;

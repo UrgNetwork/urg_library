@@ -1,3 +1,9 @@
+2019-08-20
+	* 1.2.4 released.
+	* Fixed get_sensor_time_stamp to support timestamp offset.
+	* Changed is_open to return urg.is_active.
+	* Added handshake samples.
+
 2018-06-01
 	* 1.2.3 released.
 	* Added x64 setting on VS2010.

@@ -47,7 +47,7 @@ namespace qrk
         bool laser_on(void);
         bool laser_off(void);
 
-        void reboot(void);
+        bool reboot(void);
 
         void sleep(void);
         void wakeup(void);

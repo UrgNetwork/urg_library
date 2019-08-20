@@ -1,4 +1,4 @@
-TARGET = sensor_parameter get_distance get_distance_intensity get_multiecho get_multiecho_intensity sync_time_stamp
+TARGET = sensor_parameter get_distance get_distance_handshake get_distance_intensity get_multiecho get_multiecho_intensity sync_time_stamp
 
 SRCDIR = ../../src
 URG_CPP_LIB = ../../src/liburg_cpp.a

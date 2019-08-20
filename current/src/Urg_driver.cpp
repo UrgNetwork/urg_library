@@ -3,7 +3,7 @@
   \~japanese
   \brief URG ドライバ
   \~english
-  \brief URG driver 
+  \brief URG driver
   \~
   \author Satofumi KAMIMURA
 
@@ -27,7 +27,6 @@ using namespace std;
 struct Urg_driver::pImpl
 {
     urg_t urg_;
-    bool is_opened_;
     measurement_type_t last_measure_type_;
     long time_stamp_offset_;
 
@@ -39,7 +38,7 @@ struct Urg_driver::pImpl
 
 
     pImpl(void)
-        : is_opened_(false), last_measure_type_(Distance), time_stamp_offset_(0)
+        :last_measure_type_(Distance), time_stamp_offset_(0)
     {
     }
 
@@ -95,7 +94,6 @@ bool Urg_driver::open(const char* device_name, long baudrate,
                       connection_type_t type)
 {
     close();
-    pimpl->is_opened_ = false;
     pimpl->product_type_.clear();
     pimpl->firmware_version_.clear();
     pimpl->serial_id_.clear();
@@ -107,23 +105,21 @@ bool Urg_driver::open(const char* device_name, long baudrate,
         return false;
     }
 
-    pimpl->is_opened_ = true;
     return true;
 }
 
 
 void Urg_driver::close(void)
 {
-    if (pimpl->is_opened_) {
+    if (is_open()) {
         urg_close(&pimpl->urg_);
-        pimpl->is_opened_ = false;
     }
 }
 
 
 bool Urg_driver::is_open(void) const
 {
-    return pimpl->is_opened_;
+    return pimpl->urg_.is_active;
 }
 
 
@@ -147,9 +143,9 @@ bool Urg_driver::laser_off(void)
 }
 
 
-void Urg_driver::reboot(void)
+bool Urg_driver::reboot(void)
 {
-    urg_reboot(&pimpl->urg_);
+    return urg_reboot(&pimpl->urg_) == URG_NO_ERROR;
 }
 
 
@@ -314,13 +310,17 @@ void Urg_driver::stop_measurement(void)
 
 long Urg_driver::get_sensor_time_stamp(void)
 {
-    return urg_time_stamp(&pimpl->urg_) + pimpl->time_stamp_offset_;
+    long time_stamp = urg_time_stamp(&pimpl->urg_);
+    if (time_stamp < 0)
+        return time_stamp; // error code
+    pimpl->adjust_time_stamp(&time_stamp);
+    return time_stamp;
 }
 
 bool Urg_driver::set_sensor_time_stamp(long time_stamp)
 {
     // \~japanese この時点での PC のタイムスタンプを取得
-    // \~english Gets the PC's current timestamp 
+    // \~english Gets the PC's current timestamp
     long function_first_ticks = ticks();
 
     // \~japanese PC とセンサのタイムスタンプの差を計算から推定し、
