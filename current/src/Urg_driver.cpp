@@ -3,7 +3,7 @@
   \~japanese
   \brief URG ドライバ
   \~english
-  \brief URG driver 
+  \brief URG driver
   \~
   \author Satofumi KAMIMURA
 
@@ -314,13 +314,17 @@ void Urg_driver::stop_measurement(void)
 
 long Urg_driver::get_sensor_time_stamp(void)
 {
-    return urg_time_stamp(&pimpl->urg_) + pimpl->time_stamp_offset_;
+    long time_stamp = urg_time_stamp(&pimpl->urg_);
+    if (time_stamp < 0)
+        return time_stamp; // error code
+    pimpl->adjust_time_stamp(&time_stamp);
+    return time_stamp;
 }
 
 bool Urg_driver::set_sensor_time_stamp(long time_stamp)
 {
     // \~japanese この時点での PC のタイムスタンプを取得
-    // \~english Gets the PC's current timestamp 
+    // \~english Gets the PC's current timestamp
     long function_first_ticks = ticks();
 
     // \~japanese PC とセンサのタイムスタンプの差を計算から推定し、
