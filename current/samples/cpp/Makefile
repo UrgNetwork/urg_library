@@ -15,6 +15,7 @@ LDLIBS = -lm $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -
 # Target
 TARGET = \
 	get_distance \
+	get_distance_handshake \
 	get_distance_intensity \
 	get_multiecho \
 	get_multiecho_intensity \
@@ -36,4 +37,4 @@ REQUIRE_LIB = $(SRCDIR)/liburg_cpp.a
 $(REQUIRE_LIB) : $(wildcard $(SRCDIR)/*.[ch])
 	cd $(@D)/ && $(MAKE) $(@F)
 
-get_distance get_distance_intensity get_multiecho get_multiecho_intensity sync_time_stamp sensor_parameter : Connection_information.o $(REQUIRE_LIB)
+get_distance get_distance_handshake get_distance_intensity get_multiecho get_multiecho_intensity sync_time_stamp sensor_parameter : Connection_information.o $(REQUIRE_LIB)
