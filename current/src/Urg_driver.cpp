@@ -40,6 +40,7 @@ struct Urg_driver::pImpl
     pImpl(void)
         :last_measure_type_(Distance), time_stamp_offset_(0)
     {
+        urg_t_initialize(&urg_);
     }
 
 

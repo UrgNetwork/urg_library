@@ -756,6 +756,15 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[],
     return ret;
 }
 
+void urg_t_initialize(urg_t *urg)
+{
+    urg->is_active = URG_FALSE;
+    urg->is_sending = URG_TRUE;
+    urg->last_errno = URG_NOT_CONNECTED;
+    urg->timeout = MAX_TIMEOUT;
+    urg->scanning_skip_scan = 0;
+    urg->error_handler = NULL;
+}
 
 int urg_open(urg_t *urg, urg_connection_type_t connection_type,
              const char *device_or_address, long baudrate_or_port)
@@ -763,12 +772,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     int ret;
     long baudrate = baudrate_or_port;
 
-    urg->is_active = URG_FALSE;
-    urg->is_sending = URG_TRUE;
-    urg->last_errno = URG_NOT_CONNECTED;
-    urg->timeout = MAX_TIMEOUT;
-    urg->scanning_skip_scan = 0;
-    urg->error_handler = NULL;
+    urg_t_initialize(urg);
 
     // \~japanese デバイスへの接続
     // \~english Connects to the device
@@ -1221,8 +1225,8 @@ void urg_wakeup(urg_t *urg)
 int urg_is_stable(urg_t *urg)
 {
     const char *stat = urg_sensor_status(urg);
- 
-    return (strncmp("Stable 000 no error", stat, 19) == 0 || strncmp("Sensor works well", stat, 17) == 0 
+
+    return (strncmp("Stable 000 no error", stat, 19) == 0 || strncmp("Sensor works well", stat, 17) == 0
                                           || strncmp("sensor is working normally", stat, 26) == 0) ? 1: 0;
 }
 
@@ -1282,7 +1286,7 @@ static const int receive_II_command_response(urg_t *urg,
                                             char *buffer, int buffer_size)
 {
     const int vv_expected[] = { 0, EXPECTED_END };
-    int ret; 
+    int ret;
     const char* command ="II\n";
 
     ret = scip_response(urg, command, vv_expected, urg->timeout,
@@ -1376,13 +1380,13 @@ const char *urg_sensor_status(urg_t *urg)
     int ret = 0;
     char *p;
 
-    
+
     if (!urg->is_active) {
         return NOT_CONNECTED_MESSAGE;
     }
 
     ret = receive_II_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
-    
+
     if (ret != II_RESPONSE_LINES && ret != II_ERROR_RESPONSE_LINES) {
         return RECEIVE_ERROR_MESSAGE;
     }
@@ -1408,14 +1412,14 @@ const char *urg_sensor_state(urg_t *urg)
     }
 
     ret = receive_II_command_response(urg, receive_buffer, RECEIVE_BUFFER_SIZE);
-    
+
     if (ret != II_RESPONSE_LINES && ret != II_ERROR_RESPONSE_LINES) {
         return  RECEIVE_ERROR_MESSAGE;
     }
 
     p = copy_token(urg->return_buffer,
-                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);   
-  
+                   receive_buffer, "MESM:", ";", II_RESPONSE_LINES);
+
     return (p) ? p : RECEIVE_ERROR_MESSAGE;
 }
 
