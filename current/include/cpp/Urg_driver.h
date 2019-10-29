@@ -79,6 +79,8 @@ namespace qrk
         void stop_measurement(void);
 
         //! \~japanese タイムスタンプの同期  \~english Synchronization of timestamps
+        bool start_time_stamp_mode(void);
+        bool stop_time_stamp_mode(void);
         bool set_sensor_time_stamp(long time_stamp);
         long get_sensor_time_stamp(void);
 

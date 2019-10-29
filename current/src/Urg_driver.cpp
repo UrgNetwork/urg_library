@@ -309,6 +309,18 @@ void Urg_driver::stop_measurement(void)
     urg_stop_measurement(&pimpl->urg_);
 }
 
+bool Urg_driver::start_time_stamp_mode(void)
+{
+    int ret = urg_start_time_stamp_mode(&pimpl->urg_);
+    return (ret < 0) ? false : true;
+}
+
+bool Urg_driver::stop_time_stamp_mode(void)
+{
+    int ret = urg_stop_time_stamp_mode(&pimpl->urg_);
+    return (ret < 0) ? false : true;
+}
+
 long Urg_driver::get_sensor_time_stamp(void)
 {
     long time_stamp = urg_time_stamp(&pimpl->urg_);
