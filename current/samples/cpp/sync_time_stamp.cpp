@@ -23,10 +23,13 @@ namespace
     void print_timestamp(Urg_driver& urg)
     {
         enum { Print_times = 3 };
+        urg.start_time_stamp_mode();
 
         for (int i = 0; i < Print_times; ++i) {
             cout << ticks() << ", " << urg.get_sensor_time_stamp() << endl;
         }
+
+        urg.stop_time_stamp_mode();
     }
 }
 
@@ -46,12 +49,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese データは１ステップのみ取得する
-    // \~english Will obtain only one step of measurement data
-    int min_step = urg.min_step();
-    urg.set_scanning_parameter(min_step, min_step);
+    cout << "# pc,\tsensor" << endl;
 
-    //
     // \~japanese 比較用に PC とセンサのタイムスタンプを表示する
     // \~english Just to compare, shows the current PC timestamp and sensor timestamp
     print_timestamp(urg);

@@ -41,7 +41,7 @@ static int pc_msec_time(void)
 #else
     if (!is_initialized) {
         gettimeofday(&first_time, NULL);
-	is_initialized = 1;
+        is_initialized = 1;
     }
     gettimeofday(&current_time, NULL);
 
@@ -108,6 +108,8 @@ int main(int argc, char *argv[])
     // \~japanese URG のタイムスタンプと PC のタイムスタンプを表示
     // \~english Prints the URG timestamp and the PC timestamp
     time_stamp_offset = print_time_stamp(&urg, 0);
+
+    printf("\n");
 
     // \~japanese URG の補正後のタイムスタンプと PC タイムスタンプを表示
     // \~english Prints the URG timestamp and the PC timestamp after correction

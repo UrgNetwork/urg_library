@@ -40,6 +40,7 @@ struct Urg_driver::pImpl
     pImpl(void)
         :last_measure_type_(Distance), time_stamp_offset_(0)
     {
+        urg_t_initialize(&urg_);
     }
 
 
@@ -306,6 +307,18 @@ bool Urg_driver::set_scanning_parameter(int first_step, int last_step,
 void Urg_driver::stop_measurement(void)
 {
     urg_stop_measurement(&pimpl->urg_);
+}
+
+bool Urg_driver::start_time_stamp_mode(void)
+{
+    int ret = urg_start_time_stamp_mode(&pimpl->urg_);
+    return (ret < 0) ? false : true;
+}
+
+bool Urg_driver::stop_time_stamp_mode(void)
+{
+    int ret = urg_stop_time_stamp_mode(&pimpl->urg_);
+    return (ret < 0) ? false : true;
 }
 
 long Urg_driver::get_sensor_time_stamp(void)

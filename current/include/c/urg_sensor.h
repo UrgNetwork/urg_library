@@ -110,6 +110,32 @@ extern "C" {
         char return_buffer[80];
     } urg_t;
 
+    /*!
+      \~japanese
+      \brief urg_t構造体の初期化
+
+      URG センサ管理構造体(urg_t)を初期化します。
+
+      \param[in,out] urg URG センサ管理
+
+      \attention この関数はurg_open()の初めに実行されます。任意にセンサ管理構造体(urg_t)を初期化したい時はこの関数を呼び出してください。
+      \see urg_open()
+
+      \~english
+      \brief URG control structure (urg_t) initialization
+
+      Initialize URG control structure(urg_t)
+
+      \param[in,out] urg URG control structure
+
+      \attention
+      This function is executed at the start of urg_open ().
+      Call this function if you want to initialize the URG control structure (urg_t) arbitrarily.
+
+      \see urg_open()
+      \~
+    */
+    void urg_t_initialize(urg_t *urg);
 
     /*!
       \~japanese
