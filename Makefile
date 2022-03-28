@@ -46,7 +46,6 @@ dist : release_clean
 		cp current/include/cpp/*.h $(RELEASE_DIR)/$$i/include/cpp/; \
 		cp current/src/*.c $(RELEASE_DIR)/$$i/src/; \
 		cp current/src/*.cpp $(RELEASE_DIR)/$$i/src/; \
-		cp current/samples/c/*.sh $(RELEASE_DIR)/$$i/samples/c/; \
 		cp current/windowsexe/*.bat $(RELEASE_DIR)/$$i/windowsexe/; \
 		cp -r current/vs2005/ $(RELEASE_DIR)/$$i/; \
 		cp -r current/vs2010/ $(RELEASE_DIR)/$$i/; \

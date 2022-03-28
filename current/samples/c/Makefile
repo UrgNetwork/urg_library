@@ -8,7 +8,7 @@ CC = gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES = -I$(INCLUDEDIR)
 LDFLAGS =
-LDLIBS = -lm `/bin/sh ld_wsock.sh` `/bin/sh ld_setupapi.sh`
+LDLIBS = -lm $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; fi)
 
 # Target
 TARGET = \
