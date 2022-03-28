@@ -1226,8 +1226,11 @@ int urg_is_stable(urg_t *urg)
 {
     const char *stat = urg_sensor_status(urg);
 
-    return (strncmp("Stable 000 no error", stat, 19) == 0 || strncmp("Sensor works well", stat, 17) == 0
-                                          || strncmp("sensor is working normally", stat, 26) == 0) ? 1: 0;
+    return (strncmp("Stable 000 no error", stat, 19) == 0
+            || strncmp("Sensor works well", stat, 17) == 0
+            || strncmp("sensor is working normally", stat, 26) == 0
+            || strncmp("failed to synchronize", stat, 21) == 0
+            || strncmp("detected multiple master sensor", stat, 31) == 0) ? 1: 0;
 }
 
 
