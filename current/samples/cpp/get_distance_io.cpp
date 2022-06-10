@@ -2,7 +2,7 @@
   \~japanese
   \example get_distance_io.cpp 距離・IOデータを取得する
   \~english
-  \example get_distance_io.cpp Obtains distance data
+  \example get_distance_io.cpp Obtains distance and IO(input/output) data
   \~
 
   $Id$
