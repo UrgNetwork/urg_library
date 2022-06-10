@@ -180,7 +180,8 @@ bool Urg_driver::start_measurement(measurement_type_t type,
         { URG_DISTANCE, Distance },
         { URG_DISTANCE_INTENSITY, Distance_intensity },
         { URG_MULTIECHO, Multiecho },
-        { URG_MULTIECHO_INTENSITY, Multiecho_intensity },
+        { URG_DISTANCE_IO, Distance_io },
+        { URG_DISTANCE_INTENSITY_IO, Distance_intensity_io },
     };
 
     size_t n = sizeof(type_table) / sizeof(type_table[0]);
@@ -243,6 +244,47 @@ bool Urg_driver::get_distance_intensity(std::vector<long>& data,
     return (ret < 0) ? false : true;
 }
 
+bool Urg_driver::get_distance_io(std::vector<long>& data, std::vector<long>& io, long* time_stamp)
+{
+	if (pimpl->last_measure_type_ != Distance_io) {
+		pimpl->urg_.last_errno = URG_MEASUREMENT_TYPE_MISMATCH;
+		return false;
+	}
+
+	// 最大サイズを確保し、そこにデータを格納する
+	data.resize(max_data_size());
+	io.resize(max_io_size());
+	int ret = urg_get_distance_io(&pimpl->urg_, &data[0], &io[0], time_stamp);
+	if (ret > 0) {
+		data.resize(ret);
+		pimpl->adjust_time_stamp(time_stamp);
+	}
+	return (ret < 0) ? false : true;
+}
+
+bool Urg_driver::get_distance_intensity_io(std::vector<long>& data,
+	                                       std::vector<unsigned short>& intensity,
+	                                       std::vector<long>& io,
+	                                       long* time_stamp)
+{
+	if (pimpl->last_measure_type_ != Distance_intensity_io) {
+		pimpl->urg_.last_errno = URG_MEASUREMENT_TYPE_MISMATCH;
+		return false;
+	}
+
+	// 最大サイズを確保し、そこにデータを格納する
+	size_t data_size = max_data_size();
+	data.resize(data_size);
+	intensity.resize(data_size);
+	io.resize(max_io_size());
+	int ret = urg_get_distance_intensity_io(&pimpl->urg_, &data[0], &intensity[0], &io[0], time_stamp);
+	if (ret > 0) {
+		data.resize(ret);
+		intensity.resize(ret);
+		pimpl->adjust_time_stamp(time_stamp);
+	}
+	return (ret < 0) ? false : true;
+}
 
 bool Urg_driver::get_multiecho(std::vector<long>& data_multiecho,
                                long* time_stamp)
@@ -484,6 +526,11 @@ int Urg_driver::max_data_size(void) const
 int Urg_driver::max_echo_size(void) const
 {
     return URG_MAX_ECHO;
+}
+
+int Urg_driver::max_io_size(void) const
+{
+	return URG_MAX_IO;
 }
 
 

@@ -32,12 +32,14 @@ extern "C" {
       \brief Measurement types
     */
     typedef enum {
-        URG_DISTANCE,           //!< \~japanese 距離  \~english Distance (range)
-        URG_DISTANCE_INTENSITY, //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
-        URG_MULTIECHO,          //!< \~japanese マルチエコーの距離  \~english Multiecho distance
-        URG_MULTIECHO_INTENSITY, //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
-        URG_STOP,                //!< \~japanese 計測の停止  \~english Stop measurement
-        URG_UNKNOWN,             //!< \~japanese 不明  \~english Unknown measurement type
+        URG_DISTANCE,              //!< \~japanese 距離  \~english Distance (range)
+        URG_DISTANCE_INTENSITY,    //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
+        URG_DISTANCE_IO,           //!< \~japanese 距離 + IO情報  \~english Distance (range) and IO(input/output)
+        URG_DISTANCE_INTENSITY_IO, //!< \~japanese 距離 + 強度 + IO情報  \~english Distance (range), intensity and IO(input/output)
+        URG_MULTIECHO,             //!< \~japanese マルチエコーの距離  \~english Multiecho distance
+        URG_MULTIECHO_INTENSITY,   //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
+        URG_STOP,                  //!< \~japanese 計測の停止  \~english Stop measurement
+        URG_UNKNOWN,               //!< \~japanese 不明  \~english Unknown measurement type
     } urg_measurement_type_t;
 
     /*!
@@ -54,7 +56,8 @@ extern "C" {
 
     enum {
         URG_SCAN_INFINITY = 0,  //!< \~japanese 無限回のデータ取得  \~english Continuous data scanning
-        URG_MAX_ECHO = 3, //!< \~japanese マルチエコーの最大エコー数  \~english Maximum number of echoes
+        URG_MAX_ECHO = 3,       //!< \~japanese マルチエコーの最大エコー数  \~english Maximum number of echoes
+        URG_MAX_IO = 2,         //!< \~japanese IO情報の最大データ数  \~english Maximum number of IO(input/output)
     };
 
 
@@ -451,6 +454,63 @@ extern "C" {
     */
     extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
 
+    /*!
+      \~japanese
+      \brief 距離データとIO情報の取得
+
+      センサから距離データとIO情報を取得します。事前に urg_start_measurement() を #URG_DISTANCE_IO 指定で呼び出しておく必要があります。
+
+      \param[in,out] urg URG センサ管理
+      \param[out] data 距離データ [mm]
+      \param[out] io IO情報
+      \param[out] time_stamp タイムスタンプ [msec]
+
+      \retval >=0 受信したデータ個数
+      \retval <0 エラー
+
+      io には、センサから取得したIO情報が格納されます。
+	  io[0]に入力値、io[1]に出力値が格納されるため、2要素分のサイズを確保しておく必要があります。
+	  
+	  data, time_stamp については urg_get_distance() と同じです。
+
+	  なお、IO情報取得に対応していない機種では、エラーになります。
+
+      \~english
+      \brief Gets distance and IO(input/output) data
+
+      Receives distance and IO(input/output) data from the sensor. The urg_start_measurement() function was called beforehand with #URG_DISTANCE as type argument.
+
+      \param[in,out] urg URG control structure
+      \param[out] data Distance data array [mm]
+      \param[out] io IO data array
+      \param[out] time_stamp Timestamp [msec]
+
+      \retval >=0 Number of data points received
+      \retval <0 Error
+
+      IO data received from the sensor are stored in data array. 
+      The input value is stored in io[0] and the output value in io[1].
+      The size of the two elements should be reserved in advance.
+
+      Regarding data and time_stamp arguments, refer to urg_get_distance().
+
+      Note that an error will occur for models that do not support IO information acquisition.
+
+      \~
+      Example
+      \code
+      long *data = (long*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
+	  long *io = malloc(2 * sizeof(long));
+      long time_stamp;
+
+	  ...
+
+	  urg_start_measurement(&urg, URG_DISTANCE_IO, 1, 0);
+	  int n = urg_get_distance_io(&urg, data, io, &time_stamp); \endcode
+
+	  \see urg_start_measurement()
+    */
+    extern int urg_get_distance_io(urg_t* urg, long data[], long io[], long* time_stamp);
 
     /*!
       \~japanese
@@ -501,7 +561,7 @@ extern "C" {
       ...
 
       urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
-      int n = urg_get_distance_intensity(&urg, data, intesnity, NULLL); \endcode
+      int n = urg_get_distance_intensity(&urg, data, intesnity, NULL); \endcode
 
       \~
       \see urg_start_measurement(), urg_max_data_size()
@@ -510,6 +570,64 @@ extern "C" {
                                           unsigned short intensity[],
                                           long *time_stamp);
 
+    /*!
+      \~japanese
+      \brief 距離・強度データとIO情報の取得
+
+      urg_get_distance_io() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY_IO 指定で呼び出しておく必要があります。
+
+      \param[in,out] urg URG センサ管理
+      \param[out] data 距離データ [mm]
+      \param[out] intensity 強度データ
+      \param[out] io IO情報
+      \param[out] time_stamp タイムスタンプ [msec]
+
+      \retval >=0 受信したデータ個数
+      \retval <0 エラー
+
+      data, time_stamp については urg_get_distance() 
+	  intensity については urg_get_distance_intensity() 
+	  io については urg_get_distance_io() を参照してください。
+
+	  なお、IO情報取得に対応していない機種では、エラーになります。
+
+      \~english
+      \brief Gets distance, intensity and IO(input/output) data
+
+      This is an extension to urg_get_distance_io() which allows to obtain also the intensity (strength) data. The urg_start_measurement() function was called beforehand with #URG_DISTANCE_INTENSITY_IO as type argument.
+
+      \param[in,out] urg URG control structure
+      \param[out] data Distance data array [mm]
+      \param[out] intensity Intensity data array
+      \param[out] io IO data array
+      \param[out] time_stamp Timestamp [msec]
+
+      \retval >=0 Number of data points received
+      \retval <0 Error
+
+      Regarding data and time_stamp arguments, refer to urg_get_distance().
+      Regarding io arguments, refer to urg_get_distance_io().
+
+      Note that an error will occur for models that do not support IO information acquisition.
+
+      \~
+      Example
+      \code
+      int data_size = urg_max_data_size(&urg);
+	  long *data = malloc(data_size * sizeof(long));
+	  long *intensity = malloc(data_size * sizeof(unsigned short));
+	  long *io = malloc(2 * sizeof(long));
+
+	  ...
+
+	  urg_start_measurement(&urg, URG_DISTANCE_INTENSITY_IO, 1, 0);
+	  int n = urg_get_distance_intensity(&urg, data, intesnity, NULL); \endcode
+
+	  \see urg_start_measurement(), urg_max_data_size()
+    */
+    extern int urg_get_distance_intensity_io(urg_t* urg, long data[],
+                                             unsigned short intensity[],
+                                             long io[], long* time_stamp);
 
     /*!
       \~japanese
@@ -584,7 +702,7 @@ extern "C" {
       ...
 
       urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
-      int n = urg_get_distance_intensity(&urg, data_multi, NULLL); \endcode
+      int n = urg_get_distance_intensity(&urg, data_multi, NULL); \endcode
 
       \~
       \see urg_start_measurement(), urg_max_data_size()
@@ -637,7 +755,7 @@ extern "C" {
 
       urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
       int n = urg_get_multiecho_intensity(&urg, data_multi,
-      intesnity_multi, NULLL); \endcode
+      intesnity_multi, NULL); \endcode
 
       \~
       \see urg_start_measurement(), urg_max_data_size()
