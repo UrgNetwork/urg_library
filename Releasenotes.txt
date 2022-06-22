@@ -1,3 +1,9 @@
+2022-06-22
+	* 1.2.6 released.
+	* Added get_distance_io and get_distance_intensity_io functions.
+    * Added get_distance_io and get_distance_intensity_io samples for VS2017.
+	* Fixed urg_is_stable function.
+
 2019-10-29
 	* 1.2.5 released.
 	* Added urg_t_initialize function.

@@ -28,6 +28,8 @@ namespace qrk
             Distance_intensity,  //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
             Multiecho,           //!< \~japanese マルチエコーの距離  \~english Multiecho distance
             Multiecho_intensity, //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
+            Distance_io,           //!< \~japanese 距離 + IO  \~english Distance (range) and io(input/output)
+            Distance_intensity_io, //!< \~japanese 距離 + 強度 + IO  \~english Distance (range), intensity and io(input/output)
         } measurement_type_t;
 
         typedef enum {

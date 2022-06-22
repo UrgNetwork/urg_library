@@ -64,6 +64,13 @@ namespace qrk
                                     std::vector<unsigned short>& intensity,
                                     long *time_stamp = NULL);
 
+		bool get_distance_io(std::vector<long>& data, std::vector<long>& io, long *time_stamp = NULL);
+
+		bool get_distance_intensity_io(std::vector<long>& data,
+			                           std::vector<unsigned short>& intensity,
+			                           std::vector<long>& io,
+			                           long *time_stamp = NULL);
+
         bool get_multiecho(std::vector<long>& data_multi,
                            long* time_stamp = NULL);
 
@@ -102,6 +109,7 @@ namespace qrk
         long scan_usec(void) const;
         int max_data_size(void) const;
         int max_echo_size(void) const;
+		int max_io_size(void) const;
 
         const char* product_type(void) const;
         const char* firmware_version(void) const;
