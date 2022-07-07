@@ -194,7 +194,7 @@ static void ignore_receive_data_with_qt(urg_t *urg, int timeout)
     if ((urg->is_sending == URG_FALSE) && (urg->is_laser_on == URG_FALSE)) {
         return;
     }
-
+    
     connection_write(&urg->connection, "QT\n", 3);
     urg->is_laser_on = URG_FALSE;
     ignore_receive_data(urg, timeout);
@@ -647,6 +647,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     char buffer[BUFFER_SIZE];
     int ret = 0;
     int n;
+    int occurCheckSumError = 0;
     int extended_timeout = urg->timeout
         + 2 * (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
 
@@ -673,8 +674,14 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
         // \~japanese チェックサムの評価
         // \~english Validates the checksum
-        ignore_receive_data_with_qt(urg, urg->timeout);
-        return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+        if (urg->ignore_checkSumError == 0) {
+            ignore_receive_data_with_qt(urg, urg->timeout);
+            *time_stamp = 0;
+            return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
+        }
+        else {
+            occurCheckSumError = 1;
+        }
     }
 
     if (type == URG_STOP) {
@@ -773,6 +780,30 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         break;
     }
 
+    if (occurCheckSumError == 1) {
+        // \~japanese チェックサムエラー発生時、データ廃棄
+        // \~english When occurs checksum error, it disposals receive data.
+
+        //initialize distance data and multi echo data.
+        if (type == URG_DISTANCE || type == URG_DISTANCE_INTENSITY || type == URG_DISTANCE_INTENSITY_IO) {
+            memset(data, 0, sizeof(long) * urg_max_data_size(urg));
+        } else if (type == URG_MULTIECHO || type == URG_MULTIECHO_INTENSITY) {
+            memset(data, 0, sizeof(long) * urg_max_data_size(urg) * URG_MAX_ECHO);
+        }
+
+        //initialize intensity data.
+        if (type == URG_DISTANCE_INTENSITY || type == URG_DISTANCE_INTENSITY_IO){
+            memset(data, 0, sizeof(unsigned long) * urg_max_data_size(urg));
+        }
+        
+        //initialize io data.
+        if (type == URG_DISTANCE_IO || type == URG_DISTANCE_INTENSITY_IO) {
+            memset(data, 0, sizeof(long) *  URG_MAX_IO);
+        }
+
+        *time_stamp = 0;
+    }
+
     // \~japanese specified_scan_times == 1 のときは Gx 系コマンドが使われるため
     // \~japanese データを明示的に停止しなくてよい
     // \~english If specified_scan_times == 1 then we are using a Gx type command
@@ -795,6 +826,7 @@ void urg_t_initialize(urg_t *urg)
     urg->timeout = MAX_TIMEOUT;
     urg->scanning_skip_scan = 0;
     urg->error_handler = NULL;
+    urg->ignore_checkSumError = 1;
 }
 
 int urg_open(urg_t *urg, urg_connection_type_t connection_type,
@@ -997,9 +1029,8 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
 }
 
 
-int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
-                          int scan_times, int skip_scan)
-{
+int urg_start_measurement(urg_t *urg, urg_measurement_type_t type, int scan_times, int skip_scan,
+                          int ignore_checkSumError) {
     char range_byte_ch;
     int ret = 0;
 
@@ -1007,10 +1038,12 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    if ((skip_scan < 0) || (skip_scan > 9)) {
+    if (((skip_scan < 0) || (skip_scan > 9)) || ((ignore_checkSumError < 0) || (ignore_checkSumError > 2))) {
         ignore_receive_data_with_qt(urg, urg->timeout);
         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
     }
+
+    urg->ignore_checkSumError = ignore_checkSumError;
 
     // \~japanese  !!! Mx 系, Nx 系の計測中のときは、QT を発行してから
     // \~japanese  !!! 計測開始コマンドを送信するようにする

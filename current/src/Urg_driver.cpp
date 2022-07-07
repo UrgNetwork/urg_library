@@ -188,8 +188,8 @@ bool Urg_driver::start_measurement(measurement_type_t type,
     for (size_t i = 0; i < n; ++i) {
         const type_table_t* p = &type_table[i];
         if (type == p->type) {
-            int ret = urg_start_measurement(&pimpl->urg_,
-                                            p->c_type, scan_times, skip_scan);
+            int ret =
+                urg_start_measurement(&pimpl->urg_, p->c_type, scan_times, skip_scan,pimpl->urg_.ignore_checkSumError);
             if (ret == URG_NO_ERROR) {
                 pimpl->last_measure_type_ = type;
             }
@@ -200,6 +200,7 @@ bool Urg_driver::start_measurement(measurement_type_t type,
     return false;
 }
 
+void Urg_driver::set_ignore_checkSumError(bool ignore) { pimpl->urg_.ignore_checkSumError = ignore ? 1 : 0; }
 
 bool Urg_driver::get_distance(std::vector<long>& data, long* time_stamp)
 {

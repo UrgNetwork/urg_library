@@ -110,6 +110,8 @@ extern "C" {
 
         urg_error_handler error_handler;
 
+        int ignore_checkSumError;
+
         char return_buffer[80];
     } urg_t;
 
@@ -318,6 +320,7 @@ extern "C" {
       \param[in] type データ・タイプ
       \param[in] scan_times データの取得回数
       \param[in] skip_scan データの取得間隔
+      \param[in] ignore_checkSumError 0以外:チェックサムエラーを無視し、計測継続 0:チェックサムエラーで計測停止
 
       \retval 0 正常
       \retval <0 エラー
@@ -347,6 +350,7 @@ extern "C" {
       \param[in] type Measurement type
       \param[in] scan_times Number of scans to request
       \param[in] skip_scan Interval between scans
+      \param[in] ignore_checkSumError non-0:continue measurement 0: stop measurement
 
       \retval 0 Successful
       \retval <0 Error
@@ -389,7 +393,7 @@ extern "C" {
       \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
     */
     extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
-                                     int scan_times, int skip_scan);
+                                     int scan_times, int skip_scan, int ignore_checkSumError);
 
 
     /*!
