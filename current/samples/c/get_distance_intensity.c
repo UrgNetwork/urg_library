@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
     // \~japanese ÉfÅ[É^éÊìæ
     // \~english Gets measurement data
-    urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, URG_SCAN_INFINITY, 0);
+    urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, URG_SCAN_INFINITY, 0 , 1);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
         n = urg_get_distance_intensity(&urg, data, intensity, &time_stamp);
         if (n <= 0) {
