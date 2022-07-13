@@ -179,7 +179,8 @@ bool Urg_driver::start_measurement(measurement_type_t type,
     type_table_t type_table[] = {
         { URG_DISTANCE, Distance },
         { URG_DISTANCE_INTENSITY, Distance_intensity },
-        { URG_MULTIECHO, Multiecho },
+        { URG_MULTIECHO, Multiecho },     
+        { URG_MULTIECHO_INTENSITY, Multiecho_intensity},
         { URG_DISTANCE_IO, Distance_io },
         { URG_DISTANCE_INTENSITY_IO, Distance_intensity_io },
     };
