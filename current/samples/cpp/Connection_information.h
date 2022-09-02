@@ -32,7 +32,7 @@ namespace qrk
     private:
         Connection_information(void);
         struct pImpl;
-        std::auto_ptr<pImpl> pimpl;
+        std::unique_ptr<pImpl> pimpl;
     };
 }
 

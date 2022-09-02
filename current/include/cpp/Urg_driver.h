@@ -58,6 +58,8 @@ namespace qrk
                                int scan_times = Infinity_times,
                                int skip_scan = 0);
 
+        void set_ignore_checkSumError(bool ignore = true);
+
         //! \~japanese 受信データの受け取り  \~english Receives measurement data
         bool get_distance(std::vector<long>& data, long *time_stamp = NULL);
         bool get_distance_intensity(std::vector<long>& data,
@@ -128,7 +130,7 @@ namespace qrk
         Urg_driver& operator = (const Urg_driver& rhs);
 
         struct pImpl;
-        std::auto_ptr<pImpl> pimpl;
+        std::unique_ptr<pImpl> pimpl;
     };
 }
 

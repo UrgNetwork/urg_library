@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     // \~japanese ƒf[ƒ^æ“¾
     // \~english Gets measurement data
-    urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+    urg_start_measurement(&urg, URG_DISTANCE, 1, 0, 1);
     n = urg_get_distance(&urg, data, &time_stamp);
     if (n < 0) {
         printf("urg_get_distance: %s\n", urg_error(&urg));
