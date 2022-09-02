@@ -292,7 +292,14 @@ int tcpclient_read(urg_tcpclient_t* cli,
 int tcpclient_write(urg_tcpclient_t* cli, const char* buf, int size)
 {
     // blocking if data size is larger than system's buffer.
-    return send(cli->sock_desc, buf, size, 0);  //4th arg 0: no flag
+#if defined(URG_WINDOWS_OS)
+    // blocking if data size is larger than system's buffer.
+    return send(cli->sock_desc, buf, size, 0); // 4th arg 0: no flag
+#elif defined(URG_LINUX_OS)
+    return send(cli->sock_desc, buf, size, MSG_NOSIGNAL);
+#else
+    return send(cli->sock_desc, buf, size, SO_NOSIGPIPE);
+#endif
 }
 
 
