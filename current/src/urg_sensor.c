@@ -548,13 +548,13 @@ static int receive_length_data(urg_t *urg, long length[],
         if (n > 0) {
             // \~japanese チェックサムの評価
             // \~english Validates the checksum
-            if (buffer[line_filled + n - 1] !=
-                scip_checksum(&buffer[line_filled], n - 1)) {
+            if (buffer[line_filled + n - 1] != scip_checksum(&buffer[line_filled], n - 1) &&
+                (urg->ignore_checkSumError == 0)) {
                 ignore_receive_data_with_qt(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
             }
         }
-
+        
         if (n > 0) {
             line_filled += n - 1;
         }
@@ -647,7 +647,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     char buffer[BUFFER_SIZE];
     int ret = 0;
     int n;
-    int occurCheckSumError = 0;
     int extended_timeout = urg->timeout
         + 2 * (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
 
@@ -671,17 +670,12 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         return set_errno_and_return(urg, URG_INVALID_RESPONSE);
     }
 
-    if (buffer[n - 1] != scip_checksum(buffer, n - 1)) {
+    if (buffer[n - 1] != scip_checksum(buffer, n - 1) && (urg->ignore_checkSumError == 0)) {
         // \~japanese チェックサムの評価
         // \~english Validates the checksum
-        if (urg->ignore_checkSumError == 0) {
-            ignore_receive_data_with_qt(urg, urg->timeout);
-            *time_stamp = 0;
-            return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
-        }
-        else {
-            occurCheckSumError = 1;
-        }
+        ignore_receive_data_with_qt(urg, urg->timeout);
+        *time_stamp = 0;
+        return set_errno_and_return(urg, URG_CHECKSUM_ERROR);
     }
 
     if (type == URG_STOP) {
@@ -778,30 +772,6 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     case URG_UNKNOWN:
         ret = 0;
         break;
-    }
-
-    if (occurCheckSumError == 1) {
-        // \~japanese チェックサムエラー発生時、データ廃棄
-        // \~english When occurs checksum error, it disposals receive data.
-
-        //initialize distance data and multi echo data.
-        if (type == URG_DISTANCE || type == URG_DISTANCE_INTENSITY || type == URG_DISTANCE_INTENSITY_IO) {
-            memset(data, 0, sizeof(long) * urg_max_data_size(urg));
-        } else if (type == URG_MULTIECHO || type == URG_MULTIECHO_INTENSITY) {
-            memset(data, 0, sizeof(long) * urg_max_data_size(urg) * URG_MAX_ECHO);
-        }
-
-        //initialize intensity data.
-        if (type == URG_DISTANCE_INTENSITY || type == URG_DISTANCE_INTENSITY_IO){
-            memset(data, 0, sizeof(unsigned long) * urg_max_data_size(urg));
-        }
-        
-        //initialize io data.
-        if (type == URG_DISTANCE_IO || type == URG_DISTANCE_INTENSITY_IO) {
-            memset(data, 0, sizeof(long) *  URG_MAX_IO);
-        }
-
-        *time_stamp = 0;
     }
 
     // \~japanese specified_scan_times == 1 のときは Gx 系コマンドが使われるため
