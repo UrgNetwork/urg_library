@@ -1,3 +1,9 @@
+2022-09-02
+	* 1.2.7 released.
+	* Added vs2019 project.
+	* Added the feature which can change to ignore check sum error.
+	* Fixed the feature which ignores SIGPIPE when executed send function.
+	
 2022-06-22
 	* 1.2.6 released.
 	* Added get_distance_io and get_distance_intensity_io functions.
