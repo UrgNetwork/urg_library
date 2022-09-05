@@ -33,6 +33,7 @@ dist : release_clean
 		mkdir -p $(RELEASE_DIR)/$$i/vs2010; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2015; \
 		mkdir -p $(RELEASE_DIR)/$$i/vs2017; \
+		mkdir -p $(RELEASE_DIR)/$$i/vs2019; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/c; \
 		mkdir -p $(RELEASE_DIR)/$$i/samples/cpp; \
@@ -51,6 +52,7 @@ dist : release_clean
 		cp -r current/vs2010/ $(RELEASE_DIR)/$$i/; \
 		cp -r current/vs2015/ $(RELEASE_DIR)/$$i/; \
 		cp -r current/vs2017/ $(RELEASE_DIR)/$$i/; \
+		cp -r current/vs2019/ $(RELEASE_DIR)/$$i/; \
 		cat current/urg_c-config.in | sed -e "s/VERSION/$(VERSION)/g" > $(RELEASE_DIR)/$$i/urg_c-config.in ; \
 		cat current/urg_cpp-config.in | sed -e "s/VERSION/$(VERSION)/g" > $(RELEASE_DIR)/$$i/urg_cpp-config.in ; \
 	done
