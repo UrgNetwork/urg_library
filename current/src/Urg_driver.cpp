@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief URG ƒhƒ‰ƒCƒo
+  \brief URG ãƒ‰ãƒ©ã‚¤ãƒ
   \~english
   \brief URG driver
   \~
@@ -210,7 +210,7 @@ bool Urg_driver::get_distance(std::vector<long>& data, long* time_stamp)
         return false;
     }
 
-    // \~japanese Å‘åƒTƒCƒY‚ğŠm•Û‚µA‚»‚±‚Éƒf[ƒ^‚ğŠi”[‚·‚é
+    // \~japanese æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã€ãã“ã«ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
     // \~english Allocates memory for the maximum size and stores data there
     data.resize(max_data_size());
     int ret = urg_get_distance(&pimpl->urg_, &data[0], time_stamp);
@@ -231,7 +231,7 @@ bool Urg_driver::get_distance_intensity(std::vector<long>& data,
         return false;
     }
 
-    // \~japanese Å‘åƒTƒCƒY‚ğŠm•Û‚µA‚»‚±‚Éƒf[ƒ^‚ğŠi”[‚·‚é
+    // \~japanese æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã€ãã“ã«ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
     // \~english Allocates memory for the maximum size and stores data there
     size_t data_size = max_data_size();
     data.resize(data_size);
@@ -253,7 +253,7 @@ bool Urg_driver::get_distance_io(std::vector<long>& data, std::vector<long>& io,
 		return false;
 	}
 
-	// Å‘åƒTƒCƒY‚ğŠm•Û‚µA‚»‚±‚Éƒf[ƒ^‚ğŠi”[‚·‚é
+	// æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã€ãã“ã«ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
 	data.resize(max_data_size());
 	io.resize(max_io_size());
 	int ret = urg_get_distance_io(&pimpl->urg_, &data[0], &io[0], time_stamp);
@@ -274,7 +274,7 @@ bool Urg_driver::get_distance_intensity_io(std::vector<long>& data,
 		return false;
 	}
 
-	// Å‘åƒTƒCƒY‚ğŠm•Û‚µA‚»‚±‚Éƒf[ƒ^‚ğŠi”[‚·‚é
+	// æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã€ãã“ã«ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
 	size_t data_size = max_data_size();
 	data.resize(data_size);
 	intensity.resize(data_size);
@@ -296,7 +296,7 @@ bool Urg_driver::get_multiecho(std::vector<long>& data_multiecho,
         return false;
     }
 
-    // \~japanese Å‘åƒTƒCƒY‚ğŠm•Û‚µA‚»‚±‚Éƒf[ƒ^‚ğŠi”[‚·‚é
+    // \~japanese æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã€ãã“ã«ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
     // \~english Allocates memory for the maximum size and stores data there
     size_t echo_size = max_echo_size();
     size_t data_size = max_data_size() * echo_size;
@@ -320,7 +320,7 @@ bool Urg_driver::get_multiecho_intensity(std::vector<long>& data_multiecho,
         return false;
     }
 
-    // \~japanese Å‘åƒTƒCƒY‚ğŠm•Û‚µA‚»‚±‚Éƒf[ƒ^‚ğŠi”[‚·‚é
+    // \~japanese æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç¢ºä¿ã—ã€ãã“ã«ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
     // \~english Allocates memory for the maximum size and stores data there
     size_t echo_size = max_echo_size();
     size_t data_size = max_data_size() * echo_size;
@@ -368,20 +368,22 @@ bool Urg_driver::stop_time_stamp_mode(void)
 long Urg_driver::get_sensor_time_stamp(void)
 {
     long time_stamp = urg_time_stamp(&pimpl->urg_);
-    if (time_stamp < 0)
+    if (time_stamp < 0) {
         return time_stamp; // error code
+    }
+
     pimpl->adjust_time_stamp(&time_stamp);
     return time_stamp;
 }
 
 bool Urg_driver::set_sensor_time_stamp(long time_stamp)
 {
-    // \~japanese ‚±‚Ì“_‚Å‚Ì PC ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾
+    // \~japanese ã“ã®æ™‚ç‚¹ã§ã® PC ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—
     // \~english Gets the PC's current timestamp
     long function_first_ticks = ticks();
 
-    // \~japanese PC ‚ÆƒZƒ“ƒT‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ì·‚ğŒvZ‚©‚ç„’è‚µA
-    // \~japanese ÅŒã‚Éw’è‚³‚ê‚½ time_stamp ‚É‚È‚é‚æ‚¤‚È•â³’l‚ğ‘«‚µ‚Ş
+    // \~japanese PC ã¨ã‚»ãƒ³ã‚µã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å·®ã‚’è¨ˆç®—ã‹ã‚‰æ¨å®šã—ã€
+    // \~japanese æœ€å¾Œã«æŒ‡å®šã•ã‚ŒãŸ time_stamp ã«ãªã‚‹ã‚ˆã†ãªè£œæ­£å€¤ã‚’è¶³ã—è¾¼ã‚€
     // \~english Estimates the difference between the PC's and the sensor timestamps
     // \~english and then adds the correction offset indicated by the time_stamp argument
     enum {
