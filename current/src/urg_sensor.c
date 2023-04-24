@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief URG ƒZƒ“ƒT§Œä
+  \brief URG ã‚»ãƒ³ã‚µåˆ¶å¾¡
   \~english
   \brief
   \~
@@ -10,7 +10,7 @@
   $Id$
 
   \~japanese
-  \todo Mx Œv‘ª’†‚É‘¼‚Ì Mx ƒRƒ}ƒ“ƒh‚ğ‘—M‚µ‚½‚Æ‚«‚ÉA“KØ‚É“®ì‚·‚é‚æ‚¤‚É‚·‚é
+  \todo Mx è¨ˆæ¸¬ä¸­ã«ä»–ã® Mx ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—ãŸã¨ãã«ã€é©åˆ‡ã«å‹•ä½œã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
   \~english
   \todo Run correctly when a Mx measurement command is in operation and a second Mx command is received
 */
@@ -37,7 +37,7 @@ enum {
     EXPECTED_END = -1,
 
     RECEIVE_DATA_TIMEOUT,
-    RECEIVE_DATA_COMPLETE,      /*!< \~japanese ƒf[ƒ^‚ğ³í‚ÉóM   \~english Data was received correctly */
+    RECEIVE_DATA_COMPLETE,      /*!< \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’æ­£å¸¸ã«å—ä¿¡   \~english Data was received correctly */
 
     PP_RESPONSE_LINES = 10,
     VV_RESPONSE_LINES = 7,
@@ -52,7 +52,7 @@ static const char NOT_CONNECTED_MESSAGE[] = "not connected.";
 static const char RECEIVE_ERROR_MESSAGE[] = "receive error.";
 
 
-//! \~japanese ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ  \~english Calculates the checksum value
+//! \~japanese ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è¨ˆç®—  \~english Calculates the checksum value
 static char scip_checksum(const char buffer[], int size)
 {
     unsigned char sum = 0x00;
@@ -62,7 +62,7 @@ static char scip_checksum(const char buffer[], int size)
         sum += buffer[i];
     }
 
-    // \~japanese ŒvZ‚ÌˆÓ–¡‚Í SCIP d—l‘‚ğQÆ‚Ì‚±‚Æ
+    // \~japanese è¨ˆç®—ã®æ„å‘³ã¯ SCIP ä»•æ§˜æ›¸ã‚’å‚ç…§ã®ã“ã¨
     // \~english Refer to the SCIP specification for details
     return (sum & 0x3f) + 0x30;
 }
@@ -75,7 +75,7 @@ static int set_errno_and_return(urg_t *urg, int urg_errno)
 }
 
 
-// \~japanese óM‚µ‚½‰“š‚Ìs”‚ğ•Ô‚·
+// \~japanese å—ä¿¡ã—ãŸå¿œç­”ã®è¡Œæ•°ã‚’è¿”ã™
 // \~english Returns the number of lines received
 static int scip_response(urg_t *urg, const char* command,
                          const int expected_ret[], int timeout,
@@ -105,7 +105,7 @@ static int scip_response(urg_t *urg, const char* command,
 
         } else if (p && (line_number > 0)
                    && (n < (receive_buffer_max_size - filled_size))) {
-            // \~japanese ƒGƒR[ƒoƒbƒN‚ÍŠ®‘Sˆê’v‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ßAŠi”[‚µ‚È‚¢
+            // \~japanese ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã¯å®Œå…¨ä¸€è‡´ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†ãŸã‚ã€æ ¼ç´ã—ãªã„
             // \~english Since echoback is verified upon completion, do not store it now
             memcpy(p, buffer, n);
             p += n;
@@ -114,13 +114,13 @@ static int scip_response(urg_t *urg, const char* command,
         }
 
         if (line_number == 0) {
-            // \~japanese ƒGƒR[ƒoƒbƒN•¶š—ñ‚ªAˆê’v‚·‚é‚©‚ğŠm”F‚·‚é
+            // \~japanese ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯æ–‡å­—åˆ—ãŒã€ä¸€è‡´ã™ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹
             // \~english Check if the echoback is complete
             if (strncmp(buffer, command, write_size - 1)) {
                 return set_errno_and_return(urg, URG_INVALID_RESPONSE);
             }
         } else if (n > 0 && !(line_number == 1 && n == 1)) {
-            // \~japanese ƒGƒR[ƒoƒbƒNˆÈŠO‚Ìs‚Ìƒ`ƒFƒbƒNƒTƒ€‚ğ•]‰¿‚·‚é(SCIP 1.1 ‰“š‚Ìê‡‚Í–³‹‚·‚é)
+            // \~japanese ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ä»¥å¤–ã®è¡Œã®ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã‚’è©•ä¾¡ã™ã‚‹(SCIP 1.1 å¿œç­”ã®å ´åˆã¯ç„¡è¦–ã™ã‚‹)
             // \~english Checks the checksum value for all lines except the echoback (in SCIP1.1 this is ignored)
             char checksum = buffer[n - 1];
             if ((checksum != scip_checksum(buffer, n - 1)) &&
@@ -129,11 +129,11 @@ static int scip_response(urg_t *urg, const char* command,
             }
         }
 
-        // \~japanese ƒXƒe[ƒ^ƒX‰“š‚ğ•]‰¿‚µ‚ÄA–ß‚è’l‚ğŒˆ’è‚·‚é
+        // \~japanese ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å¿œç­”ã‚’è©•ä¾¡ã—ã¦ã€æˆ»ã‚Šå€¤ã‚’æ±ºå®šã™ã‚‹
         // \~english Checks the status response to define the return value
         if (line_number == 1) {
             if (n == 1) {
-                // \~japanese SCIP 1.1 ‰“š‚Ìê‡‚ÍA³í‰“š‚Æ‚İ‚È‚·
+                // \~japanese SCIP 1.1 å¿œç­”ã®å ´åˆã¯ã€æ­£å¸¸å¿œç­”ã¨ã¿ãªã™
                 // \~english In case of SCIP1.1 it is always correct
                 ret = 0;
 
@@ -210,17 +210,17 @@ static int change_sensor_baudrate(urg_t *urg,
     int ret;
 
     if (current_baudrate == next_baudrate) {
-        // \~japanese Œ»İ‚Ìƒ{[ƒŒ[ƒg‚Æİ’è‚·‚éƒ{[ƒŒ[ƒg‚ªˆê‚È‚ç‚ÎA–ß‚é
+        // \~japanese ç¾åœ¨ã®ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã¨è¨­å®šã™ã‚‹ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆãŒä¸€ç·’ãªã‚‰ã°ã€æˆ»ã‚‹
         // \~english If the current baudrate and next baudrate are the same, return
         return set_errno_and_return(urg, URG_NO_ERROR);
     }
 
-    // \~japanese "SS" ƒRƒ}ƒ“ƒh‚Åƒ{[ƒŒ[ƒg‚ğ•ÏX‚·‚é
+    // \~japanese "SS" ã‚³ãƒãƒ³ãƒ‰ã§ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
     // \~english Use "SS" command to change the baudrate
     snprintf(buffer, SS_COMMAND_SIZE, "SS%06ld\n", next_baudrate);
     ret = scip_response(urg, buffer, ss_expected, urg->timeout, NULL, 0);
 
-    // \~japanese 0F ‰“š‚Ì‚Æ‚«‚Í Ethernet —p‚ÌƒZƒ“ƒT‚Æ‚İ‚È‚µA³í‰“š‚ğ•Ô‚·
+    // \~japanese 0F å¿œç­”ã®ã¨ãã¯ Ethernet ç”¨ã®ã‚»ãƒ³ã‚µã¨ã¿ãªã—ã€æ­£å¸¸å¿œç­”ã‚’è¿”ã™
     // \~english 0F is a correct response for Ethernet sensors
     if (ret == -15) {
         return set_errno_and_return(urg, URG_NO_ERROR);
@@ -229,13 +229,13 @@ static int change_sensor_baudrate(urg_t *urg,
         return set_errno_and_return(urg, URG_INVALID_PARAMETER);
     }
 
-    // \~japanese ³í‰“š‚È‚ç‚ÎAƒzƒXƒg‘¤‚Ìƒ{[ƒŒ[ƒg‚ğ•ÏX‚·‚é
+    // \~japanese æ­£å¸¸å¿œç­”ãªã‚‰ã°ã€ãƒ›ã‚¹ãƒˆå´ã®ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
     // \~english If the result is correct, change the host's baudrate
     ret = connection_set_baudrate(&urg->connection, next_baudrate);
 
     ignore_receive_data(urg, MAX_TIMEOUT);
 
-    // \~japanese ƒZƒ“ƒT‘¤‚Ìİ’è”½‰f‚ğ‘Ò‚Â‚½‚ß‚É­‚µ‚¾‚¯‘Ò‹@‚·‚é
+    // \~japanese ã‚»ãƒ³ã‚µå´ã®è¨­å®šåæ˜ ã‚’å¾…ã¤ãŸã‚ã«å°‘ã—ã ã‘å¾…æ©Ÿã™ã‚‹
     // \~english Waits a bit for the sensor to change baudrate
     urg_delay(150);
 
@@ -243,7 +243,7 @@ static int change_sensor_baudrate(urg_t *urg,
 }
 
 
-// \~japanese ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚È‚ª‚çÚ‘±‚·‚é
+// \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ãªãŒã‚‰æ¥ç¶šã™ã‚‹
 // \~english Sets the baudrate and connects to the sensor
 static int connect_urg_device(urg_t *urg, long baudrate)
 {
@@ -251,7 +251,7 @@ static int connect_urg_device(urg_t *urg, long baudrate)
     int try_times = sizeof(try_baudrate) / sizeof(try_baudrate[0]);
     int i;
 
-    // \~japanese w¦‚³‚ê‚½ƒ{[ƒŒ[ƒg‚©‚çÚ‘±‚·‚é
+    // \~japanese æŒ‡ç¤ºã•ã‚ŒãŸãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‹ã‚‰æ¥ç¶šã™ã‚‹
     // \~english Fixes the baudrate list to have the given value first
     for (i = 0; i < try_times; ++i) {
         if (try_baudrate[i] == baudrate) {
@@ -269,11 +269,11 @@ static int connect_urg_device(urg_t *urg, long baudrate)
 
         connection_set_baudrate(&urg->connection, try_baudrate[i]);
 
-        // \~japanese URG‚ª“®‚¢‚Ä‚¢‚éƒ{[ƒŒ[ƒgˆÈŠO‚ÅƒRƒ}ƒ“ƒh‚ğ‘—M‚µ‚½ê‡‚ÉƒSƒ~‚ªc‚éê‡‚ª‚ ‚é‚Ì‚ÅƒNƒŠƒA
+        // \~japanese URGãŒå‹•ã„ã¦ã„ã‚‹ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆä»¥å¤–ã§ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—ãŸå ´åˆã«ã‚´ãƒŸãŒæ®‹ã‚‹å ´åˆãŒã‚ã‚‹ã®ã§ã‚¯ãƒªã‚¢
         // \~english Clear URG read buffer to avoid having garbage data resulting from the incorrect baudrate communication
         clear_urg_communication_buffer(urg, MAX_TIMEOUT);
 
-        // \~japanese QT ‚ğ‘—M‚µA‰“š‚ª•Ô‚³‚ê‚é‚©‚Åƒ{[ƒŒ[ƒg‚ªˆê’v‚µ‚Ä‚¢‚é‚©‚ğŠm”F‚·‚é
+        // \~japanese QT ã‚’é€ä¿¡ã—ã€å¿œç­”ãŒè¿”ã•ã‚Œã‚‹ã‹ã§ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹
         // \~english Sends the QT command and if the response is received then baudrate is correctly set
         ret = scip_response(urg, "QT\n", qt_expected, MAX_TIMEOUT,
                             receive_buffer, RECEIVE_BUFFER_SIZE);
@@ -282,32 +282,32 @@ static int connect_urg_device(urg_t *urg, long baudrate)
             if (!strcmp(receive_buffer, "E")) {
                 int scip20_expected[] = { 0, EXPECTED_END };
 
-                // \~japanese QT ‰“š‚ÌÅŒã‚Ì‰üs‚ğ“Ç‚İ”ò‚Î‚·
+                // \~japanese QT å¿œç­”ã®æœ€å¾Œã®æ”¹è¡Œã‚’èª­ã¿é£›ã°ã™
                 // \~english Skips the end-of-line after the QT response
                 ignore_receive_data(urg, MAX_TIMEOUT);
 
-                // \~japanese "E" ‚ª•Ô‚³‚ê‚½ê‡‚ÍASCIP 1.1 ‚Æ‚İ‚È‚µ "SCIP2.0" ‚ğ‘—M‚·‚é
+                // \~japanese "E" ãŒè¿”ã•ã‚ŒãŸå ´åˆã¯ã€SCIP 1.1 ã¨ã¿ãªã— "SCIP2.0" ã‚’é€ä¿¡ã™ã‚‹
                 // \~english If "E" is received it is SCIP1.1, so change to SCIP2.0
                 ret = scip_response(urg, "SCIP2.0\n", scip20_expected,
                                     MAX_TIMEOUT, NULL, 0);
 
-                // \~japanese SCIP2.0 ‰“š‚ÌÅŒã‚Ì‰üs‚ğ“Ç‚İ”ò‚Î‚·
+                // \~japanese SCIP2.0 å¿œç­”ã®æœ€å¾Œã®æ”¹è¡Œã‚’èª­ã¿é£›ã°ã™
                 // \~english Skips the end-of-line after SCIP2.0
                 ignore_receive_data(urg, MAX_TIMEOUT);
 
-                // \~japanese ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
+                // \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
                 // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
             } else if (!strcmp(receive_buffer, "0Ee")) {
                 int tm2_expected[] = { 0, EXPECTED_END };
 
-                // \~japanese "0Ee" ‚ª•Ô‚³‚ê‚½ê‡‚ÍATM ƒ‚[ƒh‚Æ‚İ‚È‚µ "TM2" ‚ğ‘—M‚·‚é
+                // \~japanese "0Ee" ãŒè¿”ã•ã‚ŒãŸå ´åˆã¯ã€TM ãƒ¢ãƒ¼ãƒ‰ã¨ã¿ãªã— "TM2" ã‚’é€ä¿¡ã™ã‚‹
                 // \~english If "0Ee" is received it is in TM mode, send "TM2" to end it
                 scip_response(urg, "TM2\n", tm2_expected,
                               MAX_TIMEOUT, NULL, 0);
 
-                // \~japanese ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
+                // \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
                 // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
             }
@@ -315,25 +315,25 @@ static int connect_urg_device(urg_t *urg, long baudrate)
 
         if (ret <= 0) {
             if (ret == URG_INVALID_RESPONSE) {
-                // \~japanese ˆÙí‚ÈƒGƒR[ƒoƒbƒN‚Ì‚Æ‚«‚ÍA‹——£ƒf[ƒ^óM’†‚Æ‚İ‚È‚µ‚Ä
-                // \~japanese ƒf[ƒ^‚ğ“Ç‚İ”ò‚Î‚·
+                // \~japanese ç•°å¸¸ãªã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã®ã¨ãã¯ã€è·é›¢ãƒ‡ãƒ¼ã‚¿å—ä¿¡ä¸­ã¨ã¿ãªã—ã¦
+                // \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿é£›ã°ã™
                 // \~english If an invalid echoback is received, it is currently in measurement data transmission
                 // \~english so skip the data
                 ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
 
-                // \~japanese ƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
+                // \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
                 // \~english Changes the baudrate and returns
                 return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
 
             } else {
-                // \~japanese ‰“š‚ª‚È‚¢‚Æ‚«‚ÍAƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚ÄAÄ“xÚ‘±‚ğs‚¤
+                // \~japanese å¿œç­”ãŒãªã„ã¨ãã¯ã€ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦ã€å†åº¦æ¥ç¶šã‚’è¡Œã†
                 // \~english If there is no response, changes the baudrate and re-connects
                 ignore_receive_data_with_qt(urg, MAX_TIMEOUT);
                 continue;
             }
         } else if (!strcmp("00P", receive_buffer)) {
 
-            // \~japanese ƒZƒ“ƒT‚ÆƒzƒXƒg‚Ìƒ{[ƒŒ[ƒg‚ğ•ÏX‚µ‚Ä–ß‚é
+            // \~japanese ã‚»ãƒ³ã‚µã¨ãƒ›ã‚¹ãƒˆã®ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¦æˆ»ã‚‹
             // \~english Changes the baudrate and returns
             return change_sensor_baudrate(urg, try_baudrate[i], baudrate);
         }
@@ -343,7 +343,7 @@ static int connect_urg_device(urg_t *urg, long baudrate)
 }
 
 
-// \~japanese PP ƒRƒ}ƒ“ƒh‚Ì‰“š‚ğ urg_t ‚ÉŠi”[‚·‚é
+// \~japanese PP ã‚³ãƒãƒ³ãƒ‰ã®å¿œç­”ã‚’ urg_t ã«æ ¼ç´ã™ã‚‹
 // \~english Stores the PP command response into urg_t
 static int receive_parameter(urg_t *urg)
 {
@@ -392,7 +392,7 @@ static int receive_parameter(urg_t *urg)
 
         } else if (!strncmp(p, "SCAN:", 5)) {
             int rpm = strtol(p + 5, NULL, 10);
-            // \~japanese ƒ^ƒCƒ€ƒAƒEƒgŠÔ‚ÍAŒv‘ªüŠú‚Ì 16 ”{’ö“x‚Ì’l‚É‚·‚é
+            // \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã¯ã€è¨ˆæ¸¬å‘¨æœŸã® 16 å€ç¨‹åº¦ã®å€¤ã«ã™ã‚‹
             // \~english Timeout is set about 16 times the sensor measurement period
             urg->scan_usec = 1000 * 1000 * 60 / rpm;
             urg->timeout = urg->scan_usec >> (10 - 4);
@@ -401,7 +401,7 @@ static int receive_parameter(urg_t *urg)
         p += strlen(p) + 1;
     }
 
-    // \~japanese ‘S‚Ä‚Ìƒpƒ‰ƒ[ƒ^‚ğóM‚µ‚½‚©Šm”F
+    // \~japanese å…¨ã¦ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å—ä¿¡ã—ãŸã‹ç¢ºèª
     // \~english Check if all the parameters were received
     if (received_bits != 0x007f) {
         return set_errno_and_return(urg, URG_RECEIVE_ERROR);
@@ -416,7 +416,7 @@ static int receive_parameter(urg_t *urg)
 }
 
 
-//! \~japanese SCIP •¶š—ñ‚ÌƒfƒR[ƒh  \~english  Decodes the SCIP message
+//! \~japanese SCIP æ–‡å­—åˆ—ã®ãƒ‡ã‚³ãƒ¼ãƒ‰  \~english  Decodes the SCIP message
 long urg_scip_decode(const char data[], int size)
 {
     const char* p = data;
@@ -477,7 +477,7 @@ static urg_measurement_type_t parse_distance_parameter(urg_t *urg,
         return URG_UNKNOWN;
     }
 
-    // \~japanese ƒpƒ‰ƒ[ƒ^‚ÌŠi”[
+    // \~japanese ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æ ¼ç´
     // \~english Stores the parameters
     urg->received_first_index = parse_parameter(&echoback[2], 4);
     urg->received_last_index = parse_parameter(&echoback[6], 4);
@@ -546,7 +546,7 @@ static int receive_length_data(urg_t *urg, long length[],
                                 urg->timeout);
 
         if (n > 0) {
-            // \~japanese ƒ`ƒFƒbƒNƒTƒ€‚Ì•]‰¿
+            // \~japanese ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è©•ä¾¡
             // \~english Validates the checksum
             if (buffer[line_filled + n - 1] != scip_checksum(&buffer[line_filled], n - 1) &&
                 (urg->ignore_checkSumError == 0)) {
@@ -564,10 +564,10 @@ static int receive_length_data(urg_t *urg, long length[],
             int index;
 
             if (*p == '&') {
-                // \~japanese æ“ª•¶š‚ª '&' ‚¾‚Á‚½‚Æ‚«‚ÍAƒ}ƒ‹ƒ`ƒGƒR[‚Ìƒf[ƒ^‚Æ‚İ‚È‚·
+                // \~japanese å…ˆé ­æ–‡å­—ãŒ '&' ã ã£ãŸã¨ãã¯ã€ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã¨ã¿ãªã™
                 // \~english If the start character is a '&' then assume data is multiecho
                 if ((last_p - (p + 1)) < data_size) {
-                    // \~japanese '&' ‚ğœ‚¢‚ÄAdata_size •ªƒf[ƒ^‚ª–³‚¯‚ê‚Î”²‚¯‚é
+                    // \~japanese '&' ã‚’é™¤ã„ã¦ã€data_size åˆ†ãƒ‡ãƒ¼ã‚¿ãŒç„¡ã‘ã‚Œã°æŠœã‘ã‚‹
                 // \~english Skips the '&' and if the string size is less than data_size ignore it
                     break;
                 }
@@ -578,7 +578,7 @@ static int receive_length_data(urg_t *urg, long length[],
                 --line_filled;
 
             } else {
-                // \~japanese Ÿ‚Ìƒf[ƒ^
+                // \~japanese æ¬¡ã®ãƒ‡ãƒ¼ã‚¿
                 // \~english Next data
                 multiecho_index = 0;
             }
@@ -587,7 +587,7 @@ static int receive_length_data(urg_t *urg, long length[],
 
             if (step_filled >
                 (urg->received_last_index - urg->received_first_index)) {
-                // \~japanese ƒf[ƒ^‚ª‘½‰ß‚¬‚éê‡‚ÍAc‚è‚Ìƒf[ƒ^‚ğ–³‹‚µ‚Ä–ß‚é
+                // \~japanese ãƒ‡ãƒ¼ã‚¿ãŒå¤šéãã‚‹å ´åˆã¯ã€æ®‹ã‚Šã®ãƒ‡ãƒ¼ã‚¿ã‚’ç„¡è¦–ã—ã¦æˆ»ã‚‹
                 // \~english If there is extra data, ignore it
                 ignore_receive_data_with_qt(urg, urg->timeout);
                 return set_errno_and_return(urg, URG_RECEIVE_ERROR);
@@ -595,7 +595,7 @@ static int receive_length_data(urg_t *urg, long length[],
 
 
             if (is_multiecho && (multiecho_index == 0)) {
-                // \~japanese ƒ}ƒ‹ƒ`ƒGƒR[‚Ìƒf[ƒ^Ši”[æ‚ğƒ_ƒ~[ƒf[ƒ^‚Å–„‚ß‚é
+                // \~japanese ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿æ ¼ç´å…ˆã‚’ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã§åŸ‹ã‚ã‚‹
                 // \~english Stores dummy values in the multiecho data location
                 int i;
                 if (length) {
@@ -610,14 +610,14 @@ static int receive_length_data(urg_t *urg, long length[],
                 }
             }
 
-            // \~japanese ‹——£ƒf[ƒ^‚ÌŠi”[
+            // \~japanese è·é›¢ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´
             // \~english Stores the distance data
             if (length) {
                 length[index] = urg_scip_decode(p, each_size);
             }
             p += each_size;
 
-            // \~japanese ‹­“xƒf[ƒ^‚ÌŠi”[
+            // \~japanese å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´
             // \~english Stores the intensity data
             if (is_intensity) {
                 if (intensity) {
@@ -630,7 +630,7 @@ static int receive_length_data(urg_t *urg, long length[],
             line_filled -= data_size;
         }
 
-        // \~japanese Ÿ‚Éˆ—‚·‚é•¶š‚ğ‘Ş”ğ
+        // \~japanese æ¬¡ã«å‡¦ç†ã™ã‚‹æ–‡å­—ã‚’é€€é¿
         // \~english Prepares the next line to process
         memmove(buffer, p, line_filled);
     } while (n > 0);
@@ -639,7 +639,7 @@ static int receive_length_data(urg_t *urg, long length[],
 }
 
 
-//! \~japanese ‹——£ƒf[ƒ^‚Ìæ“¾  \~english Gets measurement data
+//! \~japanese è·é›¢ãƒ‡ãƒ¼ã‚¿ã®å–å¾—  \~english Gets measurement data
 static int receive_data(urg_t *urg, long data[], unsigned short intensity[], long io[],
                         long *time_stamp)
 {
@@ -650,18 +650,18 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     int extended_timeout = urg->timeout
         + 2 * (urg->scan_usec * (urg->scanning_skip_scan) / 1000);
 
-    // \~japanese ƒGƒR[ƒoƒbƒN‚Ìæ“¾
+    // \~japanese ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã®å–å¾—
     // \~english Gets the echoback
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, extended_timeout);
     if (n <= 0) {
         return set_errno_and_return(urg, URG_NO_RESPONSE);
     }
-    // \~japanese ƒGƒR[ƒoƒbƒN‚Ì‰ğÍ
+    // \~japanese ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯ã®è§£æ
     // \~english Checks the echoback
     type = parse_distance_echoback(urg, buffer);
 
-    // \~japanese ‰“š‚Ìæ“¾
+    // \~japanese å¿œç­”ã®å–å¾—
     // \~english Gets the response message
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
@@ -671,7 +671,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     }
 
     if (buffer[n - 1] != scip_checksum(buffer, n - 1) && (urg->ignore_checkSumError == 0)) {
-        // \~japanese ƒ`ƒFƒbƒNƒTƒ€‚Ì•]‰¿
+        // \~japanese ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è©•ä¾¡
         // \~english Validates the checksum
         ignore_receive_data_with_qt(urg, urg->timeout);
         *time_stamp = 0;
@@ -679,7 +679,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
     }
 
     if (type == URG_STOP) {
-        // \~japanese QT ‰“š‚Ìê‡‚É‚ÍAÅŒã‚Ì‰üs‚ğ“Ç‚İÌ‚ÄA³í‰“š‚Æ‚µ‚Äˆ—‚·‚é
+        // \~japanese QT å¿œç­”ã®å ´åˆã«ã¯ã€æœ€å¾Œã®æ”¹è¡Œã‚’èª­ã¿æ¨ã¦ã€æ­£å¸¸å¿œç­”ã¨ã—ã¦å‡¦ç†ã™ã‚‹
         // \~english If received QT response, ignore the last end-of-line and return as successful
         n = connection_readline(&urg->connection,
                                 buffer, BUFFER_SIZE, urg->timeout);
@@ -692,8 +692,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
 
     if (urg->specified_scan_times != 1) {
         if (!strncmp(buffer, "00", 2)) {
-            // \~japanese "00" ‰“š‚Ìê‡‚ÍAƒGƒR[ƒoƒbƒN‰“š‚Æ‚İ‚È‚µA
-            // \~japanese ÅŒã‚Ì‹ós‚ğ“Ç‚İÌ‚ÄAŸ‚©‚ç‚Ìƒf[ƒ^‚ğ•Ô‚·
+            // \~japanese "00" å¿œç­”ã®å ´åˆã¯ã€ã‚¨ã‚³ãƒ¼ãƒãƒƒã‚¯å¿œç­”ã¨ã¿ãªã—ã€
+            // \~japanese æœ€å¾Œã®ç©ºè¡Œã‚’èª­ã¿æ¨ã¦ã€æ¬¡ã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
             // \~english If received "00" response, assumes it is the echoback
             // \~english Skips up to the next empty line and returns the next data
             n = connection_readline(&urg->connection,
@@ -715,8 +715,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         }
 
         //if (type == URG_UNKNOWN) {
-            // \~japanese Gx, Hx ‚Ì‚Æ‚«‚Í 00P ‚ª•Ô‚³‚ê‚½‚Æ‚«‚ªƒf[ƒ^
-            // \~japanese Mx, Nx ‚Ì‚Æ‚«‚Í 99b ‚ª•Ô‚³‚ê‚½‚Æ‚«‚ªƒf[ƒ^
+            // \~japanese Gx, Hx ã®ã¨ãã¯ 00P ãŒè¿”ã•ã‚ŒãŸã¨ããŒãƒ‡ãƒ¼ã‚¿
+            // \~japanese Mx, Nx ã®ã¨ãã¯ 99b ãŒè¿”ã•ã‚ŒãŸã¨ããŒãƒ‡ãƒ¼ã‚¿
             // \~english If received "00P" response for Gx/Hx
             // \~english If received "99b" response for Mx/Nx
             ignore_receive_data_with_qt(urg, urg->timeout);
@@ -724,7 +724,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         //}
     }
 
-    // \~japanese I/O‚Ìæ“¾
+    // \~japanese I/Oã®å–å¾—
     // \~english Gets I/O
     if (type == URG_DISTANCE_IO ||
         type == URG_DISTANCE_INTENSITY_IO) {
@@ -743,7 +743,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         }
     }
 
-    // \~japanese ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
+    // \~japanese ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å–å¾—
     // \~english Gets the timestamp
     n = connection_readline(&urg->connection,
                             buffer, BUFFER_SIZE, urg->timeout);
@@ -753,7 +753,7 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         }
     }
 
-    // \~japanese ƒf[ƒ^‚Ìæ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     // \~english Gets the measurement data
     switch (type) {
     case URG_DISTANCE:
@@ -774,13 +774,13 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         break;
     }
 
-    // \~japanese specified_scan_times == 1 ‚Ì‚Æ‚«‚Í Gx ŒnƒRƒ}ƒ“ƒh‚ªg‚í‚ê‚é‚½‚ß
-    // \~japanese ƒf[ƒ^‚ğ–¾¦“I‚É’â~‚µ‚È‚­‚Ä‚æ‚¢
+    // \~japanese specified_scan_times == 1 ã®ã¨ãã¯ Gx ç³»ã‚³ãƒãƒ³ãƒ‰ãŒä½¿ã‚ã‚Œã‚‹ãŸã‚
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’æ˜ç¤ºçš„ã«åœæ­¢ã—ãªãã¦ã‚ˆã„
     // \~english If specified_scan_times == 1 then we are using a Gx type command
     // \~english it is not necessary to explicity stop measurement
     if ((urg->specified_scan_times > 1) && (urg->scanning_remain_times > 0)) {
         if (--urg->scanning_remain_times <= 0) {
-            // \~japanese ƒf[ƒ^‚Ì’â~‚Ì‚İ‚ğs‚¤
+            // \~japanese ãƒ‡ãƒ¼ã‚¿ã®åœæ­¢ã®ã¿ã‚’è¡Œã†
         // \~english Stops measurement
             urg_stop_measurement(urg);
         }
@@ -807,7 +807,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
 
     urg_t_initialize(urg);
 
-    // \~japanese ƒfƒoƒCƒX‚Ö‚ÌÚ‘±
+    // \~japanese ãƒ‡ãƒã‚¤ã‚¹ã¸ã®æ¥ç¶š
     // \~english Connects to the device
     ret = connection_open(&urg->connection, connection_type,
                           device_or_address, baudrate_or_port);
@@ -829,10 +829,10 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
         return urg->last_errno;
     }
 
-    // \~japanese  w’è‚µ‚½ƒ{[ƒŒ[ƒg‚Å URG ‚Æ’ÊM‚Å‚«‚é‚æ‚¤‚É’²®
+    // \~japanese  æŒ‡å®šã—ãŸãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã§ URG ã¨é€šä¿¡ã§ãã‚‹ã‚ˆã†ã«èª¿æ•´
     // \~english Make adjustments so to connect with URG using the specified baudrate
     if (connection_type == URG_ETHERNET) {
-        // \~japanese  Ethernet ‚Ì‚Æ‚«‚Í‰¼‚Ì’ÊM‘¬“x‚ğw’è‚µ‚Ä‚¨‚­
+        // \~japanese  Ethernet ã®ã¨ãã¯ä»®ã®é€šä¿¡é€Ÿåº¦ã‚’æŒ‡å®šã—ã¦ãŠã
         // \~english In case of Ethernet, sets a fake baudrate
         baudrate = 115200;
     }
@@ -843,7 +843,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     }
     urg->is_sending = URG_FALSE;
 
-    // \~japanese  •Ï”‚Ì‰Šú‰»
+    // \~japanese  å¤‰æ•°ã®åˆæœŸåŒ–
     // \~english Initializes variables
     urg->last_errno = URG_NO_ERROR;
     urg->range_data_byte = URG_COMMUNICATION_3_BYTE;
@@ -851,7 +851,7 @@ int urg_open(urg_t *urg, urg_connection_type_t connection_type,
     urg->scanning_remain_times = 0;
     urg->is_laser_on = URG_FALSE;
 
-    // \~japanese  ƒpƒ‰ƒ[ƒ^î•ñ‚ğæ“¾
+    // \~japanese  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æƒ…å ±ã‚’å–å¾—
     // \~english Gets the sensor parameters
     ret = receive_parameter(urg);
     if (ret == URG_NO_ERROR) {
@@ -886,7 +886,7 @@ int urg_start_time_stamp_mode(urg_t *urg)
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    // \~japanese  TM0 ‚ğ”­s‚·‚é
+    // \~japanese  TM0 ã‚’ç™ºè¡Œã™ã‚‹
     // \~english Sends TM0 command
     n = scip_response(urg, "TM0\n", expected, urg->timeout, NULL, 0);
     if (n <= 0) {
@@ -914,10 +914,10 @@ long urg_time_stamp(urg_t *urg)
         return ret;
     }
 
-    // \~japanese  buffer ‚©‚çƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚µAƒfƒR[ƒh‚µ‚Ä•Ô‚·
+    // \~japanese  buffer ã‹ã‚‰ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’å–å¾—ã—ã€ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ã¦è¿”ã™
     // \~english Gets and decodes the timestamp stored in buffer
     if (strcmp(buffer, "00P")) {
-        // \~japanese  Å‰‚Ì‰“š‚ª "00P" ‚Å‚È‚¯‚ê‚Î–ß‚é
+        // \~japanese  æœ€åˆã®å¿œç­”ãŒ "00P" ã§ãªã‘ã‚Œã°æˆ»ã‚‹
         // \~english If first status code is not "00P" return
         return set_errno_and_return(urg, URG_RECEIVE_ERROR);
     }
@@ -941,7 +941,7 @@ int urg_stop_time_stamp_mode(urg_t *urg)
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    // \~japanese  TM2 ‚ğ”­s‚·‚é
+    // \~japanese  TM2 ã‚’ç™ºè¡Œã™ã‚‹
     // \~english Sends the TM2 command
     n = scip_response(urg, "TM2\n", expected, urg->timeout, NULL, 0);
     if (n <= 0) {
@@ -965,13 +965,13 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
     urg->scanning_remain_times = urg->specified_scan_times;
     urg->scanning_skip_scan = (skip_scan < 0) ? 0 : skip_scan;
     if (scan_times >= 100) {
-        // \~japanese  Œv‘ª‰ñ”‚ª 99 ‚ğ‰z‚¦‚éê‡‚ÍA–³ŒÀ‰ñ‚ÌƒXƒLƒƒƒ“‚ğs‚¤
+        // \~japanese  è¨ˆæ¸¬å›æ•°ãŒ 99 ã‚’è¶Šãˆã‚‹å ´åˆã¯ã€ç„¡é™å›ã®ã‚¹ã‚­ãƒ£ãƒ³ã‚’è¡Œã†
         // \~english If the number of scans is over 99, work in infinite scanning mode
         urg->specified_scan_times = 0;
     }
 
     if (urg->scanning_remain_times == 1) {
-        // \~japanese  ƒŒ[ƒU”­Œõ‚ğw¦
+        // \~japanese  ãƒ¬ãƒ¼ã‚¶ç™ºå…‰ã‚’æŒ‡ç¤º
         // \~english Prepares the measurement command
         urg_laser_on(urg);
 
@@ -1015,16 +1015,16 @@ int urg_start_measurement(urg_t *urg, urg_measurement_type_t type, int scan_time
 
     urg->ignore_checkSumError = ignore_checkSumError;
 
-    // \~japanese  !!! Mx Œn, Nx Œn‚ÌŒv‘ª’†‚Ì‚Æ‚«‚ÍAQT ‚ğ”­s‚µ‚Ä‚©‚ç
-    // \~japanese  !!! Œv‘ªŠJnƒRƒ}ƒ“ƒh‚ğ‘—M‚·‚é‚æ‚¤‚É‚·‚é
-    // \~japanese  !!! ‚½‚¾‚µAMD Œv‘ª’†‚É MD ‚ğ”­s‚·‚é‚æ‚¤‚ÉA“¯‚¶ƒRƒ}ƒ“ƒh‚Ìê‡‚Í
-    // \~japanese  !!! Mx Œn, Nx Œn‚ÌŒv‘ª‚Íã‘‚«‚·‚é‚±‚Æ‚ª‚Å‚«‚é‚æ‚¤‚É‚·‚é
+    // \~japanese  !!! Mx ç³», Nx ç³»ã®è¨ˆæ¸¬ä¸­ã®ã¨ãã¯ã€QT ã‚’ç™ºè¡Œã—ã¦ã‹ã‚‰
+    // \~japanese  !!! è¨ˆæ¸¬é–‹å§‹ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
+    // \~japanese  !!! ãŸã ã—ã€MD è¨ˆæ¸¬ä¸­ã« MD ã‚’ç™ºè¡Œã™ã‚‹ã‚ˆã†ã«ã€åŒã˜ã‚³ãƒãƒ³ãƒ‰ã®å ´åˆã¯
+    // \~japanese  !!! Mx ç³», Nx ç³»ã®è¨ˆæ¸¬ã¯ä¸Šæ›¸ãã™ã‚‹ã“ã¨ãŒã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
     // \~english   !!! If a Mx/Nx measurement command is already in operation,
     // \~english   !!! measurement can be re-started after having send QT command.
     // \~english   !!! However, if Mx/Nx is already running and the same command is issued again
     // \~english   !!! (ex., send MD command while another MD is running), the command is overwritten
 
-    // \~japanese  w’è‚³‚ê‚½ƒ^ƒCƒv‚ÌƒpƒPƒbƒg‚ğ¶¬‚µA‘—M‚·‚é
+    // \~japanese  æŒ‡å®šã•ã‚ŒãŸã‚¿ã‚¤ãƒ—ã®ãƒ‘ã‚±ãƒƒãƒˆã‚’ç”Ÿæˆã—ã€é€ä¿¡ã™ã‚‹
     // \~english Prepares and sends the measurement command according to the given type
     switch (type) {
     case URG_DISTANCE:
@@ -1144,7 +1144,7 @@ int urg_stop_measurement(urg_t *urg)
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    // \~japanese  QT ‚ğ”­s‚·‚é
+    // \~japanese  QT ã‚’ç™ºè¡Œã™ã‚‹
     // \~english Sends the QT command
     n = connection_write(&urg->connection, "QT\n", 3);
     if (n != 3) {
@@ -1152,11 +1152,11 @@ int urg_stop_measurement(urg_t *urg)
     }
 
     for (i = 0; i < MAX_READ_TIMES; ++i) {
-        // \~japanese QT ‚Ì‰“š‚ª•Ô‚³‚ê‚é‚Ü‚ÅA‹——£ƒf[ƒ^‚ğ“Ç‚İÌ‚Ä‚é
+        // \~japanese QT ã®å¿œç­”ãŒè¿”ã•ã‚Œã‚‹ã¾ã§ã€è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿æ¨ã¦ã‚‹
         // \~english Skips measuement data until QT response is received
         ret = receive_data(urg, NULL, NULL, NULL, NULL);
         if (ret == URG_NO_ERROR) {
-            // \~japanese ³í‰“š
+            // \~japanese æ­£å¸¸å¿œç­”
             // \~english Correct response
             urg->is_laser_on = URG_FALSE;
             urg->is_sending = URG_FALSE;
@@ -1170,7 +1170,7 @@ int urg_stop_measurement(urg_t *urg)
 int urg_set_scanning_parameter(urg_t *urg, int first_step, int last_step,
                                int skip_step)
 {
-    // \~japanese  İ’è‚Ì”ÍˆÍŠO‚ğw’è‚µ‚½‚Æ‚«‚ÍAƒGƒ‰[‚ğ•Ô‚·
+    // \~japanese  è¨­å®šã®ç¯„å›²å¤–ã‚’æŒ‡å®šã—ãŸã¨ãã¯ã€ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
     // \~english If parameters are out of range, return an error
     if (((skip_step < 0) || (skip_step >= 100)) ||
         (first_step > last_step) ||
@@ -1215,7 +1215,7 @@ int urg_laser_on(urg_t *urg)
     }
 
     if (urg->is_laser_on != URG_FALSE) {
-        // \~japanese  Šù‚ÉƒŒ[ƒU‚ª”­Œõ‚µ‚Ä‚¢‚é‚Æ‚«‚ÍAƒRƒ}ƒ“ƒh‚ğ‘—M‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+        // \~japanese  æ—¢ã«ãƒ¬ãƒ¼ã‚¶ãŒç™ºå…‰ã—ã¦ã„ã‚‹ã¨ãã¯ã€ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
         // \~english If laser is already on don't send the command
         urg->last_errno = 0;
         return urg->last_errno;
@@ -1246,7 +1246,7 @@ int urg_reboot(urg_t *urg)
         return set_errno_and_return(urg, URG_NOT_CONNECTED);
     }
 
-    // \~japanese  ‚Q‰ñ–Ú‚Ì RB ‘—MŒãAÚ‘±‚ğØ’f‚·‚é
+    // \~japanese  ï¼’å›ç›®ã® RB é€ä¿¡å¾Œã€æ¥ç¶šã‚’åˆ‡æ–­ã™ã‚‹
     // \~english After sending the 2nd RB then close the connection
     for (i = 0; i < 2; ++i) {
         ret = scip_response(urg, "RB\n", expected, urg->timeout, NULL, 0);

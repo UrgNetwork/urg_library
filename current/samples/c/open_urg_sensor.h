@@ -3,7 +3,7 @@
 
 /*!
   \~japanese
-  \brief URG �Ƃ̐ڑ�
+  \brief URG との接続
   \~english
   \brief Connects to URG
   \~

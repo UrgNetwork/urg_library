@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief URG ライブラリのエラー定義
+  \brief URG 繝ｩ繧､繝悶Λ繝ｪ縺ｮ繧ｨ繝ｩ繝ｼ螳夂ｾｩ
   \~english
   \brief Definition of error codes of URG library
   \~

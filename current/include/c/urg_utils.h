@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
+  \brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
 
   \~english
   \brief URG sensor utility
@@ -24,11 +24,11 @@ extern "C" {
 
     /*!
       \~japanese
-      \brief URG ‚ÌƒGƒ‰[‚ğ¦‚·•¶š—ñ‚ğ•Ô‚·
+      \brief URG ã®ã‚¨ãƒ©ãƒ¼ã‚’ç¤ºã™æ–‡å­—åˆ—ã‚’è¿”ã™
 
-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
+      \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
 
-      \retval URG ‚ÌƒGƒ‰[‚ğ¦‚·•¶š—ñ
+      \retval URG ã®ã‚¨ãƒ©ãƒ¼ã‚’ç¤ºã™æ–‡å­—åˆ—
 
       \~english
       \brief Returns the string message for the last URG error
@@ -50,13 +50,13 @@ extern "C" {
 
     /*!
       \~japanese
-      \brief ƒZƒ“ƒT‚ª•Ô‚·‹——£‚ÌÅ‘å’lAÅ¬’l‚ğ•Ô‚·
+      \brief ã‚»ãƒ³ã‚µãŒè¿”ã™è·é›¢ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã‚’è¿”ã™
 
-      ƒZƒ“ƒT‚ª•Ô‚·‹——£‚ğ [Å¬’l, Å‘å’l] ‚Å•Ô‚µ‚Ü‚·B
+      ã‚»ãƒ³ã‚µãŒè¿”ã™è·é›¢ã‚’ [æœ€å°å€¤, æœ€å¤§å€¤] ã§è¿”ã—ã¾ã™ã€‚
 
-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
-      \param[out] min_distance Å¬’l [mm]
-      \param[out] max_distance Å‘å’l [mm]
+      \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+      \param[out] min_distance æœ€å°å€¤ [mm]
+      \param[out] max_distance æœ€å¤§å€¤ [mm]
 
       \~english
       \brief Obtains the minimum and maximum distance values from sensor measurements
@@ -85,19 +85,19 @@ extern "C" {
 
     /*!
       \~japanese
-      \brief Œv‘ª step ‚ÌÅ‘å’lAÅ¬’l‚ğ•Ô‚·
+      \brief è¨ˆæ¸¬ step ã®æœ€å¤§å€¤ã€æœ€å°å€¤ã‚’è¿”ã™
 
-      urg_set_scanning_parameter() ‚Åw’è‚Å‚«‚é”ÍˆÍ‚ğ [Å¬’l, Å‘å’l] ‚Å•Ô‚·B
+      urg_set_scanning_parameter() ã§æŒ‡å®šã§ãã‚‹ç¯„å›²ã‚’ [æœ€å°å€¤, æœ€å¤§å€¤] ã§è¿”ã™ã€‚
 
-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
-      \param[out] min_step Å¬’l
-      \param[out] max_step Å‘å’l
+      \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+      \param[out] min_step æœ€å°å€¤
+      \param[out] max_step æœ€å¤§å€¤
 
-      step ‚ÍƒZƒ“ƒT³–Ê‚ª 0 ‚Å‚ ‚èAƒZƒ“ƒTã•”‚©‚çŒ©‚½ê‡‚Ì”½Œv‚Ü‚í‚è‚Ì•ûŒü‚ª³AŒv‚Ü‚í‚è‚Ì•ûŒü‚ª•‰‚Ì step ’l‚Æ‚È‚éB
+      step ã¯ã‚»ãƒ³ã‚µæ­£é¢ãŒ 0 ã§ã‚ã‚Šã€ã‚»ãƒ³ã‚µä¸Šéƒ¨ã‹ã‚‰è¦‹ãŸå ´åˆã®åæ™‚è¨ˆã¾ã‚ã‚Šã®æ–¹å‘ãŒæ­£ã€æ™‚è¨ˆã¾ã‚ã‚Šã®æ–¹å‘ãŒè² ã® step å€¤ã¨ãªã‚‹ã€‚
 
-      \image html sensor_step_image.png ƒZƒ“ƒT‚Æ step ‚ÌŠÖŒW
+      \image html sensor_step_image.png ã‚»ãƒ³ã‚µã¨ step ã®é–¢ä¿‚
 
-      min_step, max_step ‚Ì’l‚ÍƒZƒ“ƒT‚É‚æ‚Á‚ÄˆÙ‚È‚éB
+      min_step, max_step ã®å€¤ã¯ã‚»ãƒ³ã‚µã«ã‚ˆã£ã¦ç•°ãªã‚‹ã€‚
 
       \~english
       \brief Gets the minimum and maximum step numbers
@@ -129,7 +129,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief ‚PƒXƒLƒƒƒ“‚É‚©‚©‚éŠÔ [usec] ‚ğ•Ô‚·
+       \brief ï¼‘ã‚¹ã‚­ãƒ£ãƒ³ã«ã‹ã‹ã‚‹æ™‚é–“ [usec] ã‚’è¿”ã™
        \~english
        \brief Returns the time [usec] for 1 scan
     */
@@ -138,7 +138,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief æ“¾ƒf[ƒ^”‚ÌÅ‘å’l‚ğ•Ô‚·
+       \brief å–å¾—ãƒ‡ãƒ¼ã‚¿æ•°ã®æœ€å¤§å€¤ã‚’è¿”ã™
        \~english
        \brief Returns the maximum size of data received from the sensor
     */
@@ -147,18 +147,18 @@ extern "C" {
 
     /*!
       \~japanese
-      \brief ƒCƒ“ƒfƒbƒNƒX‚ÆŠp“x(radian)‚Ì•ÏŠ·‚ğs‚¤
+      \brief ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¨è§’åº¦(radian)ã®å¤‰æ›ã‚’è¡Œã†
 
-      ƒCƒ“ƒfƒbƒN‚Æ‚Í urg_get_distance() ‚È‚Ç‚Ì‹——£ƒf[ƒ^æ“¾ŠÖ”‚ª•Ô‚µ‚½ƒf[ƒ^”z—ñ‚É‚Â‚¢‚Ä‚Ì’l‚Å‚ ‚éB‚±‚ÌŠÖ”‚ÍAÅŒã‚És‚Á‚½‹——£ƒf[ƒ^æ“¾ŠÖ”‚Ìƒf[ƒ^”z—ñ‚É‚Â‚¢‚Ä—LŒø‚Æ‚È‚éB
+      ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã¨ã¯ urg_get_distance() ãªã©ã®è·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ãŒè¿”ã—ãŸãƒ‡ãƒ¼ã‚¿é…åˆ—ã«ã¤ã„ã¦ã®å€¤ã§ã‚ã‚‹ã€‚ã“ã®é–¢æ•°ã¯ã€æœ€å¾Œã«è¡Œã£ãŸè·é›¢ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°ã®ãƒ‡ãƒ¼ã‚¿é…åˆ—ã«ã¤ã„ã¦æœ‰åŠ¹ã¨ãªã‚‹ã€‚
 
-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
-      \param[in] index ƒCƒ“ƒfƒbƒNƒX
+      \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+      \param[in] index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 
-      \return Šp“x [radian]
+      \return è§’åº¦ [radian]
 
-      index ‚ÍAæ“¾‚µ‚½Œv‘ªƒf[ƒ^‚É‚Â‚¢‚Ä‚Ì’l‚Å‚ ‚è step ‚âŠp“x‚Æ‚ÌŠÖŒW‚Íæ“¾İ’è‚É‚æ‚èˆÙ‚È‚éB
+      index ã¯ã€å–å¾—ã—ãŸè¨ˆæ¸¬ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦ã®å€¤ã§ã‚ã‚Š step ã‚„è§’åº¦ã¨ã®é–¢ä¿‚ã¯å–å¾—è¨­å®šã«ã‚ˆã‚Šç•°ãªã‚‹ã€‚
 
-      \image html sensor_index_image.png ƒZƒ“ƒT‚ÌŒv‘ª”ÍˆÍ‚ÆƒCƒ“ƒfƒbƒNƒX‚ÌŠÖŒW
+      \image html sensor_index_image.png ã‚»ãƒ³ã‚µã®è¨ˆæ¸¬ç¯„å›²ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–¢ä¿‚
 
       \~english
       \brief Converts index to angle in radians
@@ -194,7 +194,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief ƒCƒ“ƒfƒbƒNƒX‚ÆŠp“x(degree)‚Ì•ÏŠ·‚ğs‚¤
+       \brief ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¨è§’åº¦(degree)ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts index to angle in degrees
     */
@@ -203,7 +203,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief Šp“x(radian)‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤
+       \brief è§’åº¦(radian)ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts angle in radians to index
     */
@@ -212,7 +212,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief Šp“x(degree)‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤
+       \brief è§’åº¦(degree)ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts angle in degrees to index
     */
@@ -221,18 +221,18 @@ extern "C" {
 
     /*!
       \~japanese
-      \brief Šp“x(radian)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤
+      \brief è§’åº¦(radian)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†
 
-      urg_step_min_max() ‚Å’è‹`‚³‚ê‚Ä‚¢‚é step ‚É‚Â‚¢‚ÄAŠp“x(radian)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤B
+      urg_step_min_max() ã§å®šç¾©ã•ã‚Œã¦ã„ã‚‹ step ã«ã¤ã„ã¦ã€è§’åº¦(radian)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†ã€‚
 
-      \param[in] urg URG ƒZƒ“ƒTŠÇ—
-      \param[in] radian Šp“x [radian]
+      \param[in] urg URG ã‚»ãƒ³ã‚µç®¡ç†
+      \param[in] radian è§’åº¦ [radian]
 
       \return step
 
-      \image html sensor_angle_image.png ƒZƒ“ƒT‚Ì step ‚ÆŠp“x‚Æ‚ÌŠÖŒW
+      \image html sensor_angle_image.png ã‚»ãƒ³ã‚µã® step ã¨è§’åº¦ã¨ã®é–¢ä¿‚
 
-      Šp“x‚©‚ç step ‚Ö•ÏŠ·‚µ‚½Œ‹‰Ê‚ª®”‚Å‚È‚¢ê‡AŒ‹‰Ê‚Í 0 ‚Ì•ûŒü‚ÉØ‚èÌ‚Ä‚ç‚ê‚½’l‚Æ‚È‚éB
+      è§’åº¦ã‹ã‚‰ step ã¸å¤‰æ›ã—ãŸçµæœãŒæ•´æ•°ã§ãªã„å ´åˆã€çµæœã¯ 0 ã®æ–¹å‘ã«åˆ‡ã‚Šæ¨ã¦ã‚‰ã‚ŒãŸå€¤ã¨ãªã‚‹ã€‚
 
       \~english
       \brief Converts angle in radians to step number
@@ -256,7 +256,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief Šp“x(degree)‚Æ step ‚Ì•ÏŠ·‚ğs‚¤
+       \brief è§’åº¦(degree)ã¨ step ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts angle in degrees to step number
     */
@@ -265,7 +265,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief step ‚Æ Šp“x(radian)‚Ì•ÏŠ·‚ğs‚¤
+       \brief step ã¨ è§’åº¦(radian)ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts step number to angle in radians
     */
@@ -274,7 +274,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief step ‚Æ Šp“x(degree)‚Ì•ÏŠ·‚ğs‚¤
+       \brief step ã¨ è§’åº¦(degree)ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts step number to angle in degrees
     */
@@ -282,7 +282,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief step ‚ÆƒCƒ“ƒfƒbƒNƒX‚Ì•ÏŠ·‚ğs‚¤
+       \brief step ã¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å¤‰æ›ã‚’è¡Œã†
        \~english
        \brief Converts step number to index
     */
@@ -290,7 +290,7 @@ extern "C" {
 
     /*!
        \~japanese
-       \brief w’è‚µ‚½ŠÔ‘Ò‚Â
+       \brief æŒ‡å®šã—ãŸæ™‚é–“å¾…ã¤
        \~english
        \brief Wait at the specified time
     */

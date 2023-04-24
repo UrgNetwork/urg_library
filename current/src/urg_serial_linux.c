@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese 
-  \brief ƒVƒŠƒAƒ‹’ÊM
+  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
   \~english Serial communications in Linux
   \~
   \author Satofumi KAMIMURA
@@ -46,11 +46,11 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     serial_initialize(serial);
 
 #ifndef URG_MAC_OS
-    enum { O_EXLOCK = 0x0 }; /* \~japanese Linux ‚Å‚Íg‚¦‚È‚¢‚Ì‚Åƒ_ƒ~[‚ğì¬‚µ‚Ä‚¨‚­ \~english Not used in Linux, used as dummy */
+    enum { O_EXLOCK = 0x0 }; /* \~japanese Linux ã§ã¯ä½¿ãˆãªã„ã®ã§ãƒ€ãƒŸãƒ¼ã‚’ä½œæˆã—ã¦ãŠã \~english Not used in Linux, used as dummy */
 #endif
     serial->fd = open(device, O_RDWR | O_EXLOCK | O_NONBLOCK | O_NOCTTY);
     if (serial->fd < 0) {
-        /* \~japanese Ú‘±‚É¸”s \~english Connection failed */
+        /* \~japanese æ¥ç¶šã«å¤±æ•— \~english Connection failed */
         //strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
         return -1;
     }
@@ -58,7 +58,7 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     flags = fcntl(serial->fd, F_GETFL, 0);
     fcntl(serial->fd, F_SETFL, flags & ~O_NONBLOCK);
 
-    /* \~japanese ƒVƒŠƒAƒ‹’ÊM‚Ì‰Šú‰» \~english Initializes serial communication  */
+    /* \~japanese ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ã®åˆæœŸåŒ– \~english Initializes serial communication  */
     tcgetattr(serial->fd, &serial->sio);
     serial->sio.c_iflag = 0;
     serial->sio.c_oflag = 0;
@@ -69,13 +69,13 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     serial->sio.c_cc[VMIN] = 0;
     serial->sio.c_cc[VTIME] = 0;
 
-    /* \~japanese ƒ{[ƒŒ[ƒg‚Ì•ÏX ~\english Changes the baudrate */
+    /* \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã®å¤‰æ›´ ~\english Changes the baudrate */
     ret = serial_set_baudrate(serial, baudrate);
     if (ret < 0) {
         return ret;
     }
 
-    /* \~japanese ƒVƒŠƒAƒ‹§Œä\‘¢‘Ì‚Ì‰Šú‰» \~english Initializes serial control structures */
+    /* \~japanese ã‚·ãƒªã‚¢ãƒ«åˆ¶å¾¡æ§‹é€ ä½“ã®åˆæœŸåŒ– \~english Initializes serial control structures */
     serial->has_last_ch = False;
 
     return 0;
@@ -124,7 +124,7 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
         return -1;
     }
 
-    /* \~japanese ƒ{[ƒŒ[ƒg•ÏX \~english Changes the baudrate */
+    /* \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆå¤‰æ›´ \~english Changes the baudrate */
     cfsetospeed(&serial->sio, baudrate_value);
     cfsetispeed(&serial->sio, baudrate_value);
     tcsetattr(serial->fd, TCSADRAIN, &serial->sio);
@@ -148,7 +148,7 @@ static int wait_receive(urg_serial_t* serial, int timeout)
     fd_set rfds;
     struct timeval tv;
 
-    // \~japanese ƒ^ƒCƒ€ƒAƒEƒgİ’è
+    // \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆè¨­å®š
     // \~english Configures the timeout
     FD_ZERO(&rfds);
     FD_SET(serial->fd, &rfds);
@@ -158,7 +158,7 @@ static int wait_receive(urg_serial_t* serial, int timeout)
 
     if (select(serial->fd + 1, &rfds, NULL, NULL,
                (timeout < 0) ? NULL : &tv) <= 0) {
-        /* \~japanese ƒ^ƒCƒ€ƒAƒEƒg”­¶ \~english Timeout occurred */
+        /* \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆç™ºç”Ÿ \~english Timeout occurred */
         return 0;
     }
     return 1;
@@ -185,7 +185,7 @@ static int internal_receive(char data[], int data_size_max,
         require_n = data_size_max - filled;
         read_n = read(serial->fd, &data[filled], require_n);
         if (read_n <= 0) {
-            /* \~japanese “Ç‚İo‚µƒGƒ‰[BŒ»İ‚Ü‚Å‚ÌóM“à—e‚Å–ß‚é \~english Read error, returns all the data up to now */
+            /* \~japanese èª­ã¿å‡ºã—ã‚¨ãƒ©ãƒ¼ã€‚ç¾åœ¨ã¾ã§ã®å—ä¿¡å†…å®¹ã§æˆ»ã‚‹ \~english Read error, returns all the data up to now */
             break;
         }
         filled += read_n;
@@ -204,7 +204,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         return 0;
     }
 
-    /* \~japanese ‘‚«–ß‚µ‚½‚P•¶š‚ª‚ ‚ê‚ÎA‘‚«o‚·  \~english If there is a single character return it */
+    /* \~japanese æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—ãŒã‚ã‚Œã°ã€æ›¸ãå‡ºã™  \~english If there is a single character return it */
     if (serial->has_last_ch != False) {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
@@ -221,7 +221,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
     if (buffer_size < read_n) {
-        // \~japanese ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚Å‘«‚è‚È‚¯‚ê‚ÎAƒf[ƒ^‚ğ“Ç‚İ‘«‚·
+        // \~japanese ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã§è¶³ã‚Šãªã‘ã‚Œã°ã€ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¶³ã™
         // \~english Reads data if there is space in the ring buffer
         char buffer[RING_BUFFER_SIZE];
         int n = internal_receive(buffer,
@@ -233,7 +233,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         }
     }
 
-    // \~japanese ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚ğ•Ô‚·
+    // \~japanese ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
     // \~english Returns the data stored in the ring buffer
     if (read_n > buffer_size) {
         read_n = buffer_size;
@@ -243,7 +243,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         filled += read_n;
     }
 
-    // \~japanese ƒf[ƒ^‚ğƒ^ƒCƒ€ƒAƒEƒg•t‚«‚Å“Ç‚İo‚·
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãã§èª­ã¿å‡ºã™
     // \~english Reads data within the given timeout
     filled += internal_receive(&data[filled], max_size - filled,
                                serial, timeout);

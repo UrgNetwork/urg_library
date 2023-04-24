@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief ’ÊM‚Ìˆ—
+  \brief é€šä¿¡ã®å‡¦ç†
   \~english
   \brief Process communications
   \~
@@ -23,64 +23,64 @@ extern "C" {
 
 /*!
   \~japanese
-  \brief ’è”’è‹`
+  \brief å®šæ•°å®šç¾©
   \~english
   \brief Defines constants
 */
 enum {
-    URG_CONNECTION_TIMEOUT = -1, //!< \~japanese ƒ^ƒCƒ€ƒAƒEƒg‚ª”­¶‚µ‚½‚Æ‚«‚Ì–ß‚è’l  \~english Return value in case of timeout
+    URG_CONNECTION_TIMEOUT = -1, //!< \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒç™ºç”Ÿã—ãŸã¨ãã®æˆ»ã‚Šå€¤  \~english Return value in case of timeout
 };
 
 
 /*!
   \~japanese
-  \brief ’ÊMƒ^ƒCƒv
+  \brief é€šä¿¡ã‚¿ã‚¤ãƒ—
   \~english
   \brief Connection type
 */
 typedef enum {
-    URG_SERIAL,                 //!< \~japanese ƒVƒŠƒAƒ‹, USB Ú‘±  \~english Serial/USB connection
-    URG_ETHERNET,               //!< \~japanese ƒC[ƒT[ƒlƒbƒgÚ‘±  \~english Ethernet connection
+    URG_SERIAL,                 //!< \~japanese ã‚·ãƒªã‚¢ãƒ«, USB æ¥ç¶š  \~english Serial/USB connection
+    URG_ETHERNET,               //!< \~japanese ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆæ¥ç¶š  \~english Ethernet connection
 } urg_connection_type_t;
 
 
 /*!
   \~japanese
-  \brief ’ÊMƒŠƒ\[ƒX
+  \brief é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
   \~english
   \brief Connection resources
 */
 typedef struct
 {
-    urg_connection_type_t type; //!< \~japanese Ú‘±ƒ^ƒCƒv  \~english Type of connection
-    urg_serial_t serial;        //!< \~japanese ƒVƒŠƒAƒ‹Ú‘± \~english Serial connection
-    urg_tcpclient_t tcpclient;  //!< \~japanese ƒC[ƒT[ƒlƒbƒgÚ‘± \~english Ethernet connection
+    urg_connection_type_t type; //!< \~japanese æ¥ç¶šã‚¿ã‚¤ãƒ—  \~english Type of connection
+    urg_serial_t serial;        //!< \~japanese ã‚·ãƒªã‚¢ãƒ«æ¥ç¶š \~english Serial connection
+    urg_tcpclient_t tcpclient;  //!< \~japanese ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆæ¥ç¶š \~english Ethernet connection
 } urg_connection_t;
 
 
 /*!
   \~japanese
-  \brief Ú‘±
+  \brief æ¥ç¶š
 
-  w’è‚³‚ê‚½ƒfƒoƒCƒX‚ÉÚ‘±‚·‚éB
+  æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒã‚¤ã‚¹ã«æ¥ç¶šã™ã‚‹ã€‚
 
-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
-  \param[in] connection_type Ú‘±ƒ^ƒCƒv
-  \param[in] device Ú‘±–¼
-  \param[in] baudrate_or_port ƒ{[ƒŒ[ƒg / ƒ|[ƒg”Ô†
+  \param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
+  \param[in] connection_type æ¥ç¶šã‚¿ã‚¤ãƒ—
+  \param[in] device æ¥ç¶šå
+  \param[in] baudrate_or_port ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆ / ãƒãƒ¼ãƒˆç•ªå·
 
-  \retval 0 ³í
-  \retval <0 ƒGƒ‰[
+  \retval 0 æ­£å¸¸
+  \retval <0 ã‚¨ãƒ©ãƒ¼
 
-  connection_type ‚É‚Í
+  connection_type ã«ã¯
 
-  - URG_SERIAL ... ƒVƒŠƒAƒ‹’ÊM
-  - URG_ETHERNET .. ƒC[ƒT[ƒlƒbƒg’ÊM
+  - URG_SERIAL ... ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
+  - URG_ETHERNET .. ã‚¤ãƒ¼ã‚µãƒ¼ãƒãƒƒãƒˆé€šä¿¡
 
-  ‚ğw’è‚·‚éB
+  ã‚’æŒ‡å®šã™ã‚‹ã€‚
 
-  device, baudrate_or_port ‚Ìw’è‚Í connection_type ‚É‚æ‚èw’è‚Å‚«‚é’l‚ªˆÙ‚È‚éB
-  —á‚¦‚ÎAƒVƒŠƒAƒ‹’ÊM‚Ìê‡‚ÍˆÈ‰º‚Ì‚æ‚¤‚É‚È‚éB
+  device, baudrate_or_port ã®æŒ‡å®šã¯ connection_type ã«ã‚ˆã‚ŠæŒ‡å®šã§ãã‚‹å€¤ãŒç•°ãªã‚‹ã€‚
+  ä¾‹ãˆã°ã€ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ã®å ´åˆã¯ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã‚‹ã€‚
 
   \~english
   \brief Connection
@@ -131,11 +131,11 @@ extern int connection_open(urg_connection_t *connection,
 
 /*!
   \~japanese
-  \brief Ø’f
+  \brief åˆ‡æ–­
 
-  ƒfƒoƒCƒX‚Æ‚ÌÚ‘±‚ğØ’f‚·‚éB
+  ãƒ‡ãƒã‚¤ã‚¹ã¨ã®æ¥ç¶šã‚’åˆ‡æ–­ã™ã‚‹ã€‚
 
-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
+  \param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
   \~english
   \brief Disconnection
 
@@ -153,7 +153,7 @@ extern void connection_close(urg_connection_t *connection);
 
 /*!
   \~japanese
-  \brief ƒ{[ƒŒ[ƒg‚ğİ’è‚·‚é
+  \brief ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
   \~english
   \brief Configures the baudrate
 */
@@ -162,16 +162,16 @@ extern int connection_set_baudrate(urg_connection_t *connection, long baudrate);
 
 /*!
   \~japanese
-  \brief ‘—M
+  \brief é€ä¿¡
 
-  ƒf[ƒ^‚ğ‘—M‚·‚éB
+  ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹ã€‚
 
-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
-  \param[in] data ‘—Mƒf[ƒ^
-  \param[in] size ‘—MƒoƒCƒg”
+  \param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
+  \param[in] data é€ä¿¡ãƒ‡ãƒ¼ã‚¿
+  \param[in] size é€ä¿¡ãƒã‚¤ãƒˆæ•°
 
-  \retval >=0 ‘—Mƒf[ƒ^”
-  \retval <0 ƒGƒ‰[
+  \retval >=0 é€ä¿¡ãƒ‡ãƒ¼ã‚¿æ•°
+  \retval <0 ã‚¨ãƒ©ãƒ¼
 
   \~english
   \brief Send
@@ -198,21 +198,21 @@ extern int connection_write(urg_connection_t *connection,
 
 /*!
   \~japanese
-  \brief óM
+  \brief å—ä¿¡
 
-  ƒf[ƒ^‚ğóM‚·‚éB
+  ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹ã€‚
 
-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
-  \param[in] data óMƒf[ƒ^‚ğŠi”[‚·‚éƒoƒbƒtƒ@
-  \param[in] max_size óMƒf[ƒ^‚ğŠi”[‚Å‚«‚éƒoƒCƒg”
-  \param[in] timeout ƒ^ƒCƒ€ƒAƒEƒgŠÔ [msec]
+  \param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
+  \param[in] data å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
+  \param[in] max_size å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã§ãã‚‹ãƒã‚¤ãƒˆæ•°
+  \param[in] timeout ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ [msec]
 
-  \retval >=0 óMƒf[ƒ^”
-  \retval <0 ƒGƒ‰[
+  \retval >=0 å—ä¿¡ãƒ‡ãƒ¼ã‚¿æ•°
+  \retval <0 ã‚¨ãƒ©ãƒ¼
 
-  timeout ‚É•‰‚Ì’l‚ğw’è‚µ‚½ê‡Aƒ^ƒCƒ€ƒAƒEƒg‚Í”­¶‚µ‚È‚¢B
+  timeout ã«è² ã®å€¤ã‚’æŒ‡å®šã—ãŸå ´åˆã€ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã¯ç™ºç”Ÿã—ãªã„ã€‚
 
-  1 •¶š‚àóM‚µ‚È‚©‚Á‚½‚Æ‚«‚Í #URG_CONNECTION_TIMEOUT ‚ğ•Ô‚·B
+  1 æ–‡å­—ã‚‚å—ä¿¡ã—ãªã‹ã£ãŸã¨ãã¯ #URG_CONNECTION_TIMEOUT ã‚’è¿”ã™ã€‚
 
   \~english
   \brief Receive
@@ -249,23 +249,23 @@ extern int connection_read(urg_connection_t *connection,
 
 /*!
   \~japanese
-  \brief ‰üs•¶š‚Ü‚Å‚ÌóM
+  \brief æ”¹è¡Œæ–‡å­—ã¾ã§ã®å—ä¿¡
 
-  ‰üs•¶š‚Ü‚Å‚Ìƒf[ƒ^‚ğóM‚·‚éB
+  æ”¹è¡Œæ–‡å­—ã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹ã€‚
 
-  \param[in,out] connection ’ÊMƒŠƒ\[ƒX
-  \param[in] data óMƒf[ƒ^‚ğŠi”[‚·‚éƒoƒbƒtƒ@
-  \param[in] max_size óMƒf[ƒ^‚ğŠi”[‚Å‚«‚éƒoƒCƒg”
-  \param[in] timeout ƒ^ƒCƒ€ƒAƒEƒgŠÔ [msec]
+  \param[in,out] connection é€šä¿¡ãƒªã‚½ãƒ¼ã‚¹
+  \param[in] data å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
+  \param[in] max_size å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã§ãã‚‹ãƒã‚¤ãƒˆæ•°
+  \param[in] timeout ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ [msec]
 
-  \retval >=0 óMƒf[ƒ^”
-  \retval <0 ƒGƒ‰[
+  \retval >=0 å—ä¿¡ãƒ‡ãƒ¼ã‚¿æ•°
+  \retval <0 ã‚¨ãƒ©ãƒ¼
 
-  data ‚É‚ÍA'\\0' I’[‚³‚ê‚½•¶š—ñ‚ª max_size ‚ğ‰z‚¦‚È‚¢ƒoƒCƒg”‚¾‚¯Ši”[‚³‚ê‚éB ‚Â‚Ü‚èAóM‚Å‚«‚é•¶š‚ÌƒoƒCƒg”‚ÍAÅ‘å‚Å max_size - 1 ‚Æ‚È‚éB
+  data ã«ã¯ã€'\\0' çµ‚ç«¯ã•ã‚ŒãŸæ–‡å­—åˆ—ãŒ max_size ã‚’è¶Šãˆãªã„ãƒã‚¤ãƒˆæ•°ã ã‘æ ¼ç´ã•ã‚Œã‚‹ã€‚ ã¤ã¾ã‚Šã€å—ä¿¡ã§ãã‚‹æ–‡å­—ã®ãƒã‚¤ãƒˆæ•°ã¯ã€æœ€å¤§ã§ max_size - 1 ã¨ãªã‚‹ã€‚
 
-  ‰üs•¶š‚Í '\\r' ‚Ü‚½‚Í '\\n' ‚Æ‚·‚éB
+  æ”¹è¡Œæ–‡å­—ã¯ '\\r' ã¾ãŸã¯ '\\n' ã¨ã™ã‚‹ã€‚
 
-  óM‚µ‚½Å‰‚Ì•¶š‚ª‰üs‚Ìê‡‚ÍA0 ‚ğ•Ô‚µA1 •¶š‚àóM‚µ‚È‚©‚Á‚½‚Æ‚«‚Í #URG_CONNECTION_TIMEOUT ‚ğ•Ô‚·B
+  å—ä¿¡ã—ãŸæœ€åˆã®æ–‡å­—ãŒæ”¹è¡Œã®å ´åˆã¯ã€0 ã‚’è¿”ã—ã€1 æ–‡å­—ã‚‚å—ä¿¡ã—ãªã‹ã£ãŸã¨ãã¯ #URG_CONNECTION_TIMEOUT ã‚’è¿”ã™ã€‚
 
   \~english
   \brief Receive until end-of-line

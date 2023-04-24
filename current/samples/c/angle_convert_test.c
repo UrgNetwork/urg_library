@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example angle_convert_test.c Šp“x•ÏŠ·‚ÌŒ‹‰Ê‚ğ•\¦‚·‚é
+  \example angle_convert_test.c è§’åº¦å¤‰æ›ã®çµæœã‚’è¡¨ç¤ºã™ã‚‹
   \~english
   \example angle_convert_test.c Some cases of angle conversion
   \~

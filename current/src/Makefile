@@ -25,7 +25,7 @@ OBJ_C = urg_sensor.o urg_utils.o urg_debug.o urg_connection.o \
 OBJ_CPP = ticks.o Urg_driver.o
 
 CFLAGS = -g -O2 $(INCLUDES) -I../include/c -fPIC
-CXXFLAGS = $(CFLAGS) -I../include/cpp
+CXXFLAGS = $(CFLAGS) -I../include/cpp -std=c++11
 LDLIBS = -lm $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; fi)
 
 all : $(TARGET)

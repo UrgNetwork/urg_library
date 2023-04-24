@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese 
-  \brief ƒVƒŠƒAƒ‹’ÊM
+  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
   \~english 
   \brief Serial communications on Windows
   \~
@@ -42,14 +42,14 @@ static void set_timeout(urg_serial_t *serial, int timeout)
 
 int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 {
-    // \~japanese COM10 ˆÈ~‚Ö‚Ì‘Î‰—p
+    // \~japanese COM10 ä»¥é™ã¸ã®å¯¾å¿œç”¨
     // \~english To deal with port names over COM10
     enum { NameLength = 11 };
     char adjusted_device[NameLength];
 
     serial_initialize(serial);
 
-    /* \~japanese COM ƒ|[ƒg‚ğŠJ‚­ \~english Opens the COM port */
+    /* \~japanese COM ãƒãƒ¼ãƒˆã‚’é–‹ã \~english Opens the COM port */
     _snprintf(adjusted_device, NameLength, "\\\\.\\%s", device);
     serial->hCom = CreateFileA(adjusted_device, GENERIC_READ | GENERIC_WRITE,
                                0, NULL, OPEN_EXISTING,
@@ -61,16 +61,16 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
         return -1;
     }
 
-    /* \~japanese ’ÊMƒTƒCƒY‚ÌXV  \~english Configures the transmission size */
+    /* \~japanese é€šä¿¡ã‚µã‚¤ã‚ºã®æ›´æ–°  \~english Configures the transmission size */
     SetupComm(serial->hCom, 4096 * 8, 4096);
 
-    /* \~japanese ƒ{[ƒŒ[ƒg‚Ì•ÏX ~\english Changes the baudrate */
+    /* \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã®å¤‰æ›´ ~\english Changes the baudrate */
     serial_set_baudrate(serial, baudrate);
 
-    /* \~japanese ƒVƒŠƒAƒ‹§Œä\‘¢‘Ì‚Ì‰Šú‰» \~english Initializes serial control structures */
+    /* \~japanese ã‚·ãƒªã‚¢ãƒ«åˆ¶å¾¡æ§‹é€ ä½“ã®åˆæœŸåŒ– \~english Initializes serial control structures */
     serial->has_last_ch = False;
 
-    /* \~japanese ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’è  \~english Configures the timeout */
+    /* \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®š  \~english Configures the timeout */
     serial->current_timeout = 0;
     set_timeout(serial, serial->current_timeout);
 
@@ -193,7 +193,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         return 0;
     }
 
-    /* \~japanese ‘‚«–ß‚µ‚½‚P•¶š‚ª‚ ‚ê‚ÎA‘‚«o‚·  \~english If there is a single character return it */
+    /* \~japanese æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—ãŒã‚ã‚Œã°ã€æ›¸ãå‡ºã™  \~english If there is a single character return it */
     if (serial->has_last_ch) {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
@@ -210,7 +210,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
     if (buffer_size < read_n) {
-        // \~japanese ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚Å‘«‚è‚È‚¯‚ê‚ÎAƒf[ƒ^‚ğ“Ç‚İ‘«‚·
+        // \~japanese ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã§è¶³ã‚Šãªã‘ã‚Œã°ã€ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¶³ã™
         // \~english Reads data if there is space in the ring buffer
         char buffer[RING_BUFFER_SIZE];
         int n = internal_receive(buffer,
@@ -220,7 +220,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
     }
     buffer_size = ring_size(&serial->ring);
 
-    // \~japanese ƒŠƒ“ƒOƒoƒbƒtƒ@“à‚Ìƒf[ƒ^‚ğ•Ô‚·
+    // \~japanese ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
     // \~english Returns the data stored in the ring buffer
     if (read_n > buffer_size) {
         read_n = buffer_size;
@@ -230,7 +230,7 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
         filled += read_n;
     }
 
-    // \~japanese ƒf[ƒ^‚ğƒ^ƒCƒ€ƒAƒEƒg•t‚«‚Å“Ç‚İo‚·
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆä»˜ãã§èª­ã¿å‡ºã™
     // \~english Reads data within the given timeout
     filled += internal_receive(&data[filled],
                                max_size - filled, serial, timeout);

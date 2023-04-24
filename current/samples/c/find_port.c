@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example find_port.c ƒ|[ƒg‚Ì’Tõ
+  \example find_port.c ãƒãƒ¼ãƒˆã®æ¢ç´¢
   \~english
   \example find_port.c Finds out the port
   \~

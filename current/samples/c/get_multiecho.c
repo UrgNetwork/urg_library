@@ -1,6 +1,6 @@
  /*!
   \~japanese
-  \example get_multiecho.c ‹——£ƒf[ƒ^(ƒ}ƒ‹ƒ`ƒGƒR[)‚ğæ“¾‚·‚é
+  \example get_multiecho.c è·é›¢ãƒ‡ãƒ¼ã‚¿(ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼)ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_multiecho.c Obtains multiecho distance data
   \~
@@ -34,7 +34,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
     (void)data_n;
 
-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
     // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
     print_echo_data(data, front_index);
@@ -45,7 +45,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
     int i;
 
-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+    // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
     // \~english Prints the multiecho distance for all the measurement points
     printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
     urg_start_measurement(&urg, URG_MULTIECHO, URG_SCAN_INFINITY, 0, 1);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, n, time_stamp);
     }
 
-    // \~japanese Ø’f
+    // \~japanese åˆ‡æ–­
     // \~english Disconnects
     free(data);
     urg_close(&urg);

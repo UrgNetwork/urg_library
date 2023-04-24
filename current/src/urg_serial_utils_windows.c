@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese 
-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
+  \brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
   \~english
   \brief Serial communication auxiliary functions for Windows
   \author Satofumi KAMIMURA
@@ -9,8 +9,8 @@
   $Id$
 
   \~japanese 
-  \todo •Ï”–¼‚ğ '_' ‹æØ‚è‚ÌŒ`®‚É•ÏX‚·‚é
-  \todo C90 ‘Š“–‚Å“®ì‚·‚é‚æ‚¤‚É’²®‚·‚éB‚½‚¾‚µA"//" ƒRƒƒ“ƒg‚Íg‚¤
+  \todo å¤‰æ•°åã‚’ '_' åŒºåˆ‡ã‚Šã®å½¢å¼ã«å¤‰æ›´ã™ã‚‹
+  \todo C90 ç›¸å½“ã§å‹•ä½œã™ã‚‹ã‚ˆã†ã«èª¿æ•´ã™ã‚‹ã€‚ãŸã ã—ã€"//" ã‚³ãƒ¡ãƒ³ãƒˆã¯ä½¿ã†
   \~english
   \todo Change variable names to use the "_" convention
   \todo Fix the code to be C90 compliant, but keeping the "//" comments
@@ -80,7 +80,7 @@ static void sort_ports(void)
 
 int urg_serial_find_port(void)
 {
-    // \~japanese ƒfƒoƒCƒXƒ}ƒl[ƒWƒƒ‚Ìˆê——‚©‚ç COM ƒfƒoƒCƒX‚ğ’T‚·
+    // \~japanese ãƒ‡ãƒã‚¤ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ã®ä¸€è¦§ã‹ã‚‰ COM ãƒ‡ãƒã‚¤ã‚¹ã‚’æ¢ã™
     // \~english Searchs for COM devices from the list of device manager
 
     //4D36E978-E325-11CE-BFC1-08002BE10318
@@ -115,28 +115,28 @@ int urg_serial_find_port(void)
         int n;
         int j;
 
-        // \~japanese ƒtƒŒƒ“ƒhƒŠ[ƒl[ƒ€‚ğæ“¾‚µ‚Ä COM ”Ô†‚ğæ‚èo‚·
+        // \~japanese ãƒ•ãƒ¬ãƒ³ãƒ‰ãƒªãƒ¼ãƒãƒ¼ãƒ ã‚’å–å¾—ã—ã¦ COM ç•ªå·ã‚’å–ã‚Šå‡ºã™
         // \~english Gets the Friendly name property and gets the COM port number
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_FRIENDLYNAME,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
                                           &dwSize);
         n = (int)strlen(buffer);
         if (n < ComNameLengthMax) {
-            // \~japanese COM –¼‚ª’Z‰ß‚¬‚½ê‡Aˆ—‚µ‚È‚¢
-            // \~japanese –â‘è‚ª‚ ‚éê‡‚ÍAC³‚·‚é
+            // \~japanese COM åãŒçŸ­éããŸå ´åˆã€å‡¦ç†ã—ãªã„
+            // \~japanese å•é¡ŒãŒã‚ã‚‹å ´åˆã¯ã€ä¿®æ­£ã™ã‚‹
             // \~english If the COM name is too small, ignore it
             // \~english (fix this in case of problems)
             continue;
         }
 
-        // \~japanese (COMx) ‚ÌÅŒã‚ÌŠ‡ŒÊ‚ÌˆÊ’u‚É '\0' ‚ğ‘ã“ü‚·‚é
+        // \~japanese (COMx) ã®æœ€å¾Œã®æ‹¬å¼§ã®ä½ç½®ã« '\0' ã‚’ä»£å…¥ã™ã‚‹
         // \~english Adds '\0' at the end of the string
         p = strrchr(buffer, ')');
         if (p) {
             *p = '\0';
         }
 
-        // \~japanese COM ‚Æ”Ô†‚Ü‚Å‚Ì•¶š—ñ‚ğ”²‚«o‚·
+        // \~japanese COM ã¨ç•ªå·ã¾ã§ã®æ–‡å­—åˆ—ã‚’æŠœãå‡ºã™
         // \~english Split name into "COM" and the number
         p = strstr(&buffer[n - ComNameLengthMax], "COM");
         if (! p) {
@@ -145,7 +145,7 @@ int urg_serial_find_port(void)
 
         snprintf(found_ports[found_ports_size], DEVICE_NAME_SIZE, "%s", p);
 
-        // \~japanese ƒfƒoƒCƒX–¼‚ğæ“¾‚µAURG ƒ|[ƒg‚©‚Ì”»’è‚É—p‚¢‚é
+        // \~japanese ãƒ‡ãƒã‚¤ã‚¹åã‚’å–å¾—ã—ã€URG ãƒãƒ¼ãƒˆã‹ã®åˆ¤å®šã«ç”¨ã„ã‚‹
         // \~english Get the device names and detect the URG port
         SetupDiGetDeviceRegistryPropertyA(hdi, &sDevInfo, SPDRP_DEVICEDESC,
                                           &dwRegType, (BYTE*)buffer, BufferSize,
@@ -163,7 +163,7 @@ int urg_serial_find_port(void)
     }
     SetupDiDestroyDeviceInfoList(hdi);
 
-    // \~japanese is_urg_port ‚Ì—v‘f‚ªæ“ª‚É—ˆ‚é‚æ‚¤‚Éƒ\[ƒg‚·‚é
+    // \~japanese is_urg_port ã®è¦ç´ ãŒå…ˆé ­ã«æ¥ã‚‹ã‚ˆã†ã«ã‚½ãƒ¼ãƒˆã™ã‚‹
     // \~english sort the elements in is_urg_port array
     sort_ports();
 

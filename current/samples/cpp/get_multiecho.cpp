@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_multiecho.cpp ‹——£ƒf[ƒ^(ƒ}ƒ‹ƒ`ƒGƒR[)‚ğæ“¾‚·‚é
+  \example get_multiecho.cpp è·é›¢ãƒ‡ãƒ¼ã‚¿(ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼)ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_multiecho.cpp Obtains multiecho distance data
   \~
@@ -33,7 +33,7 @@ namespace
                     const vector<long>& data, long time_stamp)
     {
 #if 1
-        // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+        // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
         // \~english Shows only the front step
         int front_index = urg.step2index(0);
         print_echo_data(data, front_index, urg.max_echo_size());
@@ -42,7 +42,7 @@ namespace
 #else
         static_cast<void>(urg);
 
-        // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+        // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
         // \~english Prints the multiecho distance for all the measurement points
         size_t data_n = data.size();
         cout << "# n = " << data_n << ", timestamp = " << time_stamp << endl;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // \~japanese Ú‘±
+    // \~japanese æ¥ç¶š
     // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
     enum { Capture_times = 10 };
     urg.start_measurement(Urg_driver::Multiecho, Urg_driver::Infinity_times, 0);

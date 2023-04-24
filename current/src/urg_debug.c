@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \brief URG ƒZƒ“ƒT—p‚Ì•â•ŠÖ”
+  \brief URG ã‚»ãƒ³ã‚µç”¨ã®è£œåŠ©é–¢æ•°
   \~english Auxiliary functions (read and write raw data)
   \brief 
   \~

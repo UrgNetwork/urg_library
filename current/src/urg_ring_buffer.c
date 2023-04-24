@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese 
-  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@
+  \brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
   \~english 
   \brief Implements a ring buffer
   \~
@@ -57,10 +57,10 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
     int free_size = ring_capacity(ring) - ring_size(ring);
     int push_size = (size > free_size) ? free_size : size;
 
-    // \~japanese ƒf[ƒ^”z’u
+    // \~japanese ãƒ‡ãƒ¼ã‚¿é…ç½®
     // \~english Stores the data
     if (ring->first <= ring->last) {
-        // \~japanese last ‚©‚ç buffer_size I’[‚Ü‚Å‚É”z’u
+        // \~japanese last ã‹ã‚‰ buffer_size çµ‚ç«¯ã¾ã§ã«é…ç½®
         // \~english Stores data at the last element of the buffer and before buffer_size
         int left_size = 0;
         int to_end = ring->buffer_size - ring->last;
@@ -72,13 +72,13 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
 
         left_size = push_size - move_size;
         if (left_size > 0) {
-            // \~japanese 0 ‚©‚ç first ‚Ì‘O‚Ü‚Å‚ð”z’u
+            // \~japanese 0 ã‹ã‚‰ first ã®å‰ã¾ã§ã‚’é…ç½®
             // \~english Stores data before the first element
             byte_move(ring->buffer, &data[move_size], left_size);
             ring->last = left_size;
         }
     } else {
-        // \~japanese last ‚©‚ç first ‚Ì‘O‚Ü‚Å”z’u
+        // \~japanese last ã‹ã‚‰ first ã®å‰ã¾ã§é…ç½®
         // \~english Stores data from last towards first
         byte_move(&ring->buffer[ring->last], data, size);
         ring->last += push_size;
@@ -89,7 +89,7 @@ int ring_write(ring_buffer_t *ring, const char *data, int size)
 
 int ring_read(ring_buffer_t *ring, char *buffer, int size)
 {
-    // \~japanese ƒf[ƒ^Žæ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Reads data
     int now_size = ring_size(ring);
     int pop_size = (size > now_size) ? now_size : size;
@@ -99,7 +99,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
         ring->first += pop_size;
 
     } else {
-        // \~japanese first ‚©‚ç buffer_size I’[‚Ü‚Å‚ð”z’u
+        // \~japanese first ã‹ã‚‰ buffer_size çµ‚ç«¯ã¾ã§ã‚’é…ç½®
         // \~english Gets data from first element of the buffer and before buffer_size
         int left_size = 0;
         int to_end = ring->buffer_size - ring->first;
@@ -111,7 +111,7 @@ int ring_read(ring_buffer_t *ring, char *buffer, int size)
 
         left_size = pop_size - move_size;
         if (left_size > 0) {
-            // \~japanese 0 ‚©‚ç last ‚Ì‘O‚Ü‚Å‚ð”z’u
+            // \~japanese 0 ã‹ã‚‰ last ã®å‰ã¾ã§ã‚’é…ç½®
             // \~english Gets data before the last element
             byte_move(&buffer[move_size], ring->buffer, left_size);
 

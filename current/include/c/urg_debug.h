@@ -8,7 +8,7 @@
   \author Satofumi KAMIMURA
 
   \~japanese
-  \attention g‚¤•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
+  \attention ä½¿ã†å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 
   \~english
   \attention It is not necessary to use these functions.
@@ -25,7 +25,7 @@ extern "C" {
 
     /*!
      \~japanese
-     \brief ƒZƒ“ƒT‚Éƒf[ƒ^‚ğ’¼Ú‘—M‚·‚é
+     \brief ã‚»ãƒ³ã‚µã«ãƒ‡ãƒ¼ã‚¿ã‚’ç›´æ¥é€ä¿¡ã™ã‚‹
      \~english
      \brief Directly send raw data to the sensor
     */
@@ -34,7 +34,7 @@ extern "C" {
 
     /*!
      \~japanese
-     \brief ƒZƒ“ƒT‚©‚çƒf[ƒ^‚ğ’¼ÚóM‚·‚é
+     \brief ã‚»ãƒ³ã‚µã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’ç›´æ¥å—ä¿¡ã™ã‚‹
      \~english
      \brief Directly get raw data from the sensor
     */
@@ -43,7 +43,7 @@ extern "C" {
 
     /*!
      \~japanese
-     \brief ƒZƒ“ƒT‚©‚ç‰üs‚Ü‚Å‚Ìƒf[ƒ^‚ğ’¼ÚóM‚·‚é
+     \brief ã‚»ãƒ³ã‚µã‹ã‚‰æ”¹è¡Œã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã‚’ç›´æ¥å—ä¿¡ã™ã‚‹
      \~english
      \brief Directly get raw data from the sensor until end-of-line
      */

@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief ƒVƒŠƒAƒ‹’ÊM
+  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
   \~english
   \brief Serial communications
   \~
@@ -35,51 +35,51 @@ enum {
 };
 
 
-//! \~japanese ƒVƒŠƒAƒ‹’ÊM—p  \~english Control information for serial connection
+//! \~japanese ã‚·ãƒªã‚¢ãƒ«é€šä¿¡ç”¨  \~english Control information for serial connection
 typedef struct
 {
 #if defined(URG_WINDOWS_OS)
-    HANDLE hCom;                //!< \~japanese Ú‘±ƒŠƒ\[ƒX  \~english Connection resource
-    int current_timeout;        //!< \~japanese ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’èŠÔ [msec]  \~english Timeout configuration value
+    HANDLE hCom;                //!< \~japanese æ¥ç¶šãƒªã‚½ãƒ¼ã‚¹  \~english Connection resource
+    int current_timeout;        //!< \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®šæ™‚é–“ [msec]  \~english Timeout configuration value
 #else
-    int fd;                     //!< \~japanese ƒtƒ@ƒCƒ‹ƒfƒBƒXƒNƒŠƒvƒ^  \~english File descriptor
-    struct termios sio;         //!< \~japanese ’ÊMİ’è  \~english Connection configuration
+    int fd;                     //!< \~japanese ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿  \~english File descriptor
+    struct termios sio;         //!< \~japanese é€šä¿¡è¨­å®š  \~english Connection configuration
 #endif
 
-    ring_buffer_t ring;         //!< \~japanese ƒŠƒ“ƒOƒoƒbƒtƒ@  \~english Ring buffer structure
-    char buffer[RING_BUFFER_SIZE]; //!< \~japanese ƒoƒbƒtƒ@—Ìˆæ  \~english Data buffer
-    char has_last_ch;          //!< \~japanese ‘‚«–ß‚µ‚½•¶š‚ª‚ ‚é‚©‚Ìƒtƒ‰ƒO  \~english Whether the last character was received or not
-    char last_ch;              //!< \~japanese ‘‚«–ß‚µ‚½‚P•¶š  \~english Last character received
+    ring_buffer_t ring;         //!< \~japanese ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡  \~english Ring buffer structure
+    char buffer[RING_BUFFER_SIZE]; //!< \~japanese ãƒãƒƒãƒ•ã‚¡é ˜åŸŸ  \~english Data buffer
+    char has_last_ch;          //!< \~japanese æ›¸ãæˆ»ã—ãŸæ–‡å­—ãŒã‚ã‚‹ã‹ã®ãƒ•ãƒ©ã‚°  \~english Whether the last character was received or not
+    char last_ch;              //!< \~japanese æ›¸ãæˆ»ã—ãŸï¼‘æ–‡å­—  \~english Last character received
 } urg_serial_t;
 
 
-//! \~japanese Ú‘±‚ğŠJ‚­  \~english Opens the connection
+//! \~japanese æ¥ç¶šã‚’é–‹ã  \~english Opens the connection
 extern int serial_open(urg_serial_t *serial, const char *device, long baudrate);
 
 
-//! \~japanese Ú‘±‚ğ•Â‚¶‚é  \~english Closes the connection
+//! \~japanese æ¥ç¶šã‚’é–‰ã˜ã‚‹  \~english Closes the connection
 extern void serial_close(urg_serial_t *serial);
 
 
-//! \~japanese ƒ{[ƒŒ[ƒg‚ğİ’è‚·‚é  \~english Configures the baudrate
+//! \~japanese ãƒœãƒ¼ãƒ¬ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹  \~english Configures the baudrate
 extern int serial_set_baudrate(urg_serial_t *serial, long baudrate);
 
 
-//! \~japanese ƒf[ƒ^‚ğ‘—M‚·‚é  \~english Sends data over serial connection
+//! \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹  \~english Sends data over serial connection
 extern int serial_write(urg_serial_t *serial, const char *data, int size);
 
 
-//! \~japanese ƒf[ƒ^‚ğóM‚·‚é  \~english Gets data from serial connection
+//! \~japanese ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹  \~english Gets data from serial connection
 extern int serial_read(urg_serial_t *serial,
                        char *data, int max_size, int timeout);
 
 
-//! \~japanese ‰üs‚Ü‚Å‚Ìƒf[ƒ^‚ğóM‚·‚é  \~english Gets data from serial connection until end-of-line
+//! \~japanese æ”¹è¡Œã¾ã§ã®ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹  \~english Gets data from serial connection until end-of-line
 extern int serial_readline(urg_serial_t *serial,
                            char *data, int max_size, int timeout);
 
 
-//! \~japanese ƒGƒ‰[•¶š—ñ‚ğŠi”[‚µ‚Ä•Ô‚·  \~english Stores the serial error message
+//! \~japanese ã‚¨ãƒ©ãƒ¼æ–‡å­—åˆ—ã‚’æ ¼ç´ã—ã¦è¿”ã™  \~english Stores the serial error message
 extern int serial_error(urg_serial_t *serial,
                         char *error_message, int max_size);
 

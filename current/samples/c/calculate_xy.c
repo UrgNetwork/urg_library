@@ -1,8 +1,8 @@
 /*!
   \~japanese
-  \example calculate_xy.c X-Y À•WŒn‚Å‚ÌˆÊ’u‚ğŒvZ‚·‚é
+  \example calculate_xy.c X-Y åº§æ¨™ç³»ã§ã®ä½ç½®ã‚’è¨ˆç®—ã™ã‚‹
 
-  ƒZƒ“ƒT‘O•û‚ª X ²‚Ì•ûŒü‚Æ‚İ‚È‚µ‚½’¼sÀ•Wã‚ÅA‹——£ƒf[ƒ^‚ğˆÊ’u‚ğo—Í‚·‚éB
+  ã‚»ãƒ³ã‚µå‰æ–¹ãŒ X è»¸ã®æ–¹å‘ã¨ã¿ãªã—ãŸç›´è¡Œåº§æ¨™ä¸Šã§ã€è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’ä½ç½®ã‚’å‡ºåŠ›ã™ã‚‹ã€‚
 
   \~english
   \example calculate_xy.c Calculates X-Y coordinates
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
     urg_start_measurement(&urg, URG_DISTANCE, 1, 0, 1);
     n = urg_get_distance(&urg, data, &time_stamp);
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese X-Y À•WŒn‚Ì’l‚ğo—Í
+    // \~japanese X-Y åº§æ¨™ç³»ã®å€¤ã‚’å‡ºåŠ›
     // \~english Outputs X-Y coordinates
     urg_distance_min_max(&urg, &min_distance, &max_distance);
     for (i = 0; i < n; ++i) {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     }
     printf("\n");
 
-    // \~japanese Ø’f
+    // \~japanese åˆ‡æ–­
     // \~english Disconnects
     free(data);
     urg_close(&urg);

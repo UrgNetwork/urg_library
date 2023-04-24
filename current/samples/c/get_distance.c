@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_distance.c ‹——£ƒf[ƒ^‚ğæ“¾‚·‚é
+  \example get_distance.c è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_distance.c Obtains distance data
   \~
@@ -23,7 +23,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
 
     (void)data_n;
 
-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
     // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
     printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
@@ -35,7 +35,7 @@ static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
     long min_distance;
     long max_distance;
 
-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚Ì X-Y ‚ÌˆÊ’u‚ğ•\¦
+    // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã® X-Y ã®ä½ç½®ã‚’è¡¨ç¤º
     // \~english Prints the X-Y coordinates for all the measurement points
     urg_distance_min_max(urg, &min_distance, &max_distance);
     for (i = 0; i < data_n; ++i) {
@@ -78,10 +78,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
 #if 0
-    // \~japanese ƒf[ƒ^‚Ìæ“¾”ÍˆÍ‚ğ•ÏX‚·‚éê‡
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ç¯„å›²ã‚’å¤‰æ›´ã™ã‚‹å ´åˆ
     // \~english Case where the measurement range (start/end steps) is defined
     urg_set_scanning_parameter(&urg,
                                urg_deg2step(&urg, -90),
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, n, time_stamp);
     }
 
-    // \~japanese Ø’f
+    // \~japanese åˆ‡æ–­
     // \~english Disconnects
     free(data);
     urg_close(&urg);

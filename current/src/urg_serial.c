@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief ƒVƒŠƒAƒ‹’ÊM
+  \brief ã‚·ãƒªã‚¢ãƒ«é€šä¿¡
   \~english
   \brief Serial communications
   \~
@@ -26,7 +26,7 @@ enum {
 #endif
 
 
-// \~japanese ‰üs‚©‚Ç‚¤‚©‚Ì”»’è
+// \~japanese æ”¹è¡Œã‹ã©ã†ã‹ã®åˆ¤å®š
 // \~english Checks wheter is is a EOL character
 static int is_linefeed(const char ch)
 {
@@ -43,7 +43,7 @@ static void serial_ungetc(urg_serial_t *serial, char ch)
 
 int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
 {
-    /* \~japanese ‚P•¶š‚¸‚Â“Ç‚İo‚µ‚Ä•]‰¿‚·‚é */
+    /* \~japanese ï¼‘æ–‡å­—ãšã¤èª­ã¿å‡ºã—ã¦è©•ä¾¡ã™ã‚‹ */
     /* \~english Reads and evaluates 1 character at a time */
     int filled = 0;
     int is_timeout = 0;

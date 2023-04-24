@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example sync_time_stamp.cpp ƒZƒ“ƒT‚Æ PC ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ“¯Šú‚·‚é
+  \example sync_time_stamp.cpp ã‚»ãƒ³ã‚µã¨ PC ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’åŒæœŸã™ã‚‹
   \~english
   \example sync_time_stamp.cpp Timestamp synchronization between PC and sensor
   \~
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // \~japanese Ú‘±
+    // \~japanese æ¥ç¶š
     // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
@@ -51,20 +51,20 @@ int main(int argc, char *argv[])
 
     cout << "# pc,\tsensor" << endl;
 
-    // \~japanese ”äŠr—p‚É PC ‚ÆƒZƒ“ƒT‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ•\¦‚·‚é
+    // \~japanese æ¯”è¼ƒç”¨ã« PC ã¨ã‚»ãƒ³ã‚µã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’è¡¨ç¤ºã™ã‚‹
     // \~english Just to compare, shows the current PC timestamp and sensor timestamp
     print_timestamp(urg);
     cout << endl;
 
-    // \~japanese ƒZƒ“ƒT‚É PC ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğİ’è‚µA
-    // \~japanese ‹——£ƒf[ƒ^‚ğæ“¾‚µ‚½‚Æ‚«‚É“¾‚ç‚ê‚éƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ªA
-    // \~japanese PC ‚©‚ç“¾‚ç‚ê‚éƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Æ“¯‚¶‚É‚È‚é‚æ‚¤‚É‚·‚é
+    // \~japanese ã‚»ãƒ³ã‚µã« PC ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’è¨­å®šã—ã€
+    // \~japanese è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ãŸã¨ãã«å¾—ã‚‰ã‚Œã‚‹ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ãŒã€
+    // \~japanese PC ã‹ã‚‰å¾—ã‚‰ã‚Œã‚‹ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã¨åŒã˜ã«ãªã‚‹ã‚ˆã†ã«ã™ã‚‹
     // \~english Configures the PC timestamp into the sensor
     // \~english The timestamp value which comes in the measurement data
     // \~english will match the timestamp value from the PC
     urg.set_sensor_time_stamp(ticks());
 
-    // \~japanese İ’èŒã‚É PC ‚ÆƒZƒ“ƒT‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ•\¦‚·‚é
+    // \~japanese è¨­å®šå¾Œã« PC ã¨ã‚»ãƒ³ã‚µã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’è¡¨ç¤ºã™ã‚‹
     // \~english Displays the PC timestamp and sensor timestamp after configuration
     print_timestamp(urg);
 

@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief ’ÊM‚Ìˆ—
+  \brief é€šä¿¡ã®å‡¦ç†
   \~english
   \brief Communication related functions
   \~
