@@ -735,7 +735,8 @@ static int receive_data(urg_t *urg, long data[], unsigned short intensity[], lon
         if (n >= (io_size * URG_MAX_IO)) {
             if (io) {
                 char *p = buffer;
-                for (int i = 0; i < URG_MAX_IO; ++i) {
+                int i;
+                for (i = 0; i < URG_MAX_IO; ++i) {
                     io[i] = urg_scip_decode(p, io_size);
                     p += io_size;
                 }
