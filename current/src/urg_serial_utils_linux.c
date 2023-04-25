@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese 
-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
+  \brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
   \~english
   \brief Serial communication auxiliary functions for Linux
   \~
@@ -88,8 +88,8 @@ const char *urg_serial_port_name(int index)
 
 int urg_serial_is_urg_port(int index)
 {
-    // \~japanese Linux ‚Ìê‡Aƒ|[ƒg‚ª URG ‚©‚Ç‚¤‚©‚Í’f’è‚Å‚«‚È‚¢
-    // \~japanese !!! —]—Í‚ª‚ ‚ê‚ÎAdmesg ‚È‚Ç‚Ìo—Í‚©‚ç”»’è‚·‚é‚æ‚¤‚É‚µ‚Ä‚à‚æ‚¢
+    // \~japanese Linux ã®å ´åˆã€ãƒãƒ¼ãƒˆãŒ URG ã‹ã©ã†ã‹ã¯æ–­å®šã§ããªã„
+    // \~japanese !!! ä½™åŠ›ãŒã‚ã‚Œã°ã€dmesg ãªã©ã®å‡ºåŠ›ã‹ã‚‰åˆ¤å®šã™ã‚‹ã‚ˆã†ã«ã—ã¦ã‚‚ã‚ˆã„
     // \~english In Linux we cannot check if the port is an URG or not
     // \~english With some spare time we may get this from dmesg or something
     (void)index;

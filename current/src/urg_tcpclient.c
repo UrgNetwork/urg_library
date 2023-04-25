@@ -1,6 +1,6 @@
 /*!
   \file
-  \~japanese TCP/IP “Ç‚İ‚İ/‘‚«‚İ@ŠÖ” 
+  \~japanese TCP/IP èª­ã¿è¾¼ã¿/æ›¸ãè¾¼ã¿ã€€é–¢æ•° 
   \brief
   \~english
   \brief TCP/IP read/write functions
@@ -28,7 +28,7 @@ enum {
     Invalid_desc = -1,
 };
 
-// \~japanese ‰üs‚©‚Ç‚¤‚©‚Ì”»’è
+// \~japanese æ”¹è¡Œã‹ã©ã†ã‹ã®åˆ¤å®š
 // \~english Checks wheter is is a EOL character
 static int is_linefeed(const char ch)
 {
@@ -128,7 +128,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     }
 
 #if defined(URG_WINDOWS_OS)
-    // \~japanese ƒmƒ“ƒuƒƒbƒN‚É•ÏX
+    // \~japanese ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
     // \~english Configures non-blocking mode
     flag = 1;
     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
@@ -147,18 +147,18 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret == 0) {
-            // \~japanese ƒ^ƒCƒ€ƒAƒEƒg
+            // \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
             // \~english Operation timed out
             tcpclient_close(cli);
             return -2;
         }
     }
-    // \~japanese ƒuƒƒbƒNƒ‚[ƒh‚É‚·‚é
+    // \~japanese ãƒ–ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
     // \~english Returns to blocking mode
     set_block_mode(cli);
 
 #else
-    // \~japanese ƒmƒ“ƒuƒƒbƒN‚É•ÏX
+    // \~japanese ãƒãƒ³ãƒ–ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
     // \~english Configures non-blocking mode
     flag = fcntl(cli->sock_desc, F_GETFL, 0);
     fcntl(cli->sock_desc, F_SETFL, flag | O_NONBLOCK);
@@ -170,7 +170,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
             return -1;
         }
 
-        // \~japanese EINPROGRESS:ƒRƒlƒNƒVƒ‡ƒ“—v‹‚Ín‚Ü‚Á‚½‚ªA‚Ü‚¾Š®—¹‚µ‚Ä‚¢‚È‚¢
+        // \~japanese EINPROGRESS:ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³è¦æ±‚ã¯å§‹ã¾ã£ãŸãŒã€ã¾ã å®Œäº†ã—ã¦ã„ãªã„
         // \~english EINPROGRESS: a connection request was already received and not completed yet
         FD_ZERO(&rmask);
         FD_SET(cli->sock_desc, &rmask);
@@ -178,7 +178,7 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
         if (ret <= 0) {
-            // \~japanese ƒ^ƒCƒ€ƒAƒEƒgˆ—
+            // \~japanese ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå‡¦ç†
             // \~english Operation timed out
             tcpclient_close(cli);
             return -2;
@@ -186,19 +186,19 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
         if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int*)&sock_optval,
                        (socklen_t*)&sock_optval_size) != 0) {
-            // \~japanese Ú‘±‚É¸”s
+            // \~japanese æ¥ç¶šã«å¤±æ•—
             // \~english Connection failed
             tcpclient_close(cli);
             return -3;
         }
 
         if (sock_optval != 0) {
-            // \~japanese Ú‘±‚É¸”s
+            // \~japanese æ¥ç¶šã«å¤±æ•—
             // \~english Connection failed
             tcpclient_close(cli);
             return -4;
         }
-        // \~japanese ƒuƒƒbƒNƒ‚[ƒh‚É‚·‚é
+        // \~japanese ãƒ–ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
         // \~english Returns to blocking mode
         set_block_mode(cli);
     }

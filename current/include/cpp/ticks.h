@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
+  \brief ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®å–å¾—
   \~english
   \brief Gets timestamp values
   \~

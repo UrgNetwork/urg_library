@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@
+  \brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
   \~english
   \brief Ring buffer functions
   \~
@@ -14,23 +14,23 @@
 */
 
 
-//! \~japanese ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÌŠÇ—î•ñ  \~english Control structure of the ring buffer
+//! \~japanese ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ç®¡ç†æƒ…å ±  \~english Control structure of the ring buffer
 typedef struct
 {
-    char *buffer;                 //!< \~japanese ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^  \~english Pointer to the data buffer
-    int buffer_size;              //!< \~japanese ƒoƒbƒtƒ@ƒTƒCƒY  \~english Buffer size
-    int first;                    //!< \~japanese ƒoƒbƒtƒ@‚Ìæ“ªˆÊ’u  \~english Index of the first entry of the buffer
-    int last;                     //!< \~japanese ƒoƒbƒtƒ@‚ÌÅIˆÊ’u  \~english Index of the last entry of the buffer
+    char *buffer;                 //!< \~japanese ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿  \~english Pointer to the data buffer
+    int buffer_size;              //!< \~japanese ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º  \~english Buffer size
+    int first;                    //!< \~japanese ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ä½ç½®  \~english Index of the first entry of the buffer
+    int last;                     //!< \~japanese ãƒãƒƒãƒ•ã‚¡ã®æœ€çµ‚ä½ç½®  \~english Index of the last entry of the buffer
 } ring_buffer_t;
 
 
 /*!
   \~japanese
-  \brief ‰Šú‰»
+  \brief åˆæœŸåŒ–
 
-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
-  \param[in] buffer Š„‚è“–‚Ä‚éƒoƒbƒtƒ@
-  \param[in] shift_length ƒoƒbƒtƒ@ƒTƒCƒY‚Ì 2 ‚Ìæ”
+  \param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
+  \param[in] buffer å‰²ã‚Šå½“ã¦ã‚‹ãƒãƒƒãƒ•ã‚¡
+  \param[in] shift_length ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã® 2 ã®ä¹—æ•°
 
   \~english
   \brief Initialization
@@ -45,9 +45,9 @@ extern void ring_initialize(ring_buffer_t *ring,
 
 /*!
   \~japanese
-  \brief ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+  \brief ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 
-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+  \param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
 
   \~english
   \brief Clears the ring  buffer
@@ -59,9 +59,9 @@ extern void ring_clear(ring_buffer_t *ring);
 
 /*!
   \~japanese
-  \brief Ši”[ƒf[ƒ^”‚ğ•Ô‚·
+  \brief æ ¼ç´ãƒ‡ãƒ¼ã‚¿æ•°ã‚’è¿”ã™
 
-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+  \param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
 
   \~english
   \brief Returns the number of elements on the buffer
@@ -73,9 +73,9 @@ extern int ring_size(const ring_buffer_t *ring);
 
 /*!
   \~japanese
-  \brief Å‘å‚ÌŠi”[ƒf[ƒ^”‚ğ•Ô‚·
+  \brief æœ€å¤§ã®æ ¼ç´ãƒ‡ãƒ¼ã‚¿æ•°ã‚’è¿”ã™
 
-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
+  \param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
 
   \~english
   \brief Returns the maximum number of elements of the ring buffer
@@ -87,13 +87,13 @@ extern int ring_capacity(const ring_buffer_t *ring);
 
 /*!
   \~japanese
-  \brief ƒf[ƒ^‚ÌŠi”[
+  \brief ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´
 
-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
-  \param[in] data ƒf[ƒ^
-  \param[in] size ƒf[ƒ^ƒTƒCƒY
+  \param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
+  \param[in] data ãƒ‡ãƒ¼ã‚¿
+  \param[in] size ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 
-  \return Ši”[‚µ‚½ƒf[ƒ^”
+  \return æ ¼ç´ã—ãŸãƒ‡ãƒ¼ã‚¿æ•°
 
   \~english
   \brief Stores data on the ring buffer
@@ -109,13 +109,13 @@ extern int ring_write(ring_buffer_t *ring, const char *data, int size);
 
 /*!
   \~japanese
-  \brief ƒf[ƒ^‚Ìæ‚èo‚µ
+  \brief ãƒ‡ãƒ¼ã‚¿ã®å–ã‚Šå‡ºã—
 
-  \param[in] ring ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì\‘¢‘Ì
-  \param[out] buffer ƒf[ƒ^
-  \param[in] size Å‘å‚Ìƒf[ƒ^ƒTƒCƒY
+  \param[in] ring ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®æ§‹é€ ä½“
+  \param[out] buffer ãƒ‡ãƒ¼ã‚¿
+  \param[in] size æœ€å¤§ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 
-  \return æ‚èo‚µ‚½ƒf[ƒ^”
+  \return å–ã‚Šå‡ºã—ãŸãƒ‡ãƒ¼ã‚¿æ•°
 
   \~english
   \brief Extracts data from the ring buffer

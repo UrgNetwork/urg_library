@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_distance_intensity.c ‹——£E‹­“xEIOƒf[ƒ^‚ğæ“¾‚·‚é
+  \example get_distance_intensity.c è·é›¢ãƒ»å¼·åº¦ãƒ»IOãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_distance_intensity.c Obtains distance, intensity and IO(input/output) data
   \~
@@ -24,7 +24,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
 
     printf("timestamp: %ld\n", time_stamp);
 
-    // \~japanese IOî•ñ‚ğ•\¦
+    // \~japanese IOæƒ…å ±ã‚’è¡¨ç¤º
     // \~english Display IO information
     unsigned long mask = (int)1 << (IO_BIT_SIZE - 1);
     char in[IO_BIT_SIZE + 1];
@@ -40,7 +40,7 @@ static void print_data(urg_t *urg, long data[], unsigned short intensity[],
     printf("input    : %s (%ld)\n", in, io[0]);
     printf("output   : %s (%ld)\n", out, io[1]);
 
-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
     // \~english Shows only the front step
     int front_index = urg_step2index(urg, 0);
     printf("distance : %ld [mm]\n", data[front_index]);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
     urg_start_measurement(&urg, URG_DISTANCE_INTENSITY_IO, URG_SCAN_INFINITY, 0);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, intensity, io, time_stamp);
     }
 
-    // \~japanese Ø’f
+    // \~japanese åˆ‡æ–­
     // \~english Disconnects
     free(intensity);
     free(data);

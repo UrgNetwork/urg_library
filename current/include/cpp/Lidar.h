@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief Lidar ƒCƒ“ƒ^[ƒtƒF[ƒX
+  \brief Lidar ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
   \~english
   \brief Lidar interface
   \~
@@ -19,17 +19,17 @@
 
 namespace qrk
 {
-    //! \~japanese Lidar ƒCƒ“ƒ^[ƒtƒF[ƒX  \~english Lidar interface
+    //! \~japanese Lidar ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹  \~english Lidar interface
     class Lidar
     {
     public:
         typedef enum {
-            Distance,            //!< \~japanese ‹——£  \~english Range
-            Distance_intensity,  //!< \~japanese ‹——£ + ‹­“x  \~english Distance (range) and intensity (strength)
-            Multiecho,           //!< \~japanese ƒ}ƒ‹ƒ`ƒGƒR[‚Ì‹——£  \~english Multiecho distance
-            Multiecho_intensity, //!< \~japanese ƒ}ƒ‹ƒ`ƒGƒR[‚Ì(‹——£ + ‹­“x)  \~english Multiecho distance and intensity
-            Distance_io,           //!< \~japanese ‹——£ + IO  \~english Distance (range) and io(input/output)
-            Distance_intensity_io, //!< \~japanese ‹——£ + ‹­“x + IO  \~english Distance (range), intensity and io(input/output)
+            Distance,            //!< \~japanese è·é›¢  \~english Range
+            Distance_intensity,  //!< \~japanese è·é›¢ + å¼·åº¦  \~english Distance (range) and intensity (strength)
+            Multiecho,           //!< \~japanese ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®è·é›¢  \~english Multiecho distance
+            Multiecho_intensity, //!< \~japanese ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼ã®(è·é›¢ + å¼·åº¦)  \~english Multiecho distance and intensity
+            Distance_io,           //!< \~japanese è·é›¢ + IO  \~english Distance (range) and io(input/output)
+            Distance_intensity_io, //!< \~japanese è·é›¢ + å¼·åº¦ + IO  \~english Distance (range), intensity and io(input/output)
         } measurement_type_t;
 
         typedef enum {
@@ -59,11 +59,11 @@ namespace qrk
         virtual void wakeup(void) = 0;
         virtual bool is_stable(void) = 0;
 
-        //! \~japanese ƒf[ƒ^æ“¾‚ÌŠJn  \~english Starts data measurement process
+        //! \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—ã®é–‹å§‹  \~english Starts data measurement process
         virtual bool start_measurement(measurement_type_t type,
                                        int scan_times, int skip_scan) = 0;
 
-        //! \~japanese óMƒf[ƒ^‚Ìó‚¯æ‚è  \~english Receives measurement data
+        //! \~japanese å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã®å—ã‘å–ã‚Š  \~english Receives measurement data
         virtual bool get_distance(std::vector<long>& data,
                                   long *time_stamp) = 0;
         virtual bool get_distance_intensity(std::vector<long>& data,
@@ -82,13 +82,13 @@ namespace qrk
         virtual bool set_scanning_parameter(int first_step, int last_step,
                                             int skip_step) = 0;
 
-        //! \~japanese ƒf[ƒ^æ“¾‚Ì’†’f  \~english Stops data measurement process
+        //! \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—ã®ä¸­æ–­  \~english Stops data measurement process
         virtual void stop_measurement(void) = 0;
 
-        //! \~japanese ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ì“¯Šú  \~english Synchronization of timestamps
+        //! \~japanese ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã®åŒæœŸ  \~english Synchronization of timestamps
         virtual bool set_sensor_time_stamp(long time_stamp) = 0;
 
-        //! \~japanese Šp“x•ÏŠ·  \~english Angle conversion functions
+        //! \~japanese è§’åº¦å¤‰æ›  \~english Angle conversion functions
         virtual double index2rad(int index) const = 0;
         virtual double index2deg(int index) const = 0;
         virtual int rad2index(double radian) const = 0;

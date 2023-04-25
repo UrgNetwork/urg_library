@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese
-  \brief Ú‘±î•ñ‚ÌŠÇ—
+  \brief æ¥ç¶šæƒ…å ±ã®ç®¡ç†
   \~english
   \brief Maintains connection information
   \~

@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example sensor_parameter.cpp ƒZƒ“ƒTî•ñ‚Ìo—Í
+  \example sensor_parameter.cpp ã‚»ãƒ³ã‚µæƒ…å ±ã®å‡ºåŠ›
   \~english
   \example sensor_parameter.cpp Outputs sensor information fields
   \~
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // \~japanese Ú‘±
+    // \~japanese æ¥ç¶š
     // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒpƒ‰ƒ[ƒ^î•ñ‚Ì•\¦
+    // \~japanese ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æƒ…å ±ã®è¡¨ç¤º
     // \~english Displays sensor parameters
     cout << "Sensor product type: " << urg.product_type() << endl;
     cout << "Sensor firmware version: " << urg.firmware_version() << endl;

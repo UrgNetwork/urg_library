@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_distance_io.c ‹——£EIOƒf[ƒ^‚ğæ“¾‚·‚é
+  \example get_distance_io.c è·é›¢ãƒ»IOãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_distance_io.c Obtains distance and IO(input/output) data
   \~
@@ -23,7 +23,7 @@ static void print_data(urg_t *urg, long data[], long io[], long time_stamp)
 
     printf("timestamp: %ld\n", time_stamp);
 
-    // \~japanese IOî•ñ‚ğ•\¦
+    // \~japanese IOæƒ…å ±ã‚’è¡¨ç¤º
     // \~english Display IO information
     unsigned long mask = (int)1 << (IO_BIT_SIZE - 1);
     char in[IO_BIT_SIZE + 1];
@@ -39,7 +39,7 @@ static void print_data(urg_t *urg, long data[], long io[], long time_stamp)
     printf("input    : %s (%ld)\n", in, io[0]);
     printf("output   : %s (%ld)\n", out, io[1]);
 
-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
     // \~english Shows only the front step
     int front_index = urg_step2index(urg, 0);
     printf("distance : %ld [mm]\n\n", data[front_index]);
@@ -68,10 +68,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
 #if 0
-    // \~japanese ƒf[ƒ^‚Ìæ“¾”ÍˆÍ‚ğ•ÏX‚·‚éê‡
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ç¯„å›²ã‚’å¤‰æ›´ã™ã‚‹å ´åˆ
     // \~english Case where the measurement range (start/end steps) is defined
     urg_set_scanning_parameter(&urg,
                                urg_deg2step(&urg, -90),
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, io, time_stamp);
     }
 
-    // \~japanese Ø’f
+    // \~japanese åˆ‡æ–­
     // \~english Disconnects
     free(data);
     urg_close(&urg);

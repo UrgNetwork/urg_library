@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief ”ŠwŠÖ”‚Ì•â•ƒtƒ@ƒCƒ‹
+  \brief æ•°å­¦é–¢æ•°ã®è£œåŠ©ãƒ•ã‚¡ã‚¤ãƒ«
   \~english
   \brief Auxiliary math functions
   \~
@@ -21,7 +21,7 @@
 
 
 #ifndef M_PI
-//! \~japanese ‰~ü—¦ (Visual C++ 6.0 —p)
+//! \~japanese å††å‘¨ç‡ (Visual C++ 6.0 ç”¨)
 //! \~english PI approximation (for Visual C++ 6.0)
 #define M_PI 3.14159265358979323846
 #endif

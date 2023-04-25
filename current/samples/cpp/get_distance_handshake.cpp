@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_distance.cpp ‹——£ƒf[ƒ^‚ğæ“¾‚·‚é
+  \example get_distance.cpp è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_distance.cpp Obtains distance data
   \~
@@ -24,14 +24,14 @@ namespace
                     const vector<long>& data, long time_stamp)
     {
 #if 1
-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
     // \~english Shows only the front step
         int front_index = urg.step2index(0);
         cout << data[front_index] << " [mm], ("
              << time_stamp << " [msec])" << endl;
 
 #else
-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚Ì X-Y ‚ÌˆÊ’u‚ğ•\¦
+    // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã® X-Y ã®ä½ç½®ã‚’è¡¨ç¤º
     // \~english Prints the X-Y coordinates for all the measurement points
         long min_distance = urg.min_distance();
         long max_distance = urg.max_distance();
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // \~japanese Ú‘±
+    // \~japanese æ¥ç¶š
     // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
@@ -68,10 +68,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
 #if 1
-    // \~japanese ƒf[ƒ^‚Ìæ“¾”ÍˆÍ‚ğ•ÏX‚·‚éê‡
+    // \~japanese ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ç¯„å›²ã‚’å¤‰æ›´ã™ã‚‹å ´åˆ
     // \~english Case where the measurement range (start/end steps) is defined
     urg.set_scanning_parameter(urg.deg2step(-90), urg.deg2step(+90), 0);
 #endif

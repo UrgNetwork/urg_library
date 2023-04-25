@@ -1,7 +1,7 @@
 /*!
   \file
   \~japanese 
-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
+  \brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
   \~english
   \brief Serial communications auxiliary functions
   \~

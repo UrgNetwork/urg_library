@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_distance_intensity.cpp ‹——£E‹­“xƒf[ƒ^‚ğæ“¾‚·‚é
+  \example get_distance_intensity.cpp è·é›¢ãƒ»å¼·åº¦ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_distance_intensity.cpp Obtains distance and intensity data
   \~
@@ -25,7 +25,7 @@ namespace
                     long time_stamp)
     {
 #if 1
-        // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+        // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
         // \~english Shows only the front step
         int front_index = urg.step2index(0);
         cout << data[front_index] << " [mm], "
@@ -35,7 +35,7 @@ namespace
 #else
         static_cast<void>(urg);
 
-        // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+        // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
         // \~english Prints the range/intensity values for all the measurement points
         size_t data_n = data.size();
         cout << "# n = " << data_n << ", timestamp = " << time_stamp << endl;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
-    // \~japanese Ú‘±
+    // \~japanese æ¥ç¶š
     // \~english Connects to the sensor
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
     enum { Capture_times = 10 };
     urg.start_measurement(Urg_driver::Distance_intensity, Urg_driver::Infinity_times, 0);

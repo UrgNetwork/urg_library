@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \example get_multiecho_intensity.c ‹——£E‹­“xƒf[ƒ^(ƒ}ƒ‹ƒ`ƒGƒR[)‚ğæ“¾‚·‚é
+  \example get_multiecho_intensity.c è·é›¢ãƒ»å¼·åº¦ãƒ‡ãƒ¼ã‚¿(ãƒãƒ«ãƒã‚¨ã‚³ãƒ¼)ã‚’å–å¾—ã™ã‚‹
   \~english
   \example get_multiecho_intensity.c Obtains multiecho distance and intensity data
   \~
@@ -33,7 +33,7 @@ static void print_echo_data(long data[], unsigned short intensity[],
 }
 
 
-// \~japanese ‹——£A‹­“x‚Ìƒf[ƒ^‚ğ•\¦‚·‚é
+// \~japanese è·é›¢ã€å¼·åº¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºã™ã‚‹
 // \~english Prints distance and intensity data
 static void print_data(urg_t *urg, long data[],
                        unsigned short intensity[], int data_n, long time_stamp)
@@ -43,7 +43,7 @@ static void print_data(urg_t *urg, long data[],
 
     (void)data_n;
 
-    // \~japanese ‘O•û‚Ìƒf[ƒ^‚Ì‚İ‚ğ•\¦
+    // \~japanese å‰æ–¹ã®ãƒ‡ãƒ¼ã‚¿ã®ã¿ã‚’è¡¨ç¤º
     // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
     print_echo_data(data, intensity, front_index);
@@ -53,7 +53,7 @@ static void print_data(urg_t *urg, long data[],
     (void)urg;
     int i;
 
-    // \~japanese ‘S‚Ä‚Ìƒf[ƒ^‚ğ•\¦
+    // \~japanese å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
     // \~english Prints the multiecho range/intensity values for all the measurement points
     printf("# n = %d, time_stamp = %ld\n", data_n, time_stamp);
     for (i = 0; i < data_n; ++i) {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // \~japanese ƒf[ƒ^æ“¾
+    // \~japanese ãƒ‡ãƒ¼ã‚¿å–å¾—
     // \~english Gets measurement data
     urg_start_measurement(&urg, URG_MULTIECHO_INTENSITY, URG_SCAN_INFINITY, 0, 1);
     for (i = 0; i < CAPTURE_TIMES; ++i) {
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
         print_data(&urg, data, intensity, n, time_stamp);
     }
 
-    // \~japanese Ø’f
+    // \~japanese åˆ‡æ–­
     // \~english Disconnects
     free(data);
     free(intensity);

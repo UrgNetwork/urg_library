@@ -1,6 +1,6 @@
 /*!
   \~japanese
-  \brief URG �Ƃ̐ڑ�
+  \brief URG との接続
   \~english
   \brief Connects to URG
   \~
@@ -32,7 +32,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
     //const char *ip_address = "localhost";
     int i;
 
-    // \~japanese �ڑ��^�C�v�̐ؑւ�
+    // \~japanese 接続タイプの切替え
     // \~english Changes connection type
     for (i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "-e")) {
@@ -48,7 +48,7 @@ int open_urg_sensor(urg_t *urg, int argc, char *argv[])
         }
     }
 
-    // \~japanese �ڑ�
+    // \~japanese 接続
     // \~english Connection
     if (urg_open(urg, connection_type, device, baudrate_or_port) < 0) {
         printf("urg_open: %s, %ld: %s\n",

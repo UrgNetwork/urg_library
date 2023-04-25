@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief OS ‚ÌŒŸo
+  \brief OS ã®æ¤œå‡º
   \~english
   \brief Detects the current OS
   \~
@@ -24,7 +24,7 @@
 #define URG_LINUX_OS
 
 #else
-// \~japanese ŒŸo‚Å‚«‚È‚¢‚Æ‚«‚ğAMac ˆµ‚¢‚É‚µ‚Ä‚µ‚Ü‚¤
+// \~japanese æ¤œå‡ºã§ããªã„ã¨ãã‚’ã€Mac æ‰±ã„ã«ã—ã¦ã—ã¾ã†
 // \~english If cannot detect the OS, assumes it is a Mac
 #define URG_MAC_OS
 #endif

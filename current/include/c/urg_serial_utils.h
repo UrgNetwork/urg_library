@@ -4,7 +4,7 @@
 /*!
   \file
   \~japanese
-  \brief ƒVƒŠƒAƒ‹—p‚Ì•â•ŠÖ”
+  \brief ã‚·ãƒªã‚¢ãƒ«ç”¨ã®è£œåŠ©é–¢æ•°
   \~english
   \brief Auxiliary functions for serial communications
   \~
@@ -14,21 +14,21 @@
 */
 
 
-//! \~japanese ƒVƒŠƒAƒ‹ƒ|[ƒg‚ğŒŸõ‚·‚é  \~english Finds the serial port
+//! \~japanese ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆã‚’æ¤œç´¢ã™ã‚‹  \~english Finds the serial port
 extern int urg_serial_find_port(void);
 
 
-//! \~japanese ŒŸõ‚µ‚½ƒVƒŠƒAƒ‹ƒ|[ƒg–¼‚ğ•Ô‚·  \~english Returns the name of the serial port found
+//! \~japanese æ¤œç´¢ã—ãŸã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ãƒˆåã‚’è¿”ã™  \~english Returns the name of the serial port found
 extern const char *urg_serial_port_name(int index);
 
 
 /*!
   \~japanese
-  \brief ƒ|[ƒg‚ª URG ‚©‚Ç‚¤‚©
+  \brief ãƒãƒ¼ãƒˆãŒ URG ã‹ã©ã†ã‹
 
-  \retval 1 URG ‚Ìƒ|[ƒg
-  \retval 0 •s–¾
-  \retval <0 ƒGƒ‰[
+  \retval 1 URG ã®ãƒãƒ¼ãƒˆ
+  \retval 0 ä¸æ˜
+  \retval <0 ã‚¨ãƒ©ãƒ¼
 
   \~english
   \brief Checks whether the serial port corresponds to a URG or not
