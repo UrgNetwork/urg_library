@@ -12,6 +12,10 @@
 
 #include "urg_utils.h"
 #include "urg_errno.h"
+#include "urg_detect_os.h"
+#if !defined(URG_WINDOWS_OS)
+#include <unistd.h>
+#endif
 #define _USE_MATH_DEFINES
 #include <math.h>
 
