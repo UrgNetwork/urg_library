@@ -26,7 +26,7 @@
   \section mainpage_license ライセンス
 
   (C言語)修正 BSD ライセンスに基づいて配布します。\n
-  (C++)LGPL ライセンスに基づいて配布します。\n
+  (C++)修正 BSD ライセンスに基づいて配布します。\n
   ライセンスの詳細はライブラリ付属の <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> ファイルをご覧下さい。
 
 
