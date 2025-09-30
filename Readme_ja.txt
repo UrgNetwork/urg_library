@@ -11,7 +11,7 @@ Authors:
 
 License:
   (C)Simplified BSD License.
-  (C++)LGPL License.
+  (C++)Simplified BSD License.
   See COPYRIGHT file.
 
 
