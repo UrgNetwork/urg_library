@@ -1,7 +1,7 @@
 # viewers/viewer_sdl/
 
 # Compile options
-CC = gcc
+CC = $(CROSS_COMPILE)gcc
 CFLAGS = -g -O0 -Wall -Werror -W `sdl-config --cflags` `urg_c-config --cflags`
 LDFLAGS = -L/usr/X11/lib
 ifeq ($(OS),Windows_NT)

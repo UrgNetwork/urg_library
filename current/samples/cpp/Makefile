@@ -4,8 +4,8 @@
 # Compile options
 SRCDIR = ../../src
 INCLUDEDIR = ../../include/cpp
-CC = gcc
-CXX = g++
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 CXXFLAGS = $(CFLAGS)
 INCLUDES = -I$(INCLUDEDIR)
