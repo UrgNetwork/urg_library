@@ -1,9 +1,9 @@
 /*!
   \~japanese
-  \page usage_windows_bat_page Visual C++ (ƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ğg‚Á‚½ƒRƒ“ƒpƒCƒ‹)
+  \page usage_windows_bat_page Visual C++ (ãƒãƒƒãƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ã£ãŸã‚³ãƒ³ãƒ‘ã‚¤ãƒ«)
 
-  Visual Studio ‚Ì’ñ‹Ÿ‚·‚éƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ğ—p‚¢‚ÄAVisual Studio‚ğ‹N“®‚¹‚¸‚ÉƒRƒ}ƒ“ƒhƒvƒƒ“ƒvƒg‚©‚çƒRƒ“ƒpƒCƒ‹‚·‚é•û–@‚ğĞ‰î‚µ‚Ü‚·B\n
-  ˆÈ‰º‚Ìì‹Æ‚ÍƒRƒ}ƒ“ƒhƒvƒƒ“ƒvƒgã‚Ås‚¢‚Ü‚·B
+  Visual Studio ã®æä¾›ã™ã‚‹ãƒãƒƒãƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”¨ã„ã¦ã€Visual Studioã‚’èµ·å‹•ã›ãšã«ã‚³ãƒãƒ³ãƒ‰ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆã‹ã‚‰ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã™ã‚‹æ–¹æ³•ã‚’ç´¹ä»‹ã—ã¾ã™ã€‚\n
+  ä»¥ä¸‹ã®ä½œæ¥­ã¯ã‚³ãƒãƒ³ãƒ‰ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆä¸Šã§è¡Œã„ã¾ã™ã€‚
 
 
   \~english
@@ -13,27 +13,27 @@
 
 
   \~japanese
-  \section usage_windows_bat_link_make ƒRƒ“ƒpƒCƒ‹
+  \section usage_windows_bat_link_make ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
-  -# ƒRƒ“ƒpƒCƒ‹‚É•K—v‚ÈŠÂ‹«•Ï”‚ğİ’è‚·‚é‚½‚ß‚É Visual Studio ‚ª’ñ‹Ÿ‚µ‚Ä‚¢‚é bat ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚µ‚Ü‚·B \n
-  Program Files\\Microsoft Visual Studio *\\Common7\\Tools\\vsvars32.bat ‚ğ urg_library-*.*.*\\windowsexe ‚ÉƒRƒs[‚µ‚Ü‚·B \n
-  (ƒ‰ƒCƒuƒ‰ƒŠAVisual Studio‚Ìƒo[ƒWƒ‡ƒ“”Ô†‚ÍA—˜—p‚·‚é‚à‚Ì‚É“Ç‚İ‘Ö‚¦‚Ä‰º‚³‚¢B)
+  -# ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã«å¿…è¦ãªç’°å¢ƒå¤‰æ•°ã‚’è¨­å®šã™ã‚‹ãŸã‚ã« Visual Studio ãŒæä¾›ã—ã¦ã„ã‚‹ bat ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã™ã€‚ \n
+  Program Files\\Microsoft Visual Studio *\\Common7\\Tools\\vsvars32.bat ã‚’ urg_library-*.*.*\\windowsexe ã«ã‚³ãƒ”ãƒ¼ã—ã¾ã™ã€‚ \n
+  (ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€Visual Studioã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã¯ã€åˆ©ç”¨ã™ã‚‹ã‚‚ã®ã«èª­ã¿æ›¿ãˆã¦ä¸‹ã•ã„ã€‚)
   \n \n
-  -# ƒRƒ“ƒpƒCƒ‹—p‚Ì bat ƒtƒ@ƒCƒ‹‚ÌÀs \n
-  urg_library-*.*.*\\windowsexe\\compile.bat ‚ğÀs‚µ‚ÄƒRƒ“ƒpƒCƒ‹‚ğs‚¢‚Ü‚·B\n
-  (vsvars32.batƒtƒ@ƒCƒ‹‚ª“¯‚¶ƒtƒHƒ‹ƒ_‚É–³‚¢‚ÆƒGƒ‰[I—¹‚µ‚Ü‚·B)
-  \n \n
-
-  Ú×‚Í compile.bat ‚ğ‚²——‰º‚³‚¢B
-
-  \section usage_windows_bat_run_sample ¶¬‚³‚ê‚½ƒTƒ“ƒvƒ‹‚ÌÀs
-  urg_library-*.*.*\\windowsexe ‚Å¶¬‚³‚ê‚é exe ‚ğÀs‚µ‚Ü‚·B\n
-  ŠÂ‹«‚É‚æ‚Á‚Ä‚ÍƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€‚ğ•ÏX‚µ‚È‚¢‚ÆURG‚ÆÚ‘±‚Å‚«‚È‚¢ê‡‚ª‚ ‚è‚Ü‚·‚Ì‚ÅA\ref library_sample_page ‚ğQl‚É•ÏX‚µ‚Ä‚­‚¾‚³‚¢B
+  -# ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ç”¨ã® bat ãƒ•ã‚¡ã‚¤ãƒ«ã®å®Ÿè¡Œ \n
+  urg_library-*.*.*\\windowsexe\\compile.bat ã‚’å®Ÿè¡Œã—ã¦ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚’è¡Œã„ã¾ã™ã€‚\n
+  (vsvars32.batãƒ•ã‚¡ã‚¤ãƒ«ãŒåŒã˜ãƒ•ã‚©ãƒ«ãƒ€ã«ç„¡ã„ã¨ã‚¨ãƒ©ãƒ¼çµ‚äº†ã—ã¾ã™ã€‚)
   \n \n
 
-  \section usage_windows_bat_library ¶¬‚³‚ê‚½ƒ‰ƒCƒuƒ‰ƒŠ‚Ìg—p
-  ƒXƒ^ƒeƒBƒbƒNƒ‰ƒCƒuƒ‰ƒŠ urg.lib ‚Æ urg_cpp.lib ‚ª¶¬‚³‚ê‚é‚Ì‚Å
-  \ref usage_windows_vcproj_link ‚ğQl‚ÉƒvƒƒWƒFƒNƒg‚Ìİ’è‚ğ‚µAg—p‚µ‚Ä‚­‚¾‚³‚¢B\n\n
+  è©³ç´°ã¯ compile.bat ã‚’ã”è¦§ä¸‹ã•ã„ã€‚
+
+  \section usage_windows_bat_run_sample ç”Ÿæˆã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ«ã®å®Ÿè¡Œ
+  urg_library-*.*.*\\windowsexe ã§ç”Ÿæˆã•ã‚Œã‚‹ exe ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚\n
+  ç’°å¢ƒã«ã‚ˆã£ã¦ã¯ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å¤‰æ›´ã—ãªã„ã¨URGã¨æ¥ç¶šã§ããªã„å ´åˆãŒã‚ã‚Šã¾ã™ã®ã§ã€\ref library_sample_page ã‚’å‚è€ƒã«å¤‰æ›´ã—ã¦ãã ã•ã„ã€‚
+  \n \n
+
+  \section usage_windows_bat_library ç”Ÿæˆã•ã‚ŒãŸãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ä½¿ç”¨
+  ã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯ãƒ©ã‚¤ãƒ–ãƒ©ãƒª urg.lib ã¨ urg_cpp.lib ãŒç”Ÿæˆã•ã‚Œã‚‹ã®ã§
+  \ref usage_windows_vcproj_link ã‚’å‚è€ƒã«ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®è¨­å®šã‚’ã—ã€ä½¿ç”¨ã—ã¦ãã ã•ã„ã€‚\n\n
 
 
   \~english
@@ -60,9 +60,9 @@
 
 
   \~japanese
-  \section usage_windows_bat_link_clean ƒNƒŠ[ƒ“ƒAƒbƒv
+  \section usage_windows_bat_link_clean ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
 
-  ¶¬‚³‚ê‚½ƒTƒ“ƒvƒ‹‚ÌÀsƒtƒ@ƒCƒ‹‚ğíœ‚·‚é‚É‚Í urg_library-*.*.*\\windowsexe\\cleanobj.bat ‚ğÀs‚µ‚Ä‰º‚³‚¢B
+  ç”Ÿæˆã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ«ã®å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤ã™ã‚‹ã«ã¯ urg_library-*.*.*\\windowsexe\\cleanobj.bat ã‚’å®Ÿè¡Œã—ã¦ä¸‹ã•ã„ã€‚
 
 
   \~english

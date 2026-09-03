@@ -1,5 +1,6 @@
 #include "urg_sensor.h"
 #include "urg_utils.h"
+#include <stdint.h>
 
 int32_t main(void)
 {
@@ -12,18 +13,18 @@ int32_t main(void)
     int32_t scan_times;
     int32_t skip_scan;
     int32_t ret;
-    // \~japanese �v���p�����[�^�̐ݒ�
+    // \~japanese 計測パラメータの設定
     // \~english Configures measurement parameters
 
-    // \~japanese �Z���T�ɑ΂��Đڑ����s���B
-    // \~japanese �ڑ����s���ƁA�v���p�����[�^�̐ݒ�͏����������
+    // \~japanese センサに対して接続を行う。
+    // \~japanese 接続を行うと、計測パラメータの設定は初期化される
     // \~english Connects to the sensor
     // \~english Upon connection, measurement parameters are initialized (default values)
     ret = urg_open(&urg, URG_SERIAL, connect_device, connect_baudrate);
     // \todo check error code
 
-    // \~japanese �v���͈͂��w�肷��
-    // \~japanese �Z���T���ʕ����� 90 [deg] �͈͂̃f�[�^�擾���s���A�X�e�b�v�Ԉ������s��Ȃ���
+    // \~japanese 計測範囲を指定する
+    // \~japanese センサ正面方向の 90 [deg] 範囲のデータ取得を行い、ステップ間引きを行わない例
     // \~english Defines the measurement scope (start, end steps)
     // \~english Defines a measurement scope of 90 [deg] at the front of the sensor, and no step grouping in this example
     first_step = urg_rad2step(&urg, -45);
@@ -32,8 +33,8 @@ int32_t main(void)
     ret = urg_set_scanning_parameter(&urg, first_step, last_step, skip_step);
     // \todo check error code
 
-    // \~japanese �v���񐔂ƌv���̊Ԉ������w�肵�āA�v�����J�n����
-    // \~japanese 123 ��̌v�����w�����A�X�L�����̊Ԉ������s��Ȃ���
+    // \~japanese 計測回数と計測の間引きを指定して、計測を開始する
+    // \~japanese 123 回の計測を指示し、スキャンの間引きを行わない例
     // \~english Defines the number of scans
     // \~english 123 scans are requested, and no scan skipping in this example
     scan_times = 123;

@@ -1,8 +1,8 @@
 /*!
   \~japanese
-  \page usage_windows_vcproj_page Visual C++ (ƒvƒƒWƒFƒNƒgƒtƒ@ƒCƒ‹‚ðŽg‚Á‚½ƒRƒ“ƒpƒCƒ‹)
+  \page usage_windows_vcproj_page Visual C++ (ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ã£ãŸã‚³ãƒ³ãƒ‘ã‚¤ãƒ«)
 
-  Visual C++ ‚ÌƒvƒƒWƒFƒNƒgƒtƒ@ƒCƒ‹‚ðŽg‚Á‚½ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒRƒ“ƒpƒCƒ‹•û–@‚ÆA‚»‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ÌŽg‚¢•û‚ðà–¾‚µ‚Ä‚¢‚Ü‚·B
+  Visual C++ ã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ã£ãŸãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ–¹æ³•ã¨ã€ãã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ä½¿ã„æ–¹ã‚’èª¬æ˜Žã—ã¦ã„ã¾ã™ã€‚
 
 
   \~english
@@ -18,77 +18,77 @@
 
 
   \~japanese
-  \section usage_windows_vcproj_compile ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒRƒ“ƒpƒCƒ‹
+  \section usage_windows_vcproj_compile ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
-  urg_library-*.*.*\\vs20**\\c\\urg.sln (C++‚Ìê‡‚Ívs20**\\cpp\\urg_cpp.sln)‚©‚ç Visual C++ ‚ð‹N“®‚µAƒ\ƒŠƒ…[ƒVƒ‡ƒ“‚Ìƒrƒ‹ƒh‚ðs‚¢‚Ü‚·B \n
-  (ƒ‰ƒCƒuƒ‰ƒŠ‚Ìƒo[ƒWƒ‡ƒ“”Ô†‚ÍA—˜—p‚·‚é‚à‚Ì‚É“Ç‚Ý‘Ö‚¦‚Ä‰º‚³‚¢B)
+  urg_library-*.*.*\\vs20**\\c\\urg.sln (C++ã®å ´åˆã¯vs20**\\cpp\\urg_cpp.sln)ã‹ã‚‰ Visual C++ ã‚’èµ·å‹•ã—ã€ã‚½ãƒªãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ“ãƒ«ãƒ‰ã‚’è¡Œã„ã¾ã™ã€‚ \n
+  (ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã¯ã€åˆ©ç”¨ã™ã‚‹ã‚‚ã®ã«èª­ã¿æ›¿ãˆã¦ä¸‹ã•ã„ã€‚)
 
-  ƒrƒ‹ƒhŒã‚ÍAƒXƒ^ƒeƒBƒbƒNƒ‰ƒCƒuƒ‰ƒŠ urg.lib (C++‚Ìê‡‚Í urg.lib ‚Æ urg_cpp.lib) ‚ª¶¬‚³‚ê‚Ü‚·B\n
-  urg.lib ‚ÍCŒ¾Œê—pƒ‰ƒCƒuƒ‰ƒŠA urg_cpp.lib ‚ÍC++—pƒ‰ƒCƒuƒ‰ƒŠ‚Å‚·B\n
+  ãƒ“ãƒ«ãƒ‰å¾Œã¯ã€ã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯ãƒ©ã‚¤ãƒ–ãƒ©ãƒª urg.lib (C++ã®å ´åˆã¯ urg.lib ã¨ urg_cpp.lib) ãŒç”Ÿæˆã•ã‚Œã¾ã™ã€‚\n
+  urg.lib ã¯Cè¨€èªžç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€ urg_cpp.lib ã¯C++ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã™ã€‚\n
 
   \~english
   \section usage_windows_vcproj_compile Compile Library
 
-  urg_library-*.*.*\\vs20**\\c\\urg.sln (C++‚Ìê‡‚Ívs20**\\cpp\\urg_cpp.sln)‚©‚ç Visual C++ ‚ð‹N“®‚µAƒ\ƒŠƒ…[ƒVƒ‡ƒ“‚Ìƒrƒ‹ƒh‚ðs‚¢‚Ü‚·B \n
-  (ƒ‰ƒCƒuƒ‰ƒŠ‚Ìƒo[ƒWƒ‡ƒ“”Ô†‚ÍA—˜—p‚·‚é‚à‚Ì‚É“Ç‚Ý‘Ö‚¦‚Ä‰º‚³‚¢B)
+  urg_library-*.*.*\\vs20**\\c\\urg.sln (C++ã®å ´åˆã¯vs20**\\cpp\\urg_cpp.sln)ã‹ã‚‰ Visual C++ ã‚’èµ·å‹•ã—ã€ã‚½ãƒªãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ“ãƒ«ãƒ‰ã‚’è¡Œã„ã¾ã™ã€‚ \n
+  (ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã¯ã€åˆ©ç”¨ã™ã‚‹ã‚‚ã®ã«èª­ã¿æ›¿ãˆã¦ä¸‹ã•ã„ã€‚)
 
-  ƒrƒ‹ƒhŒã‚ÍAƒXƒ^ƒeƒBƒbƒNƒ‰ƒCƒuƒ‰ƒŠ urg.lib (C++‚Ìê‡‚Í urg.lib ‚Æ urg_cpp.lib) ‚ª¶¬‚³‚ê‚Ü‚·B\n
-  urg.lib ‚ÍCŒ¾Œê—pƒ‰ƒCƒuƒ‰ƒŠA urg_cpp.lib ‚ÍC++—pƒ‰ƒCƒuƒ‰ƒŠ‚Å‚·B\n
+  ãƒ“ãƒ«ãƒ‰å¾Œã¯ã€ã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯ãƒ©ã‚¤ãƒ–ãƒ©ãƒª urg.lib (C++ã®å ´åˆã¯ urg.lib ã¨ urg_cpp.lib) ãŒç”Ÿæˆã•ã‚Œã¾ã™ã€‚\n
+  urg.lib ã¯Cè¨€èªžç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€ urg_cpp.lib ã¯C++ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã™ã€‚\n
 
   \~japanese
-  \section usage_windows_vcproj_link ƒ‰ƒCƒuƒ‰ƒŠ‚ð—˜—p‚·‚é‚½‚ß‚Ì Visual C++ Ý’è
+  \section usage_windows_vcproj_link ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’åˆ©ç”¨ã™ã‚‹ãŸã‚ã® Visual C++ è¨­å®š
 
-  \subsection usage_windows_vcproj_link_c CŒ¾Œê‚Ìê‡
-  ¶¬‚³‚ê‚½ urg.lib ‚Æ urg_library-*.*.*\\include\\c ‚ðƒRƒs[‚µ‚Ä—˜—p‚µ‚Ü‚·B \n
-  ƒvƒƒWƒFƒNƒg‚ÉˆÈ‰º‚Ì‚R‚Â‚ÌÝ’è‚ð‚·‚é‚±‚Æ‚ÅAƒ‰ƒCƒuƒ‰ƒŠ‚ª—˜—p‚Å‚«‚Ü‚·B
+  \subsection usage_windows_vcproj_link_c Cè¨€èªžã®å ´åˆ
+  ç”Ÿæˆã•ã‚ŒãŸ urg.lib ã¨ urg_library-*.*.*\\include\\c ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦åˆ©ç”¨ã—ã¾ã™ã€‚ \n
+  ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«ä»¥ä¸‹ã®ï¼“ã¤ã®è¨­å®šã‚’ã™ã‚‹ã“ã¨ã§ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒåˆ©ç”¨ã§ãã¾ã™ã€‚
   \n
-  - ƒvƒ ƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "\¬ƒvƒƒpƒeƒB" -> "C/C++" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌƒCƒ“ƒNƒ‹[ƒhƒfƒBƒŒƒNƒgƒŠ" ‚É urg_library-*.*.*\\include\\c ‚ÌƒpƒX‚ð‹Lq‚µ‚Ü‚·B
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚Ìƒ‰ƒCƒuƒ‰ƒŠƒfƒBƒŒƒNƒgƒŠ" ‚É urg.lib ‚ðƒRƒs[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ð‹Lq‚µ‚Ü‚·B
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "“ü—Í" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌˆË‘¶ƒtƒ@ƒCƒ‹" ‚É urg.lib;ws2_32.lib;setupapi.lib ‚ð’Ç‹L‚µ‚Ü‚·B
+  - ãƒ—ãƒ­ ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "æ§‹æˆãƒ—ãƒ­ãƒ‘ãƒ†ã‚£" -> "C/C++" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg_library-*.*.*\\include\\c ã®ãƒ‘ã‚¹ã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg.lib ã‚’ã‚³ãƒ”ãƒ¼ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¥åŠ›" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ä¾å­˜ãƒ•ã‚¡ã‚¤ãƒ«" ã« urg.lib;ws2_32.lib;setupapi.lib ã‚’è¿½è¨˜ã—ã¾ã™ã€‚
 
-  \subsection usage_windows_vcproj_link_cpp C++‚Ìê‡
-  ¶¬‚³‚ê‚½ urg_cpp.lib ‚Æ urg_library-*.*.*\\include\\cpp ‚ðƒRƒs[‚µ‚Ä—˜—p‚µ‚Ü‚·B \n
-  ƒvƒƒWƒFƒNƒg‚ÉˆÈ‰º‚Ì‚R‚Â‚ÌÝ’è‚ð‚·‚é‚±‚Æ‚ÅAƒ‰ƒCƒuƒ‰ƒŠ‚ª—˜—p‚Å‚«‚Ü‚·B
+  \subsection usage_windows_vcproj_link_cpp C++ã®å ´åˆ
+  ç”Ÿæˆã•ã‚ŒãŸ urg_cpp.lib ã¨ urg_library-*.*.*\\include\\cpp ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦åˆ©ç”¨ã—ã¾ã™ã€‚ \n
+  ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«ä»¥ä¸‹ã®ï¼“ã¤ã®è¨­å®šã‚’ã™ã‚‹ã“ã¨ã§ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒåˆ©ç”¨ã§ãã¾ã™ã€‚
   \n
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "\¬ƒvƒƒpƒeƒB" -> "C/C++" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌƒCƒ“ƒNƒ‹[ƒhƒfƒBƒŒƒNƒgƒŠ" ‚É urg_library-*.*.*\\include\\cpp ‚ÌƒpƒX‚ð‹Lq‚µ‚Ü‚·B
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚Ìƒ‰ƒCƒuƒ‰ƒŠƒfƒBƒŒƒNƒgƒŠ" ‚É urg_cpp.lib ‚ðƒRƒs[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ð‹Lq‚µ‚Ü‚·B
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "“ü—Í" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌˆË‘¶ƒtƒ@ƒCƒ‹" ‚É urg_cpp.lib;ws2_32.lib;setupapi.lib ‚ð’Ç‹L‚µ‚Ü‚·B
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "æ§‹æˆãƒ—ãƒ­ãƒ‘ãƒ†ã‚£" -> "C/C++" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg_library-*.*.*\\include\\cpp ã®ãƒ‘ã‚¹ã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg_cpp.lib ã‚’ã‚³ãƒ”ãƒ¼ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¥åŠ›" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ä¾å­˜ãƒ•ã‚¡ã‚¤ãƒ«" ã« urg_cpp.lib;ws2_32.lib;setupapi.lib ã‚’è¿½è¨˜ã—ã¾ã™ã€‚
 
   \~english
   \section usage_windows_vcproj_link Settings for the Visual C++
 
   \subsection usage_windows_vcproj_link_c case of C language
-  ¶¬‚³‚ê‚½ urg.lib ‚Æ urg_library-*.*.*\\include\\c ‚ðƒRƒs[‚µ‚Ä—˜—p‚µ‚Ü‚·B \n
-  ƒvƒƒWƒFƒNƒg‚ÉˆÈ‰º‚Ì‚R‚Â‚ÌÝ’è‚ð‚·‚é‚±‚Æ‚ÅAƒ‰ƒCƒuƒ‰ƒŠ‚ª—˜—p‚Å‚«‚Ü‚·B
+  ç”Ÿæˆã•ã‚ŒãŸ urg.lib ã¨ urg_library-*.*.*\\include\\c ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦åˆ©ç”¨ã—ã¾ã™ã€‚ \n
+  ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«ä»¥ä¸‹ã®ï¼“ã¤ã®è¨­å®šã‚’ã™ã‚‹ã“ã¨ã§ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒåˆ©ç”¨ã§ãã¾ã™ã€‚
   \n
- - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "\¬ƒvƒƒpƒeƒB" -> "C/C++" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌƒCƒ“ƒNƒ‹[ƒhƒfƒBƒŒƒNƒgƒŠ" ‚É urg_library-*.*.*\\include\\c ‚ÌƒpƒX‚ð‹Lq‚µ‚Ü‚·B
- - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚Ìƒ‰ƒCƒuƒ‰ƒŠƒfƒBƒŒƒNƒgƒŠ" ‚É urg.lib ‚ðƒRƒs[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ð‹Lq‚µ‚Ü‚·B
- - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "“ü—Í" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌˆË‘¶ƒtƒ@ƒCƒ‹" ‚É urg.lib;ws2_32.lib;setupapi.lib ‚ð’Ç‹L‚µ‚Ü‚·B
+ - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "æ§‹æˆãƒ—ãƒ­ãƒ‘ãƒ†ã‚£" -> "C/C++" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg_library-*.*.*\\include\\c ã®ãƒ‘ã‚¹ã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+ - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg.lib ã‚’ã‚³ãƒ”ãƒ¼ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+ - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¥åŠ›" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ä¾å­˜ãƒ•ã‚¡ã‚¤ãƒ«" ã« urg.lib;ws2_32.lib;setupapi.lib ã‚’è¿½è¨˜ã—ã¾ã™ã€‚
 
   \subsection usage_windows_vcproj_link_cpp case of C++
-  ¶¬‚³‚ê‚½ urg_cpp.lib ‚Æ urg_library-*.*.*\\include\\cpp ‚ðƒRƒs[‚µ‚Ä—˜—p‚µ‚Ü‚·B \n
-  ƒvƒƒWƒFƒNƒg‚ÉˆÈ‰º‚Ì‚R‚Â‚ÌÝ’è‚ð‚·‚é‚±‚Æ‚ÅAƒ‰ƒCƒuƒ‰ƒŠ‚ª—˜—p‚Å‚«‚Ü‚·B
+  ç”Ÿæˆã•ã‚ŒãŸ urg_cpp.lib ã¨ urg_library-*.*.*\\include\\cpp ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦åˆ©ç”¨ã—ã¾ã™ã€‚ \n
+  ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«ä»¥ä¸‹ã®ï¼“ã¤ã®è¨­å®šã‚’ã™ã‚‹ã“ã¨ã§ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒåˆ©ç”¨ã§ãã¾ã™ã€‚
   \n
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "\¬ƒvƒƒpƒeƒB" -> "C/C++" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌƒCƒ“ƒNƒ‹[ƒhƒfƒBƒŒƒNƒgƒŠ" ‚É urg_library-*.*.*\\include\\cpp ‚ÌƒpƒX‚ð‹Lq‚µ‚Ü‚·B
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "‘S”Ê" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚Ìƒ‰ƒCƒuƒ‰ƒŠƒfƒBƒŒƒNƒgƒŠ" ‚É urg_cpp.lib ‚ðƒRƒs[‚µ‚½ƒfƒBƒŒƒNƒgƒŠ‚ð‹Lq‚µ‚Ü‚·B
-  - ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB "ƒŠƒ“ƒJ" -> "“ü—Í" ‚ÌƒtƒH[ƒ€‚É‚ ‚é "’Ç‰Á‚ÌˆË‘¶ƒtƒ@ƒCƒ‹" ‚É urg_cpp.lib;ws2_32.lib;setupapi.lib ‚ð’Ç‹L‚µ‚Ü‚·B
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "æ§‹æˆãƒ—ãƒ­ãƒ‘ãƒ†ã‚£" -> "C/C++" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg_library-*.*.*\\include\\cpp ã®ãƒ‘ã‚¹ã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¨èˆ¬" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª" ã« urg_cpp.lib ã‚’ã‚³ãƒ”ãƒ¼ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¨˜è¿°ã—ã¾ã™ã€‚
+  - ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ "ãƒªãƒ³ã‚«" -> "å…¥åŠ›" ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚ã‚‹ "è¿½åŠ ã®ä¾å­˜ãƒ•ã‚¡ã‚¤ãƒ«" ã« urg_cpp.lib;ws2_32.lib;setupapi.lib ã‚’è¿½è¨˜ã—ã¾ã™ã€‚
 
 
   \~japanese
-  \section usage_windows_vcproj_sample ƒTƒ“ƒvƒ‹‚ÌŽÀs
+  \section usage_windows_vcproj_sample ã‚µãƒ³ãƒ—ãƒ«ã®å®Ÿè¡Œ
 
-  ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ð—˜—p‚·‚éÝ’è‚ð‚µ‚½ Visual C++ ‚ÌƒvƒƒWƒFƒNƒg‚ª urg_library-*.*.*\\vs20**\\samples ˆÈ‰º‚É‚ ‚è‚Ü‚·B\n
-  Ž©•ª‚ÌƒvƒƒWƒFƒNƒg‚Åƒ‰ƒCƒuƒ‰ƒŠ‚ðŽg‚¤‚Æ‚«‚ÌŽQl‚É‚µ‚Ä‰º‚³‚¢B\n
-  ƒTƒ“ƒvƒ‹‚ðŽÀs‚·‚é‚É‚ÍAƒrƒ‹ƒhŽž‚Éo—Í‚³‚ê‚½ŽÀsƒtƒ@ƒCƒ‹‚ðŽÀs‚·‚é‚©AŽÀs‚·‚éƒvƒƒWƒFƒNƒg‚ðƒXƒ^[ƒgƒAƒbƒvƒvƒƒWƒFƒNƒg‚ÉÝ’è‚µAŽÀs‚µ‚Ä‚­‚¾‚³‚¢B\n
-  ŠÂ‹«‚É‚æ‚Á‚Ä‚ÍƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€‚ð•ÏX‚µ‚È‚¢‚ÆURG‚ÆÚ‘±‚Å‚«‚È‚¢ê‡‚ª‚ ‚è‚Ü‚·‚Ì‚ÅA\ref library_sample_page ‚ðŽQl‚É•ÏX‚µ‚Ä‚­‚¾‚³‚¢B
+  ã“ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’åˆ©ç”¨ã™ã‚‹è¨­å®šã‚’ã—ãŸ Visual C++ ã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãŒ urg_library-*.*.*\\vs20**\\samples ä»¥ä¸‹ã«ã‚ã‚Šã¾ã™ã€‚\n
+  è‡ªåˆ†ã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã§ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ä½¿ã†ã¨ãã®å‚è€ƒã«ã—ã¦ä¸‹ã•ã„ã€‚\n
+  ã‚µãƒ³ãƒ—ãƒ«ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€ãƒ“ãƒ«ãƒ‰æ™‚ã«å‡ºåŠ›ã•ã‚ŒãŸå®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã‚’å®Ÿè¡Œã™ã‚‹ã‹ã€å®Ÿè¡Œã™ã‚‹ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«è¨­å®šã—ã€å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚\n
+  ç’°å¢ƒã«ã‚ˆã£ã¦ã¯ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å¤‰æ›´ã—ãªã„ã¨URGã¨æŽ¥ç¶šã§ããªã„å ´åˆãŒã‚ã‚Šã¾ã™ã®ã§ã€\ref library_sample_page ã‚’å‚è€ƒã«å¤‰æ›´ã—ã¦ãã ã•ã„ã€‚
 
 
 
   \~english
   \section usage_windows_vcproj_sample Run Samples
 
-  ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ð—˜—p‚·‚éÝ’è‚ð‚µ‚½ Visual C++ ‚ÌƒvƒƒWƒFƒNƒg‚ª urg_library-*.*.*\\vs20**\\samples ˆÈ‰º‚É‚ ‚è‚Ü‚·B\n
-  Ž©•ª‚ÌƒvƒƒWƒFƒNƒg‚Åƒ‰ƒCƒuƒ‰ƒŠ‚ðŽg‚¤‚Æ‚«‚ÌŽQl‚É‚µ‚Ä‰º‚³‚¢B\n
-  ƒTƒ“ƒvƒ‹‚ðŽÀs‚·‚é‚É‚ÍAƒrƒ‹ƒhŽž‚Éo—Í‚³‚ê‚½ŽÀsƒtƒ@ƒCƒ‹‚ðŽÀs‚·‚é‚©AŽÀs‚·‚éƒvƒƒWƒFƒNƒg‚ðƒXƒ^[ƒgƒAƒbƒvƒvƒƒWƒFƒNƒg‚ÉÝ’è‚µAŽÀs‚µ‚Ä‚­‚¾‚³‚¢B\n
-  ŠÂ‹«‚É‚æ‚Á‚Ä‚ÍƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€‚ð•ÏX‚µ‚È‚¢‚ÆURG‚ÆÚ‘±‚Å‚«‚È‚¢ê‡‚ª‚ ‚è‚Ü‚·‚Ì‚ÅA\ref library_sample_page ‚ðŽQl‚É•ÏX‚µ‚Ä‚­‚¾‚³‚¢B
+  ã“ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’åˆ©ç”¨ã™ã‚‹è¨­å®šã‚’ã—ãŸ Visual C++ ã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãŒ urg_library-*.*.*\\vs20**\\samples ä»¥ä¸‹ã«ã‚ã‚Šã¾ã™ã€‚\n
+  è‡ªåˆ†ã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã§ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ä½¿ã†ã¨ãã®å‚è€ƒã«ã—ã¦ä¸‹ã•ã„ã€‚\n
+  ã‚µãƒ³ãƒ—ãƒ«ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€ãƒ“ãƒ«ãƒ‰æ™‚ã«å‡ºåŠ›ã•ã‚ŒãŸå®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã‚’å®Ÿè¡Œã™ã‚‹ã‹ã€å®Ÿè¡Œã™ã‚‹ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«è¨­å®šã—ã€å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚\n
+  ç’°å¢ƒã«ã‚ˆã£ã¦ã¯ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å¤‰æ›´ã—ãªã„ã¨URGã¨æŽ¥ç¶šã§ããªã„å ´åˆãŒã‚ã‚Šã¾ã™ã®ã§ã€\ref library_sample_page ã‚’å‚è€ƒã«å¤‰æ›´ã—ã¦ãã ã•ã„ã€‚
 */
