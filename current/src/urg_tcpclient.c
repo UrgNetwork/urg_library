@@ -31,7 +31,7 @@ enum
 
 // \~japanese 改行かどうかの判定
 // \~english Checks wheter is is a EOL character
-static int is_linefeed(const char ch)
+static int32_t is_linefeed(const char ch)
 {
     return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
 }
@@ -42,7 +42,7 @@ static void tcpclient_buffer_init(urg_tcpclient_t *cli)
 }
 
 // get number of data in buffer.
-static int tcpclient_buffer_data_num(urg_tcpclient_t *cli)
+static int32_t tcpclient_buffer_data_num(urg_tcpclient_t *cli)
 {
     return ring_size(&cli->rb);
 }
@@ -61,10 +61,10 @@ static int32_t tcpclient_buffer_read(urg_tcpclient_t *cli, char *data, int32_t s
 static void set_block_mode(urg_tcpclient_t *cli)
 {
 #if defined(URG_WINDOWS_OS)
-    u_long flag = 0;
+    uint32_t flag = 0;
     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
 #else
-    int flag = 0;
+    int32_t flag = 0;
     fcntl(cli->sock_desc, F_SETFL, flag);
 #endif
 }
@@ -78,23 +78,23 @@ int32_t tcpclient_open(urg_tcpclient_t *cli, const char *ip_str, int32_t port_nu
     fd_set rmask, wmask;
     struct timeval tv = {Connect_timeout_second, 0};
 #if defined(URG_WINDOWS_OS)
-    u_long flag;
+    uint32_t flag;
 #else
-    int flag;
-    int sock_optval = -1;
-    int sock_optval_size = sizeof(sock_optval);
+    int32_t flag;
+    int32_t sock_optval = -1;
+    int32_t sock_optval_size = sizeof(sock_optval);
 #endif
-    int ret;
+    int32_t ret;
 
     cli->sock_desc = Invalid_desc;
     cli->pushed_back = -1; // no pushed back char.
 
 #if defined(URG_WINDOWS_OS)
     {
-        static int is_initialized = 0;
+        static int32_t is_initialized = 0;
         WORD wVersionRequested = 0x0202;
         WSADATA WSAData;
-        int err;
+        int32_t err;
         if (!is_initialized)
         {
             err = WSAStartup(wVersionRequested, &WSAData);
@@ -139,7 +139,7 @@ int32_t tcpclient_open(urg_tcpclient_t *cli, const char *ip_str, int32_t port_nu
     if (connect(cli->sock_desc, (const struct sockaddr *)&(cli->server_addr),
                 cli->sock_addr_size) == SOCKET_ERROR)
     {
-        int error_number = WSAGetLastError();
+        int32_t error_number = WSAGetLastError();
         if (error_number != WSAEWOULDBLOCK)
         {
             tcpclient_close(cli);
@@ -193,7 +193,7 @@ int32_t tcpclient_open(urg_tcpclient_t *cli, const char *ip_str, int32_t port_nu
             return -2;
         }
 
-        if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int *)&sock_optval,
+        if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int32_t *)&sock_optval,
                        (socklen_t *)&sock_optval_size) != 0)
         {
             // \~japanese 接続に失敗
@@ -260,7 +260,7 @@ int32_t tcpclient_read(urg_tcpclient_t *cli,
         char tmpbuf[BUFSIZE];
         // receive with non-blocking mode.
 #if defined(URG_WINDOWS_OS)
-        u_long val = 1;
+        uint32_t val = 1;
         ioctlsocket(sock, FIONBIO, &val);
         n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, 0);
 #else
@@ -283,7 +283,7 @@ int32_t tcpclient_read(urg_tcpclient_t *cli,
     //  lastly recv with blocking but with time out to read necessary size.
     {
 #if defined(URG_WINDOWS_OS)
-        u_long val = 0;
+        uint32_t val = 0;
         ioctlsocket(sock, FIONBIO, &val);
         setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO,
                    (const char *)&timeout, sizeof(struct timeval));

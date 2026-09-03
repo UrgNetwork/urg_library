@@ -26,7 +26,7 @@ enum
 
 // \~japanese 改行かどうかの判定
 // \~english Checks wheter is is a EOL character
-static int is_linefeed(const char ch)
+static int32_t is_linefeed(const char ch)
 {
     return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
 }
@@ -41,13 +41,13 @@ int32_t serial_readline(urg_serial_t *serial, char *data, int32_t max_size, int3
 {
     /* \~japanese １文字ずつ読み出して評価する */
     /* \~english Reads and evaluates 1 character at a time */
-    int filled = 0;
-    int is_timeout = 0;
+    int32_t filled = 0;
+    int32_t is_timeout = 0;
 
     while (filled < max_size)
     {
         char recv_ch;
-        int n = serial_read(serial, &recv_ch, 1, timeout);
+        int32_t n = serial_read(serial, &recv_ch, 1, timeout);
         if (n <= 0)
         {
             is_timeout = 1;

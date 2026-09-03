@@ -95,7 +95,7 @@ bool Urg_driver::open(const char *device_name, int32_t baudrate,
 
     urg_connection_type_t connection_type =
         (type == Ethernet) ? URG_ETHERNET : URG_SERIAL;
-    int ret = urg_open(&pimpl->urg_, connection_type, device_name, baudrate);
+    int32_t ret = urg_open(&pimpl->urg_, connection_type, device_name, baudrate);
     if (ret < 0)
     {
         return false;
@@ -124,13 +124,13 @@ void Urg_driver::set_timeout_msec(int32_t msec)
 
 bool Urg_driver::laser_on(void)
 {
-    int ret = urg_laser_on(&pimpl->urg_);
+    int32_t ret = urg_laser_on(&pimpl->urg_);
     return (ret < 0) ? false : true;
 }
 
 bool Urg_driver::laser_off(void)
 {
-    int ret = urg_laser_off(&pimpl->urg_);
+    int32_t ret = urg_laser_off(&pimpl->urg_);
     return (ret < 0) ? false : true;
 }
 
@@ -178,7 +178,7 @@ bool Urg_driver::start_measurement(measurement_type_t type,
         const type_table_t *p = &type_table[i];
         if (type == p->type)
         {
-            int ret =
+            int32_t ret =
                 urg_start_measurement(&pimpl->urg_, p->c_type, scan_times, skip_scan, pimpl->urg_.ignore_checkSumError);
             if (ret == URG_NO_ERROR)
             {
@@ -204,7 +204,7 @@ bool Urg_driver::get_distance(std::vector<int32_t> &data, int32_t *time_stamp)
     // \~japanese 最大サイズを確保し、そこにデータを格納する
     // \~english Allocates memory for the maximum size and stores data there
     data.resize(max_data_size());
-    int ret = urg_get_distance(&pimpl->urg_, &data[0], time_stamp);
+    int32_t ret = urg_get_distance(&pimpl->urg_, &data[0], time_stamp);
     if (ret > 0)
     {
         data.resize(ret);
@@ -228,8 +228,8 @@ bool Urg_driver::get_distance_intensity(std::vector<int32_t> &data,
     size_t data_size = max_data_size();
     data.resize(data_size);
     intensity.resize(data_size);
-    int ret = urg_get_distance_intensity(&pimpl->urg_,
-                                         &data[0], &intensity[0], time_stamp);
+    int32_t ret = urg_get_distance_intensity(&pimpl->urg_,
+                                             &data[0], &intensity[0], time_stamp);
     if (ret > 0)
     {
         data.resize(ret);
@@ -250,7 +250,7 @@ bool Urg_driver::get_distance_io(std::vector<int32_t> &data, std::vector<int32_t
     // 最大サイズを確保し、そこにデータを格納する
     data.resize(max_data_size());
     io.resize(max_io_size());
-    int ret = urg_get_distance_io(&pimpl->urg_, &data[0], &io[0], time_stamp);
+    int32_t ret = urg_get_distance_io(&pimpl->urg_, &data[0], &io[0], time_stamp);
     if (ret > 0)
     {
         data.resize(ret);
@@ -275,7 +275,7 @@ bool Urg_driver::get_distance_intensity_io(std::vector<int32_t> &data,
     data.resize(data_size);
     intensity.resize(data_size);
     io.resize(max_io_size());
-    int ret = urg_get_distance_intensity_io(&pimpl->urg_, &data[0], &intensity[0], &io[0], time_stamp);
+    int32_t ret = urg_get_distance_intensity_io(&pimpl->urg_, &data[0], &intensity[0], &io[0], time_stamp);
     if (ret > 0)
     {
         data.resize(ret);
@@ -299,7 +299,7 @@ bool Urg_driver::get_multiecho(std::vector<int32_t> &data_multiecho,
     size_t echo_size = max_echo_size();
     size_t data_size = max_data_size() * echo_size;
     data_multiecho.resize(data_size);
-    int ret = urg_get_multiecho(&pimpl->urg_, &data_multiecho[0], time_stamp);
+    int32_t ret = urg_get_multiecho(&pimpl->urg_, &data_multiecho[0], time_stamp);
     if (ret > 0)
     {
         data_multiecho.resize(ret * echo_size);
@@ -325,10 +325,10 @@ bool Urg_driver::get_multiecho_intensity(std::vector<int32_t> &data_multiecho,
     size_t data_size = max_data_size() * echo_size;
     data_multiecho.resize(data_size);
     intensity_multiecho.resize(data_size);
-    int ret = urg_get_multiecho_intensity(&pimpl->urg_,
-                                          &data_multiecho[0],
-                                          &intensity_multiecho[0],
-                                          time_stamp);
+    int32_t ret = urg_get_multiecho_intensity(&pimpl->urg_,
+                                              &data_multiecho[0],
+                                              &intensity_multiecho[0],
+                                              time_stamp);
     if (ret > 0)
     {
         data_multiecho.resize(ret * echo_size);
@@ -341,8 +341,8 @@ bool Urg_driver::get_multiecho_intensity(std::vector<int32_t> &data_multiecho,
 bool Urg_driver::set_scanning_parameter(int32_t first_step, int32_t last_step,
                                         int32_t skip_step)
 {
-    int ret = urg_set_scanning_parameter(&pimpl->urg_,
-                                         first_step, last_step, skip_step);
+    int32_t ret = urg_set_scanning_parameter(&pimpl->urg_,
+                                             first_step, last_step, skip_step);
     return (ret < 0) ? false : true;
 }
 
@@ -353,13 +353,13 @@ void Urg_driver::stop_measurement(void)
 
 bool Urg_driver::start_time_stamp_mode(void)
 {
-    int ret = urg_start_time_stamp_mode(&pimpl->urg_);
+    int32_t ret = urg_start_time_stamp_mode(&pimpl->urg_);
     return (ret < 0) ? false : true;
 }
 
 bool Urg_driver::stop_time_stamp_mode(void)
 {
-    int ret = urg_stop_time_stamp_mode(&pimpl->urg_);
+    int32_t ret = urg_stop_time_stamp_mode(&pimpl->urg_);
     return (ret < 0) ? false : true;
 }
 
@@ -391,12 +391,12 @@ bool Urg_driver::set_sensor_time_stamp(int32_t time_stamp)
     };
 
     int32_t sum_of_pc_and_sensor_diff = 0;
-    int ret = urg_start_time_stamp_mode(&pimpl->urg_);
+    int32_t ret = urg_start_time_stamp_mode(&pimpl->urg_);
     if (ret != 0)
     {
         return false;
     }
-    for (int i = 0; i < Average_times; ++i)
+    for (int32_t i = 0; i < Average_times; ++i)
     {
         int32_t before_ticks = ticks();
         int32_t sensor_ticks = urg_time_stamp(&pimpl->urg_);

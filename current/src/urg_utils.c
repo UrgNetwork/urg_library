@@ -36,7 +36,7 @@ const char *urg_error(const urg_t *urg)
 {
     typedef struct
     {
-        int no;
+        int32_t no;
         const char *message;
     } error_messages_t;
 
@@ -61,8 +61,8 @@ const char *urg_error(const urg_t *urg)
         {URG_DATA_SIZE_PARAMETER_ERROR, "data size parameter error."},
     };
 
-    int n = sizeof(errors) / sizeof(errors[0]);
-    int i;
+    int32_t n = sizeof(errors) / sizeof(errors[0]);
+    int32_t i;
 
     for (i = 0; i < n; ++i)
     {
