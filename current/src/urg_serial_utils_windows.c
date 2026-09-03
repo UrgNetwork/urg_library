@@ -83,20 +83,17 @@ int urg_serial_find_port(void)
     // \~japanese デバイスマネージャの一覧から COM デバイスを探す
     // \~english Searchs for COM devices from the list of device manager
 
-    //4D36E978-E325-11CE-BFC1-08002BE10318
-    GUID GUID_DEVINTERFACE_COM_DEVICE = {
-        0x4D36E978L, 0xE325, 0x11CE,
-        {0xBF, 0xC1, 0x08, 0x00, 0x2B, 0xE1, 0x03, 0x18 }
-    };
+    // 4D36E978-E325-11CE-BFC1-08002BE10318
+    GUID GUID_DEVINTERFACE_COM_DEVICE = {0x4D36E978L, 0xE325, 0x11CE, {0xBF, 0xC1, 0x08, 0x00, 0x2B, 0xE1, 0x03, 0x18}};
 
     HDEVINFO hdi;
     SP_DEVINFO_DATA sDevInfo;
     int i;
 
     found_ports_size = 0;
-    hdi = SetupDiGetClassDevs(&GUID_DEVINTERFACE_COM_DEVICE, 0, 0,
-                              DIGCF_PRESENT | DIGCF_INTERFACEDEVICE);
-    if (hdi == INVALID_HANDLE_VALUE) {
+    hdi = SetupDiGetClassDevs(&GUID_DEVINTERFACE_COM_DEVICE, 0, 0, DIGCF_PRESENT);
+    if (hdi == INVALID_HANDLE_VALUE)
+    {
         return 0;
     }
 
