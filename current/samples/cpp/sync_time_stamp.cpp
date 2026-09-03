@@ -17,15 +17,18 @@
 using namespace qrk;
 using namespace std;
 
-
 namespace
 {
-    void print_timestamp(Urg_driver& urg)
+    void print_timestamp(Urg_driver &urg)
     {
-        enum { Print_times = 3 };
+        enum
+        {
+            Print_times = 3
+        };
         urg.start_time_stamp_mode();
 
-        for (int i = 0; i < Print_times; ++i) {
+        for (int32_t i = 0; i < Print_times; ++i)
+        {
             cout << ticks() << ", " << urg.get_sensor_time_stamp() << endl;
         }
 
@@ -33,8 +36,7 @@ namespace
     }
 }
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
@@ -43,7 +45,8 @@ int main(int argc, char *argv[])
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
                   information.baudrate_or_port_number(),
-                  information.connection_type())) {
+                  information.connection_type()))
+    {
         cout << "Urg_driver::open(): "
              << information.device_or_ip_name() << ": " << urg.what() << endl;
         return 1;

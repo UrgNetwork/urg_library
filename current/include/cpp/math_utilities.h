@@ -18,7 +18,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include <math.h>
-
+#include <stdint.h>
 
 #ifndef M_PI
 //! \~japanese 円周率 (Visual C++ 6.0 用)
@@ -27,7 +27,7 @@
 #endif
 
 #if defined(MSC)
-extern long lrint(double x);
+extern int32_t lrint(double x);
 #endif
 
 #endif /* !QRK_MATH_UTILITIES_H */

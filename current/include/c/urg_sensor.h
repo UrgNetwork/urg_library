@@ -20,1147 +20,1126 @@
 */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
+#include <stdint.h>
 #include "urg_connection.h"
 
-    /*!
-      \~japanese
-      \brief 計測タイプ
-      \~english
-      \brief Measurement types
-    */
-    typedef enum {
-        URG_DISTANCE,              //!< \~japanese 距離  \~english Distance (range)
-        URG_DISTANCE_INTENSITY,    //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
-        URG_DISTANCE_IO,           //!< \~japanese 距離 + IO情報  \~english Distance (range) and IO(input/output)
-        URG_DISTANCE_INTENSITY_IO, //!< \~japanese 距離 + 強度 + IO情報  \~english Distance (range), intensity and IO(input/output)
-        URG_MULTIECHO,             //!< \~japanese マルチエコーの距離  \~english Multiecho distance
-        URG_MULTIECHO_INTENSITY,   //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
-        URG_STOP,                  //!< \~japanese 計測の停止  \~english Stop measurement
-        URG_UNKNOWN,               //!< \~japanese 不明  \~english Unknown measurement type
-    } urg_measurement_type_t;
-
-    /*!
-      \~japanese
-      \brief 距離を何 byte で表現するかの指定
-      \~english
-      \brief Distance data encoding types (number of bytes)
-    */
-    typedef enum {
-        URG_COMMUNICATION_3_BYTE, //!< \~japanese 距離を 3 byte で表現する  \~english Use 3-bytes encoding for distance
-        URG_COMMUNICATION_2_BYTE, //!< \~japanese 距離を 2 byte で表現する  \~english Use 2-bytes encoding for distance
-    } urg_range_data_byte_t;
-
-
-    enum {
-        URG_SCAN_INFINITY = 0,  //!< \~japanese 無限回のデータ取得  \~english Continuous data scanning
-        URG_MAX_ECHO = 3,       //!< \~japanese マルチエコーの最大エコー数  \~english Maximum number of echoes
-        URG_MAX_IO = 2,         //!< \~japanese IO情報の最大データ数  \~english Maximum number of IO(input/output)
-    };
-
-
-    /*!
-       \~japanese
-       \brief エラーハンドラ
-       \~english
-       \brief Error handler
-    */
-    typedef urg_measurement_type_t
-    (*urg_error_handler)(const char *status, void *urg);
-
-
-    /*!
-      \~japanese
-      \brief URG センサ管理
-
-      \~english
-      \brief URG sensor control structure
-    */
-    typedef struct
-    {
-        int is_active;
-        int last_errno;
-        urg_connection_t connection;
-
-        int first_data_index;
-        int last_data_index;
-        int front_data_index;
-        int area_resolution;
-        long scan_usec;
-        int min_distance;
-        int max_distance;
-        int scanning_first_step;
-        int scanning_last_step;
-        int scanning_skip_step;
-        int scanning_skip_scan;
-        urg_range_data_byte_t range_data_byte;
-
-        int timeout;
-        int specified_scan_times;
-        int scanning_remain_times;
-        int is_laser_on;
-
-        int received_first_index;
-        int received_last_index;
-        int received_skip_step;
-        urg_range_data_byte_t received_range_data_byte;
-        int is_sending;
-
-        urg_error_handler error_handler;
-
-        int ignore_checkSumError;
-
-        char return_buffer[80];
-    } urg_t;
-
-    /*!
-      \~japanese
-      \brief urg_t構造体の初期化
-
-      URG センサ管理構造体(urg_t)を初期化します。
-
-      \param[in,out] urg URG センサ管理
-
-      \attention この関数はurg_open()の初めに実行されます。任意にセンサ管理構造体(urg_t)を初期化したい時はこの関数を呼び出してください。
-      \see urg_open()
-
-      \~english
-      \brief URG control structure (urg_t) initialization
+  /*!
+    \~japanese
+    \brief 計測タイプ
+    \~english
+    \brief Measurement types
+  */
+  typedef enum
+  {
+    URG_DISTANCE,              //!< \~japanese 距離  \~english Distance (range)
+    URG_DISTANCE_INTENSITY,    //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
+    URG_DISTANCE_IO,           //!< \~japanese 距離 + IO情報  \~english Distance (range) and IO(input/output)
+    URG_DISTANCE_INTENSITY_IO, //!< \~japanese 距離 + 強度 + IO情報  \~english Distance (range), intensity and IO(input/output)
+    URG_MULTIECHO,             //!< \~japanese マルチエコーの距離  \~english Multiecho distance
+    URG_MULTIECHO_INTENSITY,   //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
+    URG_STOP,                  //!< \~japanese 計測の停止  \~english Stop measurement
+    URG_UNKNOWN,               //!< \~japanese 不明  \~english Unknown measurement type
+  } urg_measurement_type_t;
+
+  /*!
+    \~japanese
+    \brief 距離を何 byte で表現するかの指定
+    \~english
+    \brief Distance data encoding types (number of bytes)
+  */
+  typedef enum
+  {
+    URG_COMMUNICATION_3_BYTE, //!< \~japanese 距離を 3 byte で表現する  \~english Use 3-bytes encoding for distance
+    URG_COMMUNICATION_2_BYTE, //!< \~japanese 距離を 2 byte で表現する  \~english Use 2-bytes encoding for distance
+  } urg_range_data_byte_t;
+
+  enum
+  {
+    URG_SCAN_INFINITY = 0, //!< \~japanese 無限回のデータ取得  \~english Continuous data scanning
+    URG_MAX_ECHO = 3,      //!< \~japanese マルチエコーの最大エコー数  \~english Maximum number of echoes
+    URG_MAX_IO = 2,        //!< \~japanese IO情報の最大データ数  \~english Maximum number of IO(input/output)
+  };
+
+  /*!
+     \~japanese
+     \brief エラーハンドラ
+     \~english
+     \brief Error handler
+  */
+  typedef urg_measurement_type_t (*urg_error_handler)(const char *status, void *urg);
+
+  /*!
+    \~japanese
+    \brief URG センサ管理
+
+    \~english
+    \brief URG sensor control structure
+  */
+  typedef struct
+  {
+    int32_t is_active;
+    int32_t last_errno;
+    urg_connection_t connection;
+
+    int32_t first_data_index;
+    int32_t last_data_index;
+    int32_t front_data_index;
+    int32_t area_resolution;
+    int32_t scan_usec;
+    int32_t min_distance;
+    int32_t max_distance;
+    int32_t scanning_first_step;
+    int32_t scanning_last_step;
+    int32_t scanning_skip_step;
+    int32_t scanning_skip_scan;
+    urg_range_data_byte_t range_data_byte;
+
+    int32_t timeout;
+    int32_t specified_scan_times;
+    int32_t scanning_remain_times;
+    int32_t is_laser_on;
+
+    int32_t received_first_index;
+    int32_t received_last_index;
+    int32_t received_skip_step;
+    urg_range_data_byte_t received_range_data_byte;
+    int32_t is_sending;
+
+    urg_error_handler error_handler;
+
+    int32_t ignore_checkSumError;
+
+    char return_buffer[80];
+  } urg_t;
+
+  /*!
+    \~japanese
+    \brief urg_t構造体の初期化
+
+    URG センサ管理構造体(urg_t)を初期化します。
+
+    \param[in,out] urg URG センサ管理
+
+    \attention この関数はurg_open()の初めに実行されます。任意にセンサ管理構造体(urg_t)を初期化したい時はこの関数を呼び出してください。
+    \see urg_open()
+
+    \~english
+    \brief URG control structure (urg_t) initialization
 
-      Initialize URG control structure(urg_t)
+    Initialize URG control structure(urg_t)
 
-      \param[in,out] urg URG control structure
+    \param[in,out] urg URG control structure
 
-      \attention
-      This function is executed at the start of urg_open ().
-      Call this function if you want to initialize the URG control structure (urg_t) arbitrarily.
+    \attention
+    This function is executed at the start of urg_open ().
+    Call this function if you want to initialize the URG control structure (urg_t) arbitrarily.
 
-      \see urg_open()
-      \~
-    */
-    void urg_t_initialize(urg_t *urg);
+    \see urg_open()
+    \~
+  */
+  void urg_t_initialize(urg_t *urg);
 
-    /*!
-      \~japanese
-      \brief 接続
+  /*!
+    \~japanese
+    \brief 接続
 
-      指定したデバイスに接続し、距離を計測できるようにする。
+    指定したデバイスに接続し、距離を計測できるようにする。
 
-      \param[in,out] urg URG センサ管理
-      \param[in] connection_type 通信タイプ
-      \param[in] device_or_address 接続デバイス名
-      \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
+    \param[in,out] urg URG センサ管理
+    \param[in] connection_type 通信タイプ
+    \param[in] device_or_address 接続デバイス名
+    \param[in] baudrate_or_port 接続ボーレート [bps] / TCP/IP ポート
 
-      \retval 0 正常
-      \retval <0 エラー
+    \retval 0 正常
+    \retval <0 エラー
 
-      connection_type には、以下の項目が指定できます。
+    connection_type には、以下の項目が指定できます。
 
-      - #URG_SERIAL
-      - シリアル、USB 接続
+    - #URG_SERIAL
+    - シリアル、USB 接続
 
-      - #URG_ETHERNET
-      - イーサーネット接続
+    - #URG_ETHERNET
+    - イーサーネット接続
 
-      \~english
-      \brief Connect
+    \~english
+    \brief Connect
 
-      Connects to the given device and enables measurement
+    Connects to the given device and enables measurement
 
-      \param[in,out] urg URG control structure
-      \param[in] connection_type Type of the connection
-      \param[in] device_or_address Name of the device
-      \param[in] baudrate_or_port Connection baudrate [bps] or TCP/IP port number
+    \param[in,out] urg URG control structure
+    \param[in] connection_type Type of the connection
+    \param[in] device_or_address Name of the device
+    \param[in] baudrate_or_port Connection baudrate [bps] or TCP/IP port number
 
-      \retval 0 Successful
-      \retval <0 Error
+    \retval 0 Successful
+    \retval <0 Error
 
-      The following values can be used in connection_type:
+    The following values can be used in connection_type:
 
-      - #URG_SERIAL
-      - Serial, USB connection
+    - #URG_SERIAL
+    - Serial, USB connection
 
-      - #URG_ETHERNET
-      - Ethernet connection
-      \~
-      Example
-      \code
-      urg_t urg;
+    - #URG_ETHERNET
+    - Ethernet connection
+    \~
+    Example
+    \code
+    urg_t urg;
 
-      if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
-      return 1;
-      }
+    if (urg_open(&urg, URG_SERIAL, "/dev/ttyACM0", 115200) < 0) {
+    return 1;
+    }
 
-      ...
+    ...
 
-      urg_close(&urg); \endcode
+    urg_close(&urg); \endcode
 
-      \~japanese
-      \attention URG C ライブラリの他の関数を呼び出す前に、この関数を呼び出す必要があります。
-      \~english
-      \attention Call this function before using any other function on the URG library.
+    \~japanese
+    \attention URG C ライブラリの他の関数を呼び出す前に、この関数を呼び出す必要があります。
+    \~english
+    \attention Call this function before using any other function on the URG library.
 
-      \~
-      \see urg_close()
-    */
-    extern int urg_open(urg_t *urg, urg_connection_type_t connection_type,
-                        const char *device_or_address,
-                        long baudrate_or_port);
+    \~
+    \see urg_close()
+  */
+  extern int32_t urg_open(urg_t *urg, urg_connection_type_t connection_type,
+                          const char *device_or_address,
+                          int32_t baudrate_or_port);
 
+  /*!
+    \~japanese
+    \brief 切断
 
-    /*!
-      \~japanese
-      \brief 切断
+    レーザを消灯し、URG との接続を切断します。
 
-      レーザを消灯し、URG との接続を切断します。
+    \param[in,out] urg URG センサ管理
 
-      \param[in,out] urg URG センサ管理
+    \~english
+    \brief Disconnection
 
-      \~english
-      \brief Disconnection
+    Turns off the laser and closes the connection with the URG sensor.
 
-      Turns off the laser and closes the connection with the URG sensor.
+    \param[in,out] urg URG control structure
+    \~
+    \see urg_open()
+  */
+  extern void urg_close(urg_t *urg);
 
-      \param[in,out] urg URG control structure
-      \~
-      \see urg_open()
-    */
-    extern void urg_close(urg_t *urg);
+  /*!
+    \~japanese
+    \brief タイムアウト時間の設定
 
+    \param[in,out] urg URG センサ管理
+    \param[in] msec タイムアウトする時間 [msec]
 
-    /*!
-      \~japanese
-      \brief タイムアウト時間の設定
+    \attention urg_open() を呼び出すと timeout の設定値はデフォルト値に初期化されるため、この関数は urg_open() 後に呼び出すこと。
+    \~english
+    \brief Defines the timeout value to use during communication
 
-      \param[in,out] urg URG センサ管理
-      \param[in] msec タイムアウトする時間 [msec]
+    \param[in,out] urg URG control structure
+    \param[in] msec Timeout value [msec]
 
-      \attention urg_open() を呼び出すと timeout の設定値はデフォルト値に初期化されるため、この関数は urg_open() 後に呼び出すこと。
-      \~english
-      \brief Defines the timeout value to use during communication
+    \attention The urg_open() function always sets the timeout value to its default, if necessary call this function after urg_open().
+  */
+  extern void urg_set_timeout_msec(urg_t *urg, int32_t msec);
 
-      \param[in,out] urg URG control structure
-      \param[in] msec Timeout value [msec]
+  /*!
+     \~japanese
+     \brief タイムスタンプモードの開始
+     \~english
+     \brief Starts the timestamp mode (time adjustment state)
+  */
+  extern int32_t urg_start_time_stamp_mode(urg_t *urg);
 
-      \attention The urg_open() function always sets the timeout value to its default, if necessary call this function after urg_open().
-    */
-    extern void urg_set_timeout_msec(urg_t *urg, int msec);
+  /*!
+    \~japanese
+    \brief タイムスタンプの取得
 
+    \param[in,out] urg URG センサ管理
 
-    /*!
-       \~japanese
-       \brief タイムスタンプモードの開始
-       \~english
-       \brief Starts the timestamp mode (time adjustment state)
-    */
-    extern int urg_start_time_stamp_mode(urg_t *urg);
+    \retval >=0 タイムスタンプ [msec]
+    \retval <0 エラー
 
+    \~english
+    \brief Read timestamp data
 
-    /*!
-      \~japanese
-      \brief タイムスタンプの取得
+    \param[in,out] urg URG control structure
 
-      \param[in,out] urg URG センサ管理
+    \retval >=0 Timestamp value [msec]
+    \retval <0 Error
 
-      \retval >=0 タイムスタンプ [msec]
-      \retval <0 エラー
+    \~
+    Example
+    \code
+    urg_start_time_stamp_mode(&urg);
 
-      \~english
-      \brief Read timestamp data
+    before_ticks = get_pc_msec_function();
+    time_stamp = urg_time_stamp(&urg);
+    after_ticks = get_pc_msec_function();
 
-      \param[in,out] urg URG control structure
+    \~japanese
+    // タイムスタンプについての計算
+    \~english
+    // Processing of timestamp data
+    \~
+    ...
 
-      \retval >=0 Timestamp value [msec]
-      \retval <0 Error
+    urg_stop_time_stamp_mode(&urg); \endcode
 
-      \~
-      Example
-      \code
-      urg_start_time_stamp_mode(&urg);
+    \~japanese
+    詳しくは \ref sync_time_stamp.c を参照して下さい。
+    \~english
+    For a detailed use consult the \ref sync_time_stamp.c example
+  */
+  extern int32_t urg_time_stamp(urg_t *urg);
 
-      before_ticks = get_pc_msec_function();
-      time_stamp = urg_time_stamp(&urg);
-      after_ticks = get_pc_msec_function();
+  /*!
+     \~japanese
+     \brief タイムスタンプモードの終了
+     \~english
+     \brief Stops the timestamp mode (returning to idle state)
+  */
+  extern int32_t urg_stop_time_stamp_mode(urg_t *urg);
 
-      \~japanese
-      // タイムスタンプについての計算
-      \~english
-      // Processing of timestamp data
-      \~
-      ...
+  /*!
+    \~japanese
+    \brief 距離データの取得を開始
 
-      urg_stop_time_stamp_mode(&urg); \endcode
+    距離データの取得を開始します。実際のデータは urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity() で取得できます。
 
-      \~japanese
-      詳しくは \ref sync_time_stamp.c を参照して下さい。
-      \~english
-      For a detailed use consult the \ref sync_time_stamp.c example
-    */
-    extern long urg_time_stamp(urg_t *urg);
+    \param[in,out] urg URG センサ管理
+    \param[in] type データ・タイプ
+    \param[in] scan_times データの取得回数
+    \param[in] skip_scan データの取得間隔
+    \param[in] ignore_checkSumError 0以外:チェックサムエラーを無視し、計測継続 0:チェックサムエラーで計測停止
 
+    \retval 0 正常
+    \retval <0 エラー
 
-    /*!
-       \~japanese
-       \brief タイムスタンプモードの終了
-       \~english
-       \brief Stops the timestamp mode (returning to idle state)
-    */
-    extern int urg_stop_time_stamp_mode(urg_t *urg);
+    type には取得するデータの種類を指定します。
 
+    - #URG_DISTANCE ... 距離データ
+    - #URG_DISTANCE_INTENSITY ... 距離データと強度データ
+    - #URG_MULTIECHO ... マルチエコー版の距離データ
+    - #URG_MULTIECHO_INTENSITY ... マルチエコー版の(距離データと強度データ)
 
-    /*!
-      \~japanese
-      \brief 距離データの取得を開始
+    scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INFINITY を指定した場合は、無限回のデータを取得します。\n
+    開始した計測を中断するには urg_stop_measurement() を使います。
 
-      距離データの取得を開始します。実際のデータは urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity() で取得できます。
+    skip_scan はミラーの回転数のうち、１回のスキャン後に何回スキャンしないかを指定します。skip_scan に指定できる範囲は [0, 9] です。
 
-      \param[in,out] urg URG センサ管理
-      \param[in] type データ・タイプ
-      \param[in] scan_times データの取得回数
-      \param[in] skip_scan データの取得間隔
-      \param[in] ignore_checkSumError 0以外:チェックサムエラーを無視し、計測継続 0:チェックサムエラーで計測停止
+    \image html skip_scan_image.png 何回に１回だけ計測するか
 
-      \retval 0 正常
-      \retval <0 エラー
+    たとえば、ミラーの１回転が 100 [msec] のセンサで skip_scan に 1 を指定した場合、データの取得間隔は 200 [msec] になります。
 
-      type には取得するデータの種類を指定します。
+    \~english
+    \brief Start getting distance measurement data
 
-      - #URG_DISTANCE ... 距離データ
-      - #URG_DISTANCE_INTENSITY ... 距離データと強度データ
-      - #URG_MULTIECHO ... マルチエコー版の距離データ
-      - #URG_MULTIECHO_INTENSITY ... マルチエコー版の(距離データと強度データ)
+    Starts measurement data acquisition. The actual data can be retrieved using urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity().
 
-      scan_times は何回のデータを取得するかを 0 以上の数で指定します。ただし、0 または #URG_SCAN_INFINITY を指定した場合は、無限回のデータを取得します。\n
-      開始した計測を中断するには urg_stop_measurement() を使います。
+    \param[in,out] urg URG control structure
+    \param[in] type Measurement type
+    \param[in] scan_times Number of scans to request
+    \param[in] skip_scan Interval between scans
+    \param[in] ignore_checkSumError non-0:continue measurement 0: stop measurement
 
-      skip_scan はミラーの回転数のうち、１回のスキャン後に何回スキャンしないかを指定します。skip_scan に指定できる範囲は [0, 9] です。
+    \retval 0 Successful
+    \retval <0 Error
 
-      \image html skip_scan_image.png 何回に１回だけ計測するか
+    The following values are possible for the type argument
 
-      たとえば、ミラーの１回転が 100 [msec] のセンサで skip_scan に 1 を指定した場合、データの取得間隔は 200 [msec] になります。
+    - #URG_DISTANCE ... Distance (range) data
+    - #URG_DISTANCE_INTENSITY ... Distance (range) and intensity (strength) data
+    - #URG_MULTIECHO ... Multiecho distance data
+    - #URG_MULTIECHO_INTENSITY ... Multiecho distance and intensity data
 
-      \~english
-      \brief Start getting distance measurement data
+    scan_times defines how many scans to capture from the sensor: >0 means a fixed number of scans, 0 or #URG_SCAN_INFINITY means continuous (infinite) scanning.
+    To interrupt measurement at any time use urg_stop_measurement().
 
-      Starts measurement data acquisition. The actual data can be retrieved using urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity().
+    skip_scan means, after obtaining one scan, skip measurement for the following X mirror (motor) revolutions.
+    The values for skip_scan are from the range [0, 9].
 
-      \param[in,out] urg URG control structure
-      \param[in] type Measurement type
-      \param[in] scan_times Number of scans to request
-      \param[in] skip_scan Interval between scans
-      \param[in] ignore_checkSumError non-0:continue measurement 0: stop measurement
+    \image html skip_scan_image.png shows scan skip
 
-      \retval 0 Successful
-      \retval <0 Error
+    For example, for a sensor with one mirror (motor) revolution is 100 [msec] and skip_scan is set to 1, measurement data will be obtained with an interval of 200 [msec].
 
-      The following values are possible for the type argument
+    \~
+    Example
+    \code
+    enum { CAPTURE_TIMES = 10 };
+    urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
 
-      - #URG_DISTANCE ... Distance (range) data
-      - #URG_DISTANCE_INTENSITY ... Distance (range) and intensity (strength) data
-      - #URG_MULTIECHO ... Multiecho distance data
-      - #URG_MULTIECHO_INTENSITY ... Multiecho distance and intensity data
+    for (i = 0; i < CAPTURE_TIMES; ++i) {
+    int32_t n = urg_get_distance(&urg, data, &time_stamp);
 
-      scan_times defines how many scans to capture from the sensor: >0 means a fixed number of scans, 0 or #URG_SCAN_INFINITY means continuous (infinite) scanning.
-      To interrupt measurement at any time use urg_stop_measurement().
+    \~japanese
+    // 受信したデータの利用
+    \~english
+    // Processing of obtained data
+    \~
+    ...
+    } \endcode
 
-      skip_scan means, after obtaining one scan, skip measurement for the following X mirror (motor) revolutions.
-      The values for skip_scan are from the range [0, 9].
+    \~
+    \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
+  */
+  extern int32_t urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
+                                       int32_t scan_times, int32_t skip_scan,
+                                       int32_t ignore_checkSumError);
 
-      \image html skip_scan_image.png shows scan skip
+  /*!
+    \~japanese
+    \brief 距離データの取得
 
-      For example, for a sensor with one mirror (motor) revolution is 100 [msec] and skip_scan is set to 1, measurement data will be obtained with an interval of 200 [msec].
+    センサから距離データを取得します。事前に urg_start_measurement() を #URG_DISTANCE 指定で呼び出しておく必要があります。
 
-      \~
-      Example
-      \code
-      enum { CAPTURE_TIMES = 10 };
-      urg_start_measurement(&urg, URG_DISTANCE, CAPTURE_TIMES, 0);
+    \param[in,out] urg URG センサ管理
+    \param[out] data 距離データ [mm]
+    \param[out] time_stamp タイムスタンプ [msec]
 
-      for (i = 0; i < CAPTURE_TIMES; ++i) {
-      int n = urg_get_distance(&urg, data, &time_stamp);
+    \retval >=0 受信したデータ個数
+    \retval <0 エラー
 
-      \~japanese
-      // 受信したデータの利用
-      \~english
-      // Processing of obtained data
-      \~
-      ...
-      } \endcode
+    data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_data_size() で取得できます。
 
-      \~
-      \see urg_get_distance(), urg_get_distance_intensity(), urg_get_multiecho(), urg_get_multiecho_intensity(), urg_stop_measurement()
-    */
-    extern int urg_start_measurement(urg_t *urg, urg_measurement_type_t type,
-                                     int scan_times, int skip_scan, int ignore_checkSumError);
+    time_stamp には、センサ内部のタイムスタンプが格納されます。time_stamp を取得したくない場合 NULL を指定して下さい。
 
+    \~english
+    \brief Gets distance data
 
-    /*!
-      \~japanese
-      \brief 距離データの取得
+    Receives distance data from the sensor. The urg_start_measurement() function was called beforehand with #URG_DISTANCE as type argument.
 
-      センサから距離データを取得します。事前に urg_start_measurement() を #URG_DISTANCE 指定で呼び出しておく必要があります。
+    \param[in,out] urg URG control structure
+    \param[out] data Distance data array [mm]
+    \param[out] time_stamp Timestamp [msec]
 
-      \param[in,out] urg URG センサ管理
-      \param[out] data 距離データ [mm]
-      \param[out] time_stamp タイムスタンプ [msec]
+    \retval >=0 Number of data points received
+    \retval <0 Error
 
-      \retval >=0 受信したデータ個数
-      \retval <0 エラー
+    Distance data received from the sensor are stored in data array. data array should be previously allocated to hold all the data points requested from the sensor. To know how many data points are received, use the urg_max_data_size() function.
 
-      data には、センサから取得した距離データが格納されます。data はデータを格納するのサイズを確保しておく必要があります。data に格納されるデータ数は urg_max_data_size() で取得できます。
+    time_stamp will hold the timestamp value stored on the sensor. When not necessary just pass NULL as argument.
 
-      time_stamp には、センサ内部のタイムスタンプが格納されます。time_stamp を取得したくない場合 NULL を指定して下さい。
+    \~
+    Example
+    \code
+    int32_t *data = (int32_t*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
 
-      \~english
-      \brief Gets distance data
+    ...
 
-      Receives distance data from the sensor. The urg_start_measurement() function was called beforehand with #URG_DISTANCE as type argument.
+    \~japanese
+    // データのみ取得する
+    \~english
+    // Gets only measurement data
+    urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+    int32_t n = urg_get_distance(&urg, data, NULL);
 
-      \param[in,out] urg URG control structure
-      \param[out] data Distance data array [mm]
-      \param[out] time_stamp Timestamp [msec]
+    ...
 
-      \retval >=0 Number of data points received
-      \retval <0 Error
+    \~japanese
+    // データとタイムスタンプを取得する
+    \~english
+    // Gets measurement data and timestamp
+    int32_t time_stamp;
+    urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
+    n = urg_get_distance(&urg, data, &time_stamp); \endcode
 
-      Distance data received from the sensor are stored in data array. data array should be previously allocated to hold all the data points requested from the sensor. To know how many data points are received, use the urg_max_data_size() function.
+    \~
+    \see urg_start_measurement(), urg_max_data_size()
+  */
+  extern int32_t urg_get_distance(urg_t *urg, int32_t data[], int32_t *time_stamp);
 
-      time_stamp will hold the timestamp value stored on the sensor. When not necessary just pass NULL as argument.
+  /*!
+    \~japanese
+    \brief 距離データとIO情報の取得
 
-      \~
-      Example
-      \code
-      long *data = (long*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
+    センサから距離データとIO情報を取得します。事前に urg_start_measurement() を #URG_DISTANCE_IO 指定で呼び出しておく必要があります。
 
-      ...
+    \param[in,out] urg URG センサ管理
+    \param[out] data 距離データ [mm]
+    \param[out] io IO情報
+    \param[out] time_stamp タイムスタンプ [msec]
 
-      \~japanese
-      // データのみ取得する
-      \~english
-      // Gets only measurement data
-      urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
-      int n = urg_get_distance(&urg, data, NULL);
+    \retval >=0 受信したデータ個数
+    \retval <0 エラー
 
-      ...
+    io には、センサから取得したIO情報が格納されます。
+  io[0]に入力値、io[1]に出力値が格納されるため、2要素分のサイズを確保しておく必要があります。
 
-      \~japanese
-      // データとタイムスタンプを取得する
-      \~english
-      // Gets measurement data and timestamp
-      long time_stamp;
-      urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
-      n = urg_get_distance(&urg, data, &time_stamp); \endcode
+  data, time_stamp については urg_get_distance() と同じです。
 
-      \~
-      \see urg_start_measurement(), urg_max_data_size()
-    */
-    extern int urg_get_distance(urg_t *urg, long data[], long *time_stamp);
+  なお、IO情報取得に対応していない機種では、エラーになります。
 
-    /*!
-      \~japanese
-      \brief 距離データとIO情報の取得
+    \~english
+    \brief Gets distance and IO(input/output) data
 
-      センサから距離データとIO情報を取得します。事前に urg_start_measurement() を #URG_DISTANCE_IO 指定で呼び出しておく必要があります。
+    Receives distance and IO(input/output) data from the sensor. The urg_start_measurement() function was called beforehand with #URG_DISTANCE as type argument.
 
-      \param[in,out] urg URG センサ管理
-      \param[out] data 距離データ [mm]
-      \param[out] io IO情報
-      \param[out] time_stamp タイムスタンプ [msec]
+    \param[in,out] urg URG control structure
+    \param[out] data Distance data array [mm]
+    \param[out] io IO data array
+    \param[out] time_stamp Timestamp [msec]
 
-      \retval >=0 受信したデータ個数
-      \retval <0 エラー
+    \retval >=0 Number of data points received
+    \retval <0 Error
 
-      io には、センサから取得したIO情報が格納されます。
-	  io[0]に入力値、io[1]に出力値が格納されるため、2要素分のサイズを確保しておく必要があります。
-	  
-	  data, time_stamp については urg_get_distance() と同じです。
+    IO data received from the sensor are stored in data array.
+    The input value is stored in io[0] and the output value in io[1].
+    The size of the two elements should be reserved in advance.
 
-	  なお、IO情報取得に対応していない機種では、エラーになります。
+    Regarding data and time_stamp arguments, refer to urg_get_distance().
 
-      \~english
-      \brief Gets distance and IO(input/output) data
+    Note that an error will occur for models that do not support IO information acquisition.
 
-      Receives distance and IO(input/output) data from the sensor. The urg_start_measurement() function was called beforehand with #URG_DISTANCE as type argument.
+    \~
+    Example
+    \code
+    int32_t *data = (int32_t*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
+  int32_t *io = malloc(2 * sizeof(int32_t));
+    int32_t time_stamp;
 
-      \param[in,out] urg URG control structure
-      \param[out] data Distance data array [mm]
-      \param[out] io IO data array
-      \param[out] time_stamp Timestamp [msec]
+  ...
 
-      \retval >=0 Number of data points received
-      \retval <0 Error
+  urg_start_measurement(&urg, URG_DISTANCE_IO, 1, 0);
+  int32_t n = urg_get_distance_io(&urg, data, io, &time_stamp); \endcode
 
-      IO data received from the sensor are stored in data array. 
-      The input value is stored in io[0] and the output value in io[1].
-      The size of the two elements should be reserved in advance.
+  \see urg_start_measurement()
+  */
+  extern int32_t urg_get_distance_io(urg_t *urg, int32_t data[], int32_t io[], int32_t *time_stamp);
 
-      Regarding data and time_stamp arguments, refer to urg_get_distance().
+  /*!
+    \~japanese
+    \brief 距離と強度データの取得
 
-      Note that an error will occur for models that do not support IO information acquisition.
+    urg_get_distance() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY 指定で呼び出しておく必要があります。
 
-      \~
-      Example
-      \code
-      long *data = (long*)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
-	  long *io = malloc(2 * sizeof(long));
-      long time_stamp;
+    \param[in,out] urg URG センサ管理
+    \param[out] data 距離データ [mm]
+    \param[out] intensity 強度データ
+    \param[out] time_stamp タイムスタンプ [msec]
 
-	  ...
+    \retval >=0 受信したデータ個数
+    \retval <0 エラー
 
-	  urg_start_measurement(&urg, URG_DISTANCE_IO, 1, 0);
-	  int n = urg_get_distance_io(&urg, data, io, &time_stamp); \endcode
+    強度データとは、距離計算に使った波形の反射強度であり、センサのシリーズ毎に特性が異なります。 強度データを使うことで、物体の反射率や環境の大まかな濃淡を推測できます。
 
-	  \see urg_start_measurement()
-    */
-    extern int urg_get_distance_io(urg_t* urg, long data[], long io[], long* time_stamp);
+    data, time_stamp については urg_get_distance() と同じです。
 
-    /*!
-      \~japanese
-      \brief 距離と強度データの取得
+    intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_data_size() で取得できます。
 
-      urg_get_distance() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY 指定で呼び出しておく必要があります。
+    \~english
+    \brief Gets distance and intensity data
 
-      \param[in,out] urg URG センサ管理
-      \param[out] data 距離データ [mm]
-      \param[out] intensity 強度データ
-      \param[out] time_stamp タイムスタンプ [msec]
+    This is an extension to urg_get_distance() which allows to obtain also the intensity (strength) data. The urg_start_measurement() function was called beforehand with #URG_DISTANCE_INTENSITY as type argument.
 
-      \retval >=0 受信したデータ個数
-      \retval <0 エラー
+    \param[in,out] urg URG control structure
+    \param[out] data Distance data array [mm]
+    \param[out] intensity Intensity data array
+    \param[out] time_stamp Timestamp [msec]
 
-      強度データとは、距離計算に使った波形の反射強度であり、センサのシリーズ毎に特性が異なります。 強度データを使うことで、物体の反射率や環境の大まかな濃淡を推測できます。
+    \retval >=0 Number of data points received
+    \retval <0 Error
 
-      data, time_stamp については urg_get_distance() と同じです。
+    Intensity data corresponds to the laser strength received during distance calculation. The characteristics of this value changes with sensor series. With some limitations, this property can be used to guess the reflectivity and color shade of an object.
 
-      intensity には、センサから取得した強度データが格納されます。intensity はデータを格納するのサイズを確保しておく必要があります。intensity に格納されるデータ数は urg_max_data_size() で取得できます。
+    Regarding data and time_stamp arguments, refer to urg_get_distance().
 
-      \~english
-      \brief Gets distance and intensity data
+    Intensity data received from the sensor are stored in intensity array. intensity array should be previously allocated to hold all the data points requested from the sensor. To know how many data points are received, use the urg_max_data_size() function.
 
-      This is an extension to urg_get_distance() which allows to obtain also the intensity (strength) data. The urg_start_measurement() function was called beforehand with #URG_DISTANCE_INTENSITY as type argument.
+    \~
+    Example
+    \code
+    int32_t data_size = urg_max_data_size(&urg);
+    int32_t *data = malloc(data_size * sizeof(int32_t));
+    unsigned short *intensity = malloc(data_size * sizeof(unsigned short));
 
-      \param[in,out] urg URG control structure
-      \param[out] data Distance data array [mm]
-      \param[out] intensity Intensity data array
-      \param[out] time_stamp Timestamp [msec]
+    ...
 
-      \retval >=0 Number of data points received
-      \retval <0 Error
+    urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
+    int32_t n = urg_get_distance_intensity(&urg, data, intesnity, NULL); \endcode
 
-      Intensity data corresponds to the laser strength received during distance calculation. The characteristics of this value changes with sensor series. With some limitations, this property can be used to guess the reflectivity and color shade of an object.
+    \~
+    \see urg_start_measurement(), urg_max_data_size()
+  */
+  extern int32_t urg_get_distance_intensity(urg_t *urg, int32_t data[],
+                                            unsigned short intensity[],
+                                            int32_t *time_stamp);
 
-      Regarding data and time_stamp arguments, refer to urg_get_distance().
+  /*!
+    \~japanese
+    \brief 距離・強度データとIO情報の取得
 
-      Intensity data received from the sensor are stored in intensity array. intensity array should be previously allocated to hold all the data points requested from the sensor. To know how many data points are received, use the urg_max_data_size() function.
+    urg_get_distance_io() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY_IO 指定で呼び出しておく必要があります。
 
-      \~
-      Example
-      \code
-      int data_size = urg_max_data_size(&urg);
-      long *data = malloc(data_size * sizeof(long));
-      long *intensity = malloc(data_size * sizeof(unsigned short));
+    \param[in,out] urg URG センサ管理
+    \param[out] data 距離データ [mm]
+    \param[out] intensity 強度データ
+    \param[out] io IO情報
+    \param[out] time_stamp タイムスタンプ [msec]
 
-      ...
+    \retval >=0 受信したデータ個数
+    \retval <0 エラー
 
-      urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
-      int n = urg_get_distance_intensity(&urg, data, intesnity, NULL); \endcode
+    data, time_stamp については urg_get_distance()
+  intensity については urg_get_distance_intensity()
+  io については urg_get_distance_io() を参照してください。
 
-      \~
-      \see urg_start_measurement(), urg_max_data_size()
-    */
-    extern int urg_get_distance_intensity(urg_t *urg, long data[],
-                                          unsigned short intensity[],
-                                          long *time_stamp);
+  なお、IO情報取得に対応していない機種では、エラーになります。
 
-    /*!
-      \~japanese
-      \brief 距離・強度データとIO情報の取得
+    \~english
+    \brief Gets distance, intensity and IO(input/output) data
 
-      urg_get_distance_io() に加え、強度データの取得ができる関数です。事前に urg_start_measurement() を #URG_DISTANCE_INTENSITY_IO 指定で呼び出しておく必要があります。
+    This is an extension to urg_get_distance_io() which allows to obtain also the intensity (strength) data. The urg_start_measurement() function was called beforehand with #URG_DISTANCE_INTENSITY_IO as type argument.
 
-      \param[in,out] urg URG センサ管理
-      \param[out] data 距離データ [mm]
-      \param[out] intensity 強度データ
-      \param[out] io IO情報
-      \param[out] time_stamp タイムスタンプ [msec]
+    \param[in,out] urg URG control structure
+    \param[out] data Distance data array [mm]
+    \param[out] intensity Intensity data array
+    \param[out] io IO data array
+    \param[out] time_stamp Timestamp [msec]
 
-      \retval >=0 受信したデータ個数
-      \retval <0 エラー
+    \retval >=0 Number of data points received
+    \retval <0 Error
 
-      data, time_stamp については urg_get_distance() 
-	  intensity については urg_get_distance_intensity() 
-	  io については urg_get_distance_io() を参照してください。
+    Regarding data and time_stamp arguments, refer to urg_get_distance().
+    Regarding io arguments, refer to urg_get_distance_io().
 
-	  なお、IO情報取得に対応していない機種では、エラーになります。
+    Note that an error will occur for models that do not support IO information acquisition.
 
-      \~english
-      \brief Gets distance, intensity and IO(input/output) data
+    \~
+    Example
+    \code
+    int32_t data_size = urg_max_data_size(&urg);
+  int32_t *data = malloc(data_size * sizeof(int32_t));
+  unsigned short *intensity = malloc(data_size * sizeof(unsigned short));
+  int32_t *io = malloc(2 * sizeof(int32_t));
 
-      This is an extension to urg_get_distance_io() which allows to obtain also the intensity (strength) data. The urg_start_measurement() function was called beforehand with #URG_DISTANCE_INTENSITY_IO as type argument.
+  ...
 
-      \param[in,out] urg URG control structure
-      \param[out] data Distance data array [mm]
-      \param[out] intensity Intensity data array
-      \param[out] io IO data array
-      \param[out] time_stamp Timestamp [msec]
+  urg_start_measurement(&urg, URG_DISTANCE_INTENSITY_IO, 1, 0);
+  int32_t n = urg_get_distance_intensity(&urg, data, intesnity, NULL); \endcode
 
-      \retval >=0 Number of data points received
-      \retval <0 Error
+  \see urg_start_measurement(), urg_max_data_size()
+  */
+  extern int32_t urg_get_distance_intensity_io(urg_t *urg, int32_t data[],
+                                               unsigned short intensity[],
+                                               int32_t io[], int32_t *time_stamp);
 
-      Regarding data and time_stamp arguments, refer to urg_get_distance().
-      Regarding io arguments, refer to urg_get_distance_io().
+  /*!
+    \~japanese
+    \brief 距離データの取得 (マルチエコー版)
 
-      Note that an error will occur for models that do not support IO information acquisition.
+    マルチエコー版の距離データ取得関数です。事前に urg_start_measurement() を #URG_MULTIECHO 指定で呼び出しておく必要があります。
 
-      \~
-      Example
-      \code
-      int data_size = urg_max_data_size(&urg);
-	  long *data = malloc(data_size * sizeof(long));
-	  long *intensity = malloc(data_size * sizeof(unsigned short));
-	  long *io = malloc(2 * sizeof(long));
+    \param[in,out] urg URG センサ管理
+    \param[out] data_multi 距離データ [mm]
+    \param[out] time_stamp タイムスタンプ [msec]
 
-	  ...
+    \retval >=0 受信したデータ個数
+    \retval <0 エラー
 
-	  urg_start_measurement(&urg, URG_DISTANCE_INTENSITY_IO, 1, 0);
-	  int n = urg_get_distance_intensity(&urg, data, intesnity, NULL); \endcode
+    マルチエコーとは複数の距離データです。 マルチエコーは、１つのレーザ発光において複数の距離データが得られたときに得られます。
 
-	  \see urg_start_measurement(), urg_max_data_size()
-    */
-    extern int urg_get_distance_intensity_io(urg_t* urg, long data[],
-                                             unsigned short intensity[],
-                                             long io[], long* time_stamp);
+    \image html multiecho_image.png マルチエコーのイメージ図
 
-    /*!
-      \~japanese
-      \brief 距離データの取得 (マルチエコー版)
+    time_stamp については urg_get_distance() と同じです。
 
-      マルチエコー版の距離データ取得関数です。事前に urg_start_measurement() を #URG_MULTIECHO 指定で呼び出しておく必要があります。
+    data_multi には、センサから取得した距離データが１つの step あたり最大で #URG_MAX_ECHO (3 つ)格納されます。マルチエコーが存在しない項目のデータ値は -1 が格納されています。
 
-      \param[in,out] urg URG センサ管理
-      \param[out] data_multi 距離データ [mm]
-      \param[out] time_stamp タイムスタンプ [msec]
+    \verbatim
+    data_multi[0] ... step n の距離データ (1 つめ)
+    data_multi[1] ... step n の距離データ (2 つめ)
+    data_multi[2] ... step n の距離データ (3 つめ)
+    data_multi[3] ... step (n + 1) の 距離データ (1 つめ)
+    data_multi[4] ... step (n + 1) の 距離データ (2 つめ)
+    data_multi[5] ... step (n + 1) の 距離データ (3 つめ)
+    ... \endverbatim
 
-      \retval >=0 受信したデータ個数
-      \retval <0 エラー
+    格納順は、各 step において urg_get_distance() のときと同じ距離のデータが (3n + 0) の位置に格納され、それ以外のデータが (3n + 1), (3n + 2) の位置に降順に格納されます。\n
+    つまり data_multi[3n + 1] >= data_multi[3n + 2] になることは保証されますが data_multi[3n + 0] と data_multi[3n + 1] の関係は未定義です。(data_multi[3n + 1] == data_multi[3n + 2] が成り立つのはデータ値が -1 のとき。)
 
-      マルチエコーとは複数の距離データです。 マルチエコーは、１つのレーザ発光において複数の距離データが得られたときに得られます。
+    \~english
+    \brief Gets distance data (multiecho mode)
 
-      \image html multiecho_image.png マルチエコーのイメージ図
+    Receives multiecho distance data from the sensor. The urg_start_measurement() function was called beforehand with #URG_MULTIECHO as type argument.
 
-      time_stamp については urg_get_distance() と同じです。
+    \param[in,out] urg URG control structure
+    \param[out] data_multi Distance data array [mm]
+    \param[out] time_stamp Timestamp [msec]
 
-      data_multi には、センサから取得した距離データが１つの step あたり最大で #URG_MAX_ECHO (3 つ)格納されます。マルチエコーが存在しない項目のデータ値は -1 が格納されています。
+    \retval >=0 Number of data points received
+    \retval <0 Error
 
-      \verbatim
-      data_multi[0] ... step n の距離データ (1 つめ)
-      data_multi[1] ... step n の距離データ (2 つめ)
-      data_multi[2] ... step n の距離データ (3 つめ)
-      data_multi[3] ... step (n + 1) の 距離データ (1 つめ)
-      data_multi[4] ... step (n + 1) の 距離データ (2 つめ)
-      data_multi[5] ... step (n + 1) の 距離データ (3 つめ)
-      ... \endverbatim
+    Multiecho means multiple range responses (echoes). For a single laser beam, multiple laser returns reflected from different targets may be received, and thus multiple range values are calculated.
 
-      格納順は、各 step において urg_get_distance() のときと同じ距離のデータが (3n + 0) の位置に格納され、それ以外のデータが (3n + 1), (3n + 2) の位置に降順に格納されます。\n
-      つまり data_multi[3n + 1] >= data_multi[3n + 2] になることは保証されますが data_multi[3n + 0] と data_multi[3n + 1] の関係は未定義です。(data_multi[3n + 1] == data_multi[3n + 2] が成り立つのはデータ値が -1 のとき。)
+    \image html multiecho_image.png shows multiecho measurement
 
-      \~english
-      \brief Gets distance data (multiecho mode)
+    time_stamp will hold the timestamp value stored on the sensor, same as with urg_get_distance().
 
-      Receives multiecho distance data from the sensor. The urg_start_measurement() function was called beforehand with #URG_MULTIECHO as type argument.
+    The array data_multi will hold the multiecho range data, up to a maximum of #URG_MAX_ECHO (3) echoes per step. In case the echo does not exists then -1 will be stored on the array.
 
-      \param[in,out] urg URG control structure
-      \param[out] data_multi Distance data array [mm]
-      \param[out] time_stamp Timestamp [msec]
+    \verbatim
+    data_multi[0] ... step n range data (1st echo)
+    data_multi[1] ... step n range data (2nd echo)
+    data_multi[2] ... step n range data (3rd echo)
+    data_multi[3] ... step (n + 1) range data (1st echo)
+    data_multi[4] ... step (n + 1) range data (2nd echo)
+    data_multi[5] ... step (n + 1) range data (3rd echo)
+    ... \endverbatim
 
-      \retval >=0 Number of data points received
-      \retval <0 Error
+    In the array, the cells numbered (3n + 0) will hold the range data for first echo (same data as for the urg_get_distance() function), for the other cells (3n + 1) and (3n + 2) data is stored in descending order. \n
+    This is, the order data_multi[3n + 1] >= data_multi[3n + 2] is assured, however the relation between data_multi[3n + 0] and data_multi[3n + 1] is not defined. (When data_multi[3n + 1] == data_multi[3n + 2] it means the echo does not exists and the stored value is -1.)
 
-      Multiecho means multiple range responses (echoes). For a single laser beam, multiple laser returns reflected from different targets may be received, and thus multiple range values are calculated.
+    \~
+    Example
+    \code
+    int32_t *data_multi = malloc(3 * urg_max_data_size(&urg) * sizeof(int32_t));
 
-      \image html multiecho_image.png shows multiecho measurement
+    ...
 
-      time_stamp will hold the timestamp value stored on the sensor, same as with urg_get_distance().
+    urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
+    int32_t n = urg_get_distance_intensity(&urg, data_multi, NULL); \endcode
 
-      The array data_multi will hold the multiecho range data, up to a maximum of #URG_MAX_ECHO (3) echoes per step. In case the echo does not exists then -1 will be stored on the array.
+    \~
+    \see urg_start_measurement(), urg_max_data_size()
+  */
+  extern int32_t urg_get_multiecho(urg_t *urg, int32_t data_multi[], int32_t *time_stamp);
 
-      \verbatim
-      data_multi[0] ... step n range data (1st echo)
-      data_multi[1] ... step n range data (2nd echo)
-      data_multi[2] ... step n range data (3rd echo)
-      data_multi[3] ... step (n + 1) range data (1st echo)
-      data_multi[4] ... step (n + 1) range data (2nd echo)
-      data_multi[5] ... step (n + 1) range data (3rd echo)
-      ... \endverbatim
+  /*!
+    \~japanese
+    \brief 距離と強度データの取得 (マルチエコー版)
 
-      In the array, the cells numbered (3n + 0) will hold the range data for first echo (same data as for the urg_get_distance() function), for the other cells (3n + 1) and (3n + 2) data is stored in descending order. \n
-      This is, the order data_multi[3n + 1] >= data_multi[3n + 2] is assured, however the relation between data_multi[3n + 0] and data_multi[3n + 1] is not defined. (When data_multi[3n + 1] == data_multi[3n + 2] it means the echo does not exists and the stored value is -1.)
+    urg_get_multiecho() に加え、強度データの取得できる関数です。事前に urg_start_measurement() を #URG_MULTIECHO_INTENSITY 指定で呼び出しておく必要があります。
 
-      \~
-      Example
-      \code
-      long *data_multi = malloc(3 * urg_max_data_size(&urg) * sizeof(long));
+    \param[in,out] urg URG センサ管理
+    \param[out] data_multi 距離データ [mm]
+    \param[out] intensity_multi 強度データ
+    \param[out] time_stamp タイムスタンプ [msec]
 
-      ...
+    \retval >=0 受信したデータ個数
+    \retval <0 エラー
 
-      urg_start_measurement(&urg, URG_MULTIECHO, 1, 0);
-      int n = urg_get_distance_intensity(&urg, data_multi, NULL); \endcode
+    data_multi, time_stamp については urg_get_multiecho() と同じです。
 
-      \~
-      \see urg_start_measurement(), urg_max_data_size()
-    */
-    extern int urg_get_multiecho(urg_t *urg, long data_multi[], long *time_stamp);
+    intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_data_size() で取得できます。
 
+    \~english
+    \brief Gets distance and intensity data (multiecho mode)
 
-    /*!
-      \~japanese
-      \brief 距離と強度データの取得 (マルチエコー版)
+    This is an extension to urg_get_multiecho() which allows to obtain also the intensity (strength) data for multiple echoes. The urg_start_measurement() function was called beforehand with #URG_MULTIECHO_INTENSITY as type argument.
 
-      urg_get_multiecho() に加え、強度データの取得できる関数です。事前に urg_start_measurement() を #URG_MULTIECHO_INTENSITY 指定で呼び出しておく必要があります。
+    \param[in,out] urg URG control structure
+    \param[out] data_multi Distance data array [mm]
+    \param[out] intensity_multi Intensity data array
+    \param[out] time_stamp Timestamp [msec]
 
-      \param[in,out] urg URG センサ管理
-      \param[out] data_multi 距離データ [mm]
-      \param[out] intensity_multi 強度データ
-      \param[out] time_stamp タイムスタンプ [msec]
+    \retval >=0 Number of data points received
+    \retval <0 Error
 
-      \retval >=0 受信したデータ個数
-      \retval <0 エラー
+    data_multi and time_stamp are as described in urg_get_multiecho() function.
 
-      data_multi, time_stamp については urg_get_multiecho() と同じです。
+    The order of data in the array intensity_multi is defined by how the data_multi array was sorted. The size of the intensity_multi can be obtained using urg_max_data_size().
+    \~
+    Example
+    \code
+    int32_t data_size = urg_max_data_size(&urg);
+    int32_t *data_multi = malloc(3 * data_size * sizeof(int32_t));
+    unsigned short *intensity_multi = malloc(3 * data_size * sizeof(unsigned short));
 
-      intensity_multi のデータの並びは data_multi と対応したものになります。intensity_multi に格納されるデータ数は urg_max_data_size() で取得できます。
+    ...
 
-      \~english
-      \brief Gets distance and intensity data (multiecho mode)
+    urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
+    int32_t n = urg_get_multiecho_intensity(&urg, data_multi,
+    intesnity_multi, NULL); \endcode
 
-      This is an extension to urg_get_multiecho() which allows to obtain also the intensity (strength) data for multiple echoes. The urg_start_measurement() function was called beforehand with #URG_MULTIECHO_INTENSITY as type argument.
+    \~
+    \see urg_start_measurement(), urg_max_data_size()
+  */
+  extern int32_t urg_get_multiecho_intensity(urg_t *urg, int32_t data_multi[],
+                                             unsigned short intensity_multi[],
+                                             int32_t *time_stamp);
 
-      \param[in,out] urg URG control structure
-      \param[out] data_multi Distance data array [mm]
-      \param[out] intensity_multi Intensity data array
-      \param[out] time_stamp Timestamp [msec]
+  /*!
+    \~japanese
+    \brief 計測を中断し、レーザを消灯させます
 
-      \retval >=0 Number of data points received
-      \retval <0 Error
+    \ref urg_start_measurement() の計測を中断します。
 
-      data_multi and time_stamp are as described in urg_get_multiecho() function.
+    \param[in,out] urg URG センサ管理
 
-      The order of data in the array intensity_multi is defined by how the data_multi array was sorted. The size of the intensity_multi can be obtained using urg_max_data_size().
-      \~
-      Example
-      \code
-      int data_size = urg_max_data_size(&urg);
-      long *data_multi = malloc(3 * data_size * sizeof(long));
-      long *intensity_multi = malloc(3 * data_size * sizeof(unsigned short));
+    \retval 0 正常
+    \retval <0 エラー
 
-      ...
+    \~english
+    \brief Stops measurement process and turns off the laser.
 
-      urg_start_measurement(&urg, URG_DISTANCE_INTENSITY, 1, 0);
-      int n = urg_get_multiecho_intensity(&urg, data_multi,
-      intesnity_multi, NULL); \endcode
+    It stops the measurement started with \ref urg_start_measurement() function.
 
-      \~
-      \see urg_start_measurement(), urg_max_data_size()
-    */
-    extern int urg_get_multiecho_intensity(urg_t *urg, long data_multi[],
-                                           unsigned short intensity_multi[],
-                                           long *time_stamp);
+    \param[in,out] urg URG control structure
 
+    \retval 0 Successful
+    \retval <0 Error
 
-    /*!
-      \~japanese
-      \brief 計測を中断し、レーザを消灯させます
+    \~
+    Example
+    \code
+    urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
+    for (int32_t i = 0; i < 10; ++i) {
+    urg_get_distance(&urg, data, NULL);
+    }
+    urg_stop_measurement(&urg); \endcode
 
-      \ref urg_start_measurement() の計測を中断します。
+    \~
+    \see urg_start_measurement()
+  */
+  extern int32_t urg_stop_measurement(urg_t *urg);
 
-      \param[in,out] urg URG センサ管理
+  /*!
+    \~japanese
+    \brief 計測範囲を設定します
 
-      \retval 0 正常
-      \retval <0 エラー
+    センサが計測する範囲を step 値で指定します。urg_get_distance() などの距離データ取得の関数で返されるデータ数は、ここで指定した範囲で制限されます。
 
-      \~english
-      \brief Stops measurement process and turns off the laser.
+    \param[in,out] urg URG センサ管理
+    \param[in] first_step 計測の開始 step
+    \param[in] last_step 計測の終了 step
+    \param[in] skip_step 計測データをグルーピングする個数
 
-      It stops the measurement started with \ref urg_start_measurement() function.
+    \retval 0 正常
+    \retval <0 エラー
 
-      \param[in,out] urg URG control structure
+    センサの step は、センサ正面を 0 とし、センサ上部から見て反時計まわりの向きが正の値となる順に割り振られます。
 
-      \retval 0 Successful
-      \retval <0 Error
+    \image html sensor_angle_image.png センサと step の関係
 
-      \~
-      Example
-      \code
-      urg_start_measurement(&urg, URG_DISTANCE, URG_SCAN_INFINITY, 0);
-      for (int i = 0; i < 10; ++i) {
-      urg_get_distance(&urg, data, NULL);
-      }
-      urg_stop_measurement(&urg); \endcode
+    step の間隔と、最大値、最小値はセンサ依存です。step 値の最大値、最小値は urg_step_min_max() で取得できます。\n
 
-      \~
-      \see urg_start_measurement()
-    */
-    extern int urg_stop_measurement(urg_t *urg);
+    first_step, last_step でデータの計測範囲を指定します。計測範囲は [first_step, last_step] となります。
 
+    skip_step は、計測データをグルーピングする個数を指定します。指定できる値は [0, 99] です。\n
+    skip_step は、指定された数のデータを 1 つにまとめることで、センサから受信するデータ量を減らし、距離取得を行う関数の応答性を高めるときに使います。ただし、データをまとめるため、得られるデータの分解能は減ります。
 
-    /*!
-      \~japanese
-      \brief 計測範囲を設定します
+    例えば以下のような距離データが得られる場合に
+    \verbatim
+    100, 101, 102, 103, 104, 105, 106, 107, 108, 109
+    \endverbatim
 
-      センサが計測する範囲を step 値で指定します。urg_get_distance() などの距離データ取得の関数で返されるデータ数は、ここで指定した範囲で制限されます。
+    skip_step に 2 を指定すると、得られるデータは
+    \verbatim
+    100, 102, 104, 106, 108
+    \endverbatim
 
-      \param[in,out] urg URG センサ管理
-      \param[in] first_step 計測の開始 step
-      \param[in] last_step 計測の終了 step
-      \param[in] skip_step 計測データをグルーピングする個数
+    データは、まとめるデータのうち、一番小さな値のデータが用いられます。
 
-      \retval 0 正常
-      \retval <0 エラー
+    \~english
+    \brief Configure measurement parameters
 
-      センサの step は、センサ正面を 0 とし、センサ上部から見て反時計まわりの向きが正の値となる順に割り振られます。
+    This function allows definining the scope (start and end steps) for measurement. The number of measurement data (steps) returned by urg_get_distance() and similar is defined here.
 
-      \image html sensor_angle_image.png センサと step の関係
+    \param[in,out] urg URG control structure
+    \param[in] first_step start step number
+    \param[in] last_step end step number
+    \param[in] skip_step step grouping factor
 
-      step の間隔と、最大値、最小値はセンサ依存です。step 値の最大値、最小値は urg_step_min_max() で取得できます。\n
+    \retval 0 Successful
+    \retval <0 Error
 
-      first_step, last_step でデータの計測範囲を指定します。計測範囲は [first_step, last_step] となります。
+    Observing the sensor from the top, the step 0 corresponds to the very front of the sensor, steps at the left side (counter clockwise) of step 0 are positive numbers and those to the right side (clockwise) are negative numbers.
 
-      skip_step は、計測データをグルーピングする個数を指定します。指定できる値は [0, 99] です。\n
-      skip_step は、指定された数のデータを 1 つにまとめることで、センサから受信するデータ量を減らし、距離取得を行う関数の応答性を高めるときに使います。ただし、データをまとめるため、得られるデータの分解能は減ります。
+    \image html sensor_angle_image.png shows the relation between sensor and steps
 
-      例えば以下のような距離データが得られる場合に
-      \verbatim
-      100, 101, 102, 103, 104, 105, 106, 107, 108, 109
-      \endverbatim
+    The spacing between steps, the minimum and maximum step numbers depend on the sensor. Use urg_step_min_max() to get the minimum and maximum step values.\n
 
-      skip_step に 2 を指定すると、得られるデータは
-      \verbatim
-      100, 102, 104, 106, 108
-      \endverbatim
+    first_step and last_step define the data measurement scope ([first_step, last_step])。
 
-      データは、まとめるデータのうち、一番小さな値のデータが用いられます。
+    skip_step allows setting a step grouping factor, where valid values are [0, 99].\n
+    With the skip_step parameter, several adjacent steps are grouped and combined into 1 single step, thus the amount of data transmitted from the sensor is reduced and so the response time of measurement data adquisition functions. Of course, grouping several steps into one means the measurement resolution is reduced.
 
-      \~english
-      \brief Configure measurement parameters
+    For example, for the following range data obtained in the sensor:
+    \verbatim
+    100, 101, 102, 103, 104, 105, 106, 107, 108, 109
+    \endverbatim
 
-      This function allows definining the scope (start and end steps) for measurement. The number of measurement data (steps) returned by urg_get_distance() and similar is defined here.
+    And setting skip_step to 2, the range data returned is:
+    \verbatim
+    100, 102, 104, 106, 108
+    \endverbatim
 
-      \param[in,out] urg URG control structure
-      \param[in] first_step start step number
-      \param[in] last_step end step number
-      \param[in] skip_step step grouping factor
+    for each group, the smallest range value is returned.
+    \~
+    Example
+    \code
+    urg_set_scanning_parameter(&urg, urg_deg2step(&urg, -45),
+    urg_deg2step(&urg, +45), 1);
+    urg_start_measurement(&urg, URG_DISTANCE, 0);
+    int32_t n = urg_get_distance(&urg, data, NULL);
+    for (int32_t i = 0; i < n; ++i) {
+    printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
+    } \endcode
 
-      \retval 0 Successful
-      \retval <0 Error
+    \~
+    \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
+  */
+  extern int32_t urg_set_scanning_parameter(urg_t *urg, int32_t first_step,
+                                            int32_t last_step, int32_t skip_step);
 
-      Observing the sensor from the top, the step 0 corresponds to the very front of the sensor, steps at the left side (counter clockwise) of step 0 are positive numbers and those to the right side (clockwise) are negative numbers.
+  /*!
+    \~japanese
+    \brief 通信データのサイズ変更
 
-      \image html sensor_angle_image.png shows the relation between sensor and steps
+    距離データをセンサから受信の際のデータサイズを変更します。
 
-      The spacing between steps, the minimum and maximum step numbers depend on the sensor. Use urg_step_min_max() to get the minimum and maximum step values.\n
+    \param[in,out] urg URG センサ管理
+    \param[in] data_byte 距離値を表現するデータのバイト数
 
-      first_step and last_step define the data measurement scope ([first_step, last_step])。
+    \retval 0 成功
+    \retval <0 エラー
 
-      skip_step allows setting a step grouping factor, where valid values are [0, 99].\n
-      With the skip_step parameter, several adjacent steps are grouped and combined into 1 single step, thus the amount of data transmitted from the sensor is reduced and so the response time of measurement data adquisition functions. Of course, grouping several steps into one means the measurement resolution is reduced.
+    data_byte には
 
-      For example, for the following range data obtained in the sensor:
-      \verbatim
-      100, 101, 102, 103, 104, 105, 106, 107, 108, 109
-      \endverbatim
+    - URG_COMMUNICATION_3_BYTE ... 距離を 3 byte で表現する
+    - URG_COMMUNICATION_2_BYTE ... 距離を 2 byte で表現する
 
-      And setting skip_step to 2, the range data returned is:
-      \verbatim
-      100, 102, 104, 106, 108
-      \endverbatim
+    を指定できます。\n
+    初期状態では距離を 3 byte で表現するようになっています。この設定を 2 byte に設定することで、センサから受信するデータ数は 2/3 になります。ただし、取得できる距離の最大値が 4095 になるため、観測したい対象が 4 [m] 以内の範囲に存在する場合のみ利用して下さい。
 
-      for each group, the smallest range value is returned.
-      \~
-      Example
-      \code
-      urg_set_scanning_parameter(&urg, urg_deg2step(&urg, -45),
-      urg_deg2step(&urg, +45), 1);
-      urg_start_measurement(&urg, URG_DISTANCE, 0);
-      int n = urg_get_distance(&urg, data, NULL);
-      for (int i = 0; i < n; ++i) {
-      printf("%d [mm], %d [deg]\n", data[i], urg_index2deg(&urg, i));
-      } \endcode
+    \~english
+    \brief Change the size (number of bytes) of measurement data used during communications.
 
-      \~
-      \see urg_step_min_max(), urg_rad2step(), urg_deg2step()
-    */
-    extern int urg_set_scanning_parameter(urg_t *urg, int first_step,
-                                          int last_step, int skip_step);
+    When receiving data from the sensor, changes the number of bytes used to represent measurement data.
 
-    /*!
-      \~japanese
-      \brief 通信データのサイズ変更
+    \param[in,out] urg URG control structure
+    \param[in] data_byte Number of bytes used to represent measurement data
 
-      距離データをセンサから受信の際のデータサイズを変更します。
+    \retval 0 Successful
+    \retval <0 Error
 
-      \param[in,out] urg URG センサ管理
-      \param[in] data_byte 距離値を表現するデータのバイト数
+    data_byte can be:
 
-      \retval 0 成功
-      \retval <0 エラー
+    - URG_COMMUNICATION_3_BYTE ... to represent data in 3 bytes
+    - URG_COMMUNICATION_2_BYTE ... to represent data in 2 bytes
 
-      data_byte には
-
-      - URG_COMMUNICATION_3_BYTE ... 距離を 3 byte で表現する
-      - URG_COMMUNICATION_2_BYTE ... 距離を 2 byte で表現する
-
-      を指定できます。\n
-      初期状態では距離を 3 byte で表現するようになっています。この設定を 2 byte に設定することで、センサから受信するデータ数は 2/3 になります。ただし、取得できる距離の最大値が 4095 になるため、観測したい対象が 4 [m] 以内の範囲に存在する場合のみ利用して下さい。
-
-      \~english
-      \brief Change the size (number of bytes) of measurement data used during communications.
-
-      When receiving data from the sensor, changes the number of bytes used to represent measurement data.
-
-      \param[in,out] urg URG control structure
-      \param[in] data_byte Number of bytes used to represent measurement data
-
-      \retval 0 Successful
-      \retval <0 Error
-
-      data_byte can be:
-
-      - URG_COMMUNICATION_3_BYTE ... to represent data in 3 bytes
-      - URG_COMMUNICATION_2_BYTE ... to represent data in 2 bytes
-
-       \n
-      The initial (default) data size is 3 bytes. If the number of bytes is changed to 2, the actual received message length becomes around 2/3 of the original length. However, using 2 bytes means the maximum measurement range is 4095, therefore use it only when measurement targets are 4 [m] from the sensor.
-      \~
-    */
-    extern int urg_set_measurement_data_size(urg_t *urg,
+     \n
+    The initial (default) data size is 3 bytes. If the number of bytes is changed to 2, the actual received message length becomes around 2/3 of the original length. However, using 2 bytes means the maximum measurement range is 4095, therefore use it only when measurement targets are 4 [m] from the sensor.
+    \~
+  */
+  extern int32_t urg_set_measurement_data_size(urg_t *urg,
                                                urg_range_data_byte_t data_byte);
 
+  /*!
+     \~japanese
+     \brief レーザを発光させる
+     \~english
+     \brief Turns on the laser
+  */
+  extern int32_t urg_laser_on(urg_t *urg);
+
+  /*!
+     \~japanese
+     \brief レーザを消灯する
+     \~english
+     \brief Turns off the laser
+  */
+  extern int32_t urg_laser_off(urg_t *urg);
 
-    /*!
-       \~japanese
-       \brief レーザを発光させる
-       \~english
-       \brief Turns on the laser
-    */
-    extern int urg_laser_on(urg_t *urg);
+  /*!
+     \~japanese
+     \brief センサを再起動する
+     \~english
+     \brief Reboots the sensor
+  */
+  extern int32_t urg_reboot(urg_t *urg);
 
+  /*!
+    \~japanese
+    \brief センサを低消費電力の状態に遷移させる
 
-    /*!
-       \~japanese
-       \brief レーザを消灯する
-       \~english
-       \brief Turns off the laser
-    */
-    extern int urg_laser_off(urg_t *urg);
+    低消費電力のモードでは、スキャナの回転が停止し計測も中断されます。
 
+    - 低消費電力のモード
+      - レーザが消灯して計測が中断される。
+      - スキャナの回転が停止する。
 
-    /*!
-       \~japanese
-       \brief センサを再起動する
-       \~english
-       \brief Reboots the sensor
-    */
-    extern int urg_reboot(urg_t *urg);
+    低消費電力のモードから抜けるためには \ref urg_wakeup() 関数を呼び出して下さい。
 
+    \~english
+    \brief Sets the sensor into low power mode (sleep state)
 
-    /*!
-      \~japanese
-      \brief センサを低消費電力の状態に遷移させる
+    During low power mode, the scanner motor stops and so measurement is interrupted.
 
-      低消費電力のモードでは、スキャナの回転が停止し計測も中断されます。
+    - Low power mode
+      - Laser is turned off and so measurement is stopped
+      - The scanner motor is stopped.
 
-      - 低消費電力のモード
-        - レーザが消灯して計測が中断される。
-        - スキャナの回転が停止する。
+    To recover from low power mode call the function \ref urg_wakeup()
+    \~
+    \see urg_wakeup()
+  */
+  extern int32_t urg_sleep(urg_t *urg);
 
-      低消費電力のモードから抜けるためには \ref urg_wakeup() 関数を呼び出して下さい。
+  /*!
+    \~japanese
+    \brief センサを低消費電力のモードから通常の状態に遷移させる
+    \~english
+    \brief Returns from the low power mode (sleep state) to the normal mode (idle state)
+    \~
+    \see urg_sleep()
+  */
+  extern void urg_wakeup(urg_t *urg);
 
-      \~english
-      \brief Sets the sensor into low power mode (sleep state)
+  /*!
+    \~japanese
+    \brief センサが計測できる状態かを返す
 
-      During low power mode, the scanner motor stops and so measurement is interrupted.
+    \retval 1 センサが計測できる状態にある
+    \retval 0 センサが計測できる状態にない
 
-      - Low power mode
-        - Laser is turned off and so measurement is stopped
-        - The scanner motor is stopped.
+    起動直後でスキャナの回転が安定していない場合や、何らかのエラーで計測できない場合、この関数は 0 を返します。
 
-      To recover from low power mode call the function \ref urg_wakeup()
-      \~
-      \see urg_wakeup()
-    */
-    extern int urg_sleep(urg_t *urg);
+    \~english
+    \brief Returns whether the sensor is stable to perform measurement or not
 
+    \retval 1 The sensor can do measurement
+    \retval 0 The sensor cannot do measurement
 
-    /*!
-      \~japanese
-      \brief センサを低消費電力のモードから通常の状態に遷移させる
-      \~english
-      \brief Returns from the low power mode (sleep state) to the normal mode (idle state)
-      \~
-      \see urg_sleep()
-    */
-    extern void urg_wakeup(urg_t *urg);
+    Right after power on the motor rotation is not yet stable for measurement, or if any failure condition was detected,
+    0 is returned.
+  */
+  extern int32_t urg_is_stable(urg_t *urg);
 
-    /*!
-      \~japanese
-      \brief センサが計測できる状態かを返す
+  /*!
+    \~japanese
+    \brief センサ型式を文字列で返す
 
-      \retval 1 センサが計測できる状態にある
-      \retval 0 センサが計測できる状態にない
+    センサの型式を文字列で返す。返される文字列はセンサ依存となる。
 
-      起動直後でスキャナの回転が安定していない場合や、何らかのエラーで計測できない場合、この関数は 0 を返します。
+    \param[in] urg URG センサ管理
+    \return センサ型式の文字列
 
-      \~english
-      \brief Returns whether the sensor is stable to perform measurement or not
+    \~english
+    \brief Returns the sensor model string
 
-      \retval 1 The sensor can do measurement
-      \retval 0 The sensor cannot do measurement
+    Returns the string message corresponding to the sensor model. This message is sensor dependent.
 
-      Right after power on the motor rotation is not yet stable for measurement, or if any failure condition was detected,
-      0 is returned.
-    */
-    extern int urg_is_stable(urg_t *urg);
+    \param[in] urg URG control structure
+    \return sensor model string
+  */
+  extern const char *urg_sensor_product_type(urg_t *urg);
 
+  /*!
+    \~japanese
+    \brief センサのシリアル ID 文字列を返す
 
-    /*!
-      \~japanese
-      \brief センサ型式を文字列で返す
+    センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
 
-      センサの型式を文字列で返す。返される文字列はセンサ依存となる。
+    \param[in] urg URG センサ管理
+    \return シリアル ID 文字列
 
-      \param[in] urg URG センサ管理
-      \return センサ型式の文字列
+    \~english
+    \brief Returns the sensor serial number string
 
-      \~english
-      \brief Returns the sensor model string
+    Returns the string message corresponding to the sensor serial number. This message is sensor dependent.
 
-      Returns the string message corresponding to the sensor model. This message is sensor dependent.
+    \param[in] urg URG control structure
+    \return serial number string
+  */
+  extern const char *urg_sensor_serial_id(urg_t *urg);
 
-      \param[in] urg URG control structure
-      \return sensor model string
-    */
-    extern const char *urg_sensor_product_type(urg_t *urg);
+  /*!
+    \~japanese
+    \brief センサのバージョン文字列を返す
 
+    センサのソフトウェア・バージョン文字列を返す。返される文字列はセンサ依存となる。
 
-    /*!
-      \~japanese
-      \brief センサのシリアル ID 文字列を返す
+    \param[in] urg URG センサ管理
+    \return バージョン文字列
 
-      センサのシリアル ID 文字列を返す。返される文字列はセンサ依存となる。
+    \~english
+    \brief Returns the current sensor firmware version string
 
-      \param[in] urg URG センサ管理
-      \return シリアル ID 文字列
+    Returns the string message corresponding to the current sensor firmware version. This message is sensor dependent.
 
-      \~english
-      \brief Returns the sensor serial number string
+    \param[in] urg URG control structure
+    \return firmware version string
+  */
+  extern const char *urg_sensor_firmware_version(urg_t *urg);
 
-      Returns the string message corresponding to the sensor serial number. This message is sensor dependent.
+  /*!
+    \~japanese
+    \brief センサのステータス文字列を返す
 
-      \param[in] urg URG control structure
-      \return serial number string
-    */
-    extern const char *urg_sensor_serial_id(urg_t *urg);
+    センサのステータス文字列を返す。返される文字列はセンサ依存となる。
 
+    \param[in] urg URG センサ管理
+    \return ステータス文字列
 
-    /*!
-      \~japanese
-      \brief センサのバージョン文字列を返す
+    \~english
+    \brief Returns the current sensor status string
 
-      センサのソフトウェア・バージョン文字列を返す。返される文字列はセンサ依存となる。
+    Returns the string message corresponding to the current sensor status. This message is sensor dependent.
 
-      \param[in] urg URG センサ管理
-      \return バージョン文字列
+    \param[in] urg URG control structure
+    \return current sensor status string
+  */
+  extern const char *urg_sensor_status(urg_t *urg);
 
-      \~english
-      \brief Returns the current sensor firmware version string
+  /*!
+    \~japanese
+    \brief センサの状態を返す
 
-      Returns the string message corresponding to the current sensor firmware version. This message is sensor dependent.
+    センサのステータス文字列を返す。返される文字列はセンサ依存となる。
 
-      \param[in] urg URG control structure
-      \return firmware version string
-    */
-    extern const char *urg_sensor_firmware_version(urg_t *urg);
+    \param[in] urg URG センサ管理
+    \return 状態を示す文字列
 
+    \attention 状態については SCIP の通信仕様書を参照のこと。
 
-    /*!
-      \~japanese
-      \brief センサのステータス文字列を返す
+    \~english
+    \brief Returns the current sensor state string
 
-      センサのステータス文字列を返す。返される文字列はセンサ依存となる。
+    Returns the string message corresponding to the current sensor state. This message is sensor dependent.
 
-      \param[in] urg URG センサ管理
-      \return ステータス文字列
+    \param[in] urg URG control structure
+    \return current sensor state string
 
-      \~english
-      \brief Returns the current sensor status string
+    \attention For details, please refer to the SCIP communication protocol specification.
+  */
+  extern const char *urg_sensor_state(urg_t *urg);
 
-      Returns the string message corresponding to the current sensor status. This message is sensor dependent.
+  /*!
+    \~japanese
+    \brief 計測用のエラーハンドラを登録する
 
-      \param[in] urg URG control structure
-      \return current sensor status string
-    */
-    extern const char *urg_sensor_status(urg_t *urg);
+    エラーハンドラは Gx, Mx 系のコマンドの応答が "00" か "99" 以外のときに呼び出される。
 
+    \~english
+    \brief Registers an error handler for measurement functions
 
-    /*!
-      \~japanese
-      \brief センサの状態を返す
+    The error handler will be called for the Gx, Mx commands when the response code is not "00" or "99".
+  */
+  extern void urg_set_error_handler(urg_t *urg, urg_error_handler handler);
 
-      センサのステータス文字列を返す。返される文字列はセンサ依存となる。
+  /*!
+    \~japanese
+    \brief SCIP 文字列のデコードを行う
 
-      \param[in] urg URG センサ管理
-      \return 状態を示す文字列
+    \param[in] data SCIP 文字列
+    \param[in] size data の byte サイズ
 
-      \attention 状態については SCIP の通信仕様書を参照のこと。
+    \retval デコード後の数値
 
-      \~english
-      \brief Returns the current sensor state string
+    \~english
+    \brief Decodes a SCIP message
 
-      Returns the string message corresponding to the current sensor state. This message is sensor dependent.
+    \param[in] data the SCIP message to decode
+    \param[in] size the data encoding types (number of bytes for encoding)
 
-      \param[in] urg URG control structure
-      \return current sensor state string
-
-      \attention For details, please refer to the SCIP communication protocol specification.
-    */
-    extern const char *urg_sensor_state(urg_t *urg);
-
-
-    /*!
-      \~japanese
-      \brief 計測用のエラーハンドラを登録する
-
-      エラーハンドラは Gx, Mx 系のコマンドの応答が "00" か "99" 以外のときに呼び出される。
-
-      \~english
-      \brief Registers an error handler for measurement functions
-
-      The error handler will be called for the Gx, Mx commands when the response code is not "00" or "99".
-    */
-    extern void urg_set_error_handler(urg_t *urg, urg_error_handler handler);
-
-
-    /*!
-      \~japanese
-      \brief SCIP 文字列のデコードを行う
-
-      \param[in] data SCIP 文字列
-      \param[in] size data の byte サイズ
-
-      \retval デコード後の数値
-
-      \~english
-      \brief Decodes a SCIP message
-
-      \param[in] data the SCIP message to decode
-      \param[in] size the data encoding types (number of bytes for encoding)
-
-      \retval Value after decoding
-    */
-    extern long urg_scip_decode(const char data[], int size);
-
+    \retval Value after decoding
+  */
+  extern int32_t urg_scip_decode(const char data[], int32_t size);
 
 #ifdef __cplusplus
 }

@@ -15,7 +15,6 @@
   $Id$
 */
 
-
 namespace qrk
 {
   //! \~japanese 現在のタイムスタンプを取得する  \~english Gets the current timestamp

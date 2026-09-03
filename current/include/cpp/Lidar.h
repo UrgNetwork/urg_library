@@ -23,11 +23,12 @@ namespace qrk
     class Lidar
     {
     public:
-        typedef enum {
-            Distance,            //!< \~japanese 距離  \~english Range
-            Distance_intensity,  //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
-            Multiecho,           //!< \~japanese マルチエコーの距離  \~english Multiecho distance
-            Multiecho_intensity, //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
+        typedef enum
+        {
+            Distance,              //!< \~japanese 距離  \~english Range
+            Distance_intensity,    //!< \~japanese 距離 + 強度  \~english Distance (range) and intensity (strength)
+            Multiecho,             //!< \~japanese マルチエコーの距離  \~english Multiecho distance
+            Multiecho_intensity,   //!< \~japanese マルチエコーの(距離 + 強度)  \~english Multiecho distance and intensity
             Distance_io,           //!< \~japanese 距離 + IO  \~english Distance (range) and io(input/output)
             Distance_intensity_io, //!< \~japanese 距離 + 強度 + IO  \~english Distance (range), intensity and io(input/output)
         } measurement_type_t;
@@ -65,8 +66,8 @@ namespace qrk
 
         //! \~japanese センサを再起動する  \~english Reboots the sensor
         virtual bool reboot(void) = 0;
-        //! \~japanese センサをスリープ状態にする  \~english Puts the sensor to sleep
 
+        //! \~japanese センサをスリープ状態にする  \~english Puts the sensor to sleep
         virtual void sleep(void) = 0;
         //! \~japanese センサを復帰させる  \~english Wakes the sensor
         virtual void wakeup(void) = 0;
@@ -75,20 +76,17 @@ namespace qrk
 
         //! \~japanese データ取得の開始  \~english Starts data measurement process
         virtual bool start_measurement(measurement_type_t type,
-                                       int scan_times, int skip_scan) = 0;
+                                       int32_t scan_times, int32_t skip_scan) = 0;
 
         //! \~japanese 受信データの受け取り  \~english Receives measurement data
         //! \~japanese 距離データを取得する  \~english Gets distance data
-        virtual bool get_distance(std::vector<long>& data,
-                                  long *time_stamp) = 0;
-        virtual bool get_distance_intensity(std::vector<long>& data,
-                                            std::vector<unsigned short>&
+        virtual bool get_distance(std::vector<int32_t> &data,
                                   int32_t *time_stamp) = 0;
         //! \~japanese 距離と強度データを取得する  \~english Gets distance and intensity data
         virtual bool get_distance_intensity(std::vector<int32_t> &data,
                                             std::vector<unsigned short> &
-                                            intensity,
-                                            long *time_stamp) = 0;
+                                                intensity,
+                                            int32_t *time_stamp) = 0;
 
         //! \~japanese マルチエコー距離データを取得する  \~english Gets multiecho distance data
         virtual bool get_multiecho(std::vector<int32_t> &data_multi,
@@ -97,8 +95,8 @@ namespace qrk
         //! \~japanese マルチエコー距離と強度データを取得する  \~english Gets multiecho distance and intensity data
         virtual bool get_multiecho_intensity(std::vector<int32_t> &data_multiecho,
                                              std::vector<unsigned short> &
-                                             intensity_multiecho,
-                                             long* time_stamp) = 0;
+                                                 intensity_multiecho,
+                                             int32_t *time_stamp) = 0;
 
         //! \~japanese 計測範囲とスキップ幅を設定する  \~english Sets the measurement range and skip step
         virtual bool set_scanning_parameter(int32_t first_step, int32_t last_step,

@@ -24,7 +24,8 @@
 
 #include <stdio.h>
 
-enum {
+enum
+{
     Invalid_desc = -1,
 };
 
@@ -35,34 +36,29 @@ static int is_linefeed(const char ch)
     return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
 }
 
-
-static void tcpclient_buffer_init(urg_tcpclient_t* cli)
+static void tcpclient_buffer_init(urg_tcpclient_t *cli)
 {
     ring_initialize(&cli->rb, cli->buf, RB_BITSHIFT);
 }
 
-
 // get number of data in buffer.
-static int tcpclient_buffer_data_num(urg_tcpclient_t* cli)
+static int tcpclient_buffer_data_num(urg_tcpclient_t *cli)
 {
     return ring_size(&cli->rb);
 }
 
-
-static int tcpclient_buffer_write(urg_tcpclient_t* cli,
-                                  const char* data, int size)
+static int32_t tcpclient_buffer_write(urg_tcpclient_t *cli,
+                                      const char *data, int32_t size)
 {
     return ring_write(&cli->rb, data, size);
 }
 
-
-static int tcpclient_buffer_read(urg_tcpclient_t* cli, char* data, int size)
+static int32_t tcpclient_buffer_read(urg_tcpclient_t *cli, char *data, int32_t size)
 {
     return ring_read(&cli->rb, data, size);
 }
 
-
-static void set_block_mode(urg_tcpclient_t* cli)
+static void set_block_mode(urg_tcpclient_t *cli)
 {
 #if defined(URG_WINDOWS_OS)
     u_long flag = 0;
@@ -73,12 +69,14 @@ static void set_block_mode(urg_tcpclient_t* cli)
 #endif
 }
 
-
-int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
+int32_t tcpclient_open(urg_tcpclient_t *cli, const char *ip_str, int32_t port_num)
 {
-    enum { Connect_timeout_second = 2 };
+    enum
+    {
+        Connect_timeout_second = 2
+    };
     fd_set rmask, wmask;
-    struct timeval tv = { Connect_timeout_second, 0 };
+    struct timeval tv = {Connect_timeout_second, 0};
 #if defined(URG_WINDOWS_OS)
     u_long flag;
 #else
@@ -97,9 +95,11 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         WORD wVersionRequested = 0x0202;
         WSADATA WSAData;
         int err;
-        if (!is_initialized) {
+        if (!is_initialized)
+        {
             err = WSAStartup(wVersionRequested, &WSAData);
-            if (err != 0) {
+            if (err != 0)
+            {
                 return -1;
             }
             is_initialized = 1;
@@ -109,21 +109,24 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
 
     tcpclient_buffer_init(cli);
 
-    cli->sock_addr_size = sizeof (struct sockaddr_in);
-    if ((cli->sock_desc = (int)socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    cli->sock_addr_size = sizeof(struct sockaddr_in);
+    if ((cli->sock_desc = (int)socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    {
         return -1;
     }
 
-    memset((char*)&(cli->server_addr), 0, sizeof(cli->sock_addr_size));
+    memset((char *)&(cli->server_addr), 0, sizeof(cli->sock_addr_size));
     cli->server_addr.sin_family = AF_INET;
     cli->server_addr.sin_port = htons(port_num);
 
-    if (!strcmp(ip_str, "localhost")) {
+    if (!strcmp(ip_str, "localhost"))
+    {
         ip_str = "127.0.0.1";
     }
 
     /* bind is not required, and port number is dynamic */
-    if ((cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) == INADDR_NONE) {
+    if ((cli->server_addr.sin_addr.s_addr = inet_addr(ip_str)) == INADDR_NONE)
+    {
         return -1;
     }
 
@@ -134,9 +137,11 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     ioctlsocket(cli->sock_desc, FIONBIO, &flag);
 
     if (connect(cli->sock_desc, (const struct sockaddr *)&(cli->server_addr),
-                cli->sock_addr_size) == SOCKET_ERROR) {
+                cli->sock_addr_size) == SOCKET_ERROR)
+    {
         int error_number = WSAGetLastError();
-        if (error_number != WSAEWOULDBLOCK) {
+        if (error_number != WSAEWOULDBLOCK)
+        {
             tcpclient_close(cli);
             return -1;
         }
@@ -146,7 +151,8 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         wmask = rmask;
 
         ret = select((int)cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
-        if (ret == 0) {
+        if (ret == 0)
+        {
             // \~japanese タイムアウト
             // \~english Operation timed out
             tcpclient_close(cli);
@@ -164,8 +170,10 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     fcntl(cli->sock_desc, F_SETFL, flag | O_NONBLOCK);
 
     if (connect(cli->sock_desc, (const struct sockaddr *)&(cli->server_addr),
-                cli->sock_addr_size) < 0) {
-        if (errno != EINPROGRESS) {
+                cli->sock_addr_size) < 0)
+    {
+        if (errno != EINPROGRESS)
+        {
             tcpclient_close(cli);
             return -1;
         }
@@ -177,22 +185,25 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
         wmask = rmask;
 
         ret = select(cli->sock_desc + 1, &rmask, &wmask, NULL, &tv);
-        if (ret <= 0) {
+        if (ret <= 0)
+        {
             // \~japanese タイムアウト処理
             // \~english Operation timed out
             tcpclient_close(cli);
             return -2;
         }
 
-        if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int*)&sock_optval,
-                       (socklen_t*)&sock_optval_size) != 0) {
+        if (getsockopt(cli->sock_desc, SOL_SOCKET, SO_ERROR, (int *)&sock_optval,
+                       (socklen_t *)&sock_optval_size) != 0)
+        {
             // \~japanese 接続に失敗
             // \~english Connection failed
             tcpclient_close(cli);
             return -3;
         }
 
-        if (sock_optval != 0) {
+        if (sock_optval != 0)
+        {
             // \~japanese 接続に失敗
             // \~english Connection failed
             tcpclient_close(cli);
@@ -207,13 +218,13 @@ int tcpclient_open(urg_tcpclient_t* cli, const char* ip_str, int port_num)
     return 0;
 }
 
-
-void tcpclient_close(urg_tcpclient_t* cli)
+void tcpclient_close(urg_tcpclient_t *cli)
 {
-    if (cli->sock_desc != Invalid_desc) {
+    if (cli->sock_desc != Invalid_desc)
+    {
 #if defined(URG_WINDOWS_OS)
         closesocket(cli->sock_desc);
-        //WSACleanup();
+        // WSACleanup();
 #else
         close(cli->sock_desc);
 #endif
@@ -221,21 +232,22 @@ void tcpclient_close(urg_tcpclient_t* cli)
     }
 }
 
-
-int tcpclient_read(urg_tcpclient_t* cli,
-                   char* userbuf, int req_size, int timeout)
+int32_t tcpclient_read(urg_tcpclient_t *cli,
+                       char *userbuf, int32_t req_size, int32_t timeout)
 {
     // number of data in buffer.
-    int num_in_buf = tcpclient_buffer_data_num(cli);
-    int sock       = cli->sock_desc;
-    int rem_size   = req_size;  // remaining size to be sent back.
-    int n;
+    int32_t num_in_buf = tcpclient_buffer_data_num(cli);
+    int32_t sock = cli->sock_desc;
+    int32_t rem_size = req_size; // remaining size to be sent back.
+    int32_t n;
 
     // copy data in buffer to user buffer and return with requested size.
-    if (num_in_buf > 0) {
+    if (num_in_buf > 0)
+    {
         n = tcpclient_buffer_read(cli, userbuf, req_size);
-        rem_size = req_size - n;  // lacking size.
-        if (rem_size <= 0) {
+        rem_size = req_size - n; // lacking size.
+        if (rem_size <= 0)
+        {
             return req_size;
         }
 
@@ -254,14 +266,16 @@ int tcpclient_read(urg_tcpclient_t* cli,
 #else
         n = recv(sock, tmpbuf, BUFSIZE - num_in_buf, MSG_DONTWAIT);
 #endif
-        if (n > 0) {
+        if (n > 0)
+        {
             tcpclient_buffer_write(cli, tmpbuf, n); // copy socket to my buffer
         }
 
-        n = tcpclient_buffer_read(cli, &userbuf[req_size-rem_size], rem_size);
+        n = tcpclient_buffer_read(cli, &userbuf[req_size - rem_size], rem_size);
         // n never be greater than rem_size
         rem_size -= n;
-        if (rem_size <= 0) {
+        if (rem_size <= 0)
+        {
             return req_size;
         }
     }
@@ -275,14 +289,15 @@ int tcpclient_read(urg_tcpclient_t* cli,
                    (const char *)&timeout, sizeof(struct timeval));
 #else
         struct timeval tv;
-        tv.tv_sec = timeout / 1000; // millisecond to seccond
+        tv.tv_sec = timeout / 1000;           // millisecond to seccond
         tv.tv_usec = (timeout % 1000) * 1000; // millisecond to microsecond
         setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(struct timeval));
 #endif
-        //4th arg 0:no flag
-        n = recv(sock, &userbuf[req_size-rem_size], rem_size, 0);
+        // 4th arg 0:no flag
+        n = recv(sock, &userbuf[req_size - rem_size], rem_size, 0);
         // n never be greater than rem_size
-        if (n > 0) {
+        if (n > 0)
+        {
             rem_size -= n;
         }
     }
@@ -290,8 +305,7 @@ int tcpclient_read(urg_tcpclient_t* cli,
     return (req_size - rem_size); // last return may be less than req_size;
 }
 
-
-int tcpclient_write(urg_tcpclient_t* cli, const char* buf, int size)
+int32_t tcpclient_write(urg_tcpclient_t *cli, const char *buf, int32_t size)
 {
     // blocking if data size is larger than system's buffer.
 #if defined(URG_WINDOWS_OS)
@@ -304,8 +318,7 @@ int tcpclient_write(urg_tcpclient_t* cli, const char* buf, int size)
 #endif
 }
 
-
-int tcpclient_error(urg_tcpclient_t* cli, char* error_message, int max_size)
+int32_t tcpclient_error(urg_tcpclient_t *cli, char *error_message, int32_t max_size)
 {
     (void)cli;
     (void)error_message;
@@ -316,38 +329,43 @@ int tcpclient_error(urg_tcpclient_t* cli, char* error_message, int max_size)
     return -1;
 }
 
-
-int tcpclient_readline(urg_tcpclient_t* cli,
-                       char* userbuf, int buf_size, int timeout)
+int32_t tcpclient_readline(urg_tcpclient_t *cli,
+                           char *userbuf, int32_t buf_size, int32_t timeout)
 {
-    int n = 0;
-    int i = 0;
+    int32_t n = 0;
+    int32_t i = 0;
 
-    if (cli->pushed_back > 0) {
+    if (cli->pushed_back > 0)
+    {
         userbuf[i] = cli->pushed_back;
         i++;
         cli->pushed_back = -1;
     }
-    for (; i < buf_size; ++i) {
+    for (; i < buf_size; ++i)
+    {
         char ch;
         n = tcpclient_read(cli, &ch, 1, timeout);
-        if (n <= 0) {
+        if (n <= 0)
+        {
             break; // error
         }
-        if (is_linefeed(ch)) {
+        if (is_linefeed(ch))
+        {
             break; // success
         }
         userbuf[i] = ch;
     }
 
-    if (i >= buf_size) { // No CR or LF found.
+    if (i >= buf_size)
+    { // No CR or LF found.
         --i;
         cli->pushed_back = userbuf[buf_size - 1] & 0xff;
         userbuf[buf_size - 1] = '\0';
     }
     userbuf[i] = '\0';
 
-    if (i == 0 && n <= 0) { // error
+    if (i == 0 && n <= 0)
+    { // error
         return -1;
     }
 

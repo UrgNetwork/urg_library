@@ -1,8 +1,8 @@
 /*!
   \file
-  \~japanese 
+  \~japanese
   \brief シリアル通信
-  \~english 
+  \~english
   \brief Serial communications on Windows
   \~
   \author Satofumi KAMIMURA
@@ -17,7 +17,6 @@
 #define False 0
 #endif
 
-
 static void serial_initialize(urg_serial_t *serial)
 {
     serial->hCom = INVALID_HANDLE_VALUE;
@@ -26,8 +25,7 @@ static void serial_initialize(urg_serial_t *serial)
     ring_initialize(&serial->ring, serial->buffer, RING_BUFFER_SIZE_SHIFT);
 }
 
-
-static void set_timeout(urg_serial_t *serial, int timeout)
+static void set_timeout(urg_serial_t *serial, int32_t timeout)
 {
     COMMTIMEOUTS timeouts;
     GetCommTimeouts(serial->hCom, &timeouts);
@@ -39,12 +37,14 @@ static void set_timeout(urg_serial_t *serial, int timeout)
     SetCommTimeouts(serial->hCom, &timeouts);
 }
 
-
-int serial_open(urg_serial_t *serial, const char *device, long baudrate)
+int32_t serial_open(urg_serial_t *serial, const char *device, int32_t baudrate)
 {
     // \~japanese COM10 以降への対応用
     // \~english To deal with port names over COM10
-    enum { NameLength = 11 };
+    enum
+    {
+        NameLength = 11
+    };
     char adjusted_device[NameLength];
 
     serial_initialize(serial);
@@ -55,9 +55,10 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
                                0, NULL, OPEN_EXISTING,
                                FILE_ATTRIBUTE_NORMAL, NULL);
 
-    if (serial->hCom == INVALID_HANDLE_VALUE) {
+    if (serial->hCom == INVALID_HANDLE_VALUE)
+    {
         // !!! store error_message buffer
-        //printf("open failed: %s\n", device);
+        // printf("open failed: %s\n", device);
         return -1;
     }
 
@@ -77,22 +78,22 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     return 0;
 }
 
-
 void serial_close(urg_serial_t *serial)
 {
-    if (serial->hCom != INVALID_HANDLE_VALUE) {
+    if (serial->hCom != INVALID_HANDLE_VALUE)
+    {
         CloseHandle(serial->hCom);
         serial->hCom = INVALID_HANDLE_VALUE;
     }
 }
 
-
-int serial_set_baudrate(urg_serial_t *serial, long baudrate)
+int32_t serial_set_baudrate(urg_serial_t *serial, int32_t baudrate)
 {
-    long baudrate_value;
+    int32_t baudrate_value;
     DCB dcb;
 
-    switch (baudrate) {
+    switch (baudrate)
+    {
 
     case 4800:
         baudrate_value = CBR_4800;
@@ -129,7 +130,7 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
     dcb.fParity = FALSE;
     dcb.StopBits = ONESTOPBIT;
 
-    dcb.fBinary = TRUE; //If this member is TRUE, binary mode is enabled. Windows does not support nonbinary mode transfers, so this member must be TRUE.
+    dcb.fBinary = TRUE; // If this member is TRUE, binary mode is enabled. Windows does not support nonbinary mode transfers, so this member must be TRUE.
     dcb.fInX = FALSE;
     dcb.fOutX = FALSE;
     dcb.fAbortOnError = FALSE;
@@ -148,16 +149,17 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
     return 0;
 }
 
-
-int serial_write(urg_serial_t *serial, const char *data, int size)
+int32_t serial_write(urg_serial_t *serial, const char *data, int32_t size)
 {
     DWORD n;
 
-    if (size < 0) {
+    if (size < 0)
+    {
         return 0;
     }
 
-    if (serial->hCom == INVALID_HANDLE_VALUE) {
+    if (serial->hCom == INVALID_HANDLE_VALUE)
+    {
         return -1;
     }
 
@@ -165,14 +167,14 @@ int serial_write(urg_serial_t *serial, const char *data, int size)
     return n;
 }
 
-
-static int internal_receive(char data[], int max_size,
-                            urg_serial_t* serial, int timeout)
+static int32_t internal_receive(char data[], int32_t max_size,
+                                urg_serial_t *serial, int32_t timeout)
 {
-    int filled = 0;
+    int32_t filled = 0;
     DWORD n;
 
-    if (timeout != serial->current_timeout) {
+    if (timeout != serial->current_timeout)
+    {
         set_timeout(serial, timeout);
         serial->current_timeout = timeout;
     }
@@ -182,26 +184,29 @@ static int internal_receive(char data[], int max_size,
     return filled + n;
 }
 
-
-int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+int32_t serial_read(urg_serial_t *serial, char *data, int32_t max_size, int32_t timeout)
 {
-    int filled = 0;
-    int buffer_size;
-    int read_n;
+    int32_t filled = 0;
+    int32_t buffer_size;
+    int32_t read_n;
 
-    if (max_size <= 0) {
+    if (max_size <= 0)
+    {
         return 0;
     }
 
     /* \~japanese 書き戻した１文字があれば、書き出す  \~english If there is a single character return it */
-    if (serial->has_last_ch) {
+    if (serial->has_last_ch)
+    {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
         ++filled;
     }
 
-    if (serial->hCom == INVALID_HANDLE_VALUE) {
-        if (filled > 0) {
+    if (serial->hCom == INVALID_HANDLE_VALUE)
+    {
+        if (filled > 0)
+        {
             return filled;
         }
         return -1;
@@ -209,23 +214,26 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
 
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
-    if (buffer_size < read_n) {
+    if (buffer_size < read_n)
+    {
         // \~japanese リングバッファ内のデータで足りなければ、データを読み足す
         // \~english Reads data if there is space in the ring buffer
         char buffer[RING_BUFFER_SIZE];
-        int n = internal_receive(buffer,
-                                 ring_capacity(&serial->ring) - buffer_size,
-                                 serial, 0);
+        int32_t n = internal_receive(buffer,
+                                     ring_capacity(&serial->ring) - buffer_size,
+                                     serial, 0);
         ring_write(&serial->ring, buffer, n);
     }
     buffer_size = ring_size(&serial->ring);
 
     // \~japanese リングバッファ内のデータを返す
     // \~english Returns the data stored in the ring buffer
-    if (read_n > buffer_size) {
+    if (read_n > buffer_size)
+    {
         read_n = buffer_size;
     }
-    if (read_n > 0) {
+    if (read_n > 0)
+    {
         ring_read(&serial->ring, &data[filled], read_n);
         filled += read_n;
     }

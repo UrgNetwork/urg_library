@@ -12,15 +12,18 @@
 #include "open_urg_sensor.h"
 #include <stdio.h>
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
-    enum { TIMEOUT_MSEC = 3000 };
+    enum
+    {
+        TIMEOUT_MSEC = 3000
+    };
     char buffer;
-    int n;
+    int32_t n;
     urg_t urg;
 
-    if (open_urg_sensor(&urg, argc, argv) < 0) {
+    if (open_urg_sensor(&urg, argc, argv) < 0)
+    {
         return 1;
     }
 

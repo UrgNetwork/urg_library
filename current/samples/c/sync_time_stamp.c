@@ -12,6 +12,7 @@
 #include "urg_sensor.h"
 #include "urg_utils.h"
 #include "open_urg_sensor.h"
+#include <inttypes.h>
 #include <stdio.h>
 #if defined(URG_WINDOWS_OS)
 #include <time.h>
@@ -19,9 +20,9 @@
 #include <sys/time.h>
 #endif
 
-static int pc_msec_time(void)
+static int32_t pc_msec_time(void)
 {
-    static int is_initialized = 0;
+    static int32_t is_initialized = 0;
 #if defined(URG_WINDOWS_OS)
     static clock_t first_clock;
     clock_t current_clock;
@@ -29,17 +30,19 @@ static int pc_msec_time(void)
     static struct timeval first_time;
     struct timeval current_time;
 #endif
-    long msec_time;
+    int32_t msec_time;
 
 #if defined(URG_WINDOWS_OS)
-    if (!is_initialized) {
+    if (!is_initialized)
+    {
         first_clock = clock();
         is_initialized = 1;
     }
     current_clock = clock();
     msec_time = (current_clock - first_clock) * 1000 / CLOCKS_PER_SEC;
 #else
-    if (!is_initialized) {
+    if (!is_initialized)
+    {
         gettimeofday(&first_time, NULL);
         is_initialized = 1;
     }
@@ -52,20 +55,19 @@ static int pc_msec_time(void)
     return msec_time;
 }
 
-
 /*!
   \~japanese
   \brief PC のタイムスタンプに補正するための値を返す
   \~english
   \brief Returns the timestamp (offset) necessary to correct the PC time
 */
-static long print_time_stamp(urg_t *urg, long time_stamp_offset)
+static int32_t print_time_stamp(urg_t *urg, int32_t time_stamp_offset)
 {
-    long sensor_time_stamp;
-    long pc_time_stamp;
-    long before_pc_time_stamp;
-    long after_pc_time_stamp;
-    long delay;
+    int32_t sensor_time_stamp;
+    int32_t pc_time_stamp;
+    int32_t before_pc_time_stamp;
+    int32_t after_pc_time_stamp;
+    int32_t delay;
 
     urg_start_time_stamp_mode(urg);
 
@@ -74,7 +76,8 @@ static long print_time_stamp(urg_t *urg, long time_stamp_offset)
     after_pc_time_stamp = pc_msec_time();
     delay = (after_pc_time_stamp - before_pc_time_stamp) / 2;
 
-    if (sensor_time_stamp < 0) {
+    if (sensor_time_stamp < 0)
+    {
         printf("urg_time_stamp: %s\n", urg_error(urg));
         return -1;
     }
@@ -83,23 +86,24 @@ static long print_time_stamp(urg_t *urg, long time_stamp_offset)
     pc_time_stamp = pc_msec_time();
     urg_stop_time_stamp_mode(urg);
 
-    printf("%ld,\t%ld\n", pc_time_stamp, sensor_time_stamp);
+    printf("%" PRId32 ",\t%" PRId32 "\n", pc_time_stamp, sensor_time_stamp);
 
     return sensor_time_stamp - (pc_time_stamp - delay);
 }
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
-    enum {
+    enum
+    {
         TIME_STAMP_PRINT_TIMES = 5,
     };
 
     urg_t urg;
-    long time_stamp_offset;
-    int i;
+    int32_t time_stamp_offset;
+    int32_t i;
 
-    if (open_urg_sensor(&urg, argc, argv) < 0) {
+    if (open_urg_sensor(&urg, argc, argv) < 0)
+    {
         return 1;
     }
 
@@ -113,7 +117,8 @@ int main(int argc, char *argv[])
 
     // \~japanese URG の補正後のタイムスタンプと PC タイムスタンプを表示
     // \~english Prints the URG timestamp and the PC timestamp after correction
-    for (i = 0; i < TIME_STAMP_PRINT_TIMES; ++i) {
+    for (i = 0; i < TIME_STAMP_PRINT_TIMES; ++i)
+    {
         print_time_stamp(&urg, time_stamp_offset);
     }
 

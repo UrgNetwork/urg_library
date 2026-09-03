@@ -14,26 +14,23 @@
 #include <SDL.h>
 #include <math.h>
 
-
 #if defined(URG_WINDOWS_OS)
 static const char *default_serial_device = "COM3";
 #else
 static const char *default_serial_device = "/dev/ttyACM0";
 #endif
 static const char *default_ip_address = "192.168.0.10";
-//static const char *default_ip_address = "localhost";
-
+// static const char *default_ip_address = "localhost";
 
 typedef struct
 {
     urg_connection_type_t connection_type;
     const char *device;
-    long baudrate_or_port;
+    int32_t baudrate_or_port;
     urg_measurement_type_t measurement_type;
     bool is_intensity;
     bool is_multiecho;
 } scan_mode_t;
-
 
 static void help_exit(const char *program_name)
 {
@@ -51,10 +48,9 @@ static void help_exit(const char *program_name)
            program_name);
 }
 
-
-static void parse_args(scan_mode_t *mode, int argc, char *argv[])
+static void parse_args(scan_mode_t *mode, int32_t argc, char *argv[])
 {
-    int i;
+    int32_t i;
 
     mode->connection_type = URG_SERIAL;
     mode->device = default_serial_device;
@@ -62,64 +58,77 @@ static void parse_args(scan_mode_t *mode, int argc, char *argv[])
     mode->is_multiecho = false;
     mode->is_intensity = false;
 
-    for (i = 1; i < argc; ++i) {
+    for (i = 1; i < argc; ++i)
+    {
         const char *token = argv[i];
 
-        if (!strcmp(token, "-h") || !strcmp(token, "--help")) {
+        if (!strcmp(token, "-h") || !strcmp(token, "--help"))
+        {
             help_exit(argv[0]);
-
-        } else if (!strcmp(token, "-s")) {
+        }
+        else if (!strcmp(token, "-s"))
+        {
             mode->connection_type = URG_SERIAL;
             mode->device = default_serial_device;
-            if (argc > i + 1 && argv[i + 1][0] != '-') {
+            if (argc > i + 1 && argv[i + 1][0] != '-')
+            {
                 mode->device = argv[++i];
             }
             mode->baudrate_or_port = 115200;
-
-        } else if (!strcmp(token, "-e")) {
+        }
+        else if (!strcmp(token, "-e"))
+        {
             mode->connection_type = URG_ETHERNET;
             mode->device = default_ip_address;
-            if (argc > i + 1 && argv[i + 1][0] != '-') {
+            if (argc > i + 1 && argv[i + 1][0] != '-')
+            {
                 mode->device = argv[++i];
             }
             mode->baudrate_or_port = 10940;
-
-        } else if (!strcmp(token, "-m")) {
+        }
+        else if (!strcmp(token, "-m"))
+        {
             mode->is_multiecho = true;
-        } else if (!strcmp(token, "-i")) {
+        }
+        else if (!strcmp(token, "-i"))
+        {
             mode->is_intensity = true;
         }
     }
 
-    if (mode->is_multiecho) {
+    if (mode->is_multiecho)
+    {
         mode->measurement_type =
             (mode->is_intensity) ? URG_MULTIECHO_INTENSITY : URG_MULTIECHO;
-    } else {
+    }
+    else
+    {
         mode->measurement_type =
             (mode->is_intensity) ? URG_DISTANCE_INTENSITY : URG_DISTANCE;
     }
 }
 
-
-static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
-                            int data_n, bool is_multiecho, int offset)
+static void plot_data_point(urg_t *urg, int32_t data[], unsigned short intensity[],
+                            int32_t data_n, bool is_multiecho, int32_t offset)
 {
-    long min_distance;
-    long max_distance;
+    int32_t min_distance;
+    int32_t max_distance;
     const double radian_offset = M_PI / 2.0;
-    int step = (is_multiecho) ? 3 : 1;
-    int i;
+    int32_t step = (is_multiecho) ? 3 : 1;
+    int32_t i;
 
     urg_distance_min_max(urg, &min_distance, &max_distance);
 
-    for (i = 0; i < data_n; ++i) {
-        int index = (step * i) + offset;
-        long l = (data) ? data[index] : intensity[index];
+    for (i = 0; i < data_n; ++i)
+    {
+        int32_t index = (step * i) + offset;
+        int32_t l = (data) ? data[index] : intensity[index];
         double rad;
         float x;
         float y;
 
-        if ((l <= min_distance) || (l >= max_distance)) {
+        if ((l <= min_distance) || (l >= max_distance))
+        {
             continue;
         }
 
@@ -130,18 +139,18 @@ static void plot_data_point(urg_t *urg, long data[], unsigned short intensity[],
     }
 }
 
-
 static void plot_data(urg_t *urg,
-                      long data[], unsigned short intensity[], int data_n,
+                      int32_t data[], unsigned short intensity[], int32_t data_n,
                       bool is_multiecho)
 {
     plotter_clear();
 
-    // \~japanese ‹——£
+    // \~japanese ï¿½ï¿½ï¿½ï¿½
     plotter_set_color(0x00, 0xff, 0xff);
     plot_data_point(urg, data, NULL, data_n, is_multiecho, 0);
 
-    if (is_multiecho) {
+    if (is_multiecho)
+    {
         plotter_set_color(0xff, 0x00, 0xff);
         plot_data_point(urg, data, NULL, data_n, is_multiecho, 1);
 
@@ -149,12 +158,14 @@ static void plot_data(urg_t *urg,
         plot_data_point(urg, data, NULL, data_n, is_multiecho, 2);
     }
 
-    if (intensity) {
-        // \~japanese  ‹­“x
+    if (intensity)
+    {
+        // \~japanese  ï¿½ï¿½ï¿½x
         plotter_set_color(0xff, 0xff, 0x00);
         plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 0);
 
-        if (is_multiecho) {
+        if (is_multiecho)
+        {
             plotter_set_color(0xff, 0x00, 0x00);
             plot_data_point(urg, NULL, intensity, data_n, is_multiecho, 1);
 
@@ -166,54 +177,57 @@ static void plot_data(urg_t *urg,
     plotter_swap();
 }
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     scan_mode_t mode;
     urg_t urg;
-    long *data = NULL;
+    int32_t *data = NULL;
     unsigned short *intensity = NULL;
-    //long previous_timestamp = 0;
-    long timestamp;
-    int data_size;
+    int32_t timestamp;
+    int32_t data_size;
 
-
-    // \~japanese  ˆø”‚Ì‰ğÍ
+    // \~japanese  ï¿½ï¿½ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½
     // \~english Analyzes the arguments
     parse_args(&mode, argc, argv);
 
-    // \~japanese  URG ‚ÉÚ‘±
+    // \~japanese  URG ï¿½ÉÚ‘ï¿½
     // \~english Connects to the URG
     if (urg_open(&urg, mode.connection_type,
-                 mode.device, mode.baudrate_or_port)) {
+                 mode.device, mode.baudrate_or_port))
+    {
         printf("urg_open: %s\n", urg_error(&urg));
         return 1;
     }
 
-    // \~japanese  ƒf[ƒ^æ“¾‚Ì€”õ
+    // \~japanese  ï¿½fï¿½[ï¿½^ï¿½æ“¾ï¿½Ìï¿½ï¿½ï¿½
     // \~english Prepares for measuremment data reading
     data_size = urg_max_data_size(&urg);
-    if (mode.is_multiecho) {
+    if (mode.is_multiecho)
+    {
         data_size *= 3;
     }
     data = malloc(data_size * sizeof(data[0]));
-    if (mode.is_intensity) {
+    if (mode.is_intensity)
+    {
         intensity = malloc(data_size * sizeof(intensity[0]));
     }
 
-    // \~japanese  ‰æ–Ê‚Ìì¬
+    // \~japanese  ï¿½ï¿½Ê‚Ìì¬
     // \~english Perpares the plot screen
-    if (!plotter_initialize(data_size * ((mode.is_intensity) ? 2 : 1))) {
+    if (!plotter_initialize(data_size * ((mode.is_intensity) ? 2 : 1)))
+    {
         return 1;
     }
 
-    // \~japanese  ƒf[ƒ^‚Ìæ“¾‚Æ•`‰æ
+    // \~japanese  ï¿½fï¿½[ï¿½^ï¿½Ìæ“¾ï¿½Æ•`ï¿½ï¿½
     // \~english Gets and displays measurement data
     urg_start_measurement(&urg, mode.measurement_type, URG_SCAN_INFINITY, 0);
-    while (1) {
-        int n;
-        //urg_start_measurement(&urg, mode.measurement_type, 1, 0);
-        switch (mode.measurement_type) {
+    while (1)
+    {
+        int32_t n;
+        // urg_start_measurement(&urg, mode.measurement_type, 1, 0);
+        switch (mode.measurement_type)
+        {
         case URG_DISTANCE:
             n = urg_get_distance(&urg, data, &timestamp);
             break;
@@ -235,21 +249,23 @@ int main(int argc, char *argv[])
             break;
         }
 
-        if (n <= 0) {
+        if (n <= 0)
+        {
             printf("urg_get_function: %s\n", urg_error(&urg));
             break;
         }
 
-        //fprintf(stderr, "%ld, ", timestamp - previous_timestamp);
-        //previous_timestamp = timestamp;
+        // fprintf(stderr, "%ld, ", timestamp - previous_timestamp);
+        // previous_timestamp = timestamp;
 
         plot_data(&urg, data, intensity, n, mode.is_multiecho);
-        if (plotter_is_quit()) {
+        if (plotter_is_quit())
+        {
             break;
         }
     }
 
-    // \~japanese  ƒŠƒ\[ƒX‚Ì‰ğ•ú
+    // \~japanese  ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Ì‰ï¿½ï¿½
     // \~english Release resources
     plotter_terminate();
     free(intensity);

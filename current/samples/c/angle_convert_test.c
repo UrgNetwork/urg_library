@@ -14,14 +14,14 @@
 #include "open_urg_sensor.h"
 #include <stdio.h>
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     urg_t urg;
-    int min_step;
-    int max_step;
+    int32_t min_step;
+    int32_t max_step;
 
-    if (open_urg_sensor(&urg, argc, argv) < 0) {
+    if (open_urg_sensor(&urg, argc, argv) < 0)
+    {
         return 1;
     }
 

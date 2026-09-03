@@ -1,44 +1,43 @@
-// \~japanese ƒVƒŠƒAƒ‹Ú‘±‚Å‚ÌƒZƒ“ƒT‚Æ‚ÌÚ‘±‚Æ‹——£ƒf[ƒ^‚Ìæ“¾
+// \~japanese ï¿½Vï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Ú‘ï¿½ï¿½Å‚ÌƒZï¿½ï¿½ï¿½Tï¿½Æ‚ÌÚ‘ï¿½ï¿½Æ‹ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Ìæ“¾
 // \~english Connects to the sensor via serial interface and gets range data
 
 #include "urg_sensor.h"
 #include "urg_utils.h"
 #include <stdlib.h>
 
-
-int main(void)
+int32_t main(void)
 {
     urg_t urg;
-    int ret;
-    long *length_data;
-    int length_data_size;
+    int32_t ret;
+    int32_t *length_data;
+    int32_t length_data_size;
 
-    // \~japanese "COM1" ‚ÍAƒZƒ“ƒT‚ª”F¯‚³‚ê‚Ä‚¢‚éƒfƒoƒCƒX–¼‚É‚·‚é•K—v‚ª‚ ‚é
+    // \~japanese "COM1" ï¿½ÍAï¿½Zï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½fï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     // \~english "COM1" is, in this case, the device name detected for the sensor
     const char connect_device[] = "COM1";
-    const long connect_baudrate = 115200;
+    const int32_t connect_baudrate = 115200;
 
-    // \~japanese ƒZƒ“ƒT‚É‘Î‚µ‚ÄÚ‘±‚ğs‚¤B
+    // \~japanese ï¿½Zï¿½ï¿½ï¿½Tï¿½É‘Î‚ï¿½ï¿½ÄÚ‘ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½B
     // \~english Connects to the sensor
     ret = urg_open(&urg, URG_SERIAL, connect_device, connect_baudrate);
     // \todo check error code
 
-    // \~japanese ƒf[ƒ^óM‚Ì‚½‚ß‚Ì—Ìˆæ‚ğŠm•Û‚·‚é
+    // \~japanese ï¿½fï¿½[ï¿½^ï¿½ï¿½Mï¿½Ì‚ï¿½ï¿½ß‚Ì—Ìˆï¿½ï¿½ï¿½mï¿½Û‚ï¿½ï¿½ï¿½
     // \~english Allocates memory to hold received measurement data
-    length_data = (long *)malloc(sizeof(long) * urg_max_data_size(&urg));
+    length_data = (int32_t *)malloc(sizeof(int32_t) * urg_max_data_size(&urg));
     // \todo check length_data is not NULL
 
-    // \~japanese ‹——£ƒf[ƒ^‚ÌŒv‘ªŠJnB
+    // \~japanese ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ÌŒvï¿½ï¿½ï¿½Jï¿½nï¿½B
     // \~english Starts range data measurement
     ret = urg_start_measurement(&urg, URG_DISTANCE, 1, 0);
     // \todo check error code
 
-    // \~japanese ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
+    // \~japanese ï¿½Zï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ç‹—ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½B
     // \~english Receives the measurement data
     length_data_size = urg_get_distance(&urg, length_data, NULL);
     // \todo process length_data array
 
-    // \~japanese ƒZƒ“ƒT‚Æ‚ÌÚ‘±‚ğ•Â‚¶‚éB
+    // \~japanese ï¿½Zï¿½ï¿½ï¿½Tï¿½Æ‚ÌÚ‘ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½B
     // \~english Disconnects from the sensor
     urg_close(&urg);
 

@@ -1,34 +1,36 @@
 #include "urg_sensor.h"
+#include <inttypes.h>
 #include <stdio.h>
 
-int main(void)
+int32_t main(void)
 {
-urg_t urg;
-long *length_data = NULL;
-int ret;
-// \~japanese ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚Ìæ“¾
-// \~english Gets timestamp values
+    urg_t urg;
+    int32_t *length_data = NULL;
+    int32_t ret;
+    // \~japanese ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½Ìæ“¾
+    // \~english Gets timestamp values
 
-// \~japanese urg_get_distance() ŠÖ”‚É•Ï”‚ğ—^‚¦Aƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğæ“¾‚·‚éB
-// \~english Uses the urg_get_distance() function and returns the timestamp values for each scan
+    // \~japanese urg_get_distance() ï¿½Öï¿½ï¿½É•Ïï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½Aï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½B
+    // \~english Uses the urg_get_distance() function and returns the timestamp values for each scan
 
-const int scan_times = 123;
-int length_data_size;
-long timestamp;
-int i;
+    const int32_t scan_times = 123;
+    int32_t length_data_size;
+    int32_t timestamp;
+    int32_t i;
 
-// \~japanese ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
-// \~english Starts range data measurement
-ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
-// \todo check error code
+    // \~japanese ï¿½Zï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ç‹—ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½B
+    // \~english Starts range data measurement
+    ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
+    // \todo check error code
 
-for (i = 0; i < scan_times; ++i) {
-    length_data_size = urg_get_distance(&urg, length_data, &timestamp);
-    // \todo process length_data array
+    for (i = 0; i < scan_times; ++i)
+    {
+        length_data_size = urg_get_distance(&urg, length_data, &timestamp);
+        // \todo process length_data array
 
-    // \~japanese æ“¾‚µ‚½ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğo—Í‚·‚é
-    // \~english Outputs the received timestamp value
-    printf("%ld\n", timestamp);
-}
-return 0;
+        // \~japanese ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½ï¿½
+        // \~english Outputs the received timestamp value
+        printf("%" PRId32 "\n", timestamp);
+    }
+    return 0;
 }

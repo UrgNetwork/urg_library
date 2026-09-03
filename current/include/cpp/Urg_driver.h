@@ -24,7 +24,8 @@ namespace qrk
     class Urg_driver : public Lidar
     {
     public:
-        enum {
+        enum
+        {
             Default_baudrate = 115200,
             Default_port = 10940,
             Infinity_times = -1,
@@ -39,7 +40,7 @@ namespace qrk
         static std::vector<std::string> find_ports(void);
         //! \~japanese URG センサを検索し、判定結果を返す  \~english Finds sensors and returns the detection results
         static std::vector<std::string> find_ports(std::vector<int32_t> &
-                                                   is_urg_ports);
+                                                       is_urg_ports);
         //! \~japanese 最後に発生したエラーを示す文字列を返す  \~english Returns the last error message
         const char *what(void) const;
 
@@ -59,31 +60,34 @@ namespace qrk
         //! \~japanese レーザを消灯する  \~english Turns the laser off
         bool laser_off(void);
 
+        //! \~japanese センサを再起動する  \~english Reboots the sensor
         bool reboot(void);
 
         //! \~japanese センサをスリープ状態にする  \~english Puts the sensor to sleep
         void sleep(void);
+        //! \~japanese センサを復帰させる  \~english Wakes the sensor
         void wakeup(void);
         //! \~japanese センサが安定状態か返す  \~english Returns whether the sensor is stable
         bool is_stable(void);
 
         //! \~japanese データ取得の開始  \~english Starts data measurement process
         bool start_measurement(measurement_type_t type = Distance,
-                               int scan_times = Infinity_times,
-                               int skip_scan = 0);
+                               int32_t scan_times = Infinity_times,
+                               int32_t skip_scan = 0);
 
         //! \~japanese チェックサムエラーを無視するか設定する  \~english Sets whether checksum errors are ignored
         void set_ignore_checkSumError(bool ignore = true);
 
+        //! \~japanese 受信データの受け取り  \~english Receives measurement data
         //! \~japanese 距離データを取得する  \~english Gets distance data
         bool get_distance(std::vector<int32_t> &data, int32_t *time_stamp = NULL);
         //! \~japanese 距離と強度データを取得する  \~english Gets distance and intensity data
         bool get_distance_intensity(std::vector<int32_t> &data,
                                     std::vector<unsigned short> &intensity,
                                     int32_t *time_stamp = NULL);
-                                    long *time_stamp = NULL);
 
-		bool get_distance_io(std::vector<long>& data, std::vector<long>& io, long *time_stamp = NULL);
+        //! \~japanese 距離と IO データを取得する  \~english Gets distance and IO data
+        bool get_distance_io(std::vector<int32_t> &data, std::vector<int32_t> &io, int32_t *time_stamp = NULL);
 
         //! \~japanese 距離、強度、IO データを取得する  \~english Gets distance, intensity and IO data
         bool get_distance_intensity_io(std::vector<int32_t> &data,
@@ -91,17 +95,19 @@ namespace qrk
                                        std::vector<int32_t> &io,
                                        int32_t *time_stamp = NULL);
 
-        bool get_multiecho(std::vector<long>& data_multi,
-                           long* time_stamp = NULL);
+        //! \~japanese マルチエコー距離データを取得する  \~english Gets multiecho distance data
+        bool get_multiecho(std::vector<int32_t> &data_multi,
+                           int32_t *time_stamp = NULL);
 
         //! \~japanese マルチエコー距離と強度データを取得する  \~english Gets multiecho distance and intensity data
         bool get_multiecho_intensity(std::vector<int32_t> &data_multiecho,
                                      std::vector<unsigned short> &
-                                     intensity_multiecho,
-                                     long* time_stamp = NULL);
+                                         intensity_multiecho,
+                                     int32_t *time_stamp = NULL);
 
-        bool set_scanning_parameter(int first_step, int last_step,
-                                    int skip_step = 1);
+        //! \~japanese 計測範囲とスキップ幅を設定する  \~english Sets the measurement range and skip step
+        bool set_scanning_parameter(int32_t first_step, int32_t last_step,
+                                    int32_t skip_step = 1);
 
         //! \~japanese データ取得の中断  \~english Stops data measurement process
         void stop_measurement(void);
@@ -109,6 +115,7 @@ namespace qrk
         //! \~japanese タイムスタンプの同期  \~english Synchronization of timestamps
         //! \~japanese タイムスタンプモードを開始する  \~english Starts timestamp mode
         bool start_time_stamp_mode(void);
+        //! \~japanese タイムスタンプモードを停止する  \~english Stops timestamp mode
         bool stop_time_stamp_mode(void);
         //! \~japanese センサのタイムスタンプを設定する  \~english Sets the sensor timestamp
         bool set_sensor_time_stamp(int32_t time_stamp);
@@ -176,8 +183,8 @@ namespace qrk
         void set_measurement_type(measurement_type_t type);
 
     private:
-        Urg_driver(const Urg_driver& rhs);
-        Urg_driver& operator = (const Urg_driver& rhs);
+        Urg_driver(const Urg_driver &rhs);
+        Urg_driver &operator=(const Urg_driver &rhs);
 
         struct pImpl;
         std::unique_ptr<pImpl> pimpl;

@@ -14,66 +14,70 @@
 #include "open_urg_sensor.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <inttypes.h>
 
-
-static void print_data(urg_t *urg, long data[], int data_n, long time_stamp)
+static void print_data(urg_t *urg, int32_t data[], int32_t data_n, int32_t time_stamp)
 {
 #if 1
-    int front_index;
+    int32_t front_index;
 
     (void)data_n;
 
     // \~japanese 前方のデータのみを表示
     // \~english Shows only the front step
     front_index = urg_step2index(urg, 0);
-    printf("%ld [mm], (%ld [msec])\n", data[front_index], time_stamp);
+    printf("%" PRId32 " [mm], (%" PRId32 " [msec])\n", data[front_index], time_stamp);
 
 #else
     (void)time_stamp;
 
-    int i;
-    long min_distance;
-    long max_distance;
+    int32_t i;
+    int32_t min_distance;
+    int32_t max_distance;
 
     // \~japanese 全てのデータの X-Y の位置を表示
     // \~english Prints the X-Y coordinates for all the measurement points
     urg_distance_min_max(urg, &min_distance, &max_distance);
-    for (i = 0; i < data_n; ++i) {
-        long l = data[i];
+    for (i = 0; i < data_n; ++i)
+    {
+        int32_t l = data[i];
         double radian;
-        long x;
-        long y;
+        int32_t x;
+        int32_t y;
 
-        if ((l <= min_distance) || (l >= max_distance)) {
+        if ((l <= min_distance) || (l >= max_distance))
+        {
             continue;
         }
         radian = urg_index2rad(urg, i);
-        x = (long)(l * cos(radian));
-        y = (long)(l * sin(radian));
-        printf("(%ld, %ld), ", x, y);
+        x = (int32_t)(l * cos(radian));
+        y = (int32_t)(l * sin(radian));
+        printf("(%" PRId32 ", %" PRId32 "), ", x, y);
     }
     printf("\n");
 #endif
 }
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
-    enum {
+    enum
+    {
         CAPTURE_TIMES = 10,
     };
     urg_t urg;
-    long *data = NULL;
-    long time_stamp;
-    int n;
-    int i;
+    int32_t *data = NULL;
+    int32_t time_stamp;
+    int32_t n;
+    int32_t i;
 
-    if (open_urg_sensor(&urg, argc, argv) < 0) {
+    if (open_urg_sensor(&urg, argc, argv) < 0)
+    {
         return 1;
     }
 
-    data = (long *)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
-    if (!data) {
+    data = (int32_t *)malloc(urg_max_data_size(&urg) * sizeof(data[0]));
+    if (!data)
+    {
         perror("urg_max_index()");
         return 1;
     }
@@ -88,10 +92,12 @@ int main(int argc, char *argv[])
                                urg_deg2step(&urg, +90), 0);
 #endif
 
-    for (i = 0; i < CAPTURE_TIMES; ++i) {
-        urg_start_measurement(&urg, URG_DISTANCE, 1, 0 ,1);
+    for (i = 0; i < CAPTURE_TIMES; ++i)
+    {
+        urg_start_measurement(&urg, URG_DISTANCE, 1, 0, 1);
         n = urg_get_distance(&urg, data, &time_stamp);
-        if (n <= 0) {
+        if (n <= 0)
+        {
             printf("urg_get_distance: %s\n", urg_error(&urg));
             free(data);
             urg_close(&urg);

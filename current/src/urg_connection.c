@@ -12,14 +12,14 @@
 
 #include "urg_connection.h"
 
-
-int connection_open(urg_connection_t *connection,
-                    urg_connection_type_t connection_type,
-                    const char *device, long baudrate_or_port)
+int32_t connection_open(urg_connection_t *connection,
+                        urg_connection_type_t connection_type,
+                        const char *device, int32_t baudrate_or_port)
 {
     connection->type = connection_type;
 
-    switch (connection_type) {
+    switch (connection_type)
+    {
     case URG_SERIAL:
         return serial_open(&connection->serial, device, baudrate_or_port);
         break;
@@ -32,10 +32,10 @@ int connection_open(urg_connection_t *connection,
     return -1;
 }
 
-
 void connection_close(urg_connection_t *connection)
 {
-    switch (connection->type) {
+    switch (connection->type)
+    {
     case URG_SERIAL:
         serial_close(&connection->serial);
         break;
@@ -46,12 +46,12 @@ void connection_close(urg_connection_t *connection)
     }
 }
 
-
-int connection_set_baudrate(urg_connection_t *connection, long baudrate)
+int32_t connection_set_baudrate(urg_connection_t *connection, int32_t baudrate)
 {
-    int ret = -1;
+    int32_t ret = -1;
 
-    switch (connection->type) {
+    switch (connection->type)
+    {
     case URG_SERIAL:
         ret = serial_set_baudrate(&connection->serial, baudrate);
         break;
@@ -64,11 +64,11 @@ int connection_set_baudrate(urg_connection_t *connection, long baudrate)
     return ret;
 }
 
-
-int connection_write(urg_connection_t *connection,
-                     const char *data, int size)
+int32_t connection_write(urg_connection_t *connection,
+                         const char *data, int32_t size)
 {
-    switch (connection->type) {
+    switch (connection->type)
+    {
     case URG_SERIAL:
         return serial_write(&connection->serial, data, size);
         break;
@@ -79,11 +79,11 @@ int connection_write(urg_connection_t *connection,
     return -1;
 }
 
-
-int connection_read(urg_connection_t *connection,
-                    char *data, int max_size, int timeout)
+int32_t connection_read(urg_connection_t *connection,
+                        char *data, int32_t max_size, int32_t timeout)
 {
-    switch (connection->type) {
+    switch (connection->type)
+    {
     case URG_SERIAL:
         return serial_read(&connection->serial, data, max_size, timeout);
         break;
@@ -94,11 +94,11 @@ int connection_read(urg_connection_t *connection,
     return -1;
 }
 
-
-int connection_readline(urg_connection_t *connection,
-                        char *data, int max_size, int timeout)
+int32_t connection_readline(urg_connection_t *connection,
+                            char *data, int32_t max_size, int32_t timeout)
 {
-    switch (connection->type) {
+    switch (connection->type)
+    {
     case URG_SERIAL:
         return serial_readline(&connection->serial, data, max_size, timeout);
         break;

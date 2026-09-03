@@ -13,14 +13,13 @@
   $Id$
 */
 
+#include <stdint.h>
 
 //! \~japanese シリアルポートを検索する  \~english Finds the serial port
-extern int urg_serial_find_port(void);
-
+extern int32_t urg_serial_find_port(void);
 
 //! \~japanese 検索したシリアルポート名を返す  \~english Returns the name of the serial port found
-extern const char *urg_serial_port_name(int index);
-
+extern const char *urg_serial_port_name(int32_t index);
 
 /*!
   \~japanese
@@ -37,6 +36,6 @@ extern const char *urg_serial_port_name(int index);
   \retval 0 Unknown
   \retval <0 Error
 */
-extern int urg_serial_is_urg_port(int index);
+extern int32_t urg_serial_is_urg_port(int32_t index);
 
 #endif /* !URG_SERIAL_UTILS_H */

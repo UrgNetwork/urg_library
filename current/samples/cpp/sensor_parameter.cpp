@@ -16,8 +16,7 @@
 using namespace qrk;
 using namespace std;
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     Connection_information information(argc, argv);
 
@@ -26,7 +25,8 @@ int main(int argc, char *argv[])
     Urg_driver urg;
     if (!urg.open(information.device_or_ip_name(),
                   information.baudrate_or_port_number(),
-                  information.connection_type())) {
+                  information.connection_type()))
+    {
         cout << "Urg_driver::open():"
              << information.device_or_ip_name() << ": " << urg.what() << endl;
         return 1;

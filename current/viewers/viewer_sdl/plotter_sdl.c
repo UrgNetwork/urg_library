@@ -3,8 +3,8 @@
   \brief Plotter (SDL)
 
   \~japanese
-  \todo glDrawElements() ‚ğg‚¤‚æ‚¤‚ÉC³‚·‚é
-  \todo MAX_POINTS ‚Ì 1081 ‚Ì”‚ğƒZƒ“ƒT‚©‚ç‚Ìî•ñ‚Å‰Šú‰»‚·‚é
+  \todo glDrawElements() ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½æ‚¤ï¿½ÉCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  \todo MAX_POINTS ï¿½ï¿½ 1081 ï¿½Ìï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   \~english
   \todo Fix the code to use glDrawElements()
   \todo Use the sensor information instead of MAX_POINTS
@@ -15,22 +15,22 @@
   $Id$
 */
 
-//#define USE_GL_2 1
+// #define USE_GL_2 1
 
 #if defined(USE_GL_2)
 #define GL_GLEXT_PROTOTYPES 1
 #define GL3_PROTOTYPES 1
 #endif
 #include "plotter_sdl.h"
+#include <stdint.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 
-
-enum {
+enum
+{
     SCREEN_WIDTH = 640,
     SCREEN_HEIGHT = 480,
 };
-
 
 typedef struct
 {
@@ -38,21 +38,20 @@ typedef struct
     GLfloat y;
 } vector_t;
 
-
 static SDL_Surface *screen_ = NULL;
 static vector_t *points_ = NULL;
 static size_t max_points_size_ = 0;
 static size_t points_size_ = 0;
 static double draw_magnify_ = 0.1;
 
-
 static void opengl_initialize(void)
 {
-    int bpp = SDL_GetVideoInfo()->vfmt->BitsPerPixel;
+    int32_t bpp = SDL_GetVideoInfo()->vfmt->BitsPerPixel;
 
     // Initialize the display
-    int rgb_size[3];
-    switch (bpp) {
+    int32_t rgb_size[3];
+    switch (bpp)
+    {
     case 8:
         rgb_size[0] = 3;
         rgb_size[1] = 3;
@@ -77,9 +76,8 @@ static void opengl_initialize(void)
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, rgb_size[2]);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    //SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
+    // SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 }
-
 
 static void opengl_setup(void)
 {
@@ -104,7 +102,6 @@ static void opengl_setup(void)
     glShadeModel(GL_SMOOTH);
 }
 
-
 static void draw_points(void)
 {
 
@@ -112,7 +109,8 @@ static void draw_points(void)
     size_t i;
 
     glBegin(GL_POINTS);
-    for (i = 0; i < points_size_; ++i) {
+    for (i = 0; i < points_size_; ++i)
+    {
         glVertex2i(points_[i].x, points_[i].y);
     }
     glEnd();
@@ -120,7 +118,7 @@ static void draw_points(void)
     points_size_ = 0;
 
 #else
-    int memory_size = points_size * sizeof(points[0]);
+    int32_t memory_size = points_size * sizeof(points[0]);
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
@@ -138,7 +136,6 @@ static void draw_points(void)
     points_size = 0;
 #endif
 }
-
 
 static void enter2D(void)
 {
@@ -159,30 +156,32 @@ static void enter2D(void)
     glTranslatef(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0);
 }
 
-
-bool plotter_initialize(int data_size)
+bool plotter_initialize(int32_t data_size)
 {
     points_ = malloc(data_size * sizeof(vector_t));
-    if (!points_) {
+    if (!points_)
+    {
         return false;
     }
     max_points_size_ = data_size;
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
         printf("SDL_Init: %s\n", SDL_GetError());
         return false;
     }
 
-    // \~japanese ‰æ–Ê‚Ìì¬
+    // \~japanese ï¿½ï¿½Ê‚Ìì¬
     // \~english Prepares the display screeen
     opengl_initialize();
     screen_ = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_OPENGL);
-    if (!screen_) {
+    if (!screen_)
+    {
         return false;
     }
     opengl_setup();
 
-    // \~japanese •`‰æİ’è
+    // \~japanese ï¿½`ï¿½ï¿½İ’ï¿½
     // \~english Prepares for drawing
     glPointSize(2.0);
 #if defined(USE_GL_2)
@@ -190,18 +189,16 @@ bool plotter_initialize(int data_size)
 #endif
     enter2D();
 
-    // \~japanese ƒf[ƒ^‚ÌŠm•Û
+    // \~japanese ï¿½fï¿½[ï¿½^ï¿½ÌŠmï¿½ï¿½
     // \~english Reserves data
 
     return true;
 }
 
-
 void plotter_terminate(void)
 {
     SDL_Quit();
 }
-
 
 void plotter_clear(void)
 {
@@ -209,30 +206,28 @@ void plotter_clear(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-
 void plotter_swap(void)
 {
-    // \~japanese •\¦‚ğ“ü‚êŠ·‚¦‚é‚Æ‚«‚ÉA‚Ü‚¾•`‰æ‚µ‚Ä‚¢‚È‚¢“à—e‚ğ•`‰æ‚·‚é
+    // \~japanese ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½êŠ·ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉAï¿½Ü‚ï¿½ï¿½`ï¿½æ‚µï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½eï¿½ï¿½`ï¿½æ‚·ï¿½ï¿½
     // \~english Before swapping buffers, finish any pending drawing
     draw_points();
 
     SDL_GL_SwapBuffers();
 }
 
-
 void plotter_set_color(unsigned char r, unsigned g, unsigned b)
 {
-    // \~japanese F‚ğ•ÏX‚·‚é‚Æ‚«‚ÉA‚Ü‚Æ‚ß‚Ä•`‰æ‚ğs‚¤
+    // \~japanese ï¿½Fï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉAï¿½Ü‚Æ‚ß‚Ä•`ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
     // \~english Before changing color, finish any pending drawing
     draw_points();
 
     glColor3f(r / 255.0, g / 255.0, b / 255.0);
 }
 
-
 void plotter_plot(float x, float y)
 {
-    if (points_size_ >= max_points_size_) {
+    if (points_size_ >= max_points_size_)
+    {
         return;
     }
 
@@ -241,15 +236,16 @@ void plotter_plot(float x, float y)
     ++points_size_;
 }
 
-
 bool plotter_is_quit(void)
 {
     bool is_quit = false;
-    int magnify = 0;
+    int32_t magnify = 0;
 
     SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type)
+        {
 
         case SDL_QUIT:
             is_quit = true;
@@ -257,40 +253,51 @@ bool plotter_is_quit(void)
 
         case SDL_KEYDOWN:
             if ((event.key.keysym.sym == SDLK_q) ||
-                (event.key.keysym.sym == SDLK_F4)) {
+                (event.key.keysym.sym == SDLK_F4))
+            {
                 is_quit = true;
             }
-            if (event.key.keysym.sym == SDLK_COMMA) {
+            if (event.key.keysym.sym == SDLK_COMMA)
+            {
                 --magnify;
             }
-            if (event.key.keysym.sym == SDLK_PERIOD) {
+            if (event.key.keysym.sym == SDLK_PERIOD)
+            {
                 ++magnify;
             }
             break;
 
         case SDL_MOUSEBUTTONDOWN:
-            if (event.button.button == SDL_BUTTON_WHEELUP) {
+            if (event.button.button == SDL_BUTTON_WHEELUP)
+            {
                 --magnify;
-            } else if (event.button.button == SDL_BUTTON_WHEELDOWN) {
+            }
+            else if (event.button.button == SDL_BUTTON_WHEELDOWN)
+            {
                 ++magnify;
             }
             break;
         }
     }
 
-    // \~japanese •`‰æ‚ÌŠg‘å—¦‚ğ•ÏX‚·‚é
+    // \~japanese ï¿½`ï¿½ï¿½ÌŠgï¿½å—¦ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
     // \~english Changes the zooming rate
-    while (magnify < 0) {
+    while (magnify < 0)
+    {
         draw_magnify_ *= 0.90;
         ++magnify;
     }
-    while (magnify > 0) {
+    while (magnify > 0)
+    {
         draw_magnify_ *= 1.10;
         --magnify;
     }
-    if (draw_magnify_ < 0.001) {
+    if (draw_magnify_ < 0.001)
+    {
         draw_magnify_ = 0.001;
-    } else if (draw_magnify_ > 10.0) {
+    }
+    else if (draw_magnify_ > 10.0)
+    {
         draw_magnify_ = 10.0;
     }
 
