@@ -1,6 +1,6 @@
 /*!
   \file
-  \~japanese 
+  \~japanese
   \brief シリアル通信
   \~english Serial communications in Linux
   \~
@@ -14,11 +14,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-
-enum {
+enum
+{
     INVALID_FD = -1,
 };
-
 
 static void serial_initialize(urg_serial_t *serial)
 {
@@ -28,8 +27,7 @@ static void serial_initialize(urg_serial_t *serial)
     ring_initialize(&serial->ring, serial->buffer, RING_BUFFER_SIZE_SHIFT);
 }
 
-
-static void serial_clear(urg_serial_t* serial)
+static void serial_clear(urg_serial_t *serial)
 {
     tcdrain(serial->fd);
     tcflush(serial->fd, TCIOFLUSH);
@@ -37,21 +35,24 @@ static void serial_clear(urg_serial_t* serial)
     serial->has_last_ch = False;
 }
 
-
-int serial_open(urg_serial_t *serial, const char *device, long baudrate)
+int32_t serial_open(urg_serial_t *serial, const char *device, int32_t baudrate)
 {
-    int flags = 0;
-    int ret = 0;
+    int32_t flags = 0;
+    int32_t ret = 0;
 
     serial_initialize(serial);
 
 #ifndef URG_MAC_OS
-    enum { O_EXLOCK = 0x0 }; /* \~japanese Linux では使えないのでダミーを作成しておく \~english Not used in Linux, used as dummy */
+    enum
+    {
+        O_EXLOCK = 0x0
+    }; /* \~japanese Linux では使えないのでダミーを作成しておく \~english Not used in Linux, used as dummy */
 #endif
     serial->fd = open(device, O_RDWR | O_EXLOCK | O_NONBLOCK | O_NOCTTY);
-    if (serial->fd < 0) {
+    if (serial->fd < 0)
+    {
         /* \~japanese 接続に失敗 \~english Connection failed */
-        //strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
+        // strerror_r(errno, serial->error_string, ERROR_MESSAGE_SIZE);
         return -1;
     }
 
@@ -71,7 +72,8 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
 
     /* \~japanese ボーレートの変更 ~\english Changes the baudrate */
     ret = serial_set_baudrate(serial, baudrate);
-    if (ret < 0) {
+    if (ret < 0)
+    {
         return ret;
     }
 
@@ -81,21 +83,21 @@ int serial_open(urg_serial_t *serial, const char *device, long baudrate)
     return 0;
 }
 
-
 void serial_close(urg_serial_t *serial)
 {
-    if (serial->fd >= 0) {
+    if (serial->fd >= 0)
+    {
         close(serial->fd);
         serial->fd = INVALID_FD;
     }
 }
 
-
-int serial_set_baudrate(urg_serial_t *serial, long baudrate)
+int32_t serial_set_baudrate(urg_serial_t *serial, int32_t baudrate)
 {
-    long baudrate_value = -1;
+    int32_t baudrate_value = -1;
 
-    switch (baudrate) {
+    switch (baudrate)
+    {
     case 4800:
         baudrate_value = B4800;
         break;
@@ -133,17 +135,16 @@ int serial_set_baudrate(urg_serial_t *serial, long baudrate)
     return 0;
 }
 
-
-int serial_write(urg_serial_t *serial, const char *data, int size)
+int32_t serial_write(urg_serial_t *serial, const char *data, int32_t size)
 {
-    if (serial->fd == INVALID_FD) {
+    if (serial->fd == INVALID_FD)
+    {
         return -1;
     }
     return write(serial->fd, data, size);
 }
 
-
-static int wait_receive(urg_serial_t* serial, int timeout)
+static int32_t wait_receive(urg_serial_t *serial, int32_t timeout)
 {
     fd_set rfds;
     struct timeval tv;
@@ -157,34 +158,38 @@ static int wait_receive(urg_serial_t* serial, int timeout)
     tv.tv_usec = (timeout % 1000) * 1000;
 
     if (select(serial->fd + 1, &rfds, NULL, NULL,
-               (timeout < 0) ? NULL : &tv) <= 0) {
+               (timeout < 0) ? NULL : &tv) <= 0)
+    {
         /* \~japanese タイムアウト発生 \~english Timeout occurred */
         return 0;
     }
     return 1;
 }
 
-
-static int internal_receive(char data[], int data_size_max,
-                            urg_serial_t* serial, int timeout)
+static int32_t internal_receive(char data[], int32_t data_size_max,
+                                urg_serial_t *serial, int32_t timeout)
 {
-    int filled = 0;
+    int32_t filled = 0;
 
-    if (data_size_max <= 0) {
+    if (data_size_max <= 0)
+    {
         return 0;
     }
 
-    while (filled < data_size_max) {
-        int require_n;
-        int read_n;
+    while (filled < data_size_max)
+    {
+        int32_t require_n;
+        int32_t read_n;
 
-        if (! wait_receive(serial, timeout)) {
+        if (!wait_receive(serial, timeout))
+        {
             break;
         }
 
         require_n = data_size_max - filled;
         read_n = read(serial->fd, &data[filled], require_n);
-        if (read_n <= 0) {
+        if (read_n <= 0)
+        {
             /* \~japanese 読み出しエラー。現在までの受信内容で戻る \~english Read error, returns all the data up to now */
             break;
         }
@@ -193,41 +198,48 @@ static int internal_receive(char data[], int data_size_max,
     return filled;
 }
 
-
-int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
+int32_t serial_read(urg_serial_t *serial, char *data, int32_t max_size, int32_t timeout)
 {
-    int buffer_size;
-    int read_n;
-    int filled = 0;
+    int32_t buffer_size;
+    int32_t read_n;
+    int32_t filled = 0;
 
-    if (max_size <= 0) {
+    if (max_size <= 0)
+    {
         return 0;
     }
 
     /* \~japanese 書き戻した１文字があれば、書き出す  \~english If there is a single character return it */
-    if (serial->has_last_ch != False) {
+    if (serial->has_last_ch != False)
+    {
         data[0] = serial->last_ch;
         serial->has_last_ch = False;
         ++filled;
     }
-    if (serial->fd == INVALID_FD) {
-        if (filled > 0) {
+    if (serial->fd == INVALID_FD)
+    {
+        if (filled > 0)
+        {
             return filled;
-        } else {
+        }
+        else
+        {
             return -1;
         }
     }
 
     buffer_size = ring_size(&serial->ring);
     read_n = max_size - filled;
-    if (buffer_size < read_n) {
+    if (buffer_size < read_n)
+    {
         // \~japanese リングバッファ内のデータで足りなければ、データを読み足す
         // \~english Reads data if there is space in the ring buffer
         char buffer[RING_BUFFER_SIZE];
-        int n = internal_receive(buffer,
-                                 ring_capacity(&serial->ring) - buffer_size,
-                                 serial, 0);
-        if (n > 0) {
+        int32_t n = internal_receive(buffer,
+                                     ring_capacity(&serial->ring) - buffer_size,
+                                     serial, 0);
+        if (n > 0)
+        {
             ring_write(&serial->ring, buffer, n);
             buffer_size += n;
         }
@@ -235,10 +247,12 @@ int serial_read(urg_serial_t *serial, char *data, int max_size, int timeout)
 
     // \~japanese リングバッファ内のデータを返す
     // \~english Returns the data stored in the ring buffer
-    if (read_n > buffer_size) {
+    if (read_n > buffer_size)
+    {
         read_n = buffer_size;
     }
-    if (read_n > 0) {
+    if (read_n > 0)
+    {
         ring_read(&serial->ring, &data[filled], read_n);
         filled += read_n;
     }

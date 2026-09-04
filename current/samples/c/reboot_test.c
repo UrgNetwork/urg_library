@@ -11,13 +11,16 @@
 #include "open_urg_sensor.h"
 #include <stdio.h>
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
-    enum { DATA_SIZE = 1081 };
+    enum
+    {
+        DATA_SIZE = 1081
+    };
     urg_t urg;
 
-    if (open_urg_sensor(&urg, argc, argv) < 0) {
+    if (open_urg_sensor(&urg, argc, argv) < 0)
+    {
         return 1;
     }
 

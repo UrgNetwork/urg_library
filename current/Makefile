@@ -1,4 +1,5 @@
 # Makefile for urgwidget
+include ./build_rule.mk
 
 OUTPUT_HTML_DIR = html
 OUTPUT_HTML_JA_DIR = html_ja

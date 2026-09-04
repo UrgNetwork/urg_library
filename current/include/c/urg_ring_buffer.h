@@ -13,16 +13,16 @@
   $Id$
 */
 
+#include <stdint.h>
 
 //! \~japanese リングバッファの管理情報  \~english Control structure of the ring buffer
 typedef struct
 {
-    char *buffer;                 //!< \~japanese バッファへのポインタ  \~english Pointer to the data buffer
-    int buffer_size;              //!< \~japanese バッファサイズ  \~english Buffer size
-    int first;                    //!< \~japanese バッファの先頭位置  \~english Index of the first entry of the buffer
-    int last;                     //!< \~japanese バッファの最終位置  \~english Index of the last entry of the buffer
+  char *buffer;        //!< \~japanese バッファへのポインタ  \~english Pointer to the data buffer
+  int32_t buffer_size; //!< \~japanese バッファサイズ  \~english Buffer size
+  int32_t first;       //!< \~japanese バッファの先頭位置  \~english Index of the first entry of the buffer
+  int32_t last;        //!< \~japanese バッファの最終位置  \~english Index of the last entry of the buffer
 } ring_buffer_t;
-
 
 /*!
   \~japanese
@@ -40,8 +40,7 @@ typedef struct
   \param[in] shift_length Buffer size as multiple of 2
 */
 extern void ring_initialize(ring_buffer_t *ring,
-                            char *buffer, const int shift_length);
-
+                            char *buffer, const int32_t shift_length);
 
 /*!
   \~japanese
@@ -56,7 +55,6 @@ extern void ring_initialize(ring_buffer_t *ring,
 */
 extern void ring_clear(ring_buffer_t *ring);
 
-
 /*!
   \~japanese
   \brief 格納データ数を返す
@@ -68,8 +66,7 @@ extern void ring_clear(ring_buffer_t *ring);
 
   \param[in] ring Pointer to the ring buffer data structure
 */
-extern int ring_size(const ring_buffer_t *ring);
-
+extern int32_t ring_size(const ring_buffer_t *ring);
 
 /*!
   \~japanese
@@ -82,8 +79,7 @@ extern int ring_size(const ring_buffer_t *ring);
 
   \param[in] ring Pointer to the ring buffer data structure
 */
-extern int ring_capacity(const ring_buffer_t *ring);
-
+extern int32_t ring_capacity(const ring_buffer_t *ring);
 
 /*!
   \~japanese
@@ -104,8 +100,7 @@ extern int ring_capacity(const ring_buffer_t *ring);
 
   \return The number of elements written to the ring buffer
 */
-extern int ring_write(ring_buffer_t *ring, const char *data, int size);
-
+extern int32_t ring_write(ring_buffer_t *ring, const char *data, int32_t size);
 
 /*!
   \~japanese
@@ -126,6 +121,6 @@ extern int ring_write(ring_buffer_t *ring, const char *data, int size);
 
   \return The number of elements read from the ring buffer
 */
-extern int ring_read(ring_buffer_t *ring, char *buffer, int size);
+extern int32_t ring_read(ring_buffer_t *ring, char *buffer, int32_t size);
 
 #endif /* ! RING_BUFFER_H */

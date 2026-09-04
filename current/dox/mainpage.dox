@@ -2,10 +2,10 @@
   \mainpage URG Library document
 
   \~japanese
-  \section mainpage_what ŠT—v
+  \section mainpage_what æ¦‚è¦
 
-  ‚±‚ê‚ÍAƒŒ[ƒU‹——£ƒZƒ“ƒT URG ƒVƒŠ[ƒY—p‚ÌƒI[ƒvƒ“ƒ\[ƒXƒ‰ƒCƒuƒ‰ƒŠ‚Å‚·B\n
-  ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ÍAˆÈ‰º‚ÌŠÂ‹«‚É‚Ä“®ì‚ğŠm”F‚µ‚Ä‚¢‚Ü‚·B
+  ã“ã‚Œã¯ã€ãƒ¬ãƒ¼ã‚¶è·é›¢ã‚»ãƒ³ã‚µ URG ã‚·ãƒªãƒ¼ã‚ºç”¨ã®ã‚ªãƒ¼ãƒ—ãƒ³ã‚½ãƒ¼ã‚¹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã™ã€‚\n
+  ã“ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ã€ä»¥ä¸‹ã®ç’°å¢ƒã«ã¦å‹•ä½œã‚’ç¢ºèªã—ã¦ã„ã¾ã™ã€‚
 
 - Visual C++ 2005
 - Visual C++ 2010
@@ -23,11 +23,11 @@
 - gcc 4.6.2 (MinGW)
 
   \~japanese
-  \section mainpage_license ƒ‰ƒCƒZƒ“ƒX
+  \section mainpage_license ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
 
-  (CŒ¾Œê)C³ BSD ƒ‰ƒCƒZƒ“ƒX‚ÉŠî‚Ã‚¢‚Ä”z•z‚µ‚Ü‚·B\n
-  (C++)C³ BSD ƒ‰ƒCƒZƒ“ƒX‚ÉŠî‚Ã‚¢‚Ä”z•z‚µ‚Ü‚·B\n
-  ƒ‰ƒCƒZƒ“ƒX‚ÌÚ×‚Íƒ‰ƒCƒuƒ‰ƒŠ•t‘®‚Ì <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> ƒtƒ@ƒCƒ‹‚ğ‚²——‰º‚³‚¢B
+  (Cè¨€èª)ä¿®æ­£ BSD ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã«åŸºã¥ã„ã¦é…å¸ƒã—ã¾ã™ã€‚\n
+  (C++)ä¿®æ­£ BSD ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã«åŸºã¥ã„ã¦é…å¸ƒã—ã¾ã™ã€‚\n
+  ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã®è©³ç´°ã¯ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä»˜å±ã® <a href="COPYRIGHT.txt">COPYRIGHT.txt</a> ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã”è¦§ä¸‹ã•ã„ã€‚
 
 
   \~english
@@ -39,12 +39,12 @@
 
 
   \~japanese
-  \section mainpage_download ƒ_ƒEƒ“ƒ[ƒh
+  \section mainpage_download ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
 
-  ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚Ì zip ƒtƒ@ƒCƒ‹‚ÍAˆÈ‰º‚ÌƒAƒhƒŒƒX‚©‚çƒ_ƒEƒ“ƒ[ƒh‚Å‚«‚Ü‚·B
+  ã“ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã® zip ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€ä»¥ä¸‹ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã§ãã¾ã™ã€‚
   - http://sourceforge.net/projects/urgnetwork/files/urg_library/
 
-  ŠJ”­”Å‚Ìƒ\[ƒXƒR[ƒh‚Í Git ƒŠƒ|ƒWƒgƒŠ‚ÅŠÇ—‚³‚ê‚Ä‚¢‚Ü‚·B
+  é–‹ç™ºç‰ˆã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã¯ Git ãƒªãƒã‚¸ãƒˆãƒªã§ç®¡ç†ã•ã‚Œã¦ã„ã¾ã™ã€‚
   \verbatim
 git clone https://github.com/UrgNetwork/urg_library \endverbatim
 
@@ -61,7 +61,7 @@ git clone https://github.com/UrgNetwork/urg_library \endverbatim
 git clone https://github.com/UrgNetwork/urg_library \endverbatim
 
   \~japanese
-  \section mainpage_compile_and_usage ƒ‰ƒCƒuƒ‰ƒŠ‚ÆAƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€‚ÌƒRƒ“ƒpƒCƒ‹
+  \section mainpage_compile_and_usage ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¨ã€ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
   - Windows(Visual Studio)
     - \subpage usage_windows_vcproj_page
@@ -83,12 +83,12 @@ git clone https://github.com/UrgNetwork/urg_library \endverbatim
 
 
   \~japanese
-  \section mainpage_library ƒ‰ƒCƒuƒ‰ƒŠ‚Ìg‚¢•û
+  \section mainpage_library ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ä½¿ã„æ–¹
 
   - \subpage library_tutorial_page
   - \subpage library_sample_page
 
-  - ƒ‰ƒCƒuƒ‰ƒŠ API
+  - ãƒ©ã‚¤ãƒ–ãƒ©ãƒª API
     - \ref urg_sensor.h
     - \ref urg_utils.h
 
@@ -105,10 +105,10 @@ git clone https://github.com/UrgNetwork/urg_library \endverbatim
 
 
   \~japanese
-  \section mainpage_support –â‚¢‡‚í‚¹æ
+  \section mainpage_support å•ã„åˆã‚ã›å…ˆ
 
-  ¿–â‚â—v–]‚ÍAURG Network‚ÌƒtƒH[ƒ‰ƒ€A‚à‚µ‚­‚ÍtwitterƒAƒJƒEƒ“ƒg(\@UrgNetwork)‚Ü‚Å‚¨Šè‚¢‚µ‚Ü‚·B\n
-  - <a href="http://sourceforge.net/p/urgnetwork/discussion">UrgNetwork ƒtƒH[ƒ‰ƒ€</a>\n
+  è³ªå•ã‚„è¦æœ›ã¯ã€URG Networkã®ãƒ•ã‚©ãƒ¼ãƒ©ãƒ ã€ã‚‚ã—ãã¯twitterã‚¢ã‚«ã‚¦ãƒ³ãƒˆ(\@UrgNetwork)ã¾ã§ãŠé¡˜ã„ã—ã¾ã™ã€‚\n
+  - <a href="http://sourceforge.net/p/urgnetwork/discussion">UrgNetwork ãƒ•ã‚©ãƒ¼ãƒ©ãƒ </a>\n
   - <a href="https://twitter.com/intent/tweet?screen_name=UrgNetwork">Tweet to \@UrgNetwork</a>
 
   \~english

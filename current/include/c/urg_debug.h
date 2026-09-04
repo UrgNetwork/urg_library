@@ -17,38 +17,37 @@
 */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include "urg_sensor.h"
 
+  /*!
+   \~japanese
+   \brief センサにデータを直接送信する
+   \~english
+   \brief Directly send raw data to the sensor
+  */
+  extern int32_t urg_raw_write(urg_t *urg, const char *data, int32_t data_size);
 
-    /*!
-     \~japanese
-     \brief センサにデータを直接送信する
-     \~english
-     \brief Directly send raw data to the sensor
-    */
-    extern int urg_raw_write(urg_t *urg, const char *data, int data_size);
+  /*!
+   \~japanese
+   \brief センサからデータを直接受信する
+   \~english
+   \brief Directly get raw data from the sensor
+  */
+  extern int32_t urg_raw_read(urg_t *urg, char *data, int32_t max_data_size,
+                              int32_t timeout);
 
-
-    /*!
-     \~japanese
-     \brief センサからデータを直接受信する
-     \~english
-     \brief Directly get raw data from the sensor
-    */
-    extern int urg_raw_read(urg_t *urg, char *data, int max_data_size,
-                            int timeout);
-
-    /*!
-     \~japanese
-     \brief センサから改行までのデータを直接受信する
-     \~english
-     \brief Directly get raw data from the sensor until end-of-line
-     */
-    extern int urg_raw_readline(urg_t *urg,char *data, int max_data_size,
-                                int timeout);
+  /*!
+   \~japanese
+   \brief センサから改行までのデータを直接受信する
+   \~english
+   \brief Directly get raw data from the sensor until end-of-line
+   */
+  extern int32_t urg_raw_readline(urg_t *urg, char *data, int32_t max_data_size,
+                                  int32_t timeout);
 
 #ifdef __cplusplus
 }

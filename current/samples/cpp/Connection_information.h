@@ -16,18 +16,17 @@
 #include "Urg_driver.h"
 #include <memory>
 
-
 namespace qrk
 {
     class Connection_information
     {
     public:
-        Connection_information(int argc, const char*const argv[]);
+        Connection_information(int32_t argc, const char *const argv[]);
         ~Connection_information(void);
 
         Lidar::connection_type_t connection_type() const;
-        const char* device_or_ip_name(void) const;
-        long baudrate_or_port_number(void) const;
+        const char *device_or_ip_name(void) const;
+        int32_t baudrate_or_port_number(void) const;
 
     private:
         Connection_information(void);

@@ -1,8 +1,8 @@
 /*!
   \~japanese
-  \page library_tutorial_page �`���[�g���A��
+  \page library_tutorial_page チュートリアル
 
-  ���C�u�����̎g�����̃T���v����p���Đ������܂��B
+  ライブラリの使い方のサンプルを用いて説明します。
 
   \~english
   \page library_tutorial_page Tutorial page
@@ -11,7 +11,7 @@
 
 
   \~japanese
-  - <b>�`���[�g���A��</b>
+  - <b>チュートリアル</b>
     - \ref library_tutorial_connect_and_get
     - \ref library_tutorial_get_scans
     - \ref library_tutorial_settings
@@ -28,33 +28,33 @@
 
 
   \~japanese
-  \section library_tutorial_connect_and_get �Z���T�Ƃ̐ڑ��Ƌ����f�[�^�̎擾
+  \section library_tutorial_connect_and_get センサとの接続と距離データの取得
 
-  �Z���T���狗���f�[�^���擾�����{�I�Ȏ菇��
+  センサから距離データを取得する基本的な手順は
 
-  - �Z���T�ɑ΂��Đڑ����s���B
-    - �V���A���|�[�g�����w�肵�Đڑ�����B(�V���A���AUSB �ڑ��̂Ƃ�)
-    - IP �A�h���X���w�肵�Đڑ�����B(Ethernet �ڑ��̂Ƃ�)
+  - センサに対して接続を行う。
+    - シリアルポート名を指定して接続する。(シリアル、USB 接続のとき)
+    - IP アドレスを指定して接続する。(Ethernet 接続のとき)
 
-  - �f�[�^��M�̂��߂̗̈���m�ۂ���
-    - malloc �Ȃǂŗ̈���m�ۂ���B
+  - データ受信のための領域を確保する
+    - malloc などで領域を確保する。
 
-  - �Z���T���狗���f�[�^���擾����B
-    - �v�����J�n����B
-    - �v�����ꂽ�����f�[�^����M����B
+  - センサから距離データを取得する。
+    - 計測を開始する。
+    - 計測された距離データを受信する。
 
-  - �Z���T�Ƃ̐ڑ������B
-    - �v���𒆒f���A�Z���T�Ƃ̐ڑ���ؒf����B
+  - センサとの接続を閉じる。
+    - 計測を中断し、センサとの接続を切断する。
 
-  �ƂȂ�܂��B
+  となります。
 
-  ��L�̏������v���O�����ŋL�q�������̂��A�ȉ��Ɏ����܂��B
+  上記の処理をプログラムで記述したものを、以下に示します。
   \include connect_and_get.c
 
-  �v���O�������ɏo�Ă��� urg_t �\���̂� urg_open() �֐����Ăяo�����Ƃ��ɏ���������A�Z���T�p�����[�^�̎擾��ȍ~�̃f�[�^����M���Ǘ����Ă��܂��B
+  プログラム中に出てくる urg_t 構造体は urg_open() 関数を呼び出したときに初期化され、センサパラメータの取得や以降のデータ送受信を管理しています。
 
-  ���̃v���O���������s����� length_data �̈�� length_data_size �̃f�[�^���i�[����܂��B\n
-  �擾���������f�[�^�����ɕ\������ɂ́A�ȉ��̂悤�ɋL�q���܂��B
+  このプログラムを実行すると length_data 領域に length_data_size 個のデータが格納されます。\n
+  取得した距離データを順に表示するには、以下のように記述します。
   \code
 for (i = 0; i < length_data_size; ++i) {
     printf("%ld, ", length_data[i]);
@@ -62,26 +62,26 @@ for (i = 0; i < length_data_size; ++i) {
 printf("\n"); \endcode
 
   \n
-  �܂��A�Z���T�Ƃ̐ڑ����C�[�T�[�l�b�g�ōs���ꍇ urg_open() �̋L�q���ȉ��̂悤�ɕύX���܂��B
+  また、センサとの接続をイーサーネットで行う場合 urg_open() の記述を以下のように変更します。
   \dontinclude connect_ethernet.c
   \skip //
   \until todo check error
 
 
-  \section library_tutorial_get_scans �A�����ċ����f�[�^���擾����
+  \section library_tutorial_get_scans 連続して距離データを取得する
 
-  scan_times ��̋����f�[�^���擾����v���O�����́A�ȉ��̂悤�ɋL�q�ł��܂��B
+  scan_times 回の距離データを取得するプログラムは、以下のように記述できます。
   \dontinclude get_scans.c
   \skip //
   \until }
 
 
-  ���̏ꍇ urg_start_measurement() �� urg_get_distance() �̃y�A���J��Ԃ��ČĂяo�������A�擾�񐔂��w�肵�ĂP�x urg_start_measurement() ���Ăяo���Ă��� urg_get_distance() �ŌJ��Ԃ��f�[�^���擾������������悭�f�[�^���擾�ł��܂��B
+  大抵の場合 urg_start_measurement() と urg_get_distance() のペアを繰り返して呼び出すよりも、取得回数を指定して１度 urg_start_measurement() を呼び出しておき urg_get_distance() で繰り返しデータを取得する方が効率よくデータを取得できます。
 
 
-  \section library_tutorial_settings �v���̃p�����[�^�ݒ�
+  \section library_tutorial_settings 計測のパラメータ設定
 
-  �v���͈̔́A�X�e�b�v���̊Ԉ����ݒ�A�X�L�����̊Ԉ����ݒ���s�����Ƃ��ł��܂��B�v���͈̔͂�����������A�Ԉ������s�����ƂŎ�M�f�[�^�ʂ����炷���Ƃ��ł��A���C�u��������̕��ׂ��������܂��B
+  計測の範囲、ステップ数の間引き設定、スキャンの間引き設定を行うことができます。計測の範囲を狭くしたり、間引きを行うことで受信データ量を減らすことができ、ライブラリ動作の負荷が減少します。
 
   \dontinclude set_parameter.c
   \skip //
@@ -89,31 +89,31 @@ printf("\n"); \endcode
   \line check error code
 
 
-  \section library_tutorial_timestamp �����f�[�^���擾�����Ƃ��̃^�C���X�^���v���擾����
+  \section library_tutorial_timestamp 距離データを取得したときのタイムスタンプを取得する
 
-  �v�������̃^�C�~���O�ōs��ꂽ���� urg_get_distance() �֐��Ŏ擾�ł��܂��B
+  計測がいつのタイミングで行われたかは urg_get_distance() 関数で取得できます。
 
-  urg_get_distance() ��p���Ď擾�����^�C���X�^���v��\������v���O�����́A�ȉ��̂悤�ɋL�q�ł��܂��B
+  urg_get_distance() を用いて取得したタイムスタンプを表示するプログラムは、以下のように記述できます。
   \dontinclude get_timestamp.c
   \skip //
   \until }
 
 
-  �ʏ�̓Z���T�̌v�������Ōv�����s���܂����A���C�u�������������� PC �̕��ׂ������ꍇ�͌v���f�[�^�̃^�C���X�^���v�Ԋu���A�Z���T�̌v���������������Ȃ�ꍇ������܂��B���̏ꍇ�A�v������X�e�b�v�����Ԉ����Ȃǂ̕ύX�őΏ��ł��邱�Ƃ�����܂��B
+  通常はセンサの計測周期で計測が行われますが、ライブラリを処理する PC の負荷が高い場合は計測データのタイムスタンプ間隔が、センサの計測周期よりも長くなる場合があります。この場合、計測するステップ数を間引くなどの変更で対処できることがあります。
 
 
-  \section library_tutorial_xy �����f�[�^�� X-Y ���W�n�ɕϊ�����
+  \section library_tutorial_xy 距離データを X-Y 座標系に変換する
 
-  �v�����������f�[�^�� X-Y ���W�ɕϊ�����ɂ� urg_index2rad() ��p���Ă��̋������ǂ̕����ɂ��邩���v�Z���܂��B
+  計測した距離データを X-Y 座標に変換するには urg_index2rad() を用いてその距離がどの方向にあるかを計算します。
 
   \dontinclude convert_xy.c
   \skip //
   \until printf("\n");
 
 
-  urg_index2rad() �́A�Z���T���ʂ� 0 [deg] �Ƃ����Ƃ��̃X�e�b�v�̌��������W�A���P�ʂŕԂ��܂��B
+  urg_index2rad() は、センサ正面が 0 [deg] としたときのステップの向きをラジアン単位で返します。
 
-  \image html sensor_index_image.png �Z���T�� urg_index2rad() �̊֌W
+  \image html sensor_index_image.png センサと urg_index2rad() の関係
 
 
   \~english

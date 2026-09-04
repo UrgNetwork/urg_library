@@ -12,8 +12,7 @@
 
 #include <stdbool.h>
 
-
-extern bool plotter_initialize(int data_size);
+extern bool plotter_initialize(int32_t data_size);
 extern void plotter_terminate(void);
 extern void plotter_clear(void);
 extern void plotter_swap(void);

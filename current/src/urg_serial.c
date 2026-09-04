@@ -12,12 +12,11 @@
 
 #include "urg_serial.h"
 
-
-enum {
+enum
+{
     False = 0,
     True,
 };
-
 
 #if defined(URG_WINDOWS_OS)
 #include "urg_serial_windows.c"
@@ -25,14 +24,12 @@ enum {
 #include "urg_serial_linux.c"
 #endif
 
-
 // \~japanese 改行かどうかの判定
 // \~english Checks wheter is is a EOL character
-static int is_linefeed(const char ch)
+static int32_t is_linefeed(const char ch)
 {
     return ((ch == '\r') || (ch == '\n')) ? 1 : 0;
 }
-
 
 static void serial_ungetc(urg_serial_t *serial, char ch)
 {
@@ -40,35 +37,42 @@ static void serial_ungetc(urg_serial_t *serial, char ch)
     serial->last_ch = ch;
 }
 
-
-int serial_readline(urg_serial_t *serial, char *data, int max_size, int timeout)
+int32_t serial_readline(urg_serial_t *serial, char *data, int32_t max_size, int32_t timeout)
 {
     /* \~japanese １文字ずつ読み出して評価する */
     /* \~english Reads and evaluates 1 character at a time */
-    int filled = 0;
-    int is_timeout = 0;
+    int32_t filled = 0;
+    int32_t is_timeout = 0;
 
-    while (filled < max_size) {
+    while (filled < max_size)
+    {
         char recv_ch;
-        int n = serial_read(serial, &recv_ch, 1, timeout);
-        if (n <= 0) {
+        int32_t n = serial_read(serial, &recv_ch, 1, timeout);
+        if (n <= 0)
+        {
             is_timeout = 1;
             break;
-        } else if (is_linefeed(recv_ch)) {
+        }
+        else if (is_linefeed(recv_ch))
+        {
             break;
         }
         data[filled++] = recv_ch;
     }
-    if (filled >= max_size) {
+    if (filled >= max_size)
+    {
         --filled;
         serial_ungetc(serial, data[filled]);
     }
     data[filled] = '\0';
 
-    if ((filled == 0) && is_timeout) {
+    if ((filled == 0) && is_timeout)
+    {
         return -1;
-    } else {
-        //fprintf(stderr, "%s\n", data);
+    }
+    else
+    {
+        // fprintf(stderr, "%s\n", data);
         return filled;
     }
 }

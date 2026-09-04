@@ -12,24 +12,26 @@
 #include "urg_serial_utils.h"
 #include <stdio.h>
 
-
-int main(void)
+int32_t main(void)
 {
-    int found_port_size = urg_serial_find_port();
-    int i;
+  int32_t found_port_size = urg_serial_find_port();
+  int32_t i;
 
-    if (found_port_size == 0) {
-        printf("could not found ports.\n");
-        return 1;
+  if (found_port_size == 0)
+  {
+    printf("could not found ports.\n");
+    return 1;
+  }
+
+  for (i = 0; i < found_port_size; ++i)
+  {
+    printf("%s", urg_serial_port_name(i));
+    if (urg_serial_is_urg_port(i))
+    {
+      printf(" [URG]");
     }
+    printf("\n");
+  }
 
-    for (i = 0; i < found_port_size; ++i) {
-        printf("%s", urg_serial_port_name(i));
-        if (urg_serial_is_urg_port(i)) {
-          printf(" [URG]");
-        }
-        printf("\n");
-    }
-
-    return 0;
+  return 0;
 }

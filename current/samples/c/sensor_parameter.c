@@ -13,17 +13,18 @@
 #include "urg_utils.h"
 #include "open_urg_sensor.h"
 #include <stdio.h>
+#include <inttypes.h>
 
-
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
     urg_t urg;
-    int min_step;
-    int max_step;
-    long min_distance;
-    long max_distance;
+    int32_t min_step;
+    int32_t max_step;
+    int32_t min_distance;
+    int32_t max_distance;
 
-    if (open_urg_sensor(&urg, argc, argv) < 0) {
+    if (open_urg_sensor(&urg, argc, argv) < 0)
+    {
         return 1;
     }
 
@@ -37,9 +38,9 @@ int main(int argc, char *argv[])
     printf("step: [%d, %d]\n", min_step, max_step);
 
     urg_distance_min_max(&urg, &min_distance, &max_distance);
-    printf("distance: [%ld, %ld)\n", min_distance, max_distance);
+    printf("distance: [%" PRId32 ", %" PRId32 ")\n", min_distance, max_distance);
 
-    printf("scan interval: %ld [usec]\n", urg_scan_usec(&urg));
+    printf("scan interval: %" PRId32 " [usec]\n", urg_scan_usec(&urg));
     printf("sensor data size: %d\n", urg_max_data_size(&urg));
 
     urg_close(&urg);

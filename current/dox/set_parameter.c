@@ -1,44 +1,45 @@
 #include "urg_sensor.h"
 #include "urg_utils.h"
+#include <stdint.h>
 
-int main(void)
+int32_t main(void)
 {
-const char connect_device[] = "/dev/ttyACM0";
-const long connect_baudrate = 115200;
-urg_t urg;
-int first_step;
-int last_step;
-int skip_step;
-int scan_times;
-int skip_scan;
-int ret;
-// \~japanese Œv‘ªƒpƒ‰ƒ[ƒ^‚Ìİ’è
-// \~english Configures measurement parameters
+    const char connect_device[] = "/dev/ttyACM0";
+    const int32_t connect_baudrate = 115200;
+    urg_t urg;
+    int32_t first_step;
+    int32_t last_step;
+    int32_t skip_step;
+    int32_t scan_times;
+    int32_t skip_scan;
+    int32_t ret;
+    // \~japanese è¨ˆæ¸¬ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
+    // \~english Configures measurement parameters
 
-// \~japanese ƒZƒ“ƒT‚É‘Î‚µ‚ÄÚ‘±‚ğs‚¤B
-// \~japanese Ú‘±‚ğs‚¤‚ÆAŒv‘ªƒpƒ‰ƒ[ƒ^‚Ìİ’è‚Í‰Šú‰»‚³‚ê‚é
-// \~english Connects to the sensor
-// \~english Upon connection, measurement parameters are initialized (default values)
-ret = urg_open(&urg, URG_SERIAL, connect_device, connect_baudrate);
-// \todo check error code
+    // \~japanese ã‚»ãƒ³ã‚µã«å¯¾ã—ã¦æ¥ç¶šã‚’è¡Œã†ã€‚
+    // \~japanese æ¥ç¶šã‚’è¡Œã†ã¨ã€è¨ˆæ¸¬ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®šã¯åˆæœŸåŒ–ã•ã‚Œã‚‹
+    // \~english Connects to the sensor
+    // \~english Upon connection, measurement parameters are initialized (default values)
+    ret = urg_open(&urg, URG_SERIAL, connect_device, connect_baudrate);
+    // \todo check error code
 
-// \~japanese Œv‘ª”ÍˆÍ‚ğw’è‚·‚é
-// \~japanese ƒZƒ“ƒT³–Ê•ûŒü‚Ì 90 [deg] ”ÍˆÍ‚Ìƒf[ƒ^æ“¾‚ğs‚¢AƒXƒeƒbƒvŠÔˆø‚«‚ğs‚í‚È‚¢—á
-// \~english Defines the measurement scope (start, end steps)
-// \~english Defines a measurement scope of 90 [deg] at the front of the sensor, and no step grouping in this example
-first_step = urg_rad2step(&urg, -45);
-last_step = urg_rad2step(&urg, +45);
-skip_step = 0;
-ret = urg_set_scanning_parameter(&urg, first_step, last_step, skip_step);
-// \todo check error code
+    // \~japanese è¨ˆæ¸¬ç¯„å›²ã‚’æŒ‡å®šã™ã‚‹
+    // \~japanese ã‚»ãƒ³ã‚µæ­£é¢æ–¹å‘ã® 90 [deg] ç¯„å›²ã®ãƒ‡ãƒ¼ã‚¿å–å¾—ã‚’è¡Œã„ã€ã‚¹ãƒ†ãƒƒãƒ—é–“å¼•ãã‚’è¡Œã‚ãªã„ä¾‹
+    // \~english Defines the measurement scope (start, end steps)
+    // \~english Defines a measurement scope of 90 [deg] at the front of the sensor, and no step grouping in this example
+    first_step = urg_rad2step(&urg, -45);
+    last_step = urg_rad2step(&urg, +45);
+    skip_step = 0;
+    ret = urg_set_scanning_parameter(&urg, first_step, last_step, skip_step);
+    // \todo check error code
 
-// \~japanese Œv‘ª‰ñ”‚ÆŒv‘ª‚ÌŠÔˆø‚«‚ğw’è‚µ‚ÄAŒv‘ª‚ğŠJn‚·‚é
-// \~japanese 123 ‰ñ‚ÌŒv‘ª‚ğw¦‚µAƒXƒLƒƒƒ“‚ÌŠÔˆø‚«‚ğs‚í‚È‚¢—á
-// \~english Defines the number of scans
-// \~english 123 scans are requested, and no scan skipping in this example
-scan_times = 123;
-skip_scan = 0;
-ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, skip_scan);
-// \todo check error code
-return 0;
+    // \~japanese è¨ˆæ¸¬å›æ•°ã¨è¨ˆæ¸¬ã®é–“å¼•ãã‚’æŒ‡å®šã—ã¦ã€è¨ˆæ¸¬ã‚’é–‹å§‹ã™ã‚‹
+    // \~japanese 123 å›ã®è¨ˆæ¸¬ã‚’æŒ‡ç¤ºã—ã€ã‚¹ã‚­ãƒ£ãƒ³ã®é–“å¼•ãã‚’è¡Œã‚ãªã„ä¾‹
+    // \~english Defines the number of scans
+    // \~english 123 scans are requested, and no scan skipping in this example
+    scan_times = 123;
+    skip_scan = 0;
+    ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, skip_scan, 0);
+    // \todo check error code
+    return 0;
 }

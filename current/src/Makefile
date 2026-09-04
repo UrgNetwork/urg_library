@@ -2,8 +2,8 @@
 # $Id$
 
 # Compile options
-CC = gcc
-CXX = g++
+CC = $(ARCH)gcc
+CXX = $(ARCH)g++
 #CFLAGS = -O2 -Wall -Werror -W $(INCLUDES)
 CFLAGS = -g -O0 -Wall -Werror -W -I../include/c $(INCLUDES)
 CXXFLAGS = $(CFLAGS) -I../include/cpp
@@ -26,6 +26,7 @@ OBJ_CPP = ticks.o Urg_driver.o
 
 CFLAGS = -g -O2 $(INCLUDES) -I../include/c -fPIC
 CXXFLAGS = $(CFLAGS) -I../include/cpp -std=c++11
+AR = $(CROSS_COMPILE)ar
 LDLIBS = -lm $(shell if test `echo $(OS) | grep Windows`; then echo "-lwsock32 -lsetupapi"; fi)
 
 all : $(TARGET)

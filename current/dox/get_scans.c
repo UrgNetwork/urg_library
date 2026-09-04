@@ -1,31 +1,32 @@
 #include "urg_sensor.h"
 #include <stddef.h>
 
-int main(void)
+int32_t main(void)
 {
     urg_t urg;
-    int ret;
-    long *length_data = NULL;
-// \~japanese scan_times ‰ñ‚ÌƒXƒLƒƒƒ“ƒf[ƒ^‚ğæ“¾
-// \~english Obtains measurement data for scan_times scans
+    int32_t ret;
+    int32_t *length_data = NULL;
+    // \~japanese scan_times å›ã®ã‚¹ã‚­ãƒ£ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+    // \~english Obtains measurement data for scan_times scans
 
-// \~japanese urg_start_measurement() ŠÖ”‚ÅƒXƒLƒƒƒ“‰ñ”‚ğw’è‚µ
-// \~english Uses urg_start_measurement() function to define the number of scans
-// \~japanese urg_get_distance() ŠÖ”‚Åw’è‚µ‚½‰ñ”‚¾‚¯ƒf[ƒ^‚ğóM‚·‚éB
-// \~english Uses urg_get_distance() function to receive the measurement data
+    // \~japanese urg_start_measurement() é–¢æ•°ã§ã‚¹ã‚­ãƒ£ãƒ³å›æ•°ã‚’æŒ‡å®šã—
+    // \~english Uses urg_start_measurement() function to define the number of scans
+    // \~japanese urg_get_distance() é–¢æ•°ã§æŒ‡å®šã—ãŸå›æ•°ã ã‘ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹ã€‚
+    // \~english Uses urg_get_distance() function to receive the measurement data
 
-const int scan_times = 123;
-int length_data_size;
-int i;
+    const int32_t scan_times = 123;
+    int32_t length_data_size;
+    int32_t i;
 
-// \~japanese ƒZƒ“ƒT‚©‚ç‹——£ƒf[ƒ^‚ğæ“¾‚·‚éB
-// \~english Starts range data measurement
-ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0);
-// \todo check error code
+    // \~japanese ã‚»ãƒ³ã‚µã‹ã‚‰è·é›¢ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã€‚
+    // \~english Starts range data measurement
+    ret = urg_start_measurement(&urg, URG_DISTANCE, scan_times, 0, 0);
+    // \todo check error code
 
-for (i = 0; i < scan_times; ++i) {
-    length_data_size = urg_get_distance(&urg, length_data, NULL);
-    // \todo process length_data array
-}
-return 0;
+    for (i = 0; i < scan_times; ++i)
+    {
+        length_data_size = urg_get_distance(&urg, length_data, NULL);
+        // \todo process length_data array
+    }
+    return 0;
 }
