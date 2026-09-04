@@ -4,7 +4,7 @@
 # Compile options
 SRCDIR = ../../src
 INCLUDEDIR = ../../include/c
-CC = $(CROSS_COMPILE)gcc
+CC = $(ARCH)gcc
 CFLAGS = -g -O0 -Wall -Werror -W $(INCLUDES)
 INCLUDES = -I$(INCLUDEDIR)
 LDFLAGS =

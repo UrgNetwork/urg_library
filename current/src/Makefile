@@ -2,8 +2,8 @@
 # $Id$
 
 # Compile options
-CC = $(CROSS_COMPILE)gcc
-CXX = $(CROSS_COMPILE)g++
+CC = $(ARCH)gcc
+CXX = $(ARCH)g++
 #CFLAGS = -O2 -Wall -Werror -W $(INCLUDES)
 CFLAGS = -g -O0 -Wall -Werror -W -I../include/c $(INCLUDES)
 CXXFLAGS = $(CFLAGS) -I../include/cpp

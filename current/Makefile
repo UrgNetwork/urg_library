@@ -1,9 +1,5 @@
 # Makefile for urgwidget
-
-CROSS_COMPILE ?=
-CC = $(CROSS_COMPILE)gcc
-CXX = $(CROSS_COMPILE)g++
-AR = $(CROSS_COMPILE)ar
+include ./build_rule.mk
 
 OUTPUT_HTML_DIR = html
 OUTPUT_HTML_JA_DIR = html_ja
